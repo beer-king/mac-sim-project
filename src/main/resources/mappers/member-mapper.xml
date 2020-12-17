@@ -2,9 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="memberMapper">
-    <resultMap id="memberReulstSet" type="Member">
+    <resultMap id="memberResultSet" type="Member">
         <result column="user_no" property="userNo"/>
         <result column="user_id" property="userId"/>
+        <result column="user_pwd" property="userPwd"/>
         <result column="user_name" property="userName"/>
         <result column="gender" property="gender"/>
         <result column="email" property="email"/>
@@ -38,7 +39,40 @@
          set status = 'N'
        where user_pwd = #{userPwd}
    </delete>
-
+	
+	<insert id="insertMember" parameterType="Member">
+		insert
+		  into member
+		  (
+		     user_no
+		   , user_id
+		   , user_pwd
+		   , user_name
+		   , gender
+		   , email
+		   , address
+		   , extra_address
+		   , detail_address
+		   , post_code
+		   , birth
+		   , phone
+		  )
+		  values
+		  (
+		    seq_user_no.nextval
+		  , #{userId}
+		  , #{userPwd}
+		  , #{userName}
+		  , #{gender}
+		  , #{email}
+		  , #{address}
+		  , #{extraAddress}
+		  , #{detailAddress}
+		  , #{postCode}
+		  , #{birth}
+		  , #{phone}
+		  )
+	</insert>
 
 
 </mapper>

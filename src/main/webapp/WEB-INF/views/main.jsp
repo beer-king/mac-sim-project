@@ -27,6 +27,15 @@
 
 <!-- header -->
 <header>
+
+	<c:if test="${!empty alertMsg }">
+	<script>
+		alertify.alert("${alertMsg}");
+	</script>
+	<c:remove var="alertMsg" scope="session"/>
+	</c:if>
+
+
 	<div class="inner">
 		<div class="header__left">
 			<a class="header__logo" href="#">
@@ -49,14 +58,14 @@
 		<c:choose>
 			<c:when test="${!empty loginUser}">
 				<ul class="header__nav">
-					<li><a href="#">회원가입</a></li>
-					<li><a href="#">로그인</a></li>
+					<li><a href="agreeForm.me">회원가입</a></li>
+					<li><a href="loginForm.me">로그인</a></li>
 				</ul>
 			</c:when>
 			<c:when test="${empty loginUser}">
 				<ul class="header__nav">
 					<li><a href="mypage.me">마이페이지</a></li>
-					<li><a href="#">로그아웃</a></li>
+					<li><a href="logout.me">로그아웃</a></li>
 				</ul>
 			</c:when>
 		</c:choose>

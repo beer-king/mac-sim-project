@@ -44,8 +44,8 @@
                 <i><span class="material-icons"> search </span></i>
             </div>
             <ul class="header__nav">
-                <li><a href="#">회원가입</a></li>
-                <li><a href="#">로그인</a></li>
+                <li><a href="agreeForm.me">회원가입</a></li>
+                <li><a href="loginForm.me">로그인</a></li>
             </ul>
         </div>
     </div>

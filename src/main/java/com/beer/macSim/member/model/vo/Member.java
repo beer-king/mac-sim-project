@@ -2,7 +2,7 @@ package com.beer.macSim.member.model.vo;
 
 import lombok.*;
 
-import java.util.Date;
+import java.sql.Date;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,7 +21,7 @@ public class Member {
     private String extraAddress;
     private String detailAddress;
     private String postCode;
-    private Date birth;
+    private String birth;
     private String phone;
     private int point;
     private int status;

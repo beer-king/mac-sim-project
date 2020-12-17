@@ -3,6 +3,7 @@ package com.beer.macSim.member.controller;
 import com.beer.macSim.member.model.service.MemberService;
 import com.beer.macSim.member.model.vo.Member;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +16,8 @@ public class MemberController {
 
     @Autowired
     private MemberService mService;
-
+    @Autowired
+	private BCryptPasswordEncoder bcryptPasswordEncoder;
 
     @RequestMapping("mypage.me")
     public String myPage(){
@@ -89,5 +91,52 @@ public class MemberController {
 
     }
 
+    @RequestMapping("enrollForm.me")
+    public String enrollForm() {
+    	return "member/enrollForm";
+    }
 
+    @RequestMapping("loginForm.me")
+    public String loginForm() {
+    	return "member/loginForm";
+    }
+    
+    @RequestMapping("idFindForm.me")
+    public String idFindForm() {
+    	return "member/idFindForm";
+    }
+    
+    @RequestMapping("pwdFindForm.me")
+    public String pwdFindForm() {
+    	return "member/pwdFindForm";
+    }
+    
+    @RequestMapping("agreeForm.me")
+    public String agreeForm() {
+    	return "member/agreeForm";
+    }
+    
+    // 회원가입
+    @RequestMapping("insert.me")
+	public String insertMember(Member m, Model model, HttpSession session) {
+    
+    	String encPwd = bcryptPasswordEncoder.encode(m.getUserPwd());	// 평문값을 넘기면 암호화 과정을 통해서 encPwd에 담긴다.
+		//System.out.println("암호화 후(암호문) :" + encPwd);
+		m.setUserPwd(encPwd); // 암호문이 담겨있음! 이것을 dao까지 쭉 넘길것이다.
+			
+		int result = mService.insertMember(m);
+		
+		if(result > 0) { // 성공 => 메인페이지 url재요청
+			
+			session.setAttribute("alertMsg","회원가입 성공! 100point 적립 되었습니다~!");
+			return "redirect:/";
+			
+		}else { // 실패
+			
+			model.addAttribute("errorMsg", "회원가입 실패..");
+			return "common/errorPage";
+		}
+    	
+    	
+    }
 }
