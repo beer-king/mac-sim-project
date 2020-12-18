@@ -74,5 +74,26 @@
 		  )
 	</insert>
 
+	<select id="findId" resultMap="memberResultSet"
+			parameterType="string">
+	  select user_id
+	    from member
+	   where user_name = #{userName}
+	    and phone= #{phone}		
+	</select>
+
+	<select id="idCheck" parameterType="string" 
+			resultType="_int">
+		select
+		       count(*)
+		  from member
+		 where user_id=#{userId}
+	</select>
+
+
+
+
+
+
 
 </mapper>

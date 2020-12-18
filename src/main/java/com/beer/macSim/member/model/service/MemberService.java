@@ -17,4 +17,10 @@ public interface MemberService {
     //4. 회원탈퇴용 서비스
     int deleteMember(String userId);
 
+    // 아이디 찾기
+    Member findId(Member m);
+    
+    // 아이디 중복체크!
+    int idCheck(String userId);
+    
 }

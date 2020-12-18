@@ -49,11 +49,11 @@
                 
                 <br>
     
-                <form action="insert.me" method="post" onsubmit="">
+                <form id="enrollForm" action="insert.me" method="post" onsubmit="">
                     <div class="form-group">
                         <label for="userId">* 아이디 </label>
                         <input type="text" class="form-control" id="userId" name="userId" placeholder="" required>
-                        <button type="button" class="btn btn-secondary btn-sm">중복체크</button><br>
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="idCheck();">중복체크</button><br>
                         <label style="font-size: 0.8em; color: gray;" >영문자, 숫자 포함하여 총 4~12자로 입력하시오.</label><br>
 
                         <label for="userPwd">* 비밀번호 </label>
@@ -95,7 +95,7 @@
                     </div>
                     <br>
                     <div class="btns" align="center">
-                        <button type="submit" class="btn btn-primary" style="background-color: #ecbf2e;" onclick="return validate();">회원가입</button>
+                        <button type="submit" id="enrollBtn"class="btn btn-primary" style="background-color: #ecbf2e;" onclick="return validate();">회원가입</button>
                         <button type="reset" class="btn btn-secondary"> 초기화</button>
                     </div>
                 </form>
@@ -105,6 +105,51 @@
 
         <script>
 		
+        // 아이디 중복체크
+        function idCheck(){
+        	var idInput = $("#enrollForm input[name=userId]");
+        	$.ajax({
+        		url:"idCheck.me",
+        		data:{userId:idInput.val()},
+        		type:"post",
+        		success:function(count){
+        			if(count == 1){
+        				//불가
+        				alert("중복된 아이디입니다.")
+        				$('#enrollBtn').attr('disabled',true);
+        				idInput.focus();
+        			}else{
+        				//사용가능
+        				alert("사용가능한 아이디입니다.")
+        				$('#entollBtn').removeAttr('disabled');
+        			}
+        			
+        		},error:function(){
+        			console.log("ajax통신 실패실패")
+        			
+        		}
+        	})
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         //주소
          function sample6_execDaumPostcode() {
             new daum.Postcode({

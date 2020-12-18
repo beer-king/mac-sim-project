@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 
@@ -137,6 +138,33 @@ public class MemberController {
 			return "common/errorPage";
 		}
     	
-    	
     }
+    
+    @RequestMapping("findId.me")
+    public String findId(Member m,  Model model, HttpSession session) {
+    	
+    	Member findId = mService.findId(m);
+    		
+		session.setAttribute("findId", findId);
+		return "member/resultId";
+    		
+    }
+    
+    @ResponseBody
+	@RequestMapping("idCheck.me")
+	public String idCheck(String userId) {
+		
+		return String.valueOf(mService.idCheck(userId)); 
+
+	}
+    
+    
+    
+    
 }
+
+
+
+
+
+
