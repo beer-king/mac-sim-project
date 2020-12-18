@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="resources/css/button.css">
+<link rel="stylesheet" href="resources/css/button.css"> 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
     <!-- jQuery library -->
@@ -47,30 +47,35 @@
 <body style="background-color:  #2a2725;">
     
     <div class="outer">
-            <br><br>
+        <br><br>
             <div id="image" align="center">
-              <img src="resources/images/logo.png" alt="">
+              <img src="resources/images/logo.png" alt=""><br><br>
+              <span style="font-size: small;">고객님의 정보와 일치하는 아이디 입니다.</span>
             </div>
-            <br><br>
+            <br>
             <div id="findIdForm">
-              <form action="findId.me" method="post">
-                  <table align="center">
-                    <tr>
-                      <th>이름</th>
-                      <td><input type="text" name="userName" required></td>
-                    </tr>
-
-                    <tr>
-                      <th>전화번호&nbsp&nbsp</th>
-                      <td><input type="text" name="phone" required placeholder="-없이 입력하세요"></td>
-                    </tr>
-
+            
+              <form action="" method="">
+                     <table align="center">
+                   
+                   <c:choose>
+	                   	<c:when test="${ empty findId }">
+		                    <tr>
+		                      <th><h3>조회된 정보가 없습니다.</h1></th>        
+		                    </tr>
+		                </c:when>
+		                <c:otherwise>
+		                    <tr>
+		                      <th><h1>${findId.userId}</h1></th>        
+		                    </tr>
+	                    </c:otherwise>
+                   </c:choose> 
+                    
                   </table>
 
                   <br>
-                  <br>
                   <div align="center" id="findId">
-                    <button type="submit" class="snip1535">아이디 찾기</button>
+                    <button type="button" class="snip1535" onclick="location.href='loginForm.me'">로그인 하기</button>
                   </div>
                   <br>
                   <div align="center">
@@ -87,9 +92,6 @@
             
     </div>
          
-      
 
-</body>
-	
 </body>
 </html>

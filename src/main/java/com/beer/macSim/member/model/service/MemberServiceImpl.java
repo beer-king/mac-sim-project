@@ -34,4 +34,18 @@ public class MemberServiceImpl implements MemberService {
 
         return mDao.deleteMember(sqlSession,userPwd);
     }
+
+	@Override
+	public Member findId(Member m) {
+		return mDao.findId(sqlSession,m);
+	}
+
+	@Override
+	public int idCheck(String userId) {
+		return mDao.idCheck(sqlSession, userId);
+	}
 }
+
+
+
+

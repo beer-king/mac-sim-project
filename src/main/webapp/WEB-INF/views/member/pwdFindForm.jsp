@@ -53,12 +53,12 @@
                   <table align="center">
                     <tr>
                       <th>아이디</th>
-                      <td><input type="text" name="userId" placeholder="아이디를 입력하세요" required></td>
+                      <td><input type="text" name="userId" placeholder="ex)macsim" required></td>
                     </tr>
 
                     <tr>
                       <th>이메일&nbsp&nbsp</th>
-                      <td><input type="email" name="email" required placeholder="이메일 형식으로 쓰시오"></td>
+                      <td><input type="email" name="email" required placeholder="ex)macsim@gmail.com"></td>
                     </tr>
 
                   </table>
