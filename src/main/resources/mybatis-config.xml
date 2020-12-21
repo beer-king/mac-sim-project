@@ -11,6 +11,8 @@
 		<!-- 별칭등록자리 -->
 		<typeAlias type="com.beer.macSim.member.model.vo.Member" alias="Member"/>
 		<typeAlias type="com.beer.macSim.data.model.vo.Score" alias="Score"/>
+		<typeAlias type="com.beer.macSim.event.model.vo.Event" alias="Event"/>
+		<typeAlias type="com.beer.macSim.groupBuy.model.vo.GroupBuy" alias="GroupBuy"/>
 	</typeAliases>
 	
 	<!-- 원래는 DB접속과 관련된 내용들을 작성했었음!! => 다른곳(root-context)에서 할 예정 -->
@@ -18,6 +20,8 @@
 	<!-- 사용할 메퍼파일등록자리 -->
 	<mappers>
 		<mapper resource="/mappers/member-mapper.xml"/>
+		<mapper resource="/mappers/event-mapper.xml"/>
+		<mapper resource="/mappers/groupBuy-mapper.xml"/>
 	</mappers>
 
 

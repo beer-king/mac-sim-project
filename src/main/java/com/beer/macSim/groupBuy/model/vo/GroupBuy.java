@@ -1,4 +1,4 @@
-package com.beer.macSim.groupBuying.model.vo;
+package com.beer.macSim.groupBuy.model.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

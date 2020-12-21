@@ -1,4 +1,4 @@
-package com.beer.macSim.groupBuying.controller;
+package com.beer.macSim.groupBuy.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
