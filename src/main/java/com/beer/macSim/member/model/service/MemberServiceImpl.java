@@ -16,7 +16,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public Member loginMember(Member m) {
-        return null;
+        return mDao.loginMember(sqlSession, m);
     }
 
     @Override
@@ -42,7 +42,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int idCheck(String userId) {
-		return mDao.idCheck(sqlSession, userId);
+		return mDao.idCheck(sqlSession, userId); 
 	}
 }
 

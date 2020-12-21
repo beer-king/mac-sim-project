@@ -159,8 +159,29 @@ public class MemberController {
 	}
     
     
+    @RequestMapping("login.me")
+    public String loginMember(Member m, HttpSession session, Model model) {
+    	
+    	Member loginUser = mService.loginMember(m); 
+    	
+    	if(loginUser != null && bcryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())) {
+			session.setAttribute("loginUser", loginUser);
+			return "redirect:/";
+			 
+		}else {
+			
+			model.addAttribute("errorMsg", "로그인 실패..");
+			return "common/errorPage";
+			
+		}
+    }
     
-    
+    @RequestMapping("logout.me")
+	public String logoutMember(HttpSession session) {
+		session.invalidate();
+		return "redirect:/";
+		
+	}
 }
 
 

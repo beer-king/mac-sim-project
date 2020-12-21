@@ -92,7 +92,7 @@
         <div id="content">
             <div id="content_1" style="background-color:  rgb(24, 22, 22);" >
      
-                <form action="" method="" >
+                <form action="login.me" method="post" >
                     <table id="loginForm">
                         <tr>
                             <td colspan="2">

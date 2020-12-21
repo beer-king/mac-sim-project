@@ -94,7 +94,7 @@
 				<li><a href="#">커뮤니티</a></li>
 				<li><a href="list.ev">이벤트</a></li>
 				<li><a href="#">공동구매</a></li>
-				<li><a href="#">공지사항</a></li>
+				<li><a href="notice.no">공지사항</a></li>
 			</ul>
 		</div>
 		<div class="header__right">
@@ -103,18 +103,18 @@
 				<i><span class="material-icons"> search </span></i>
 			</div>
 		<c:choose>
-			<c:when test="${!empty loginUser}">
+			<c:when test="${empty loginUser}">
 				<ul class="header__nav">
 					<li><a href="agreeForm.me">회원가입</a></li>
 					<li><a href="loginForm.me">로그인</a></li>
 				</ul>
 			</c:when>
-			<c:when test="${empty loginUser}">
+			<c:otherwise>
 				<ul class="header__nav">
 					<li><a href="mypage.me">마이페이지</a></li>
 					<li><a href="logout.me">로그아웃</a></li>
 				</ul>
-			</c:when>
+			</c:otherwise>
 		</c:choose>
 		</div>
 	</div>
