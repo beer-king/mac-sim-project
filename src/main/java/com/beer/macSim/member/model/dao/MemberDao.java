@@ -4,6 +4,8 @@ import com.beer.macSim.member.model.vo.Member;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+
 @Repository
 public class MemberDao {
 
@@ -27,5 +29,15 @@ public class MemberDao {
 
 	public int idCheck(SqlSessionTemplate sqlSession, String userId) {
 		return sqlSession.selectOne("memberMapper.idCheck", userId);
+	}
+
+
+	public ArrayList<> selectBeerReviewList(SqlSessionTemplate sqlSession){
+    	return (ArrayList)sqlSession.selectList("memberMapper.selectBeerReviewList");
+	}
+
+
+	public int deleteReview(SqlSessionTemplate sqlSession, int scoreNo) {
+    	return sqlSession.update("memberMapper.updateBeerReview",scoreNo);
 	}
 }

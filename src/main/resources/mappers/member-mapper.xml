@@ -20,7 +20,16 @@
         <result column="status" property="status"/>
         <result column="login_time" property="loginTime"/>
         <result column="report" property="report"/>
+
     </resultMap>
+
+	<resultMap id="beerReviewResultSet" type="Score">
+		<result column="score_no" property="scoreNo"></result>
+		<result column="beer_name" property="beerName"></result>
+		<result column="score" property="score"></result>
+		<result column="updated_date" property="updatedDate"></result>
+		<result column="comments" property="comments"></result>
+	</resultMap>
 
    <update id="updateMember" parameterType="Member">
        update
@@ -91,9 +100,29 @@
 	</select>
 
 
+	<select id="selectBeerReviewList" resultMap="beerReviewResultSet">
+
+		select
+		       score_no
+			  ,beer_name
+			  ,score
+			  ,s.updated_date
+			  ,comments
+		from score s
+				 join beer b using(beer_no)
+		where s.status='Y';
+
+	</select>
+
+	<update id="updateBeerReview" parameterType="_int">
+
+		update
+              score
+         set status = 'N'
+       where score_no = #{scoreNo}
 
 
-
+	</update>
 
 
 </mapper>

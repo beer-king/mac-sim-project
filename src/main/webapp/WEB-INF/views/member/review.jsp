@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: chois
@@ -74,41 +75,43 @@
 <form action="" method="post" id="reviewForm">
 
     <div align="left" >
-
-        <table border="1" id="reviewTable" class="table-bordered">
-            <tr>
-                <th width="100">맥주이름</th>
-                <td>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-                        수정
-                    </button>
+        <c:forEach var="beerReview" items="${list}">
+            <table border="1" id="reviewTable" class="table-bordered">
 
 
+                <tr>
+                    <th width="100">${beerReview.beerName}</th>
+                    <td>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                            수정
+                        </button>
 
-                    |<button type="button" class="btn btn-danger" onclick="deleteBeer();">삭제</button>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    (98)점 <span>2020-12-09</span>
-                </td>
 
-            </tr>
-            <tr>
-                <td colspan="2" height="100">
-                    <textarea name="rContent" class="form-control" cols="30" rows="5" style="resize:none;" readonly></textarea>
-                </td>
 
-            </tr>
-        </table>
+                        |<button type="button" class="btn btn-danger" onclick="deleteBeer();">삭제</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        (${beerReview.score})점 <span>${beerReview.updatedDate}</span>
+                    </td>
 
+                </tr>
+                <tr>
+                    <td colspan="2" height="100">
+                        <textarea name="rContent" class="form-control" cols="30" rows="5" style="resize:none;" readonly>${beerReview.comments}</textarea>
+                    </td>
+
+                </tr>
+            </table>
+        </c:forEach>
 
         <script>
             function deleteBeer(){
                 var message = confirm("삭제를 원하신다면 확인을 눌러주세요");
                 //console.log(message); => 확인누르면 true
                 if(message){
-                    location.href="deleteReview";
+                    location.href="deleteReview?scoreNo=${list.scoreNo}";
                 }
 
             }
@@ -129,7 +132,7 @@
         aria-hidden="true"
 >
     <div class="modal-dialog">
-        <form action="" method="get" class="modal-content">
+        <form action="updateBeerReview" method="get" class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">리뷰 수정</h5>
                 <button

@@ -6,6 +6,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Service
 public class MemberServiceImpl implements MemberService {
     @Autowired
@@ -44,6 +46,16 @@ public class MemberServiceImpl implements MemberService {
 	public int idCheck(String userId) {
 		return mDao.idCheck(sqlSession, userId);
 	}
+
+    @Override
+    public ArrayList<> selectBeerReivewList() {
+        return mDao.selectBeerReviewList(sqlSession);
+    }
+
+    @Override
+    public int deleteReview(int scoreNo) {
+        return mDao.deleteReview(sqlSession,scoreNo);
+    }
 }
 
 

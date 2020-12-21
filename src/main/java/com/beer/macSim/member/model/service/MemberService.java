@@ -2,6 +2,8 @@ package com.beer.macSim.member.model.service;
 
 import com.beer.macSim.member.model.vo.Member;
 
+import java.util.ArrayList;
+
 public interface MemberService {
 
     //1. 로그인용 서비스
@@ -22,5 +24,10 @@ public interface MemberService {
     
     // 아이디 중복체크!
     int idCheck(String userId);
+
+    //맥주리뷰 리스트 조회
+    ArrayList selectBeerReivewList();
     
+    //마이페이지 맥주리뷰 삭제
+    int deleteReview(int scoreNo);
 }

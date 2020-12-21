@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 
 
 @Controller
@@ -31,7 +32,13 @@ public class MemberController {
     }
 
     @RequestMapping("review.me")
-    public String review(){
+    public String review(Model model){
+
+
+        ArrayList<> list = mService.selectBeerReivewList();
+
+        model.addAttribute("list",list);
+
         return "member/review" ;
     }
 
@@ -88,6 +95,20 @@ public class MemberController {
         }else{ // 실패
             session.setAttribute("errorMsg","회원 탈퇴에 실패했습니다");
             return "common/errorPage";
+        }
+
+    }
+
+    @RequestMapping("deleteReview")
+    public String deleteReview(int scoreNo , HttpSession session){
+        int deleteReview = mService.deleteReview(scoreNo);
+
+        if(deleteReview>0){
+           session.setAttribute("alertMsg","리뷰삭제 성공");
+           return "redirect:/";
+        }else{
+            session.setAttribute("alertMsg","리뷰삭제 실패");
+            return "member/review";
         }
 
     }
