@@ -32,9 +32,9 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public int deleteMember(String userPwd) {
+    public int deleteMember(String userId) {
 
-        return mDao.deleteMember(sqlSession,userPwd);
+        return mDao.deleteMember(sqlSession,userId);
     }
 
 	@Override
@@ -47,15 +47,27 @@ public class MemberServiceImpl implements MemberService {
 		return mDao.idCheck(sqlSession, userId); 
 	}
 
+	/*
     @Override
     public ArrayList<> selectBeerReivewList() {
+
         return mDao.selectBeerReviewList(sqlSession);
     }
+    */
+
 
     @Override
     public int deleteReview(int scoreNo) {
-        return mDao.deleteReview(sqlSession,scoreNo);
+
+        return mDao.deleteReivew(sqlSession,scoreNo);
     }
+
+    /*
+    @Override
+    public int memberPwdUpdate(String encPwd) {
+        return mDao.memberPwdUpdate(sqlSession,encPwd);
+    }
+     */
 }
 
 
