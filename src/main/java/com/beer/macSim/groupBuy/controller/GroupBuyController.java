@@ -9,6 +9,6 @@ public class GroupBuyController {
 	@RequestMapping("list.gb")
 	public String selectGroupBuyList() {
 		
-		return "groupBuying.groupBuyingListView";
+		return "groupBuy/groupBuyListView";
 	}
 }

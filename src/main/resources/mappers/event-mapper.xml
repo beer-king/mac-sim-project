@@ -3,22 +3,22 @@
 
 <mapper namespace="eventMapper">
 	<resultMap id="eventResultSet" type="Event">
-		<result column="" property=""/>
-		<result column="" property=""/>
-		<result column="" property=""/>
-		<result column="" property=""/>
-		<result column="" property=""/>
-		<result column="" property=""/>
-		<result column="" property=""/>
-		<result column="" property=""/>
-		<result column="" property=""/>
-		<result column="" property=""/>
-		<result column="" property=""/>
-		<result column="" property=""/>
-		<result column="" property=""/>
-		<result column="" property=""/>
-		<result column="" property=""/>
-		<result column="" property=""/>		
+		<result column="ev_no" property="evNo"/>
+		<result column="user_no" property="userNo"/>
+		<result column="ev_title" property="evTitle"/>
+		<result column="ev_content" property="evContent"/>
+		<result column="ev_starttime" property="evStartTime"/>
+		<result column="ev_endtime" property="evEndTime"/>
+		<result column="beer_no" property="beerNo"/>
+		<result column="req_time" property="reqTime"/>
+		<result column="limit_no" property="limitNo"/>
+		<result column="apply_no" property="applyNo"/>
+		<result column="ev_point" property="evPoint"/>
+		<result column="click_no" property="clickNo"/>
+		<result column="status" property="status"/>
+		<result column="ev_date" property="evDate"/>
+		<result column="ev_thumb" property="evThumb"/>
+		<result column="ev_deny" property="evDeny"/>		
 	</resultMap>
   	
   	
