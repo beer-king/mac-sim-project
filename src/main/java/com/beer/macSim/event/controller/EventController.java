@@ -11,4 +11,10 @@ public class EventController {
 		
 		return "event/eventListView";
 	}
+	
+	@RequestMapping("detail.ev")
+	public String selectEvent() {
+		
+		return "event/eventDetailView";
+	}
 }

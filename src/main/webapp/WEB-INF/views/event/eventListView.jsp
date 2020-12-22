@@ -15,6 +15,7 @@
         position:relative; 
         background-color:aqua;
         }
+    .evList:hover{cursor:pointer;}
     .content{
         height:100px;
         box-sizing: border-box;
@@ -63,7 +64,7 @@
             </div>
 
             <div class="content">
-                <table style="height: 100%;" align="center">
+                <table id="eventList" style="height: 100%;" align="center">
                     <thead>
                         <th>3차 온라인 시음회</th>
                         <th>No.12</th>
@@ -91,7 +92,7 @@
             </div>
 
             <div class="content">
-                <table style="height: 100%;" align="center">
+                <table id="eventList" style="height: 100%;" align="center">
                     <thead>
                         <th>4차 온라인 맥주파티</th>
                         <th>No.12</th>
@@ -110,7 +111,13 @@
                 </table>
             </div>
 
-            
+            <script>
+            	$(function(){
+            		$(".evList").click(function(){
+            			location.href = "detail.ev"
+            		})
+            	})
+            </script>
 
         </div>
             <div id="pagingArea">

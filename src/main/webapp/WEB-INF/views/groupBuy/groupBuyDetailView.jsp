@@ -40,12 +40,12 @@
     
     <jsp:include page="../common/header.jsp"/> 
     
-        <button type="button" class="btn btn-primary" >&lt;뒤로가기</button>
+        <button type="button" class="btn btn-primary" onclick="history.back();" >&lt;뒤로가기</button>
         <br><br>
 
         <div class="head" align="center">
             <div class="photo">
-                <img src="../images/카카오 맥주잔.jpg" width="300px">
+                <img src="resources/images/카카오 맥주잔.jpg" width="300px">
             </div>
             <div class="profile">
                 <table id="proTable">
@@ -87,10 +87,10 @@
                 </tr>
                 <tr>
                     <td>
-                        <img src="../images/카카오 맥주잔2.PNG" width="500px">
+                        <img src="resources/images/카카오 맥주잔2.PNG" width="500px">
                     </td>
                     <td>
-                        <img src="../images/카카오 맥주잔3.PNG" width="500px">
+                        <img src="resources/images/카카오 맥주잔3.PNG" width="500px">
                     </td>
                 </tr>
                

@@ -42,12 +42,12 @@
    	<jsp:include page="../common/header.jsp"/>   
 		
 		<br>
-        <button type="button" class="btn btn-primary" >&lt;뒤로가기</button>
+        <button type="button" class="btn btn-primary" onclick="history.back();">&lt;뒤로가기</button>
         <br><br>
 
         <div class="head" align="center">
             <div class="photo">
-                <img src="../images/beer online tasting1.jpg" width="350px">
+                <img src="resources/images/beer online tasting1.jpg" width="350px">
             </div>
             <div class="profile">
                 <table id="proTable">
@@ -92,7 +92,7 @@
                         </h3>
                     </td>
                     <td>
-                        <img src="../images/제주 펠롱 에일.jpg" width="200px">
+                        <img src="resources/images/제주 펠롱 에일.jpg" width="200px">
                     </td>
                 </tr>
                 <tr>
@@ -103,7 +103,7 @@
                         </h3>
                     </td>
                     <td>
-                        <img src="../images/온라인 시음회 사진.jpg" width="300px">
+                        <img src="resources/images/온라인 시음회 사진.jpg" width="300px">
                     </td>
                 </tr>
              </table>
