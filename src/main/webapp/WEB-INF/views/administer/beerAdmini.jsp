@@ -144,6 +144,7 @@
 </c:if>
 <div class="outer">
     <div class="content">
+    	<c:if test="${category eq 1}">
         <form id="enrollForm" method="post" action="enrollBeer.ad" enctype="multipart/form-data">
             <img id="titleImg" width="350" height="350">
             <input type="file" name="upfile" id="upfile" onchange="loadImg(this);" required oninvalid="checkAlert();">
@@ -191,19 +192,34 @@
                 <button type="reset" class="btn btn-danger">취소하기</button>
             </div>
         </form>
+        </c:if>
     </div>
     
     <div class="menu">
-        <div id="name1">맥주 등록 관리</div>
+    	<c:if test="${category eq 1}">
+        <div id="name1" style="background: rgb(236, 191, 46);">맥주 등록 관리</div>
         <br>
         <div id="name2">맥주 수정 관리</div>
         <br>
+        </c:if>
+        <c:if test="${category eq 2}">
+        <div id="name1">맥주 등록 관리</div>
+        <br>
+        <div id="name2" style="background: rgb(236, 191, 46);">맥주 수정 관리</div>
+        <br>
+        </c:if>
     </div>
     <script>
 		$(function(){
 			$("#upfile").hide();
 			$("#titleImg").click(function(){
 				$("#upfile").click();
+			});
+			$("#name1").click(function(){
+				location.href = "beerAd.ad?category=1";
+			});
+			$("#name2").click(function(){
+				location.href = "beerAd.ad?category=2";
 			});
 		});
 		
@@ -222,6 +238,7 @@
 			alert("이미지를 넣어주세요.");
 		}
 	</script>
+	
 </div>
 </main>
 

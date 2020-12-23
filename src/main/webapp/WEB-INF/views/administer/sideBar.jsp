@@ -93,9 +93,9 @@
 	</div>
 	<div id="mysidenav" class="sidenav">
 		<a href="#" class="closebtn" onclick='closeNav()'><</a>
-		<a href="callAd.ad">신고관리</a>
+		<a href="callAd.ad?category=1">신고관리</a>
 		<br>
-		<a href="beerAd.ad">맥주관리</a>
+		<a href="beerAd.ad?category=1">맥주관리</a>
 		<br>
 		<a href="#">공구관리</a>
 		<br>

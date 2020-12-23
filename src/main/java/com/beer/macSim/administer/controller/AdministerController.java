@@ -29,7 +29,8 @@ public class AdministerController {
 		return "administer/callAdmini";
 	}
 	@RequestMapping("beerAd.ad")
-	public String goBeer() {
+	public String goBeer(int category, Model model) {
+		model.addAttribute("category",category);
 		return "administer/beerAdmini";
 	}
 	@RequestMapping("enrollBeer.ad")
