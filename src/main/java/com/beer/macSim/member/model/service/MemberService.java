@@ -35,7 +35,7 @@ public interface MemberService {
 
     
     // 회원 비빌번호 변경
-    //int memberPwdUpdate(String newPwd);
+    int memberPwdUpdate(Member m);
 
      
 }

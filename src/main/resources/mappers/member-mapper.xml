@@ -44,14 +44,15 @@
    </update>
 
 	
-	<!--  
-	<update id="memberPwdUpdate" parameterType="string">
+
+	<update id="memberPwdUpdate" parameterType="Member">
 		update
                member
-          set user_pwd = #{encPwd}
-       where  user_id =${loginUser.getUserId}
+          set user_pwd = #{newPwd}
+       where  user_id =#{userId}
+         
 	</update>
-	-->
+
 
    <update id="deleteMember" parameterType="string">
        update
@@ -131,6 +132,7 @@
 		     , report
 		 from member
 		where user_id = #{userId}
+		   and status = 0
 	</select>
 
 	<!--  

@@ -62,12 +62,12 @@ public class MemberServiceImpl implements MemberService {
         return mDao.deleteReivew(sqlSession,scoreNo);
     }
 
-    /*
     @Override
-    public int memberPwdUpdate(String encPwd) {
-        return mDao.memberPwdUpdate(sqlSession,encPwd);
+    public int memberPwdUpdate(Member m) {
+        return mDao.memberPwdUpdate(sqlSession,m);
     }
-     */
+
+
 }
 
 

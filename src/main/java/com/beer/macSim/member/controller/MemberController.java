@@ -2,6 +2,7 @@ package com.beer.macSim.member.controller;
 
 import com.beer.macSim.member.model.service.MemberService;
 import com.beer.macSim.member.model.vo.Member;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -85,25 +86,48 @@ public class MemberController {
 
     }
     
-    /*
+    
     @RequestMapping("memberPwdUpdate")
 
-    public String memberPwdUpdate(String newPwd , HttpSession session,Model model){
+    public String memberPwdUpdate(Member m, HttpSession session, Model model){
     	
-    	String encPwd = bcryptPasswordEncoder.encode(newPwd);
     	
-        int result = mService.memberPwdUpdate(encPwd);
+    	
+        String encNewPwd = bcryptPasswordEncoder.encode(m.getNewPwd());
+        String userPwd = m.getUserPwd();
+        String encUserPwd = bcryptPasswordEncoder.encode(m.getUserPwd());
+        m.setNewPwd(encNewPwd);
+        m.setUserPwd(encUserPwd);
+    	
         
-        if(result>0) {
-        	session.setAttribute("alertMsg", "비밀번호변경에 성공했습니다");
-        	return "redirect:update.me";
-        }else {
-        	model.addAttribute("errorMsg", "비밀번호변경실패");
+        
+        if(bcryptPasswordEncoder.matches(userPwd, encUserPwd)) { // 본인이 맞을 경우
+        	
+        	int result = mService.memberPwdUpdate(m);
+        	
+        	if(result>0) { // 비밀번호 변경성공
+        		session.removeAttribute("loginUser");
+        		session.setAttribute("alertMsg", "비밀번호 변경 성공");
+        		return "redirect:/";
+        	
+        	}else { // 변경실패
+        		
+        		model.addAttribute("errorMsg", "회원탈퇴실패ㅠㅠ");
+				return "common/errorPage";
+        		
+        	}
+        	
+        }else { // 본인이 아닐경우
+        	
+        	model.addAttribute("errorMsg","비밀번호가 틀렸습니다");
         	return "common/errorPage";
         }
-
+        
+        
+        
+        	
     }
-    */
+    
      
     
 
@@ -113,9 +137,9 @@ public class MemberController {
     	// pwd : 탈퇴요청시 적은 비밀번호(평문)
 		
     	Member loginUser = (Member)session.getAttribute("loginUser"); // 로그인된 회원객체
-    	String encPwd = loginUser.getUserPwd();
     	
-    	// encPwd : 비밀번호(암호문)
+    	// encPwd : 비밀번호(암호문)    	
+    	String encPwd = loginUser.getUserPwd();
     	
     		if(bcryptPasswordEncoder.matches(pwd, encPwd)) { // 본인이 맞을 경우
 			
@@ -127,7 +151,7 @@ public class MemberController {
 					
 					//세션에 담겨있던 loginUser 삭제
 					session.removeAttribute("loginUser");
-					session.setAttribute("alertMsg", "회원탈퇴성공");
+					session.setAttribute("alertMsg","회원탈퇴성공");
 					return "redirect:/";
 				}else { // 탈퇴 실패
 					model.addAttribute("errorMsg", "회원탈퇴실패");
