@@ -57,11 +57,13 @@ public class MemberServiceImpl implements MemberService {
 
     */
 
+	/*
     @Override
     public int deleteReview(int scoreNo) {
 
         return mDao.deleteReview(sqlSession,scoreNo);
     }
+    */
 
     @Override
     public int memberPwdUpdate(Member m) {

@@ -171,7 +171,7 @@ public class MemberController {
 			}
     }
 
-
+/*
     @RequestMapping("deleteReview")
     public String deleteReview(int scoreNo , HttpSession session){
         int deleteReview = mService.deleteReview(scoreNo);
@@ -185,6 +185,7 @@ public class MemberController {
         }
 
     }
+    */
 
     @RequestMapping("enrollForm.me")
     public String enrollForm() {

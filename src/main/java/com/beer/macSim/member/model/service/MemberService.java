@@ -28,8 +28,9 @@ public interface MemberService {
     //맥주리뷰 리스트 조회
    // ArrayList selectBeerReivewList();
     
+    
     //마이페이지 맥주리뷰 삭제
-    int deleteReview(int scoreNo);
+    //int deleteReview(int scoreNo);
 
 	
 
