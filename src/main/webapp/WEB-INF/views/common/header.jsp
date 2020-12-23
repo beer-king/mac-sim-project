@@ -35,7 +35,7 @@
                 <li><a href="#">커뮤니티</a></li>
                 <li><a href="list.ev">이벤트</a></li>
                 <li><a href="list.gb">공동구매</a></li>
-                <li><a href="#">공지사항</a></li>
+                <li><a href="list.no">공지사항</a></li>
             </ul>
         </div>
         <div class="header__right">

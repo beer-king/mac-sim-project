@@ -35,6 +35,8 @@ public class MemberDao {
 	public Member loginMember(SqlSessionTemplate sqlSession, Member m) {
 		return sqlSession.selectOne("memberMapper.loginMember",m);
 
+	}
+		
 
 	public ArrayList<> selectBeerReviewList(SqlSessionTemplate sqlSession){
     	return (ArrayList)sqlSession.selectList("memberMapper.selectBeerReviewList");
@@ -45,7 +47,7 @@ public class MemberDao {
     	return sqlSession.update("memberMapper.updateBeerReview",scoreNo);
 
 	}
+
+
 }
-
-
 
