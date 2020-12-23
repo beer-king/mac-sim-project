@@ -32,14 +32,12 @@ public class EventServiceImpl implements EventService {
 
 	@Override
 	public int increaseCount(int eno) {
-		// TODO Auto-generated method stub
-		return 0;
+		return evDao.increaseCount(sqlSession, eno);
 	}
 
 	@Override
 	public Event selectEvent(int eno) {
-		// TODO Auto-generated method stub
-		return null;
+		return evDao.selectEvent(sqlSession, eno);
 	}
 
 	@Override

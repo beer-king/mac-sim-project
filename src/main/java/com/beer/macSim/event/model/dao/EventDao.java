@@ -26,4 +26,12 @@ public class EventDao {
 		
 		return (ArrayList)sqlSession.selectList("eventMapper.selectEventList", null, rowbounds);
 	}
+	
+	public int increaseCount(SqlSessionTemplate sqlSession, int eno) {
+		return sqlSession.update("eventMapper.increaseCount", eno);
+	}
+	
+	public Event selectEvent(SqlSessionTemplate sqlSession, int eno) {
+		return sqlSession.selectOne("eventMapper.selectEvent", eno);
+	}
 }
