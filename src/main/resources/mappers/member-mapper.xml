@@ -22,6 +22,8 @@
 
     </resultMap>
 
+
+
 	<!--  
 		<resultMap id="beerReviewResultSet" type="Score">
 			<result column="score_no" property="scoreNo"></result>
@@ -31,6 +33,7 @@
 			<result column="comments" property="comments"></result>
 		</resultMap>
 	-->
+
 
    <update id="updateMember" parameterType="Member">
        update
@@ -65,7 +68,6 @@
 		insert
 		  into member
 		  (
-		     user_no
 		   , user_id
 		   , user_pwd
 		   , user_name
@@ -80,7 +82,6 @@
 		  )
 		  values
 		  (
-		    seq_user_no.nextval
 		  , #{userId}
 		  , #{userPwd}
 		  , #{userName}
@@ -135,6 +136,34 @@
 		   and status = 0
 	</select>
 
+ 
+	<select id="selectBeerReviewList" resultMap="beerReviewResultSet">
+
+		select
+		       score_no
+			  ,beer_name
+			  ,score
+			  ,s.updated_date
+			  ,comments
+		from score s
+				 join beer b using(beer_no)
+		where s.status='Y';
+
+	</select>
+	
+	
+	<update id="updateBeerReview" parameterType="_int">
+
+		update
+              score
+         set status = 'N'
+       where score_no = #{scoreNo}
+
+
+	</update>
+	
+
+
 	<!--  
 		<select id="selectBeerReviewList" resultMap="beerReviewResultSet">
 	
@@ -160,5 +189,6 @@
 	
 		</update>
     -->
+
 
 </mapper>

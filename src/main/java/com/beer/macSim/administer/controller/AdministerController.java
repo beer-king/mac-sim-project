@@ -12,4 +12,8 @@ public class AdministerController {
 	public String goCall() {
 		return "administer/callAdmini";
 	}
+	@RequestMapping("beerAd.ad")
+	public String goBeer() {
+		return "administer/beerAdmini";
+	}
 }

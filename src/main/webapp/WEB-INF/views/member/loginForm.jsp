@@ -128,7 +128,7 @@
             <br>
             <!--소셜 로그인 폼-->
             <div id="content_2" style="color: white;">
-                <form action="" method="">
+                <form action="" method="get">
                     <table align="center">
                         <tr>
                             <td colspan="2">* 소셜(SNS) 로그인</td>
@@ -137,8 +137,8 @@
                         <tr>
                             <td colspan="2">
                                 <br>
-                                <a href="">
-                                <img src="resources/images/카카오로로그인.PNG" alt="">
+                                <a href="https://kauth.kakao.com/oauth/authorize?client_id=3e97e22d6dadb5186b6825cc9c41ac40&redirect_uri=https://localhost:8888/login&response_type=code">
+                                <img src="resources/images/kakao.PNG" alt="">
                                 </a>
                             </td>
                             <br>

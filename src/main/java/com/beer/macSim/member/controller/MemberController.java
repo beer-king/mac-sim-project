@@ -8,6 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
@@ -31,7 +32,8 @@ public class MemberController {
     public String update(){
         return "member/update";
     }
-
+    
+    
     @RequestMapping("review.me")
     public String review(Model model){
 
@@ -42,7 +44,8 @@ public class MemberController {
 
         return "member/review" ;
     }
-
+	
+    
     @RequestMapping("point.me")
     public String point(){
         return "member/point" ;
@@ -168,6 +171,7 @@ public class MemberController {
 			}
     }
 
+
     @RequestMapping("deleteReview")
     public String deleteReview(int scoreNo , HttpSession session){
         int deleteReview = mService.deleteReview(scoreNo);
@@ -272,6 +276,8 @@ public class MemberController {
 		return "redirect:/";
 		
 	}
+    
+   
 }
 
 

@@ -46,6 +46,7 @@ public class MemberServiceImpl implements MemberService {
 	public int idCheck(String userId) {
 		return mDao.idCheck(sqlSession, userId); 
 	}
+	
 
 	/*
     @Override
@@ -53,13 +54,13 @@ public class MemberServiceImpl implements MemberService {
 
         return mDao.selectBeerReviewList(sqlSession);
     }
-    */
 
+    */
 
     @Override
     public int deleteReview(int scoreNo) {
 
-        return mDao.deleteReivew(sqlSession,scoreNo);
+        return mDao.deleteReview(sqlSession,scoreNo);
     }
 
     @Override

@@ -63,7 +63,7 @@
 	<div class="inner">
 		<span class="openmenu" onclick='openNav()'>></span>
 		<div class="header__left">
-			<a class="header__logo" href="#">
+			<a class="header__logo" href="/macSim">
 				<img src="resources/images/macsimXy.png" alt="logo"
 				/></a>
 			<span class="div-line"></span>
@@ -98,15 +98,15 @@
 	</div>
 	<div id="mysidenav" class="sidenav">
 		<a href="#" class="closebtn" onclick='closeNav()'><</a>
-		<a href="#">신고관리</a>
+		<a href="callAd.ad">신고관리</a>
 		<br>
-		<a href="#">신고관리</a>
+		<a href="beerAd.ad">맥주관리</a>
 		<br>
-		<a href="#">신고관리</a>
+		<a href="#">공구관리</a>
 		<br>
-		<a href="#">신고관리</a>
+		<a href="#">이벤트관리</a>
 		<br>
-		<a href="#">신고관리</a>
+		<a href="#">공지사항관리</a>
 		<br>
 	</div>
 	<script>
