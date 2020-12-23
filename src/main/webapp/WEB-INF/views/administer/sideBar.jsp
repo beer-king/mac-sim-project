@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<style>
 		.sidenav {
 			height:100%;
@@ -54,12 +55,6 @@
     </style>
 </head>
 <body>
-<c:if test="${!empty alertMsg }">
-	<script>
-		alertify.alert("${alertMsg}");
-	</script>
-	<c:remove var="alertMsg" scope="session"/>
-	</c:if>
 	<div class="inner">
 		<span class="openmenu" onclick='openNav()'>></span>
 		<div class="header__left">

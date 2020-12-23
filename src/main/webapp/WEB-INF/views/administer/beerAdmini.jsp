@@ -6,6 +6,18 @@
 <head>
 <meta charset="UTF-8">
 <title>MACSIM</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!-- 부트스트랩에서 제공하고 있는 스크립트 -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<!-- JavaScript -->
+<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+<!-- CSS -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+<!-- Default theme -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+<!-- Semantic UI theme -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
 	<link
 			rel="stylesheet"
 			href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css"
@@ -124,45 +136,54 @@
 
 <!-- main -->
 <main>
+<c:if test="${ !empty alertMsg }">
+	<script>
+		alertify.alert("${alertMsg}");
+	</script>
+	<c:remove var="alertMsg" scope="session"/>
+</c:if>
 <div class="outer">
     <div class="content">
-        <form id="enrollForm" method="post" action="insert.bo" enctype="multipart/form-data">
+        <form id="enrollForm" method="post" action="enrollBeer.ad" enctype="multipart/form-data">
             <img id="titleImg" width="350" height="350">
+            <input type="file" name="upfile" id="upfile" onchange="loadImg(this);" required oninvalid="checkAlert();">
             <br>
             <table align="center">
                 <tr>
                     <th><label for="title">맥주 이름</label></th>
-                    <td><input type="text" id="title" class="form-control" name="boardTitle" required></td>
+                    <td><input type="text" id="name" class="form-control" name="beerName" required></td>
                 </tr>
                 <tr>
                     <th><label for="writer">맥주 영어 이름</label></th>
-                    <td><input type="text" id="writer" class="form-control" name="boardWriter" required></td>
+                    <td><input type="text" id="eName" class="form-control" name="beerEname" required></td>
                 </tr>
                 <tr>
                     <th><label for="writer">맥주 분류</label></th>
-                    <td><input type="text" id="writer" class="form-control" name="boardWriter" required></td>
+                    <td><input type="text" id="style" class="form-control" name="beerStyle" required></td>
                 </tr>
                 <tr>
                     <th><label for="writer">맥주 생산지</label></th>
-                    <td><input type="text" id="writer" class="form-control" name="boardWriter" required></td>
+                    <td><input type="text" id="location" class="form-control" name="beerLocation" required></td>
                 </tr>
                 <tr>
                     <th><label for="writer">맥주 생산자</label></th>
-                    <td><input type="text" id="writer" class="form-control" name="boardWriter" required></td>
+                    <td><input type="text" id="producer" class="form-control" name="beerProducer" required></td>
                 </tr>
                 <tr>
                     <th><label for="writer">도수</label></th>
-                    <td><input type="text" id="writer" class="form-control" name="boardWriter" required></td>
+                    <td><input type="text" id="alcohol" class="form-control" name="alcohol" required></td>
                 </tr>
                 <tr>
                     <th><label for="writer">병/캔 분류</label></th>
-                    <td><input type="text" id="writer" class="form-control" name="boardWriter" required></td>
+                    <td><input type="text" id="container" class="form-control" name="beerContainer" required></td>
                 </tr>
             </table>
             <br>
             <div align="center">
-                <div>유저명 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp 부여포인트</div>
-                <div><input type="text" id="writer" class="form-control" name="boardWriter" required>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="text" id="writer" class="form-control" name="boardWriter" required></div>
+                <div>유저명</div>
+                <div><input type="text" id="userId" class="form-control" name="userId"></div>
+            	<div>부여포인트</div>
+            	<div><input type="number" id="point" class="form-control" name="point"></div>
             </div>
 
             <div align="right">
@@ -178,6 +199,29 @@
         <div id="name2">맥주 수정 관리</div>
         <br>
     </div>
+    <script>
+		$(function(){
+			$("#upfile").hide();
+			$("#titleImg").click(function(){
+				$("#upfile").click();
+			});
+		});
+		
+		function loadImg(inputFile){
+			if(inputFile.files.length){
+				var reader = new FileReader();
+				reader.readAsDataURL(inputFile.files[0]);
+				reader.onload = function(e){
+					$("#titleImg").attr("src", e.target.result);
+				}
+			}else{
+				$("#titleImg").attr("src", null);
+			}
+		}
+		function checkAlert(){
+			alert("이미지를 넣어주세요.");
+		}
+	</script>
 </div>
 </main>
 

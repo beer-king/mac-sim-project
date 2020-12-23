@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="adminMapper">
+	<resultMap id="beerResultSet" type="Beers">
+		<result column="beer_no" property="beerNo"/>
+		<result column="beer_name" property="beerName"/>
+		<result column="beer_ename" property="beerEname"/>
+		<result column="beer_style" property="beerStyle"/>
+		<result column="beer_producer" property="beerProducer"/>
+		<result column="beer_location" property="beerLocation"/>
+		<result column="beer_alcohol" property="alcohol"/>
+		<result column="beer_container" property="beerContainer"/>
+		<result column="updateed_date" property="updatedDate"/>
+		<result column="status" property="status"/>
+		<result column="reply_count" property="replyCount"/>
+		<result column="score_total" property="scoreTotal"/>
+		<result column="origin_name" property="originName"/>
+		<result column="change_name" property="changeName"/>
+	</resultMap>
+  	<insert id="insertBeer" parameterType="Beers">
+  		insert
+  			into beer
+  			(
+  				  beer_no
+  				, beer_name
+  				, beer_ename
+  				, beer_style
+  				, beer_producer
+  				, beer_location
+  				, beer_alcohol
+  				, beer_container
+  				, origin_name
+  				, change_name
+  			)
+  			values
+  			(
+  				  seq_beer_no.nextval
+  				, #{beerName}
+  				, #{beerEname}
+  				, #{beerStyle}
+  				, #{beerProducer}
+  				, #{beerLocation}
+  				, #{alcohol}
+  				, #{beerContainer}
+  				, #{originName}
+  				, #{changeName}
+  			)
+  	</insert>
+  	<update id="updatePoint" parameterType="Member">
+  		update
+  			member
+  		 set
+  		 	point = point + #{point}
+  		where
+  		 	user_id = #{userId}
+  	</update>
+  
+</mapper>
