@@ -21,31 +21,47 @@
         <result column="report" property="report"/>
 
     </resultMap>
-	<resultMap id="beerReviewResultSet" type="Score">
-		<result column="score_no" property="scoreNo"></result>
-		<result column="beer_name" property="beerName"></result>
-		<result column="score" property="score"></result>
-		<result column="updated_date" property="updatedDate"></result>
-		<result column="comments" property="comments"></result>
-	</resultMap>
+
+
+
+	<!--  
+		<resultMap id="beerReviewResultSet" type="Score">
+			<result column="score_no" property="scoreNo"></result>
+			<result column="beer_name" property="beerName"></result>
+			<result column="score" property="score"></result>
+			<result column="updated_date" property="updatedDate"></result>
+			<result column="comments" property="comments"></result>
+		</resultMap>
+	-->
+
 
    <update id="updateMember" parameterType="Member">
        update
               member
-         set  userName = #{userName}
+         set  user_name = #{userName}
             , gender = #{gender}
             , phone = #{phone}
             , email = #{email}
             , address = #{address}
-       where  userId = #{userId}
+       where  user_id = #{userId}
    </update>
 
-   <delete id="deleteMember" parameterType="string">
+	
+	<!--  
+	<update id="memberPwdUpdate" parameterType="string">
+		update
+               member
+          set user_pwd = #{encPwd}
+       where  user_id =${loginUser.getUserId}
+	</update>
+	-->
+
+   <update id="deleteMember" parameterType="string">
        update
              member
-         set status = 'N'
-       where user_pwd = #{userPwd}
-   </delete>
+         set status = 2
+      	where user_id = #{userId}   
+   </update>
 	
 	<insert id="insertMember" parameterType="Member">
 		insert
@@ -117,6 +133,7 @@
 		 from member
 		where user_id = #{userId}
 	</select>
+
  
 	<select id="selectBeerReviewList" resultMap="beerReviewResultSet">
 
@@ -143,5 +160,33 @@
 
 	</update>
 	
+
+
+	<!--  
+		<select id="selectBeerReviewList" resultMap="beerReviewResultSet">
+	
+			select
+			       score_no
+				  ,beer_name
+				  ,score
+				  ,s.updated_date
+				  ,comments
+			from score s
+					 join beer b using(beer_no)
+			where s.status='Y';
+	
+		</select>
+	
+		<update id="updateBeerReview" parameterType="_int">
+	
+			update
+	              score
+	         set status = 'N'
+	       where score_no = #{scoreNo}
+	
+	
+		</update>
+    -->
+
 
 </mapper>

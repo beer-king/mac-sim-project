@@ -15,6 +15,7 @@
         position:relative; 
         background-color:aqua;
         }
+    .gbList:hover{cursor:pointer}
     .content{
         height:100px;
         box-sizing: border-box;
@@ -58,7 +59,7 @@
        <br><br>
        <div class="gbList">
            <div class="photo">
-               <img src="../images/카카오 맥주잔.jpg" alt="" width="160px">
+               <img src="resources/images/카카오 맥주잔.jpg" alt="" width="160px">
            </div>
 
            <div class="content">
@@ -86,7 +87,7 @@
        <br>
        <div class="gbList">
            <div class="photo">
-               <img src="../images/기네스 맥주잔.jpg" alt="" width="160px">
+               <img src="resources/images/기네스 맥주잔.jpg" alt="" width="160px">
            </div>
 
            <div class="content">
@@ -109,7 +110,14 @@
                </table>
            </div>
 
-           
+           <script>
+           	$(function(){
+           		$(".gbList").click(function(){
+           			location.href="detail.gb"
+           		})
+           		
+           	})
+           </script>
 
        </div>
            <div id="pagingArea">

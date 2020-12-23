@@ -60,7 +60,6 @@
 <hr style="height:2px;border-width:0;color:white;background-color:white">
 
 
-
 <div id="header">
     <ul id="mypageMenu">
         <li><a href="update.me">정보수정</a></li>
@@ -106,16 +105,16 @@
 <form action="memberUpdate.me" method="POST">
     <div id="userInfo">
         <ul>
-            <li><span>*아이디</span> <input  type="text" value="Beerking" readonly> </li>
-            <li><span>이름</span> <input type="text" value="최성주" name="userName"></li>
+            <li><span>*아이디</span> <input  type="text" value="${loginUser.userId}" name="userId" readonly > </li>
+            <li><span>이름</span> <input type="text" value="${loginUser.userName}" name="userName"></li>
             <li>
-                <span>성별</span> <span>M</span> <input type="radio" name="gender" value="M" checked>
-                <span>F</span> <input type="radio"name="gender" value="F">
+                <span>성별</span> <span>M</span> <input type="radio" name="gender" value="M" id="Male">
+                <span>F</span> <input type="radio"name="gender" value="F" id="Female">
             </li>
 
-            <li><span>전화번호</span> <input type="text"  name="phone" value="010-5761-0000" ></li>
-            <li><span>이메일</span> <input type="email" name="email" value="tjdwnn032@naver.com"></li>
-            <li><span>주소</span> <input type="text" name="address" value="주소"></li>
+            <li><span>전화번호</span> <input type="text"  name="phone" value="${loginUser.phone}" ></li>
+            <li><span>이메일</span> <input type="email" name="email" value="${loginUser.email}"></li>
+            <li><span>주소</span> <input type="text" name="address" value="${loginUser.address}"></li>
         </ul>
 
         <div align="left" class="subBtn">
@@ -125,7 +124,21 @@
     </div>
 </form>
 
-<form action="memberPwdUpdate" method="POST">
+<script>
+    $(function(){
+        if("${loginUser.gender}"=="M"){
+            $("#Male").attr("checked",true);
+
+        }else if("${loginUser.gender}"=="F"){
+            $("#Female").attr("checked",true);
+        }
+    });
+
+</script>
+
+
+
+<form action="memberPwdUpdate.me" method="get">
     <div id="changePwd">
         <ul>
             <li> <span>아이디 : ${loginUser.userId}</span> </li>
@@ -168,7 +181,7 @@
 </script>
 
 
-<form action="" method="POST">
+
     <div id="deleteMember">
         <ol>
             <li><span>탈퇴할거유?진짜루?</span> </li>
@@ -184,31 +197,33 @@
         <!-- The Modal -->
         <div class="modal" id="myModal">
             <div class="modal-dialog">
-                <form class="modal-content">
+                <div class="modal-content">
 
                     <!-- Modal Header -->
                     <div class="modal-header">
                         <h4 class="modal-title">회원 탈퇴</h4>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
-
+					
                     <!-- Modal body -->
-                    <div action="memberDelete.me" method="post" class="modal-body">
-                        현재 비밀번호를 입력해주세요
-                        <input type="password" name="pwd" >
-                    </div>
-
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
-                        <button type="submit" class="btn btn-danger" data-dismiss="modal">탈퇴</button>
-                    </div>
-
-                </form>
+					<form action="memberDelete.me" method="post">
+	                    <div class="modal-body">
+	                    	    현재 비밀번호를 입력해주세요
+	                        <input type="password" name="pwd" >
+	                    </div>
+	
+	                   
+	                    <div class="modal-footer">
+	                        <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+	                        <button type="submit" class="btn btn-danger" data-dismiss="modal">탈퇴</button>
+	                    </div>
+					</form>	
+                
+                </div>
             </div>
         </div>
     </div>
 
-</form>
+
 </body>
 </html>

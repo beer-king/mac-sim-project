@@ -75,7 +75,7 @@
 
 <div id="pointHistory">
     <h1 style="margin-left: 30px; color: rgb(236, 191, 46); font-size:30px">포인트 내역</h1>
-    <h3 style="margin-left: 30px; font-size:20px">현재 보유 포인트 : <span id="nowPoint">130</span></h3>
+    <h3 style="margin-left: 30px; font-size:20px">현재 보유 포인트 : <span id="nowPoint">${loginUser.point}</span></h3>
     <br>
     <ul id="point">
         <li>

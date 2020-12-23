@@ -111,6 +111,7 @@
 			</c:when>
 			<c:otherwise>
 				<ul class="header__nav">
+					<label style="color:white;">${loginUser.userName}님 환영합니다</label>
 					<li><a href="mypage.me">마이페이지</a></li>
 					<li><a href="logout.me">로그아웃</a></li>
 				</ul>

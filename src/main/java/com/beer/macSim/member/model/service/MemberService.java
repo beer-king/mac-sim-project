@@ -17,7 +17,7 @@ public interface MemberService {
     int updateMember(Member m);
 
     //4. 회원탈퇴용 서비스
-    int deleteMember(String userId);
+    int deleteMember(String userPwd);
 
     // 아이디 찾기
     Member findId(Member m);
@@ -26,8 +26,16 @@ public interface MemberService {
     int idCheck(String userId);
 
     //맥주리뷰 리스트 조회
-    ArrayList selectBeerReivewList();
+   // ArrayList selectBeerReivewList();
     
     //마이페이지 맥주리뷰 삭제
     int deleteReview(int scoreNo);
+
+	
+
+    
+    // 회원 비빌번호 변경
+    //int memberPwdUpdate(String newPwd);
+
+     
 }

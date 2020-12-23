@@ -15,8 +15,8 @@ public class MemberDao {
 
     }
 
-    public int deleteMember(SqlSessionTemplate sqlSession, String userPwd) {
-        return sqlSession.delete("memberMapper.deleteMember",userPwd);
+    public int deleteMember(SqlSessionTemplate sqlSession, String userId) {
+        return sqlSession.update("memberMapper.deleteMember",userId);
     }
 
 	public int insertMember(SqlSessionTemplate sqlSession, Member m) {
@@ -33,14 +33,23 @@ public class MemberDao {
 
 
 	public Member loginMember(SqlSessionTemplate sqlSession, Member m) {
-		return sqlSession.selectOne("memberMapper.loginMember",m);
+		return sqlSession.selectOne("memberMapper.loginMember", m);
 
 	}
-		
 
+
+	
+	/*
+	public int memberPwdUpdate(SqlSessionTemplate sqlSession, String encPwd) {
+    	return sqlSession.update("memberMapper.memberPwdUpdate",encPwd);
+	}
+	*/
+/*
 	public ArrayList<> selectBeerReviewList(SqlSessionTemplate sqlSession){
     	return (ArrayList)sqlSession.selectList("memberMapper.selectBeerReviewList");
 	}
+*/
+	
 
 
 	public int deleteReview(SqlSessionTemplate sqlSession, int scoreNo) {
@@ -48,6 +57,9 @@ public class MemberDao {
 
 	}
 
-
 }
+
+
+
+
 

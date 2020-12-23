@@ -72,6 +72,6 @@
 </div>
 
 <hr style="height:2px;border-width:0;color:white;background-color:white">
-<h1 align="center">${ errorMsg }</h1>
+<h1 align="center">${errorMsg}</h1>
 </body>
 </html>
