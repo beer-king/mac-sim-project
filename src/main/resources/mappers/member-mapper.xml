@@ -137,21 +137,9 @@
 	</select>
 
  
-	<select id="selectBeerReviewList" resultMap="beerReviewResultSet">
 
-		select
-		       score_no
-			  ,beer_name
-			  ,score
-			  ,s.updated_date
-			  ,comments
-		from score s
-				 join beer b using(beer_no)
-		where s.status='Y';
-
-	</select>
 	
-	
+	<!-- 
 	<update id="updateBeerReview" parameterType="_int">
 
 		update
@@ -161,7 +149,7 @@
 
 
 	</update>
-	
+	 -->
 
 
 	<!--  
