@@ -67,6 +67,49 @@
 		.openmenu > i {
 			font-size: 30px;
 		}
+		.content{
+			margin-top: 50px;
+			margin-left: 200px;
+            width: 60%;
+            height: 700px;
+            background: rgb(236, 191, 46);
+            float: left;
+        }
+        .menu{
+            margin-top: 50px;
+            width: 20%;
+            height: 200px;
+            float: left;
+        }
+        .menu div{
+            width: 150px;
+            height: 40px;
+            text-align: center;
+            display:table-cell;
+            vertical-align: middle;
+            background: gray;
+        }
+        .menu div:hover{
+            background: rgb(236, 191, 46);
+            cursor: pointer;
+        }
+        #name1{
+            background: rgb(236, 191, 46);
+        }
+        .dataview {
+            margin: 20px;
+            background: white;
+            text-align: center;
+            
+        }
+        .dataview td{
+            height: 40px;
+            width: 200px;
+            vertical-align: middle;
+        }
+        .outer{
+        	height: 800px;
+        }
     </style>
 </head>
 <body>
@@ -79,7 +122,54 @@
 
 <!-- main -->
 <main>
-	
+<div class="outer">
+    <div class="content">
+        <form action="test.do" method="POST">
+            <table class="dataview">
+                <tr>
+                    <td rowspan="2" style="width: 40px;"><input type="checkbox" name="number" value="1"></td>
+                    <td>이벤트 글 번호 : </td>
+                    <td>번호값</td>
+                    <td>이벤트 제목 : </td>
+                    <td>제목값</td>
+                </tr>
+                <tr>
+                    <td>신고 카테고리 : </td>
+                    <td>신고값</td>
+                </tr>
+            </table>
+            <table class="dataview">
+                <tr>
+                    <td rowspan="2" style="width: 40px;"><input type="checkbox" name="number" value="2"></td>
+                    <td>이벤트 글 번호 : </td>
+                    <td>번호값</td>
+                    <td>이벤트 제목 : </td>
+                    <td>제목값</td>
+                </tr>
+                <tr>
+                    <td>신고 카테고리 : </td>
+                    <td>신고값</td>
+                </tr>
+            </table>
+            <div align=right>
+            	<button type="submit">일괄처리</button>
+            </div>
+            
+			
+        </form>
+    </div>
+    
+    <div class="menu">
+        <div id="name1">이벤트 신고 관리</div>
+        <br>
+        <div id="name2">맥주 리뷰 신고 관리</div>
+        <br>
+        <div id="name3">포럼 신고 관리</div>
+        <br>
+        <div id="name4">신고된 유저 관리</div>
+        <br>
+    </div>
+</div>
 </main>
 
 <footer></footer>

@@ -124,7 +124,7 @@
 		<a href="#" class="closebtn" onclick='closeNav()'><</a>
 		<a href="callAd.ad">신고관리</a>
 		<br>
-		<a href="#">신고관리</a>
+		<a href="beerAd.ad">신고관리</a>
 		<br>
 		<a href="#">신고관리</a>
 		<br>
