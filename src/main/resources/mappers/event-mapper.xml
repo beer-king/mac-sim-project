@@ -43,4 +43,32 @@
 		  from event
 		  join member using (user_no)
   	</select>
+  	
+  	<update id="increaseCount" parameterType="_int"	>
+  		update 
+  			    event
+  		   set  click_no = click_no +1
+  		 where  ev_no = #{eno} 
+  	</update>
+  	
+  	<select id="selectEvent" parameterType="_int" resultMap="eventResultSet">
+  		select
+  			   ev_no
+  			 , user_id  
+  			 , ev_title
+  			 , ev_content
+  			 , ev_starttime
+  			 , ev_endtime
+  			 , beer_name
+  			 , req_time
+  			 , limit_no
+  			 , apply_no
+  			 , ev_point
+  			 , ev_date
+  			 , ev_thumb
+  	      from event
+  	      join member using(user_no)
+  	      join beer using(beer_no)
+  	     where  ev_no = #{eno}
+  	</select>
 </mapper>

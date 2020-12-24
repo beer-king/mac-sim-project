@@ -36,7 +36,18 @@ public class EventController {
 	}
 	
 	@RequestMapping("detail.ev")
-	public String selectEvent() {
+	public String selectEvent(int eno, Model model) {
+		
+		int result = evService.increaseCount(eno);
+		
+		if(result > 0) {
+			Event ev = evService.selectEvent(eno);
+			model.addAttribute("ev", ev);
+		}else {
+			model.addAttribute("errorMsg", "존재하지 않는 게시글입니다.");
+		}
+		
+		
 		
 		return "event/eventDetailView";
 	}
