@@ -3,6 +3,7 @@ package com.beer.macSim.administer.controller;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.http.HttpSession;
@@ -11,11 +12,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.beer.macSim.administer.model.service.AdminService;
+import com.beer.macSim.common.model.vo.PageInfo;
+import com.beer.macSim.common.template.Pagination;
 import com.beer.macSim.data.model.vo.Beers;
 import com.beer.macSim.member.model.vo.Member;
+import com.beer.macSim.notice.model.vo.Notice;
 
 
 @Controller
@@ -25,13 +30,29 @@ public class AdministerController {
 	
 	
 	@RequestMapping("callAd.ad")
-	public String goCall() {
+	public String goCall(@RequestParam(value="category", defaultValue="1")int category, Model model) {
+		model.addAttribute("category",category);
 		return "administer/callAdmini";
 	}
 	@RequestMapping("beerAd.ad")
-	public String goBeer(int category, Model model) {
+	public String goBeer(@RequestParam(value="category", defaultValue="1")int category, Model model) {
 		model.addAttribute("category",category);
 		return "administer/beerAdmini";
+	}
+	
+	@RequestMapping("noticeAd.ad")
+	public String goNotice(@RequestParam(value="currentPage", defaultValue="1")int currentPage,@RequestParam(value="category", defaultValue="1")int category, Model model) {
+		model.addAttribute("category",category);
+		if(category == 1) {
+			int listCount = aService.selectListCount();
+			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+			
+			ArrayList<Notice> list = aService.selectNoticeList(pi);
+			
+			model.addAttribute("pi", pi);
+			model.addAttribute("list", list);
+		}
+		return "administer/noticeAdmini";
 	}
 	@RequestMapping("enrollBeer.ad")
 	public String enrollBeer(Beers b, Member m, MultipartFile upfile, HttpSession session, Model model) {
@@ -46,6 +67,18 @@ public class AdministerController {
 			session.setAttribute("alertMsg", "성공적으로 게시글이 등록되었습니다.");
 			return "redirect:beerAd.ad";
 			
+		}else { // 실패
+			model.addAttribute("errorMsg", "게시글 작성 실패!");
+			return "common/errorPage";
+		}
+	}
+	@RequestMapping("enrollNotice.ad")
+	public String enrollNotice(Notice n, HttpSession session, Model model) {
+		int result = aService.insertNotice(n);
+		
+		if(result > 0) { // 성공
+			session.setAttribute("alertMsg", "성공적으로 게시글이 등록되었습니다.");
+			return "redirect:noticeAd.ad";
 		}else { // 실패
 			model.addAttribute("errorMsg", "게시글 작성 실패!");
 			return "common/errorPage";

@@ -68,6 +68,7 @@
 		insert
 		  into member
 		  (
+		  	 user_no
 		   , user_id
 		   , user_pwd
 		   , user_name
@@ -82,6 +83,7 @@
 		  )
 		  values
 		  (
+		    seq_user_no.nextval
 		  , #{userId}
 		  , #{userPwd}
 		  , #{userName}
@@ -116,7 +118,8 @@
 	<select id="loginMember" resultMap="memberResultSet"
 			parameterType="Member">
 		select
-		       user_id
+			   user_no
+		     , user_id
 		     , user_pwd
 		     , user_name
 		     , gender
@@ -133,7 +136,7 @@
 		     , report
 		 from member
 		where user_id = #{userId}
-		   and status = 0
+		   and (status = 0 or status = 3)
 	</select>
 
  

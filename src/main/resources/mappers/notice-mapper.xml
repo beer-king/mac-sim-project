@@ -4,6 +4,7 @@
 	<resultMap type="Notice" id="noticeResultSet">
 		<result column="notice_no" property="noticeNo"/>
 		<result column="user_no" property="userNo"/>
+		<result column="user_id" property="userId"/>
 		<result column="notice_title" property="noticeTitle"/>
 		<result column="notice_content" property="noticeContent"/>
 		<result column="notice_date" property="noticeDate"/>

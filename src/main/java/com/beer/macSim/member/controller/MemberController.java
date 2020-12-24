@@ -258,7 +258,6 @@ public class MemberController {
     public String loginMember(Member m, HttpSession session, Model model) {
     	
     	Member loginUser = mService.loginMember(m); 
-    	
     	if(loginUser != null && bcryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())) {
 			session.setAttribute("loginUser", loginUser);
 			return "redirect:/";

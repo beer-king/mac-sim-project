@@ -123,6 +123,11 @@
             width: 40%;
             height: 360px;
         }
+        .data{
+            border-collapse: separate;
+            border-spacing: 20px;
+            width: 100%;
+        }
         
     </style>
 </head>
@@ -155,27 +160,27 @@
                     <td><input type="text" id="name" class="form-control" name="beerName" required></td>
                 </tr>
                 <tr>
-                    <th><label for="writer">맥주 영어 이름</label></th>
+                    <th><label for="eTitle">맥주 영어 이름</label></th>
                     <td><input type="text" id="eName" class="form-control" name="beerEname" required></td>
                 </tr>
                 <tr>
-                    <th><label for="writer">맥주 분류</label></th>
+                    <th><label for="style">맥주 분류</label></th>
                     <td><input type="text" id="style" class="form-control" name="beerStyle" required></td>
                 </tr>
                 <tr>
-                    <th><label for="writer">맥주 생산지</label></th>
+                    <th><label for="location">맥주 생산지</label></th>
                     <td><input type="text" id="location" class="form-control" name="beerLocation" required></td>
                 </tr>
                 <tr>
-                    <th><label for="writer">맥주 생산자</label></th>
+                    <th><label for="producer">맥주 생산자</label></th>
                     <td><input type="text" id="producer" class="form-control" name="beerProducer" required></td>
                 </tr>
                 <tr>
-                    <th><label for="writer">도수</label></th>
+                    <th><label for="alcohol">도수</label></th>
                     <td><input type="text" id="alcohol" class="form-control" name="alcohol" required></td>
                 </tr>
                 <tr>
-                    <th><label for="writer">병/캔 분류</label></th>
+                    <th><label for="container">병/캔 분류</label></th>
                     <td><input type="text" id="container" class="form-control" name="beerContainer" required></td>
                 </tr>
             </table>
@@ -216,7 +221,7 @@
 				$("#upfile").click();
 			});
 			$("#name1").click(function(){
-				location.href = "beerAd.ad?category=1";
+				location.href = "beerAd.ad";
 			});
 			$("#name2").click(function(){
 				location.href = "beerAd.ad?category=2";

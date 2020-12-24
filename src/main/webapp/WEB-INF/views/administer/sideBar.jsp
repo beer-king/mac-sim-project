@@ -56,7 +56,9 @@
 </head>
 <body>
 	<div class="inner">
-		<span class="openmenu" onclick='openNav()'>></span>
+		<c:if test="${loginUser.status eq 3}">
+			<span class="openmenu" onclick='openNav()'>></span>
+		</c:if>
 		<div class="header__left">
 			<a class="header__logo" href="/macSim">
 				<img src="resources/images/macsimXy.png" alt="logo"
@@ -91,26 +93,29 @@
 		</c:choose>
 		</div>
 	</div>
-	<div id="mysidenav" class="sidenav">
-		<a href="#" class="closebtn" onclick='closeNav()'><</a>
-		<a href="callAd.ad?category=1">신고관리</a>
-		<br>
-		<a href="beerAd.ad?category=1">맥주관리</a>
-		<br>
-		<a href="#">공구관리</a>
-		<br>
-		<a href="#">이벤트관리</a>
-		<br>
-		<a href="#">공지사항관리</a>
-		<br>
-	</div>
-	<script>
-		function openNav() {
-			document.getElementById('mysidenav').style.display = 'block';
-		}
-		function closeNav() {
-			document.getElementById('mysidenav').style.display = 'none';
-		}
-	</script>
+	<c:if test="${loginUser.status eq 3}">
+		<div id="mysidenav" class="sidenav">
+			<a href="#" class="closebtn" onclick='closeNav()'><</a>
+			<a href="callAd.ad">신고관리</a>
+			<br>
+			<a href="beerAd.ad">맥주관리</a>
+			<br>
+			<a href="#">공구관리</a>
+			<br>
+			<a href="#">이벤트관리</a>
+			<br>
+			<a href="noticeAd.ad">공지사항관리</a>
+			<br>
+		</div>
+		<script>
+			function openNav() {
+				console.log(${loginUser.status})
+				document.getElementById('mysidenav').style.display = 'block';
+			}
+			function closeNav() {
+				document.getElementById('mysidenav').style.display = 'none';
+			}
+		</script>
+	</c:if>
 </body>
 </html>

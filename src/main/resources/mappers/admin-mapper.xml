@@ -54,5 +54,22 @@
   		where
   		 	user_id = #{userId}
   	</update>
+  	<insert id="insertNotice" parameterType="Notice">
+  		insert
+  			into notice
+  			(
+  				  notice_no
+  				, user_no
+  				, notice_title
+  				, notice_content
+  			)
+  			values
+  			(
+  				  seq_notice_no.nextval
+  				, #{userNo}
+  				, #{noticeTitle}
+  				, #{noticeContent}
+  			)
+  	</insert>
   
 </mapper>
