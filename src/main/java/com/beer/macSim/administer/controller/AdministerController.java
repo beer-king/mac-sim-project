@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.beer.macSim.administer.model.service.AdminService;
@@ -82,6 +83,36 @@ public class AdministerController {
 		}else { // 실패
 			model.addAttribute("errorMsg", "게시글 작성 실패!");
 			return "common/errorPage";
+		}
+	}
+	@RequestMapping("goUpdateNotice.ad")
+	public String goUpdateNotice(String noticeNo, Model model) {
+		Notice n = aService.selectNotice(noticeNo);
+		model.addAttribute("n",n);
+		return "administer/noticeUpdataAdmini";
+	}
+	
+	@RequestMapping("updateNotice.ad")
+	public String updateNotice(Notice n, HttpSession session, Model model) {
+		int result = aService.updateNotice(n);
+		
+		if(result > 0) { // 성공
+			session.setAttribute("alertMsg", "성공적으로 게시글이 수정되었습니다.");
+			return "redirect:noticeAd.ad";
+		}else { // 실패
+			model.addAttribute("errorMsg", "게시글 수정 실패!");
+			return "common/errorPage";
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping("noticeDelete.ad")
+	public String deleteNotice(String noticeNo) {
+		int result = aService.deleteNotice(noticeNo);
+		if(result > 0) {
+			return "success";
+		}else {
+			return "fail";
 		}
 	}
 	

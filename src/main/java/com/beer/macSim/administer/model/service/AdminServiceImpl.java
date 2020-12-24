@@ -40,6 +40,21 @@ public class AdminServiceImpl implements AdminService{
 	public int insertNotice(Notice n) {
 		return aDao.insertNotice(sqlSession,n);
 	}
+
+	@Override
+	public int updateNotice(Notice n) {
+		return aDao.updateNotice(sqlSession, n);
+	}
+
+	@Override
+	public int deleteNotice(String noticeNo) {
+		return aDao.deleteNotice(sqlSession, noticeNo);
+	}
+
+	@Override
+	public Notice selectNotice(String noticeNo) {
+		return aDao.selectNotice(sqlSession, noticeNo);
+	}
 	
 	
 }

@@ -34,6 +34,7 @@
 	/>
 	<link rel="stylesheet" href="resources/css/header.css" />
 	<link rel="stylesheet" href="resources/css/mainPage.css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<style>
 		.sidenav {
 			height:100%;

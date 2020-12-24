@@ -22,6 +22,10 @@ public class AdminDao {
 	public int selectListCount(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("noticeMapper.selectListCount");
 	}
+	
+	public Notice selectNotice(SqlSessionTemplate sqlSession, String noticeNo) {
+		return sqlSession.selectOne("noticeMapper.selectNotice", noticeNo);
+	}
 
 	public ArrayList<Notice> selectNoticeList(PageInfo pi, SqlSessionTemplate sqlSession) {
 		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
@@ -31,6 +35,14 @@ public class AdminDao {
 	
 	public int insertNotice(SqlSessionTemplate sqlSession, Notice n) {
 		return sqlSession.insert("adminMapper.insertNotice", n);
+	}
+	
+	public int updateNotice(SqlSessionTemplate sqlSession, Notice n) {
+		return sqlSession.update("adminMapper.updateNotice", n);
+	}
+	
+	public int deleteNotice(SqlSessionTemplate sqlSession, String noticeNo) {
+		return sqlSession.update("adminMapper.deleteNotice", noticeNo);
 	}
 
 }

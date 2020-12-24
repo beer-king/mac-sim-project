@@ -14,4 +14,10 @@ public interface AdminService {
 	ArrayList<Notice> selectNoticeList(PageInfo pi);
 	
 	int insertNotice(Notice n);
+	
+	int updateNotice(Notice n);
+	
+	int deleteNotice(String noticeNo);
+	
+	Notice selectNotice(String noticeNo);
 }

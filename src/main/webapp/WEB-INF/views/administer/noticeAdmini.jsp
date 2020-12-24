@@ -20,8 +20,12 @@
 			rel="stylesheet"
 			href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
 	/>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	<link rel="stylesheet" href="resources/css/header.css" />
 	<link rel="stylesheet" href="resources/css/mainPage.css" />
+ 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+ 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<style>
 		.sidenav {
 			height:100%;
@@ -166,7 +170,8 @@
                         <td style="vertical-align: middle;">${n.userId }</td>
                         <td style="vertical-align: middle;">${n.noticeDate }</td>
                         <td style="vertical-align: middle;">${n.count }</td>
-                        <td style="vertical-align: middle;"><button>수정</button>&nbsp&nbsp<button>삭제</button></td>
+                        <td style="vertical-align: middle;"><button type="button" id="name3" onclick="goUpdatePage('${n.noticeNo}');">수정</button>&nbsp&nbsp
+                        <button type="button" data-toggle="modal" data-target="#myModal" data-num="${n.noticeNo }">삭제</button></td>
                     </tr>
                     </c:forEach>
                 </tbody>
@@ -207,6 +212,7 @@
             </div>
         </form>
     </c:if>
+    
     </div>
     <div class="menu">
         <c:if test="${category eq 1}">
@@ -223,16 +229,63 @@
         </c:if>
     </div>
     <script>
+	    function goUpdatePage(noticeNo)
+	    {
+			location.href="goUpdateNotice.ad?noticeNo="+noticeNo;
+	    }
 		$(function(){
+			var num = "";
+			$(document).ready(function() {
+	    		$('#myModal').on('show.bs.modal', function(event){
+	    			num = $(event.relatedTarget).data('num');
+	    		});
+	    	});
+	    	$("#call").click(function(){
+	     
+	        	call();
+	        	
+	        });
+	    	function call(){
+	    		  $.ajax({
+	    			  url:"noticeDelete.ad",
+	    			  type:"POST",
+	    			  data:{
+	    				  noticeNo:num},
+	    			  success:function(result){
+	    				  alert("삭제되었습니다.");
+	    				  location.reload();
+	    			  },error:function(){
+	    				  alert("실패되었습니다.");
+	    			  }
+	    		  })
+	    	  }
 			$("#name1").click(function(){
 				location.href = "noticeAd.ad";
 			});
 			$("#name2").click(function(){
 				location.href = "noticeAd.ad?category=2";
-				
 			});
+			
+			
 		});
 	</script>
+	<div class="modal fade" id="myModal">
+	    <div class="modal-dialog">
+	      <div class="modal-content">
+	      <br>
+	      	<h3>&nbsp&nbsp해당 공지사항을 삭제하시겠습니까?</h3>
+	        <!-- Modal body -->
+	        <div class="modal-body">
+
+	          <br><br>
+	          <div align="right">
+	          	<button id="call" type="button" class="btn btn-primary" data-dismiss="modal">삭제하기</button>
+	          	<button type="button" class="btn btn-danger" data-dismiss="modal">취소하기</button>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+    </div>
 </div>
 </main>
 

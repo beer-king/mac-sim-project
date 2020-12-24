@@ -20,9 +20,12 @@
 			rel="stylesheet"
 			href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
 	/>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	<link rel="stylesheet" href="resources/css/header.css" />
 	<link rel="stylesheet" href="resources/css/mainPage.css" />
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+ 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+ 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<style>
 		.sidenav {
 			height:100%;
@@ -72,7 +75,7 @@
 			margin-top: 50px;
 			margin-left: 200px;
             width: 60%;
-            height: 700px;
+            height: 500px;
             background: rgb(236, 191, 46);
             float: left;
         }
@@ -94,23 +97,33 @@
             background: rgb(236, 191, 46);
             cursor: pointer;
         }
-        #name1{
-            background: rgb(236, 191, 46);
-        }
-        .dataview {
-            margin: 20px;
-            background: white;
-            text-align: center;
-            
-        }
-        .dataview td{
-            height: 40px;
-            width: 200px;
-            vertical-align: middle;
-        }
         .outer{
-        	height: 800px;
+        	height: 600px;
+            box-sizing: border-box;
+        } 
+        .table{
+            margin-left: 30px;
+            width: 90%;
         }
+        .enrollForm {
+            margin-right: 20px;
+        }
+        .table tbody tr:hover{
+            background: gray;
+            cursor: pointer;
+        }
+    	.table{
+            border: 1px solid black;
+            width: 800px;
+            height: 300px;
+        }
+        .data{
+            border-collapse: separate;
+            border-spacing: 20px;
+            width: 100%;
+           
+        }
+
     </style>
 </head>
 <body>
@@ -125,50 +138,25 @@
 <main>
 <div class="outer">
     <div class="content">
-        <form action="test.do" method="POST">
-            <table class="dataview">
+    	<br><br>
+        <form action="updateNotice.ad" method="POST">
+        	<input type="hidden" name ="userNo" value="${loginUser.userNo}">
+        	<input type="hidden" name ="noticeNo" value="${n.noticeNo}">
+            <table class="data" style="text-align: center;">
                 <tr>
-                    <td rowspan="2" style="width: 40px;"><input type="checkbox" name="number" value="1"></td>
-                    <td>이벤트 글 번호 : </td>
-                    <td>번호값</td>
-                    <td>이벤트 제목 : </td>
-                    <td>제목값</td>
+                    <th>제목</th>
+                    <td><input type="text" name="noticeTitle" style="width: 90%;" value="${n.noticeTitle }"required></td>
                 </tr>
                 <tr>
-                    <td>신고 카테고리 : </td>
-                    <td>신고값</td>
-                </tr>
-            </table>
-            <table class="dataview">
-                <tr>
-                    <td rowspan="2" style="width: 40px;"><input type="checkbox" name="number" value="2"></td>
-                    <td>이벤트 글 번호 : </td>
-                    <td>번호값</td>
-                    <td>이벤트 제목 : </td>
-                    <td>제목값</td>
-                </tr>
-                <tr>
-                    <td>신고 카테고리 : </td>
-                    <td>신고값</td>
+                    <th style="vertical-align: middle;">내용</th>
+                    <td><textarea name="noticeContent" cols="30" rows="10" style="resize: none; width: 90%; height: 300px;" required>${n.noticeContent }</textarea></td>
                 </tr>
             </table>
-            <div align=right>
-            	<button type="submit">일괄처리</button>
+            <div align="right">
+                <button type="submit">수정하기</button>
+                <button type="reset">되돌리기</button>
             </div>
-            
-			
         </form>
-    </div>
-    
-    <div class="menu">
-        <div id="name1">이벤트 신고 관리</div>
-        <br>
-        <div id="name2">맥주 리뷰 신고 관리</div>
-        <br>
-        <div id="name3">포럼 신고 관리</div>
-        <br>
-        <div id="name4">신고된 유저 관리</div>
-        <br>
     </div>
 </div>
 </main>

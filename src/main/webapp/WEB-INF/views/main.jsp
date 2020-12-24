@@ -138,7 +138,6 @@
 	
 		<script>
 			function openNav() {
-				console.log("test");
 				document.getElementById('mysidenav').style.display = 'block';
 			}
 			function closeNav() {

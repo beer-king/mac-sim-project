@@ -71,5 +71,25 @@
   				, #{noticeContent}
   			)
   	</insert>
+  	
+  	<update id="updateNotice" parameterType="Notice">
+  		update
+  			notice
+  		 set
+  		 	  notice_title = #{noticeTitle}
+  		 	, notice_content = #{noticeContent}
+  		 	, notice_date = sysdate
+  		 where
+  		 	notice_no = #{noticeNo}
+  	</update>
+  	
+  	<update id="deleteNotice" parameterType="string">
+  		update
+  			notice
+  		 set
+  			status = 'N'
+  		where
+  			notice_no = #{noticeNo}
+  	</update>
   
 </mapper>
