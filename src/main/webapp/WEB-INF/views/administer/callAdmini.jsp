@@ -126,32 +126,20 @@
 <div class="outer">
     <div class="content">
         <form action="test.do" method="POST">
+        	<c:forEach var="r" items="${ rlist }">	
             <table class="dataview">
                 <tr>
-                    <td rowspan="2" style="width: 40px;"><input type="checkbox" name="number" value="1"></td>
-                    <td>이벤트 글 번호 : </td>
-                    <td>번호값</td>
-                    <td>이벤트 제목 : </td>
-                    <td>제목값</td>
+                    <td rowspan="2" style="width: 40px;"><input type="checkbox" name="number" value="${r.reqNo}"></td>
+                    <td>신고글 번호 : ${r.reqNo}</td>
+                    <td>종류 번호 : ${r.rfromNo}</td>
                 </tr>
                 <tr>
                     <td>신고 카테고리 : </td>
                     <td>신고값</td>
                 </tr>
             </table>
-            <table class="dataview">
-                <tr>
-                    <td rowspan="2" style="width: 40px;"><input type="checkbox" name="number" value="2"></td>
-                    <td>이벤트 글 번호 : </td>
-                    <td>번호값</td>
-                    <td>이벤트 제목 : </td>
-                    <td>제목값</td>
-                </tr>
-                <tr>
-                    <td>신고 카테고리 : </td>
-                    <td>신고값</td>
-                </tr>
-            </table>
+            </c:forEach>
+            
             <div align=right>
             	<button type="submit">일괄처리</button>
             </div>

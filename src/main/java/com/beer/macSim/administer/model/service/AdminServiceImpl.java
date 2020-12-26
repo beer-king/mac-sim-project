@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.beer.macSim.administer.model.dao.AdminDao;
+import com.beer.macSim.administer.model.vo.Report;
+import com.beer.macSim.administer.model.vo.SelectData;
 import com.beer.macSim.common.model.vo.PageInfo;
 import com.beer.macSim.data.model.vo.Beers;
 import com.beer.macSim.member.model.vo.Member;
@@ -54,6 +56,26 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public Notice selectNotice(String noticeNo) {
 		return aDao.selectNotice(sqlSession, noticeNo);
+	}
+
+	@Override
+	public int selectCallListCount(SelectData sd) {
+		return aDao.selectCallListCount(sqlSession, sd);
+	}
+
+	@Override
+	public ArrayList<Report> selectCallList(PageInfo pi, SelectData sd) {
+		return aDao.selectCallList(sqlSession, pi, sd);
+	}
+
+	@Override
+	public int selectUserListCount() {
+		return aDao.selectUserListCount(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Member> selectUserList(PageInfo pi) {
+		return aDao.selectUserList(pi, sqlSession);
 	}
 	
 	

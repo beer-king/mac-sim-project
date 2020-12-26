@@ -6,6 +6,8 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.beer.macSim.administer.model.vo.Report;
+import com.beer.macSim.administer.model.vo.SelectData;
 import com.beer.macSim.common.model.vo.PageInfo;
 import com.beer.macSim.data.model.vo.Beers;
 import com.beer.macSim.member.model.vo.Member;
@@ -44,5 +46,25 @@ public class AdminDao {
 	public int deleteNotice(SqlSessionTemplate sqlSession, String noticeNo) {
 		return sqlSession.update("adminMapper.deleteNotice", noticeNo);
 	}
-
+	
+	public int selectUserListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("adminMapper.selectUserListCount");
+	}
+	
+	public ArrayList<Member> selectUserList(PageInfo pi, SqlSessionTemplate sqlSession) {
+		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("adminMapper.selectUserList", null, rowBounds);
+	}
+	
+	public int selectCallListCount(SqlSessionTemplate sqlSession, SelectData sd) {
+		return sqlSession.selectOne("adminMapper.selectUserListCount", sd);
+	}
+	
+	public ArrayList<Report> selectCallList(SqlSessionTemplate sqlSession, PageInfo pi, SelectData sd){
+		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("selectCallList", sd, rowBounds);
+		
+	}
 }
