@@ -36,24 +36,18 @@ public class AdministerController {
 	@RequestMapping("callAd.ad")
 	public String goCall(@RequestParam(value="currentPage", defaultValue="1")int currentPage, @RequestParam(value="category", defaultValue="1")int category, @RequestParam(value="status", defaultValue="A")String status, Model model) {
 		model.addAttribute("category",category);
-		System.out.println("test2");
-		System.out.println(category);
+		model.addAttribute("status", status);
 		if(category == 4) {
 			int listCount = aService.selectUserListCount();
-			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
-			ArrayList<Member> rlist = aService.selectUserList(pi);
+			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 6);
+			ArrayList<Member> ulist = aService.selectUserList(pi);
 			model.addAttribute("pi", pi);
-			model.addAttribute("rlist", rlist);
-			System.out.println("test3");
+			model.addAttribute("ulist", ulist);
 		}else {
 			SelectData sd = Selectation.getSelectData(category, status);
 			int listCount = aService.selectCallListCount(sd);
-			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 6);
 			ArrayList<Report> rlist = aService.selectCallList(pi, sd);
-			for(Report r : rlist) {
-				System.out.println("test");
-				System.out.println(r);
-			}
 			model.addAttribute("pi", pi);
 			model.addAttribute("rlist", rlist);
 		}
@@ -61,9 +55,47 @@ public class AdministerController {
 	}
 	
 	
+	@ResponseBody
+	@RequestMapping("userBan.ad")
+	public String userBan(String userNo) {
+		int result = aService.userBan(userNo);
+		if(result > 0) {
+			return "success";
+		}else {
+			return "fail";
+		}
+	}
 	
+	@ResponseBody
+	@RequestMapping("reportB.ad")
+	public String reportB(String reqNo) {
+		System.out.println("test");
+		SelectData sd = Selectation.getSelectData(Integer.parseInt(reqNo), "B");
+		int result = aService.reportBC(sd);
+		if(result > 0) {
+			return "success";
+		}else {
+			return "fail";
+		}
+	}
 	
-	
+	@ResponseBody
+	@RequestMapping("reportC.ad")
+	public String reportC(String reqNo) {
+		SelectData sd = Selectation.getSelectData(Integer.parseInt(reqNo), "C");
+		int result = aService.reportBC(sd);
+		
+		//이벤트, 커뮤니티, 포럼, 비어리뷰 완성후 돌아갈 함수
+		//Report r = aService.selectCallOne(Integer.parseInt(reqNo));
+		//int result2 = aService.deleteBoard(Report r);
+		
+		
+		if(result > 0) {
+			return "success";
+		}else {
+			return "fail";
+		}
+	}
 	
 	
 	
@@ -75,6 +107,10 @@ public class AdministerController {
 		model.addAttribute("category",category);
 		return "administer/beerAdmini";
 	}
+	
+	
+	
+	
 	
 	
 	//공지사항 관리

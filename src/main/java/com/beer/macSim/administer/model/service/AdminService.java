@@ -27,4 +27,10 @@ public interface AdminService {
 	int deleteNotice(String noticeNo);
 	
 	Notice selectNotice(String noticeNo);
+	
+	ArrayList<String> selectBeerNameAll();
+	
+	int userBan(String userNo);
+	
+	int reportBC(SelectData sd);
 }

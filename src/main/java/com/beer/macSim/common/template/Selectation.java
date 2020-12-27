@@ -17,6 +17,6 @@ public class Selectation {
 			data.add("4");
 			data.add("5");
 		}
-		return new SelectData(category, status,data);
+		return new SelectData(category, status, data);
 	}
 }

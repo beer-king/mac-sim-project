@@ -126,7 +126,7 @@
   	</select>
   	
   	<select id="selectUserList" resultMap="memberResultSet">
-		select user_id, report, status
+		select user_no, user_id, report, status
 		from member
 		where report > 4 and status = 0
         order by user_no asc
@@ -150,5 +150,23 @@
 			</foreach>
 		order by req_no desc
   	</select>
+  	
+  	<update id="userBan" parameterType="string">
+  		update
+  			member
+  		   set
+  		   	status = 1
+  		 where
+  		 	user_no = #{userNo}
+  	</update>
+  	
+  	<update id="reportBC" parameterType="SD">
+  		update
+  			report
+  		   set
+  		   	req_status = #{status}
+  		 where
+  		 	req_no = #{category}
+  	</update>
   
 </mapper>

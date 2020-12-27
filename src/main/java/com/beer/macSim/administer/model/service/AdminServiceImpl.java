@@ -77,6 +77,21 @@ public class AdminServiceImpl implements AdminService{
 	public ArrayList<Member> selectUserList(PageInfo pi) {
 		return aDao.selectUserList(pi, sqlSession);
 	}
+
+	@Override
+	public ArrayList<String> selectBeerNameAll() {
+		return aDao.selectBeerNameAll(sqlSession);
+	}
+
+	@Override
+	public int userBan(String userNo) {
+		return aDao.userBan(sqlSession, userNo);
+	}
+
+	@Override
+	public int reportBC(SelectData sd) {
+		return aDao.reportBC(sqlSession, sd);
+	}
 	
 	
 }

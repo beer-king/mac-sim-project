@@ -58,13 +58,23 @@ public class AdminDao {
 	}
 	
 	public int selectCallListCount(SqlSessionTemplate sqlSession, SelectData sd) {
-		return sqlSession.selectOne("adminMapper.selectUserListCount", sd);
+		return sqlSession.selectOne("adminMapper.selectCallListCount", sd);
 	}
 	
 	public ArrayList<Report> selectCallList(SqlSessionTemplate sqlSession, PageInfo pi, SelectData sd){
 		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		return (ArrayList)sqlSession.selectList("selectCallList", sd, rowBounds);
+		return (ArrayList)sqlSession.selectList("adminMapper.selectCallList", sd, rowBounds);
 		
+	}
+	
+	public ArrayList<String> selectBeerNameAll(SqlSessionTemplate sqlSession){
+		return (ArrayList)sqlSession.selectList("adminMapper.selectBeerNameAll");
+	}
+	public int userBan(SqlSessionTemplate sqlSession, String userNo) {
+		return sqlSession.update("adminMapper.userBan", userNo);
+	}
+	public int reportBC(SqlSessionTemplate sqlSession, SelectData sd) {
+		return sqlSession.update("adminMapper.reportBC", sd);
 	}
 }
