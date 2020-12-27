@@ -37,13 +37,17 @@ public class MemberDao {
 
 	}
 
-
-	
-	/*
-	public int memberPwdUpdate(SqlSessionTemplate sqlSession, String encPwd) {
-    	return sqlSession.update("memberMapper.memberPwdUpdate",encPwd);
+	public int deleteReivew(SqlSessionTemplate sqlSession, int scoreNo) {
+    	return sqlSession.update("memberMapper.updateBeerReview",scoreNo);
 	}
-	*/
+
+	public int memberPwdUpdate(SqlSessionTemplate sqlSession, Member m) {
+    	return sqlSession.update("memberMapper.memberPwdUpdate",m);
+
+
+	}
+	
+
 /*
 	public ArrayList<> selectBeerReviewList(SqlSessionTemplate sqlSession){
     	return (ArrayList)sqlSession.selectList("memberMapper.selectBeerReviewList");
@@ -52,14 +56,7 @@ public class MemberDao {
 	
 
 
-	public int deleteReview(SqlSessionTemplate sqlSession, int scoreNo) {
-    	return sqlSession.update("memberMapper.updateBeerReview",scoreNo);
-
-	}
-
 }
-
-
 
 
 

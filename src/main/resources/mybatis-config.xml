@@ -14,6 +14,9 @@
 		<typeAlias type="com.beer.macSim.event.model.vo.Event" alias="Event"/>
 		<typeAlias type="com.beer.macSim.groupBuy.model.vo.GroupBuy" alias="GroupBuy"/>
 		<typeAlias type="com.beer.macSim.notice.model.vo.Notice" alias="Notice"/>
+		<typeAlias type="com.beer.macSim.data.model.vo.Beers" alias="Beers"/>
+		<typeAlias type="com.beer.macSim.administer.model.vo.Report" alias="Report"/>
+		<typeAlias type="com.beer.macSim.administer.model.vo.SelectData" alias="SD"/>
 	</typeAliases>
 	
 	<!-- 원래는 DB접속과 관련된 내용들을 작성했었음!! => 다른곳(root-context)에서 할 예정 -->
@@ -24,6 +27,7 @@
 		<mapper resource="/mappers/event-mapper.xml"/>
 		<mapper resource="/mappers/groupBuy-mapper.xml"/>
 		<mapper resource="/mappers/notice-mapper.xml"/>
+		<mapper resource="/mappers/admin-mapper.xml"/>
 	</mappers>
 
 

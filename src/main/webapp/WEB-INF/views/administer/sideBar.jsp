@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
 	<style>
 		.sidenav {
 			height:100%;
@@ -54,16 +55,12 @@
     </style>
 </head>
 <body>
-<c:if test="${!empty alertMsg }">
-	<script>
-		alertify.alert("${alertMsg}");
-	</script>
-	<c:remove var="alertMsg" scope="session"/>
-	</c:if>
 	<div class="inner">
-		<span class="openmenu" onclick='openNav()'>></span>
+		<c:if test="${loginUser.status eq 3}">
+			<span class="openmenu" onclick='openNav()'>></span>
+		</c:if>
 		<div class="header__left">
-			<a class="header__logo" href="#">
+			<a class="header__logo" href="/macSim">
 				<img src="resources/images/macsimXy.png" alt="logo"
 				/></a>
 			<span class="div-line"></span>
@@ -96,26 +93,29 @@
 		</c:choose>
 		</div>
 	</div>
-	<div id="mysidenav" class="sidenav">
-		<a href="#" class="closebtn" onclick='closeNav()'><</a>
-		<a href="#">신고관리</a>
-		<br>
-		<a href="#">신고관리</a>
-		<br>
-		<a href="#">신고관리</a>
-		<br>
-		<a href="#">신고관리</a>
-		<br>
-		<a href="#">신고관리</a>
-		<br>
-	</div>
-	<script>
-		function openNav() {
-			document.getElementById('mysidenav').style.display = 'block';
-		}
-		function closeNav() {
-			document.getElementById('mysidenav').style.display = 'none';
-		}
-	</script>
+	<c:if test="${loginUser.status eq 3}">
+		<div id="mysidenav" class="sidenav">
+			<a href="#" class="closebtn" onclick='closeNav()'><</a>
+			<a href="callAd.ad">신고관리</a>
+			<br>
+			<a href="beerAd.ad">맥주관리</a>
+			<br>
+			<a href="#">공구관리</a>
+			<br>
+			<a href="#">이벤트관리</a>
+			<br>
+			<a href="noticeAd.ad">공지사항관리</a>
+			<br>
+		</div>
+		<script>
+			function openNav() {
+				console.log(${loginUser.status})
+				document.getElementById('mysidenav').style.display = 'block';
+			}
+			function closeNav() {
+				document.getElementById('mysidenav').style.display = 'none';
+			}
+		</script>
+	</c:if>
 </body>
 </html>

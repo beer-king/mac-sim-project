@@ -4,6 +4,7 @@
 	<resultMap type="Notice" id="noticeResultSet">
 		<result column="notice_no" property="noticeNo"/>
 		<result column="user_no" property="userNo"/>
+		<result column="user_id" property="userId"/>
 		<result column="notice_title" property="noticeTitle"/>
 		<result column="notice_content" property="noticeContent"/>
 		<result column="notice_date" property="noticeDate"/>
@@ -14,6 +15,7 @@
 		select
 		       count(*)
 		  from notice
+		 where status = 'Y'
 	</select>
 	
 	<select id="selectNoticeList" resultMap="noticeResultSet">
@@ -25,8 +27,24 @@
 		     , count
 		  from notice
 		  join member using(user_no)
+          where
+            notice.status = 'Y'
 		 order
 		    by notice_no desc			
+	</select>
+	
+	<select id="selectNotice" resultMap="noticeResultSet" parameterType="string">
+		select
+		       notice_no
+		     , user_id
+		     , notice_title
+             , notice_content
+		     , notice_date
+		     , count
+		  from notice
+		  join member using(user_no)
+          where
+            notice.status = 'Y' and notice_no = #{noticeNo}
 	</select>
 	
 </mapper>

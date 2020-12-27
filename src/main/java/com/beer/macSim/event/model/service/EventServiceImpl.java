@@ -2,37 +2,42 @@ package com.beer.macSim.event.model.service;
 
 import java.util.ArrayList;
 
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.beer.macSim.common.model.vo.PageInfo;
+import com.beer.macSim.event.model.dao.EventDao;
 import com.beer.macSim.event.model.vo.EvReply;
 import com.beer.macSim.event.model.vo.Event;
 
 @Service
 public class EventServiceImpl implements EventService {
-
+	
+	@Autowired
+	private SqlSessionTemplate sqlSession;
+	@Autowired
+	private EventDao evDao;
+	
 	@Override
 	public int selectEventCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return evDao.selectEventCount(sqlSession);
+		
 	}
 
 	@Override
 	public ArrayList<Event> selectEventList(PageInfo pi) {
-		// TODO Auto-generated method stub
-		return null;
+		return evDao.selectEventList(sqlSession, pi);
 	}
 
 	@Override
 	public int increaseCount(int eno) {
-		// TODO Auto-generated method stub
-		return 0;
+		return evDao.increaseCount(sqlSession, eno);
 	}
 
 	@Override
 	public Event selectEvent(int eno) {
-		// TODO Auto-generated method stub
-		return null;
+		return evDao.selectEvent(sqlSession, eno);
 	}
 
 	@Override

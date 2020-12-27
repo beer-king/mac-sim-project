@@ -74,16 +74,18 @@
 <!-- header -->
 <header>
 
-	<c:if test="${!empty alertMsg }">
-	<script>
-		alertify.alert("${alertMsg}");
-	</script>
-	<c:remove var="alertMsg" scope="session"/>
+	<c:if test="${!empty alertMsg}">
+		<script>
+			alert("${alertMsg}");
+		</script>
+		<c:remove var="alertMsg" scope="session"/>
 	</c:if>
 
 
 	<div class="inner">
-		<span class="openmenu" onclick='openNav()'>></span>
+		<c:if test="${loginUser.status eq 3}">
+			<span class="openmenu" onclick='openNav()'>></span>
+		</c:if>
 		<div class="header__left">
 			<a class="header__logo" href="#">
 				<img src="resources/images/macsimXy.png" alt="logo"
@@ -126,28 +128,30 @@
 		-->	
 		</div>
 	</div>
+	<c:if test="${loginUser.status eq 3}">
+		<div id="mysidenav" class="sidenav">
+			<a href="#" class="closebtn" onclick='closeNav()'><</a>
+			<a href="callAd.ad">신고관리</a>
+			<br>
+			<a href="beerAd.ad">맥주관리</a>
+			<br>
+			<a href="#">공구관리</a>
+			<br>
+			<a href="#">이벤트관리</a>
+			<br>
+			<a href="noticeAd.ad">공지사항관리</a>
+			<br>
+		</div>
 	
-    <div id="mysidenav" class="sidenav">
-		<a href="#" class="closebtn" onclick='closeNav()'><</a>
-		<a href="callAd.ad">신고관리</a>
-		<br>
-		<a href="#">신고관리</a>
-		<br>
-		<a href="#">신고관리</a>
-		<br>
-		<a href="#">신고관리</a>
-		<br>
-		<a href="#">신고관리</a>
-		<br>
-	</div>
-	<script>
-		function openNav() {
-			document.getElementById('mysidenav').style.display = 'block';
-		}
-		function closeNav() {
-			document.getElementById('mysidenav').style.display = 'none';
-		}
-	</script>
+		<script>
+			function openNav() {
+				document.getElementById('mysidenav').style.display = 'block';
+			}
+			function closeNav() {
+				document.getElementById('mysidenav').style.display = 'none';
+			}
+		</script>
+	</c:if>
 </header>
 
 <!-- main -->

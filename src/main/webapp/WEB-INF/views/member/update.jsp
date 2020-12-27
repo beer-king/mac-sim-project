@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+
 <html>
 <head>
     <title>정보수정</title>
@@ -55,10 +57,19 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
+
+
+
 <jsp:include page="../common/header.jsp"/>
 <br>
 <hr style="height:2px;border-width:0;color:white;background-color:white">
 
+<c:if test="${!empty alertMsg}">
+    <script>
+        alert("${alertMsg}");
+    </script>
+    <c:remove var="alertMsg" scope="session"/>
+</c:if>
 
 <div id="header">
     <ul id="mypageMenu">
@@ -141,7 +152,7 @@
 <form action="memberPwdUpdate.me" method="get">
     <div id="changePwd">
         <ul>
-            <li> <span>아이디 : ${loginUser.userId}</span> </li>
+            <li> <span>아이디 : ${loginUser.userId}<input type="hidden" name="userId" value="${loginUser.userId}"></span> </li>
             <li> <span>현재비밀번호 :</span> <input type="password" name="userPwd"> </li>
             <li> <span>신규비밀번호 : </span> <input type="password" id="newPwd" name="newPwd"> </li>
             <li> <span>신규비밀번호 확인 : </span> <input type="password" id="checkPwd"> </li>
@@ -215,7 +226,7 @@
 	                   
 	                    <div class="modal-footer">
 	                        <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
-	                        <button type="submit" class="btn btn-danger" data-dismiss="modal">탈퇴</button>
+	                        <button type="submit" class="btn btn-danger" >탈퇴</button>
 	                    </div>
 					</form>	
                 

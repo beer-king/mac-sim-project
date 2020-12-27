@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -57,34 +58,39 @@
             <button type="submit">검색</button>
         </form>
 
-        <br><br>
+        <br>
+        <c:forEach var="e" items="${ list }">
+        <br>
         <div class="evList">
+        	<input class="eno" type="text" hidden value="${ e.evNo }">
             <div class="photo">
-                <img src="resources/images/beer online tasting1.jpg" alt="" width="200px">
+                <img src="${ e.evThumb }" alt="" width="200px">
             </div>
 
             <div class="content">
                 <table id="eventList" style="height: 100%;" align="center">
                     <thead>
-                        <th>3차 온라인 시음회</th>
-                        <th>No.12</th>
+                        <th>${ e.evTitle }</th>
+                        <th>No.${ e.evNo }</th>
                         <th>D-Day = 8</th>
-                        <th>2020-12-07 PM 8</th>
+                        <th>${ e.evStartTime }</th>
                     </thead>
                     <tbody>
-                        <td colspan="4">안녕하세요 3차 온라인 시음회를 2주뒤에 개최합니다!!</td>
+                        <td colspan="4">${ e.evContent }</td>
                     </tbody>
                     <tfoot>
-                        <td>조회수 : 145</td>
+                        <td>조회수 : ${ e.clickNo }</td>
                         <td>댓글수 : 12</td>
-                        <td>작성자 : admin</td>
-                        <td>2020-11-09</td>
+                        <td>작성자 : ${ e.userNo }</td>
+                        <td>${e.evDate }</td>
                     </tfoot>
                 </table>
             </div>
 
         </div>
-
+        </c:forEach>
+		
+		<!-- 
         <br>
         <div class="evList">
             <div class="photo">
@@ -110,25 +116,41 @@
                     </tfoot>
                 </table>
             </div>
-
+			-->
+			
             <script>
             	$(function(){
             		$(".evList").click(function(){
-            			location.href = "detail.ev"
-            		})
-            	})
+            			location.href = "detail.ev?eno=" + $(this).children(".eno").val();
+            		});
+            	});
             </script>
 
         </div>
             <div id="pagingArea">
                 <ul class="pagination">
-                    <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">4</a></li>
-                    <li class="page-item"><a class="page-link" href="#">5</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                	
+                	<c:choose>
+                		<c:when test="${ pi.currentPage eq 1 }">
+                   			<li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                    	</c:when>
+                    	<c:otherwise>
+                    		<li class="page-item"><a class="page-link" href="list.ev?currentPage=${ pi.currentPage -1 }">Previous</a></li> 
+                    	</c:otherwise>
+                    </c:choose>
+                    
+                    <c:forEach var="p" begin="${pi.startPage }" end="${ pi.endPage }">
+                    	<li class="page-item"><a class="page-link" href="list.ev?currentPage=${ p }">${ p }</a></li>
+                    </c:forEach>
+                    
+                    <c:choose>
+                    	<c:when test="${ pi.currentPage eq pi.maxPage }">
+                    		<li class="page-item"><a class="page-link" href="#">Next</a></li>
+                    	</c:when>
+                    	<c:otherwise>
+                    		<li class="page-item"><a class="page-link" href="${ pi.currentPage +1 }">Next</a></li>
+                    	</c:otherwise>
+                    </c:choose>
                 </ul>
             </div>
         </div>

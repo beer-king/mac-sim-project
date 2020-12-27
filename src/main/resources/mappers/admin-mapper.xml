@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="adminMapper">
+	<resultMap id="beerResultSet" type="Beers">
+		<result column="beer_no" property="beerNo"/>
+		<result column="beer_name" property="beerName"/>
+		<result column="beer_ename" property="beerEname"/>
+		<result column="beer_style" property="beerStyle"/>
+		<result column="beer_producer" property="beerProducer"/>
+		<result column="beer_location" property="beerLocation"/>
+		<result column="beer_alcohol" property="alcohol"/>
+		<result column="beer_container" property="beerContainer"/>
+		<result column="updateed_date" property="updatedDate"/>
+		<result column="status" property="status"/>
+		<result column="reply_count" property="replyCount"/>
+		<result column="score_total" property="scoreTotal"/>
+		<result column="origin_name" property="originName"/>
+		<result column="change_name" property="changeName"/>
+	</resultMap>
+    <resultMap id="memberResultSet" type="Member">
+        <result column="user_no" property="userNo"/>
+        <result column="user_id" property="userId"/>
+        <result column="user_pwd" property="userPwd"/>
+        <result column="user_name" property="userName"/>
+        <result column="gender" property="gender"/>
+        <result column="email" property="email"/>
+        <result column="address" property="address"/>
+        <result column="extra_address" property="extraAddress"/>
+        <result column="detail_address" property="detailAddress"/>
+        <result column="post_code" property="postCode"/>
+        <result column="birth" property="birth"/>
+        <result column="phone" property="phone"/>
+        <result column="point" property="point"/>
+        <result column="status" property="status"/>
+        <result column="login_time" property="loginTime"/>
+        <result column="report" property="report"/>
+    </resultMap>
+    <resultMap type="Report" id="reportResultSet">
+    	<result column="req_no" property="reqNo"/>
+    	<result column="rfrom_no" property="rfromNo"/>
+    	<result column="req_content" property="reqContent"/>
+    	<result column="req_status" property="reqStatus"/>
+    	<result column="req_num" property="reqNum"/>
+    	<result column="req_cate_no" property="reqCateNo"/>
+    	<result column="req_cate_title" property="reqCateTitle"/>
+    </resultMap>
+  	<insert id="insertBeer" parameterType="Beers">
+  		insert
+  			into beer
+  			(
+  				  beer_no
+  				, beer_name
+  				, beer_ename
+  				, beer_style
+  				, beer_producer
+  				, beer_location
+  				, beer_alcohol
+  				, beer_container
+  				, origin_name
+  				, change_name
+  			)
+  			values
+  			(
+  				  seq_beer_no.nextval
+  				, #{beerName}
+  				, #{beerEname}
+  				, #{beerStyle}
+  				, #{beerProducer}
+  				, #{beerLocation}
+  				, #{alcohol}
+  				, #{beerContainer}
+  				, #{originName}
+  				, #{changeName}
+  			)
+  	</insert>
+  	<update id="updatePoint" parameterType="Member">
+  		update
+  			member
+  		 set
+  		 	point = point + #{point}
+  		where
+  		 	user_id = #{userId}
+  	</update>
+  	<insert id="insertNotice" parameterType="Notice">
+  		insert
+  			into notice
+  			(
+  				  notice_no
+  				, user_no
+  				, notice_title
+  				, notice_content
+  			)
+  			values
+  			(
+  				  seq_notice_no.nextval
+  				, #{userNo}
+  				, #{noticeTitle}
+  				, #{noticeContent}
+  			)
+  	</insert>
+  	
+  	<update id="updateNotice" parameterType="Notice">
+  		update
+  			notice
+  		 set
+  		 	  notice_title = #{noticeTitle}
+  		 	, notice_content = #{noticeContent}
+  		 	, notice_date = sysdate
+  		 where
+  		 	notice_no = #{noticeNo}
+  	</update>
+  	
+  	<update id="deleteNotice" parameterType="string">
+  		update
+  			notice
+  		 set
+  			status = 'N'
+  		where
+  			notice_no = #{noticeNo}
+  	</update>
+  	
+  	<select id="selectUserListCount" resultType="_int">
+		select count(*)
+		from member
+		where report > 4 and status = 0
+  	</select>
+  	
+  	<select id="selectUserList" resultMap="memberResultSet">
+		select user_no, user_id, report, status
+		from member
+		where report > 4 and status = 0
+        order by user_no asc
+  	</select>
+  	
+  	<select id="selectCallListCount" resultType="_int" parameterType="SD">
+		select count(*)
+		from report
+		where req_status = #{status} and
+			<foreach item="item" index="index" collection="data" open="(" separator="or" close=")">
+			rfrom_no = #{item}
+			</foreach>
+  	</select>
+  	
+  	<select id="selectCallList" resultMap="reportResultSet" parameterType="SD">
+		select req_no, rfrom_no, req_content, req_status, req_num, req_cate_no, req_cate_title
+		from report
+		where req_status = #{status} and
+			<foreach item="item" index="index" collection="data" open="(" separator="or" close=")">
+			rfrom_no = #{item}
+			</foreach>
+		order by req_no desc
+  	</select>
+  	
+  	<update id="userBan" parameterType="string">
+  		update
+  			member
+  		   set
+  		   	status = 1
+  		 where
+  		 	user_no = #{userNo}
+  	</update>
+  	
+  	<update id="reportBC" parameterType="SD">
+  		update
+  			report
+  		   set
+  		   	req_status = #{status}
+  		 where
+  		 	req_no = #{category}
+  	</update>
+  
+</mapper>
