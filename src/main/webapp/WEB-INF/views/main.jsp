@@ -103,7 +103,7 @@
 				<i><span class="material-icons"> search </span></i>
 			</div>
 		<c:choose>
-			<c:when test="${empty loginUser}">
+			<c:when test="${empty loginUser && userId eq null}">
 				<ul class="header__nav">
 					<li><a href="agreeForm.me">회원가입</a></li>
 					<li><a href="loginForm.me">로그인</a></li>
@@ -111,12 +111,19 @@
 			</c:when>
 			<c:otherwise>
 				<ul class="header__nav">
-					<label style="color:white;">${loginUser.userName}님 환영합니다</label>
+					<label style="color:white;">${loginUser.userName }님 환영합니다</label>
 					<li><a href="mypage.me">마이페이지</a></li>
 					<li><a href="logout.me">로그아웃</a></li>
+					<!-- <li><a href="kakaologout.do">카카오로그아웃</a></li>-->
 				</ul>
 			</c:otherwise>
 		</c:choose>
+		<!--  
+		<c:if test="${userId ne null }">
+			<label>로그인 성공입니다.</label>
+			<input type="button" value="로그아웃" onclick="location.href='kakaologout.do'">
+		</c:if>	
+		-->	
 		</div>
 	</div>
 	

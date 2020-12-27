@@ -137,7 +137,8 @@
                         <tr>
                             <td colspan="2">
                                 <br>
-                                <a href="https://kauth.kakao.com/oauth/authorize?client_id=3e97e22d6dadb5186b6825cc9c41ac40&redirect_uri=https://localhost:8888/login&response_type=code">
+                                <a href="https://kauth.kakao.com/oauth/authorize?client_id=567b1938fc17d7aead56fc41ab004ac5
+&redirect_uri=http://localhost:8888/macSim/kakaologin.do&response_type=code">
                                 <img src="resources/images/kakao.PNG" alt="">
                                 </a>
                             </td>

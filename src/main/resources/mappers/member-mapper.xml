@@ -134,7 +134,7 @@
 		where user_id = #{userId}
 	</select>
 
- 
+ 	 
 	<select id="selectBeerReviewList" resultMap="beerReviewResultSet">
 
 		select
