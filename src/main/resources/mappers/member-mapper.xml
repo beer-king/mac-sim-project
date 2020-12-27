@@ -140,10 +140,10 @@
 	</select>
 
 
- 	 
+ 	<!--   
 	<select id="selectBeerReviewList" resultMap="beerReviewResultSet">
 	</select>
-
+	-->
 	
 	<!-- 
 	<update id="updateBeerReview" parameterType="_int">

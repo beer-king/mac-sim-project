@@ -10,7 +10,7 @@
 		<result column="beer_location" property="beerLocation"/>
 		<result column="beer_alcohol" property="alcohol"/>
 		<result column="beer_container" property="beerContainer"/>
-		<result column="updateed_date" property="updatedDate"/>
+		<result column="updated_date" property="updatedDate"/>
 		<result column="status" property="status"/>
 		<result column="reply_count" property="replyCount"/>
 		<result column="score_total" property="scoreTotal"/>
@@ -168,5 +168,18 @@
   		 where
   		 	req_no = #{category}
   	</update>
+  	
+  	<select id="selectBeerListCount" resultType="_int">
+  		select count(*)
+  		from beer
+  		where status = 'Y'
+  	</select>
+  	
+  	<select id="selectBeerList" resultMap="beerResultSet">
+		select beer_no, beer_name, beer_ename, beer_style, beer_producer, beer_location, beer_alcohol, beer_container, updated_date, status, reply_count, score_total, origin_name, change_name
+		from beer
+		where status = 'Y'
+		order by beer_no asc
+  	</select>
   
 </mapper>

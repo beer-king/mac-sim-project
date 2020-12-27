@@ -103,8 +103,15 @@ public class AdministerController {
 	
 	//비어관리
 	@RequestMapping("beerAd.ad")
-	public String goBeer(@RequestParam(value="category", defaultValue="1")int category, Model model) {
+	public String goBeer(@RequestParam(value="currentPage", defaultValue="1")int currentPage, @RequestParam(value="category", defaultValue="1")int category, Model model) {
 		model.addAttribute("category",category);
+		if(category == 2) {
+			int listCount = aService.selectBeerListCount();
+			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+			ArrayList<Beers> blist= aService.selectBeerList(pi);
+			model.addAttribute("pi", pi);
+			model.addAttribute("blist", blist);
+		}
 		return "administer/beerAdmini";
 	}
 	

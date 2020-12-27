@@ -110,11 +110,7 @@
         	height: 600px;
             box-sizing: border-box;
         }
-        .dataview{
-            background: white;
-            width: 90%;
-            height: px;
-        }
+        
         #enrollForm img{
             float: left;
             margin: 20px;
@@ -129,7 +125,17 @@
             border-spacing: 20px;
             width: 100%;
         }
-        
+        .dataview {
+            margin: 20px;
+            background: white;
+            text-align: center;
+            
+        }
+        .dataview td{
+            height: 40px;
+            width: 200px;
+            vertical-align: middle;
+        }
     </style>
 </head>
 <body>
@@ -148,6 +154,7 @@
 	</script>
 	<c:remove var="alertMsg" scope="session"/>
 </c:if>
+
 <div class="outer">
     <div class="content">
     	<c:if test="${category eq 1}">
@@ -199,6 +206,40 @@
             </div>
         </form>
         </c:if>
+        <c:if test="${category eq 2}">
+        		<br>
+		        <form class="enrollForm" action="" method="" align="right">
+		            <select name="" id="">
+		                <option value="title">맥주 이름</option>
+		                <option value="content">맥주 번호</option>
+		            </select>
+		            <input type="text" id="searchbox" placeholder="검색어를 입력하세요" name="search">
+		            <button type="submit" id="sbtn" style="margin-right: 20px;">검색</button>
+		        </form>
+		        <br>
+		        <c:forEach var="b" items="${ blist }">	
+	        		<table class="dataview" style="width: 90%;">
+			            	<tr>
+			            		<td rowspan="2" style="width: 20px;"><img src="${b.changeName }" width="100" height="100"></td>
+			            	</tr>
+			                <tr class="clickDataView">
+			                    <td>맥주 번호 : ${b.beerNo }</td>
+			                    <td>맥주 이름 : ${b.beerName }</td>
+			                </tr>
+			        </table>
+		        </c:forEach>
+		     	<div class="paging-area" align="center">     
+		        	<c:if test="${ pi.currentPage ne 1}">
+		        		<a href="beerAd.ad?category=2&currentPage=${ pi.currentPage-1 }">이전</a>
+		        	</c:if>	
+		        	<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+		        		<a href="beerAd.ad?category=2&currentPage=${ p }">${ p }</a>
+		            </c:forEach>
+		            <c:if test="${pi.maxPage > 0 and pi.maxPage ne pi.currentPage}">
+		            	<a href="beerAd.ad?category=2&currentPage=${ pi.currentPage+1 }">다음</a>
+		            </c:if>
+        		</div>
+        </c:if>
         
         
     </div>
@@ -219,6 +260,12 @@
     </div>
     <script>
 		$(function(){
+			$(document).ready(function() {
+	    		if (${category} == 2) {
+					$(".content").height('800');
+					$(".outer").height('1000');
+				}
+	    	});
 			$("#upfile").hide();
 			$("#titleImg").click(function(){
 				$("#upfile").click();

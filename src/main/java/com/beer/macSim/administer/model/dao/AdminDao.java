@@ -77,4 +77,14 @@ public class AdminDao {
 	public int reportBC(SqlSessionTemplate sqlSession, SelectData sd) {
 		return sqlSession.update("adminMapper.reportBC", sd);
 	}
+	
+	public int selectBeerListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("adminMapper.selectBeerListCount");
+	}
+	
+	public ArrayList<Beers> selectBeerList(SqlSessionTemplate sqlSession, PageInfo pi){
+		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("adminMapper.selectBeerList", null, rowBounds);
+	}
 }
