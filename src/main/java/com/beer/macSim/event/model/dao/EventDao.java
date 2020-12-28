@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.beer.macSim.common.model.vo.PageInfo;
+import com.beer.macSim.event.model.vo.Attachment;
 import com.beer.macSim.event.model.vo.Event;
 
 @Repository
@@ -33,5 +34,13 @@ public class EventDao {
 	
 	public Event selectEvent(SqlSessionTemplate sqlSession, int eno) {
 		return sqlSession.selectOne("eventMapper.selectEvent", eno);
+	}
+	
+	public int insertEvent(SqlSessionTemplate sqlSession, Event e) {
+		return sqlSession.insert("eventMapper.insertEvent",e);
+	}
+	
+	public int insertAttachment(SqlSessionTemplate sqlSession, Attachment a) {
+		return sqlSession.insert("eventMapper.insertAttachment", a);
 	}
 }
