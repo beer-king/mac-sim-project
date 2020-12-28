@@ -92,6 +92,16 @@ public class AdminServiceImpl implements AdminService{
 	public int reportBC(SelectData sd) {
 		return aDao.reportBC(sqlSession, sd);
 	}
+
+	@Override
+	public int selectBeerListCount() {
+		return aDao.selectBeerListCount(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Beers> selectBeerList(PageInfo pi) {
+		return aDao.selectBeerList(sqlSession, pi);
+	}
 	
 	
 }

@@ -145,11 +145,11 @@
 		            	<tr>
 		            		<td rowspan="3" style="width: 20px;"><input type="checkbox" name="number" value="${r.reqNo}"></td>
 		            	</tr>
-		                <tr class="clickDataView" onclick="trclick2(${r.reqNo})">
+		                <tr class="clickDataView" onclick="trclick2(${r.reqNo}, `${r.reqContent }`, '${r.reqCateTitle }')">
 		                    <td>신고글 번호 : ${r.reqNo}</td>
 		                    <td>종류 번호 : 이벤트댓글</td>
 		                </tr>
-		                <tr class="clickDataView" onclick="trclick2(${r.reqNo})">
+		                <tr class="clickDataView" onclick="trclick2(${r.reqNo}, `${r.reqContent }`, '${r.reqCateTitle }')">
 		                	<td>신고 카테고리 : ${r.reqCateTitle }</td>
 		                	<td>&nbsp</td>
 		                </tr>
@@ -166,7 +166,7 @@
 		            	<tr>
 		            		<td rowspan="3" style="width: 20px;"><input type="checkbox" name="number" value="${r.reqNo}"></td>
 		            	</tr>
-		                <tr class="clickDataView" onclick="trclick2(${r.reqNo})">
+		                <tr class="clickDataView" onclick="trclick2(${r.reqNo}, `${r.reqContent }`, '${r.reqCateTitle }')">
 		                    <td>신고글 번호 : ${r.reqNo}</td>
 		                    <c:if test="${r.rfromNo eq 1}">
 		                    	<td>종류 번호 :맥주리뷰</td>
@@ -175,7 +175,7 @@
 		                    	<td>종류 번호 : 맥주리뷰댓글</td>
 		                    </c:if>
 		                </tr>
-		                <tr class="clickDataView" onclick="trclick2(${r.reqNo})">
+		                <tr class="clickDataView" onclick="trclick2(${r.reqNo}, `${r.reqContent }`, '${r.reqCateTitle }')">
 		                	<td>신고 카테고리 : ${r.reqCateTitle }</td>
 		                	<td>&nbsp</td>
 		                </tr>
@@ -192,7 +192,7 @@
 		            	<tr>
 		            		<td rowspan="3" style="width: 20px;"><input type="checkbox" name="number" value="${r.reqNo}"></td>
 		            	</tr>
-		                <tr class="clickDataView" onclick="trclick2(${r.reqNo})">
+		                <tr class="clickDataView" onclick="trclick2(${r.reqNo}, `${r.reqContent }`, '${r.reqCateTitle }')">
 		                    <td>신고글 번호 : ${r.reqNo}</td>
 		                    <c:if test="${r.rfromNo eq 3}">
 		                    	<td>종류 번호 : 커뮤니티</td>
@@ -204,7 +204,7 @@
 		                    	<td>종류 번호 : 포럼 대댓글</td>
 		                    </c:if>
 		                </tr>
-		                <tr class="clickDataView" onclick="trclick2(${r.reqNo})">
+		                <tr class="clickDataView" onclick="trclick2(${r.reqNo}, `${r.reqContent }`, '${r.reqCateTitle }')">
 		                	<td>신고 카테고리 : ${r.reqCateTitle }</td>
 		                	<td>&nbsp</td>
 		                </tr>
@@ -302,12 +302,19 @@
     </div>
     <script>
     	var num = "";
+    	var content = "";
+    	var cate = "";
 	    function trclick(userNo){
 			num = userNo;
 			$("#myModal").modal("show");
 		};
-		function trclick2(reportNo){
+		function trclick2(reportNo, rcontent, rcate){
 			num = reportNo;
+			content = rcontent;
+			cate = rcate;
+			console.log(cate);
+			$("#mcate").html(cate);
+			$("#mcontent").html(content);
 			$("#myModal").modal("show");
 		};
 		$(function(){
@@ -400,9 +407,11 @@
 		      <div class="modal-content">
 		      <br>
 		      	<h3>&nbsp 신고 카테고리</h3>
+		      	<h5 id="mcate" style="margin-left: 40px;"></h5>
 		        <!-- Modal body -->
 		        <div class="modal-body">
 		          <h3>&nbsp 신고 이유</h3>
+		          <h5 id="mcontent" style="margin-left: 40px;"></h5>
 		          <br><br>
 		          <div align="center">
 		          	<button type="button" class="btn btn-primary" data-dismiss="modal" style="width: 150px;">해당 글 이동</button>

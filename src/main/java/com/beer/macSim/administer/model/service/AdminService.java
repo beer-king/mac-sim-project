@@ -33,4 +33,7 @@ public interface AdminService {
 	int userBan(String userNo);
 	
 	int reportBC(SelectData sd);
+	
+	int selectBeerListCount();
+	ArrayList<Beers> selectBeerList(PageInfo pi);
 }
