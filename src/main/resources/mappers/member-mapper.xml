@@ -139,24 +139,7 @@
 		   and (status = 0 or status = 3)
 	</select>
 
-
- 	 
-	<select id="selectBeerReviewList" resultMap="beerReviewResultSet">
-	</select>
-
 	
-	<!-- 
-	<update id="updateBeerReview" parameterType="_int">
-
-		update
-              score
-         set status = 'N'
-       where score_no = #{scoreNo}
-
-
-	</update>
-	 -->
-
 
 	<!--  
 		<select id="selectBeerReviewList" resultMap="beerReviewResultSet">
