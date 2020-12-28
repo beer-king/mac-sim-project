@@ -1,5 +1,6 @@
 package com.beer.macSim.member.model.service;
 
+import com.beer.macSim.event.model.vo.Event;
 import com.beer.macSim.member.model.dao.MemberDao;
 import com.beer.macSim.member.model.vo.Member;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -69,6 +70,33 @@ public class MemberServiceImpl implements MemberService {
     public int memberPwdUpdate(Member m) {
         return mDao.memberPwdUpdate(sqlSession,m);
     }
+
+	
+    @Override
+	public ArrayList<Event> selectEventList(Member m) {
+		return mDao.selectEventList(sqlSession,m);
+	}
+
+	@Override
+	public int reviewCount(Member m) {
+		
+		return mDao.reviewCount(sqlSession,m);
+	}
+
+	@Override
+	public int eventCount(Member m) {
+		return mDao.eventCount(sqlSession,m);
+	}
+
+	@Override
+	public int groupCount(Member m) {
+		return mDao.groupCount(sqlSession,m);
+	}
+
+	@Override
+	public int deleteEvent(String title) {
+		return mDao.deleteEvent(sqlSession,title);
+	}
 
 
 }

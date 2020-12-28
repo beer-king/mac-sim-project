@@ -1,14 +1,10 @@
 package com.beer.macSim.member.controller;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
-
-
-import com.beer.macSim.member.model.service.MemberService;
-import com.beer.macSim.member.model.vo.Member;
-import org.apache.ibatis.annotations.Param;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,7 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.beer.macSim.event.model.vo.Event;
 import com.beer.macSim.member.model.service.KakaoService;
+import com.beer.macSim.member.model.service.MemberService;
+import com.beer.macSim.member.model.vo.Member;
 
 
 
@@ -33,7 +32,17 @@ public class MemberController {
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
 
 	@RequestMapping("mypage.me")
-	public String myPage() {
+	public String myPage(HttpSession session, Model model) {
+		
+		Member m = (Member)session.getAttribute("loginUser");
+		
+		int reviewCount = mService.reviewCount(m);
+		int eventCount = mService.eventCount(m);
+		int groupCount = mService.groupCount(m);
+		model.addAttribute("reviewCount", reviewCount);
+		model.addAttribute("eventCount",eventCount);
+		model.addAttribute("groupCount", groupCount);
+		
 		return "member/myPage";
 	}
 
@@ -59,7 +68,17 @@ public class MemberController {
 	}
 
 	@RequestMapping("event.me")
-	public String event() {
+	public String event(HttpSession session, Model model) {
+		
+		Member m = (Member)session.getAttribute("loginUser");
+		
+		
+		ArrayList<Event>list = mService.selectEventList(m);
+		
+		System.out.println(list);
+		
+		model.addAttribute("list", list);
+
 		return "member/event";
 	}
 
@@ -201,7 +220,27 @@ public class MemberController {
 
 	}
 
-	
+	@RequestMapping("delete.ev")
+	public String deleteEvent(Model model,HttpSession session) {
+		
+		
+		String title = (String) model.getAttribute("eventTitle");
+		//System.out.println(title);
+		
+		int result = mService.deleteEvent(title);
+		
+		System.out.println(result);
+		
+		if(result>0) { // 삭제 성공
+			session.setAttribute("alertMsg", "이벤트가 취소되었습니다");
+			return "redirect:event.me";
+		}else { // 삭제 실패
+			model.addAttribute("errorMsg", "비밀번호가 틀렸습니다");
+			return "common/errorPage";
+		}
+		
+		
+	}
 
 	@RequestMapping("enrollForm.me")
 	public String enrollForm() {

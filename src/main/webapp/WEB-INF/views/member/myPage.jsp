@@ -97,7 +97,7 @@
     </tr>
     <tr>
         <th width="650">
-            <p>${loginUser.userId} 님은 <a href="">(2)건의 리뷰</a>를 남겼고, <a href="">(2)건의 이벤트신청</a>,<a href="">(1)건의 공구신청</a> 중입니다.</p>
+            <p>${loginUser.userId} 님은 <a href="review.me">(${reviewCount})건의 리뷰</a>를 남겼고, <a href="event.me">(${eventCount})건의 이벤트신청</a>,<a href="group.me">(${groupCount})건의 공구신청</a> 중입니다.</p>
         </th>
     </tr>
 </table>

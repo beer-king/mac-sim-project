@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <html>
 <head>
     <title>이벤트 신청내역</title>
@@ -84,38 +85,41 @@
 
 <h1 style="margin-left: 30px; color: rgb(236, 191, 46);">이벤트 신청현황</h1>
 
+<br>
 <div id="event" style="margin-left: 30px;">
     <ol>
-        <li>
-            <span>말표맥주시음회</span>
-            <!-- Button to Open the Modal -->
-            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">
-                취소
-            </button>
-
-        </li>
-        <br>
-        <li>
-            <span>말표맥주시음회</span>
-            <!-- Button to Open the Modal -->
-            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">
-                취소
-            </button>
-
-        </li>
-        <br>
-        <li>
-            <span>말표맥주시음회</span>
-            <!-- Button to Open the Modal -->
-            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">
-                취소
-            </button>
-
-        </li>
+  		
+  		<c:when test="${empty list}">
+  			<b>신청한 이벤트가 없습니다.</b>
+  		</c:when>
+  		<c:otherwise> 
+			<c:forEach var="e" items="${list}">
+			        <li id="a">
+				            <span id="b">${e.evTitle }</span>
+				            <!-- Button to Open the Modal -->
+				           
+				            <c:if test="${!empty list}">
+					            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">
+					               	 취소
+					            </button>
+							</c:if>
+			        </li>
+			        <br>
+		   	</c:forEach>     
+       </c:otherwise>
     </ol>
 </div>
 
-
+<script type="text/javascript">
+	$(function(){
+		$("#c").click(function(){
+		 var title = $("#b").text();
+		 console.log(title);
+		 location.href = "delete.ev?eventTitle="+title;
+		 
+		});
+	});
+</script>
 
 <!-- The Modal -->
 <div class="modal" id="myModal">
@@ -135,8 +139,9 @@
 
             <!-- Modal footer -->
             <form action="delete.ev"  class="modal-footer">
+            	
                 <button type="button" class="btn btn-primary" data-dismiss="modal">뒤로가기</button>
-                <button type="submit" class="btn btn-danger" data-dismiss="modal">취소</button>
+                <button id="c" type="submit" class="btn btn-danger" data-dismiss="modal">취소</button>
             </form>
 
         </div>
@@ -147,69 +152,26 @@
 
 <div class="myEvent">
     <table  style="height: 100px;" class="table-hover">
+    <c:forEach var="e" test="${list}">
         <tr>
-            <td rowspan="3">서울수제맥주시음회</td>
+            <td rowspan="3" style="color:white;">${e.evTitle }</td>
             <td rowspan="3">
                          <textarea name="" id="" cols="100" rows="5" style="resize: none;" disabled>
-                            서울수제맥주시음회 정보들
-                            서울수제맥주시음회 정보들
-                            서울수제맥주시음회 정보들
-                            서울수제맥주시음회 정보들
-                            서울수제맥주시음회 정보들
+                          ${e.evContent}
                          </textarea>
             </td>
             <td rowspan="3" width="100px">
-                <span>승인</span>
+                <span style="color:white;">${e.status}</span>
             </td>
 
         </tr>
-
+	</c:forEach>
     </table>
 </div>
 
-<div class="myEvent">
-    <table  style="height: 100px;" class="table-hover">
-        <tr>
-            <td rowspan="3">서울수제맥주시음회</td>
-            <td rowspan="3">
-                         <textarea name="" id="" cols="100" rows="5" style="resize: none;" disabled>
-                            서울수제맥주시음회 정보들
-                            서울수제맥주시음회 정보들
-                            서울수제맥주시음회 정보들
-                            서울수제맥주시음회 정보들
-                            서울수제맥주시음회 정보들
-                         </textarea>
-            </td>
-            <td rowspan="3" width="100px">
-                <span>승인</span>
-            </td>
 
-        </tr>
 
-    </table>
-</div>
 
-<div class="myEvent">
-    <table  style="height: 100px;" class="table-hover">
-        <tr>
-            <td rowspan="3">서울수제맥주시음회</td>
-            <td rowspan="3">
-                         <textarea name="" id="" cols="100" rows="5" style="resize: none;" disabled>
-                            서울수제맥주시음회 정보들
-                            서울수제맥주시음회 정보들
-                            서울수제맥주시음회 정보들
-                            서울수제맥주시음회 정보들
-                            서울수제맥주시음회 정보들
-                         </textarea>
-            </td>
-            <td rowspan="3" width="100px">
-                <span>미승인</span>
-            </td>
-
-        </tr>
-
-    </table>
-</div>
 
 <div style="margin-left:17px">
     <ul class="pagination">

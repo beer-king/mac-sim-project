@@ -1,5 +1,7 @@
 package com.beer.macSim.member.model.service;
 
+
+import com.beer.macSim.event.model.vo.Event;
 import com.beer.macSim.member.model.vo.Member;
 
 import java.util.ArrayList;
@@ -33,10 +35,18 @@ public interface MemberService {
     //int deleteReview(int scoreNo);
 
 	
-
+    ArrayList<Event> selectEventList(Member m);
     
     // 회원 비빌번호 변경
     int memberPwdUpdate(Member m);
+    
+    
+    int reviewCount(Member m );
+    
+    int eventCount(Member m);
+    
+    int groupCount(Member m);
 
+	int deleteEvent(String title);
      
 }

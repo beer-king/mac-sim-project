@@ -34,6 +34,13 @@
 		</resultMap>
 	-->
 
+   <resultMap type="Event" id="eventResultSet">
+   		<result column="ev_no" property="evNo"></result>
+   		<result column="user_no" property="userNo"/>
+   		<result column="ev_title" property="evTitle"/>
+   		<result column="ev_content" property="evContent"/>
+   		<result column="status" property="status"/>
+   </resultMap>
 
    <update id="updateMember" parameterType="Member">
        update
@@ -183,6 +190,52 @@
 	
 		</update>
     -->
-
+	
+	
+	
+	<select id="selectEventList" resultMap="eventResultSet" parameterType="Member">
+		select 
+		      ev_no
+		     ,user_no
+		     ,ev_title
+		     ,ev_content
+		     ,status
+		from event
+		where user_no= #{userNo}    
+	</select>
+	
+	
+	<select id="reviewCount" resultType="_int" parameterType="Member">
+		
+		   select count(*) 
+		         from score 
+		         where user_no =#{userNo}
+	
+	</select>
+	
+	<select id="eventCount" resultType="_int" parameterType="Member">
+		
+		   select count(*) 
+		         from event 
+		         where user_no =#{userNo}
+	
+	</select>
+	
+	<select id="groupCount" resultType="_int" parameterType="Member">
+		
+		   select count(*) 
+		         from group_buy
+		         where user_no =#{userNo}
+	
+	</select>
+	
+	
+	<update id="deleteEvent" parameterType="string">
+		 update
+              event
+          set status = 'D'
+       where  ev_title =#{title} 
+	
+	</update>
 
 </mapper>
