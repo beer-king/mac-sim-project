@@ -8,7 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import com.beer.macSim.member.model.service.MemberService;
 import com.beer.macSim.member.model.vo.Member;
-import org.apache.ibatis.annotations.Param;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

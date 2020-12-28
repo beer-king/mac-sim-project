@@ -58,7 +58,7 @@
     <br><br>
     <div class="outer">
 		<br><br>
-        <h1 align="left">공지사항</h1>
+        <span align="left" style= "font-size: 2em;">공지사항</span>
 
 
         <hr style="border: solid 0.7px #ecbf2e;">
@@ -76,7 +76,7 @@
         </div>
 		<br>
 		
-            <table class="table" style="text-align: center; border: 1px solid #dddddd;">
+            <table id="noticeList" class="table" style="text-align: center; border: 1px solid #dddddd;">
                 <br>
                 <thead>
                     <tr style=" text-align: center;color: white;">
@@ -92,9 +92,9 @@
                 
                 	<c:forEach var="n" items="${ list }">	
 	                    <tr>
-	                        <td>${n.noticeNo }</td>
+	                        <td class="nno">${n.noticeNo }</td>
 	                        <td>${n.noticeTitle }</td>
-	                        <td>${n.userNo }</td>
+	                        <td>${n.userId }</td>
 	                        <td>${n.noticeDate }</td>
 	                        <td>${n.count }</td>
 	                    </tr>
@@ -102,13 +102,16 @@
                    
                 </tbody>
             </table>
+            
+			<script>
+				$(function(){
+					$("#noticeList tbody tr").click(function(){
+						location.href = "detail.no?nno=" + $(this).children(".nno").text();
+					});
+				})
+			</script>
 
-            <!-- 현재 관리자 로그인 되어있을 경우만 보여짐 
-            <div id="insert" align="right">
-                <a href="" class="btn btn-secondary btn-sm" style="background: #ecbf2e;;">글작성</a>
-                <br><br>
-            </div>
-            -->
+            
        <br><br>
 
         <div class="paging-area">

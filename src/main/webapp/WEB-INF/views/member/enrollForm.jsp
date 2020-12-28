@@ -41,7 +41,7 @@
 	<div class="outer">
         <br>
         <div class="image" align="center">
-            <img src="resources/images/logo.png" alt="">
+            <a href="/macSim"><img src="resources/images/logo.png" alt=""></a>
         </div>
         <div class="content">
             

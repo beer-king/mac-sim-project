@@ -85,7 +85,7 @@
     <div class="outer">
       <br>
             <div id="image" align="center">
-              <img src="resources/images/logo.png" alt="">
+              <a href="/macSim"><img src="resources/images/logo.png" alt=""></a>
             </div>
 
             <form action="enrollForm.me" method="post">  

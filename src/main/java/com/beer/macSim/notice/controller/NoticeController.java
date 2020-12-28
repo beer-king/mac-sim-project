@@ -13,6 +13,7 @@ import com.beer.macSim.common.template.Pagination;
 import com.beer.macSim.notice.model.service.NoticeService;
 import com.beer.macSim.notice.model.vo.Notice;
 
+
 @Controller
 public class NoticeController {
 
@@ -33,6 +34,30 @@ public class NoticeController {
 		return "notice/noticeList";
 		
 	}
+	
+	@RequestMapping("detail.no")
+	public String selectBoard(int nno, Model model) {
+		
+		int result = nService.increaseCount(nno);
+		
+		if(result > 0) {
+			
+			Notice n = nService.selectNotice(nno);
+			
+			model.addAttribute("n",n);
+			
+			return "notice/noticeDetailView";
+			
+		}else {
+			
+			model.addAttribute("errorMsg","존재하지 않는 공지사항이거나 삭제된 게시글 입니다.");
+			return "common/errorPage";
+		}
+		
+	}
+	
+	
+	
 }
 
 

@@ -86,7 +86,7 @@
 <body style="background-color: #2a2725;">
 	 <div class="wrap">
         <div id="header" align="center">
-            <img src="resources/images/logo.png" alt="" id="img1"><br>            
+            <a href="/macSim"><img src="resources/images/logo.png" alt="" id="img1"></a><br>            
         </div>
         <!--로그인 폼-->
         <div id="content">
