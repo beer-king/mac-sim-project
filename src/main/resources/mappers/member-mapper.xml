@@ -221,5 +221,8 @@
        where  ev_title =#{title} 
 	
 	</update>
+	
+	
+	
 
 </mapper>

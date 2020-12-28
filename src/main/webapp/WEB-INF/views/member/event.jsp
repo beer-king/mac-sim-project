@@ -89,24 +89,25 @@
 <div id="event" style="margin-left: 30px;">
     <ol>
   		
-  		<c:when test="${empty list}">
+  		<c:if test="${empty list}">
   			<b>신청한 이벤트가 없습니다.</b>
-  		</c:when>
-  		<c:otherwise> 
+  		</c:if>
+  		
 			<c:forEach var="e" items="${list}">
 			        <li id="a">
 				            <span id="b">${e.evTitle }</span>
 				            <!-- Button to Open the Modal -->
 				           
-				            <c:if test="${!empty list}">
+				           
 					            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">
 					               	 취소
 					            </button>
-							</c:if>
+							
 			        </li>
 			        <br>
 		   	</c:forEach>     
-       </c:otherwise>
+      	
+       
     </ol>
 </div>
 
@@ -120,6 +121,7 @@
 		});
 	});
 </script>
+
 
 <!-- The Modal -->
 <div class="modal" id="myModal">
@@ -141,12 +143,14 @@
             <form action="delete.ev"  class="modal-footer">
             	
                 <button type="button" class="btn btn-primary" data-dismiss="modal">뒤로가기</button>
-                <button id="c" type="submit" class="btn btn-danger" data-dismiss="modal">취소</button>
+                <button id="c" type="submit" class="btn btn-danger" data-dismiss="modal">확인</button>
             </form>
 
         </div>
     </div>
 </div>
+
+
 
 <hr style="height:2px;border-width:0;color:white;background-color:white">
 
@@ -170,16 +174,32 @@
 </div>
 
 
-
-
-
 <div style="margin-left:17px">
     <ul class="pagination">
-        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+      				 <c:choose>                
+		                  <c:when test="${pi.currentPage eq 1}"> 
+		                   	 	<li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+		                  </c:when> 
+		                  <c:otherwise> 
+		                    	<li class="page-item"><a class="page-link" href="event.me?currentPage=${pi.currentPage -1}">Previous</a></li>
+		                  </c:otherwise>  
+                    </c:choose>
+                    
+                    
+                    <c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage}">
+                   		 <li class="page-item"><a class="page-link" href="event.me?currentPage=${p}">${p}</a></li>
+                    </c:forEach>
+                    
+                    
+                    <c:choose>
+                    	<c:when test="${pi.currentPage eq pi.maxPage}">
+	                   		 <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+	                    </c:when>
+	                	
+	                	<c:otherwise>
+	                    	 <li class="page-item"><a class="page-link" href="event.me?currentPage=${pi.currentPage +1}">Next</a></li>
+	                    </c:otherwise>
+                    </c:choose>
     </ul>
 </div>
 </body>

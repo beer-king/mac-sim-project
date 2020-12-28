@@ -68,6 +68,8 @@ public class MemberDao {
 	public int deleteEvent(SqlSessionTemplate sqlSession, String title) {
 		return sqlSession.update("memberMapper.deleteEvent", title);
 	}
+
+
 	
 
 /*

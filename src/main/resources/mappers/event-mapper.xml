@@ -21,7 +21,8 @@
 		<result column="ev_thumb" property="evThumb"/>
 		<result column="ev_deny" property="evDeny"/>		
 	</resultMap>
-	
+
+    <!--  	
 	<resultMap id="AttachmentResultSet" type="Attachment">
 		<result column="att_no" property="attNo"/>
 		<result column="origin_name" property="originName"/>
@@ -29,7 +30,7 @@
 		<result column="ev_no" property="evNo"/>
 		<result column="pno" property="pNo"/>
 	</resultMap>
-  	
+  	-->
   	<select id="selectEventCount" resultType="_int">
   		select
 		        count(*)
@@ -105,8 +106,10 @@
   		  , #{evDate} || #{evTime}
   		  , #{ev
   	</insert>
-  	
+  
+  	<!--  
   	<insert id="insertAttachment" parameterType="Attachment">
   		
   	</insert>
+  	-->
 </mapper>

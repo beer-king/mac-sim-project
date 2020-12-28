@@ -48,5 +48,6 @@ public interface MemberService {
     int groupCount(Member m);
 
 	int deleteEvent(String title);
+
      
 }
