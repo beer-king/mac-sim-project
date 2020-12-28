@@ -90,26 +90,44 @@
   		  , ev_title
   		  , ev_content
   		  , ev_starttime
-  		  , ev_endtime
   		  , beer_no
   		  , req_time
   		  , limit_no
-  		  , apply_no
   		  , ev_point
-  		  , ed_date
+  		  , ev_date
   		  , ev_thumb
   		  )
+  		  values
+  		  (
   		    seq_ev_no.nextval
   		  , #{userNo}
   		  , #{evTitle}
   		  , #{evContent}
-  		  , #{evDate} || #{evTime}
-  		  , #{ev
+  		  , #{evStartTime}
+  		  , #{beerNo}
+  		  , #{reqTime}
+  		  , #{limitNo}
+  		  , #{evPoint}
+  		  , sysdate
+  		  , #{evThumb}
+  		  )
   	</insert>
   
-  	<!--  
+  	 
   	<insert id="insertAttachment" parameterType="Attachment">
-  		
+  		insert
+  		  into attachment
+  		  (
+  		  	attNo
+  		  , originName
+  		  , changeName
+  		  )
+  		  values
+  		  (
+  		  	seq_att_no.nextval
+  		  , #{originName}
+  		  , #{changeName}
+  		  )
   	</insert>
-  	-->
+  	
 </mapper>

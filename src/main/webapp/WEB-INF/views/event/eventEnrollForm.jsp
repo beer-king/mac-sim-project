@@ -69,8 +69,8 @@
                             <td><input type="time" id="appTime" name="appTime" required class="form-control"></td>
                         </tr>
                         <tr>
-                            <th><label for="evBeer">이벤트용 맥주 : </label></th>
-                            <td><input type="text" id="evBeer" name="evBeer" class="form-control" placeholder="시음회시 제공되는 맥주입니다."></td>
+                            <th><label for="beerNo">이벤트용 맥주 : </label></th>
+                            <td><input type="text" id="beerNo" name="beerNo" class="form-control" placeholder="시음회시 제공되는 맥주입니다."></td>
                         </tr>
                         <tr>
                             <th><label for="evPoint">포인트 소모량 : </label></th>

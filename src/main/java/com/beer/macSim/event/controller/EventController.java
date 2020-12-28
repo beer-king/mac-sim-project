@@ -69,7 +69,10 @@ public class EventController {
 	}
 	
 	@RequestMapping("insert.ev")
-	public String insertEvent(Event e, Attachment a, @RequestParam("upfile1") MultipartFile upfile1, @RequestParam("upfile2") MultipartFile upfile2,
+	public String insertEvent(Event e, Attachment a,
+							  @RequestParam("evDate") String evDate, @RequestParam("evTime") String evTime,
+							  @RequestParam("appDate") String appDate, @RequestParam("appTime") String appTime,	
+							  @RequestParam("upfile1") MultipartFile upfile1, @RequestParam("upfile2") MultipartFile upfile2,
 							  HttpSession session,  Model model) {
 		// 첨부파일 업로드 기능을 하기 위해서는 라이브러리 2개 추가(pom.xml파일에), 빈으로 등록(root-context.xml파일에)해야 됨
 		
@@ -82,7 +85,8 @@ public class EventController {
 			a.setOriginName(upfile2.getOriginalFilename());
 			a.setChangeName("resources/uploadFiles/" + changeName2);
 		}
-		
+		e.setEvStartTime(evDate + " " + evTime);
+		e.setReqTime(appDate + " " + appTime);
 		int result1 = evService.insertEvent(e);
 		int result2 = evService.insertAttachment(a);
 		
