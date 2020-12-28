@@ -33,7 +33,7 @@
 		    by notice_no desc			
 	</select>
 	
-	<select id="selectNotice" resultMap="noticeResultSet" parameterType="string">
+	<select id="selectNotice" resultMap="noticeResultSet" parameterType="_int">
 		select
 		       notice_no
 		     , user_id
@@ -44,7 +44,15 @@
 		  from notice
 		  join member using(user_no)
           where
-            notice.status = 'Y' and notice_no = #{noticeNo}
+            notice.status = 'Y' and notice_no = #{nno}
 	</select>
+	
+	<update id="increaseCount" parameterType="_int">
+	  update 
+		      notice
+		  set count = count + 1
+		where notice_no = #{nno}
+		  and status = 'Y'
+	</update>
 	
 </mapper>

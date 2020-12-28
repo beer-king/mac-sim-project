@@ -57,7 +57,10 @@
 
             <button type="submit">검색</button>
         </form>
-
+		
+		
+		<a class="btn btn-primary" style="float:right"  href="enrollForm.ev">글쓰기</a>
+		
         <br>
         <c:forEach var="e" items="${ list }">
         <br>

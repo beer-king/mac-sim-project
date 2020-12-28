@@ -49,7 +49,7 @@
     <div class="outer">
             <br><br>
             <div id="image" align="center">
-              <img src="resources/images/logo.png" alt="">
+              <a href="/macSim"><img src="resources/images/logo.png" alt=""></a>
             </div>
             <br><br>
             <div id="findIdForm">

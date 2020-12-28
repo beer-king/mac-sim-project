@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.beer.macSim.common.model.vo.PageInfo;
 import com.beer.macSim.event.model.dao.EventDao;
+import com.beer.macSim.event.model.vo.Attachment;
 import com.beer.macSim.event.model.vo.EvReply;
 import com.beer.macSim.event.model.vo.Event;
 
@@ -50,6 +51,17 @@ public class EventServiceImpl implements EventService {
 	public int insertEvReply(EvReply er) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+
+	@Override
+	public int insertEvent(Event e) {
+		return evDao.insertEvent(sqlSession, e);
+	}
+
+	@Override
+	public int insertAttachment(Attachment a) {
+		return evDao.insertAttachment(sqlSession, a);
 	}
 
 }

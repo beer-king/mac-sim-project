@@ -53,11 +53,11 @@
             <div class="profile">
                 <table id="proTable">
                     <tr>
-                        <td colspan="2"><h2>Event No.12</h2></td>
+                        <td colspan="2"><h2>Event No. ${ ev.evNo }</h2></td>
                     </tr>
                     <tr>
-                        <th><h1>3차 온라인 맥주 시음회</h1></th>
-                        <th><h4>작성자 : admin</h4></th>
+                        <th><h1>${ ev.evTitle }</h1></th>
+                        <th><h4>작성자 : ${ ev.userNo }</h4></th>
                     </tr>
                     <tr>
                         <th>시음일 : 2020-12-07 PM 8 ~ 9 </th>

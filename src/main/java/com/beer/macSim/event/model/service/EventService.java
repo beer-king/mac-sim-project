@@ -3,6 +3,7 @@ package com.beer.macSim.event.model.service;
 import java.util.ArrayList;
 
 import com.beer.macSim.common.model.vo.PageInfo;
+import com.beer.macSim.event.model.vo.Attachment;
 import com.beer.macSim.event.model.vo.EvReply;
 import com.beer.macSim.event.model.vo.Event;
 
@@ -21,4 +22,8 @@ public interface EventService {
 	
 	// 4. 이벤트 댓글 작성용 서비스
 	int insertEvReply(EvReply er);
+	
+	// 5. 이벤트 작성하기용 서비스
+	int insertEvent(Event e);
+	int insertAttachment(Attachment a);
 }

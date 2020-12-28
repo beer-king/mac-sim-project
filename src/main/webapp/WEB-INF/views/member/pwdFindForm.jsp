@@ -45,7 +45,7 @@
     <div class="outer">
             <br>
             <div id="image" align="center">
-              <img src="resources/images/macsimXy.png" alt="" style="width: 180px; height: 40px;"><br><br>
+              <a href="/macSim"><img src="resources/images/macsimXy.png" alt="" style="width: 180px; height: 40px;"></a><br><br>
             </div>
             <br><br>
             <div id="findIdForm">
