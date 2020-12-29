@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="commMapper">
+
+	<resultMap id="commResultSet" type="Community" >
+		<result column="comm_no" property="commNo" />
+		<result column="comm_src" property="commSrc" />
+		<result column="comm_content" property="commContent" />
+		<result column="comm_createdate" property="commCreateDate" />
+		<result column="comm_cate" property="commCate" />
+		<result column="comm_status" property="commStatus" />
+		<result column="user_no" property="userNo" />
+		<result column="user_id" property="userId" />
+	</resultMap>
+	
+	<select id="selectCommCount" resultType="_int" >
+		select
+		       count(*)
+		  from community
+		 where comm_cate = #{cate}
+		   and comm_status = 0
+	</select>
+	
+	<select id="selectCommList" resultMap="commResultSet">
+		select
+		       comm_src
+		     , comm_content
+		     , comm_createdate
+		     , user_id
+		  from community
+		  join member using(user_no)
+		 where comm_cate = #{cate}
+		   and comm_status = 0
+		 order
+		    by comm_createdate desc
+	</select>
+	
+
+</mapper>
