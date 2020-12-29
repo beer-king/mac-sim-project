@@ -8,10 +8,12 @@ import org.springframework.stereotype.Repository;
 
 import com.beer.macSim.common.model.vo.PageInfo;
 import com.beer.macSim.community.model.vo.Community;
+import com.beer.macSim.community.model.vo.Forum;
 
 @Repository
 public class CommDao {
 	
+	// 커뮤니티 (맥일/오맥) 리스트 조회
 	public int selectCommCount(SqlSessionTemplate sqlSession, int cate) {
 		return sqlSession.selectOne("commMapper.selectCommCount", cate);
 	}
@@ -22,6 +24,20 @@ public class CommDao {
 		RowBounds rowbounds = new RowBounds(offset, pi.getBoardLimit());
 		
 		return (ArrayList)sqlSession.selectList("commMapper.selectCommList", cate, rowbounds);
+		
+	}
+	
+	// 포럼 리스트 조회
+	public int selectForumCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("commMapper.selectForumCount");
+	}
+	
+	public ArrayList<Forum> selectForumList(SqlSessionTemplate sqlSession, PageInfo pi){
+		
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowbounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("commMapper.selectForumList", null, rowbounds);
 		
 	}
 

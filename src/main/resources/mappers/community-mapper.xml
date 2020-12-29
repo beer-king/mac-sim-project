@@ -13,6 +13,20 @@
 		<result column="user_id" property="userId" />
 	</resultMap>
 	
+	<resultMap id="forResultSet" type="Forum" >
+		<result column="for_no" property="forNo" />
+		<result column="for_src" property="forSrc" />
+		<result column="for_title" property="forTitle" />
+		<result column="for_info" property="forInfo" />
+		<result column="for_createdate" property="forCreateDate" />
+		<result column="for_count" property="forCount" />
+		<result column="for_comment" property="forComment" />
+		<result column="for_status" property="forStatus" />
+		<result column="user_no" property="userNo" />
+		<result column="user_id" property="userId" />
+		<!-- <result column="" property="" /> -->
+	</resultMap>
+	
 	<select id="selectCommCount" resultType="_int" >
 		select
 		       count(*)
@@ -33,6 +47,32 @@
 		   and comm_status = 0
 		 order
 		    by comm_createdate desc
+	</select>
+	
+	<select id="selectForumCount" resultType="_int">
+		select
+		       count(*)
+		  from forum
+		 where for_status = 0
+	</select>
+	
+	<select id="selectForumList" resultMap="forResultSet">
+		select
+		       for_no
+		     , for_src
+		     , for_title
+		     , for_info
+		     , for_createdate
+		     , for_count
+		     , for_comment
+		     , for_status
+		     , user_no
+		     , user_id
+		  from forum
+		  join member using(user_no)
+		 where for_status = 0
+		 order
+		    by for_createdate desc
 	</select>
 	
 
