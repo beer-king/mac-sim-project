@@ -43,4 +43,8 @@ public class EventDao {
 	public int insertAttachment(SqlSessionTemplate sqlSession, Attachment a) {
 		return sqlSession.insert("eventMapper.insertAttachment", a);
 	}
+	
+	public ArrayList<Attachment> selectEvAttachment(SqlSessionTemplate sqlSession, int eno) {
+		return (ArrayList)sqlSession.selectList("eventMapper.selectEvAttachment", eno);
+	}
 }

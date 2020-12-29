@@ -51,10 +51,12 @@ public class EventController {
 		
 		if(result > 0) {
 			Event ev = evService.selectEvent(eno);
+			ArrayList<Attachment> atList = evService.selectEvAttachment(eno);
 			System.out.println(ev);
+			System.out.println(atList);
 			
 			model.addAttribute("ev", ev);
-			
+			model.addAttribute("atList", atList);
 			return "event/eventDetailView";
 		}else {
 			model.addAttribute("errorMsg", "존재하지 않는 게시글입니다.");

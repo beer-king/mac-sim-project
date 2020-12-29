@@ -10,6 +10,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <style>
+	.outer{
+		width:1000px;
+		margin:auto;
+		}
     .evList{
         width:800px;
         height:200px;
@@ -33,7 +37,9 @@
         left:30px;
         float:left;
     }
-    #pagingArea{width:fit-content; margin-top: 20px;}    
+    #pagingArea{
+    	width:fit-content;
+     	margin:auto;}    
 </style>
 </head>
 <body>
@@ -61,7 +67,7 @@
 		
 		<a class="btn btn-primary" style="float:right"  href="enrollForm.ev">글쓰기</a>
 		
-        <br>
+        <br><br>
         <c:forEach var="e" items="${ list }">
         <br>
         <div class="evList">
@@ -128,7 +134,8 @@
             		});
             	});
             </script>
-
+	
+		<br><br>
         </div>
             <div id="pagingArea">
                 <ul class="pagination">

@@ -64,4 +64,9 @@ public class EventServiceImpl implements EventService {
 		return evDao.insertAttachment(sqlSession, a);
 	}
 
+	@Override
+	public ArrayList<Attachment> selectEvAttachment(int eno) {
+		return evDao.selectEvAttachment(sqlSession, eno);
+	}
+
 }

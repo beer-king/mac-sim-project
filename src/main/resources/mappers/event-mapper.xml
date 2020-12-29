@@ -11,6 +11,7 @@
 		<result column="ev_starttime" property="evStartTime"/>
 		<result column="ev_endtime" property="evEndTime"/>
 		<result column="beer_no" property="beerNo"/>
+		<result column="beer_name" property="beerNo"/>
 		<result column="req_time" property="reqTime"/>
 		<result column="limit_no" property="limitNo"/>
 		<result column="apply_no" property="applyNo"/>
@@ -22,7 +23,7 @@
 		<result column="ev_deny" property="evDeny"/>		
 	</resultMap>
 
-    <!--  	
+     	
 	<resultMap id="AttachmentResultSet" type="Attachment">
 		<result column="att_no" property="attNo"/>
 		<result column="origin_name" property="originName"/>
@@ -30,7 +31,7 @@
 		<result column="ev_no" property="evNo"/>
 		<result column="pno" property="pNo"/>
 	</resultMap>
-  	-->
+  	
   	<select id="selectEventCount" resultType="_int">
   		select
 		        count(*)
@@ -129,5 +130,15 @@
   		  , #{changeName}
   		  )
   	</insert>
+  	
+  	<select id="selectEvAttachment" parameterType="_int"
+  		    resultMap="AttachmentResultSet">
+  		select
+  				att_no
+  			  , origin_name
+  			  , change_name
+  		   from attachment
+  		  where ev_no  = ${eno} 
+  	</select>
   	
 </mapper>
