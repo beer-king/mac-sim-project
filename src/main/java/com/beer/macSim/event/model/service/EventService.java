@@ -25,6 +25,5 @@ public interface EventService {
 	int insertEvReply(EvReply er);
 	
 	// 5. 이벤트 작성하기용 서비스
-	int insertEvent(Event e);
-	int insertAttachment(Attachment a);
+	int insertEvent(Event e, Attachment a);
 }

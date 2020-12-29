@@ -55,14 +55,18 @@ public class EventServiceImpl implements EventService {
 
 
 	@Override
-	public int insertEvent(Event e) {
-		return evDao.insertEvent(sqlSession, e);
+	public int insertEvent(Event e, Attachment a) {
+		
+		int result1 = evDao.insertEvent(sqlSession, e);
+		
+		int result2 =1; // 첨부파일이 없어도 업로드 되게끔 1로 초기화
+		if (a != null) { // 첨부파일이 있었을 경우
+			result2 = evDao.insertAttachment(sqlSession, a);
+		}
+		
+		return result1 * result2;
 	}
 
-	@Override
-	public int insertAttachment(Attachment a) {
-		return evDao.insertAttachment(sqlSession, a);
-	}
 
 	@Override
 	public ArrayList<Attachment> selectEvAttachment(int eno) {

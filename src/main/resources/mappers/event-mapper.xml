@@ -119,15 +119,17 @@
   		insert
   		  into attachment
   		  (
-  		  	attNo
-  		  , originName
-  		  , changeName
+  		  	att_no
+  		  , origin_name
+  		  , change_name
+  		  , ev_no
   		  )
   		  values
   		  (
   		  	seq_att_no.nextval
   		  , #{originName}
   		  , #{changeName}
+  		  , seq_ev_no.currval
   		  )
   	</insert>
   	

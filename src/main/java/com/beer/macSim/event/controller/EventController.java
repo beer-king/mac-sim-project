@@ -89,10 +89,10 @@ public class EventController {
 		}
 		e.setEvStartTime(evDate + " " + evTime);
 		e.setReqTime(appDate + " " + appTime);
-		int result1 = evService.insertEvent(e);
-		int result2 = evService.insertAttachment(a);
 		
-		if(result1 * result2 >0) { // 성공
+		int result = evService.insertEvent(e, a);
+		
+		if(result > 0) { // 성공
 			session.setAttribute("alertMsg", "성공적으로 이벤트글이 등록되었습니다.");
 			return "redirect:list.ev";
 		}else { // 실패
