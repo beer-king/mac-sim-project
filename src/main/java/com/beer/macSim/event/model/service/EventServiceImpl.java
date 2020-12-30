@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.beer.macSim.common.model.vo.PageInfo;
 import com.beer.macSim.event.model.dao.EventDao;
+import com.beer.macSim.event.model.vo.Attachment;
 import com.beer.macSim.event.model.vo.EvReply;
 import com.beer.macSim.event.model.vo.Event;
 
@@ -50,6 +51,26 @@ public class EventServiceImpl implements EventService {
 	public int insertEvReply(EvReply er) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+
+	@Override
+	public int insertEvent(Event e, Attachment a) {
+		
+		int result1 = evDao.insertEvent(sqlSession, e);
+		
+		int result2 =1; // 첨부파일이 없어도 업로드 되게끔 1로 초기화
+		if (a != null) { // 첨부파일이 있었을 경우
+			result2 = evDao.insertAttachment(sqlSession, a);
+		}
+		
+		return result1 * result2;
+	}
+
+
+	@Override
+	public ArrayList<Attachment> selectEvAttachment(int eno) {
+		return evDao.selectEvAttachment(sqlSession, eno);
 	}
 
 }

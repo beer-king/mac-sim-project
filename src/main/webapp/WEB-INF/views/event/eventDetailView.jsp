@@ -48,20 +48,20 @@
 
         <div class="head" align="center">
             <div class="photo">
-                <img src="resources/images/beer online tasting1.jpg" width="350px">
+                <img src="${ ev.evThumb }" width="350px">
             </div>
             <div class="profile">
                 <table id="proTable">
                     <tr>
-                        <td colspan="2"><h2>Event No.12</h2></td>
+                        <td colspan="2"><h2>Event No. ${ ev.evNo }</h2></td>
                     </tr>
                     <tr>
-                        <th><h1>3차 온라인 맥주 시음회</h1></th>
-                        <th><h4>작성자 : admin</h4></th>
+                        <th><h1>${ ev.evTitle }</h1></th>
+                        <th><h4>작성자 : ${ ev.userNo }</h4></th>
                     </tr>
                     <tr>
-                        <th>시음일 : 2020-12-07 PM 8 ~ 9 </th>
-                        <th>신청마감일 : 2020-12-06 PM 8</th>
+                        <th>시음일 : ${ ev.evStartTime } </th>
+                        <th>신청마감일 : ${ ev.reqTime }</th>
                     </tr>
                     <tr>
                         <th><button class="btn btn-danger" data-toggle="modal" data-target="#appModal">신청하기</button></th>
@@ -75,25 +75,23 @@
              <table class="table" align="center">
                 <tr>
                     <td colspan="2">
-                        <h3>맥심과 제주맥주가 주관하는 맥주 시음회 참가자를 모집합니다. <br>
-                        맥주 시음회를 신청하시면 제주맥주에서 제공하는 맥주가 시음회 전날까지 귀하의 집에 배달됩니다. <br>
-                         시음회 1시간전에 구글 미트 url 을 보내드립니다.</h3>
+                        <h3>${ ev.evContent }</h3>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <h2>모집자 현황 :  100명 중  86명  마감됨 !!</h2>
+                        <h2>모집자 현황 :  ${ ev.limitNo }명 중  ${ ev.applyNo }명  마감됨 !!</h2>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <h3>제공되는 맥주 : 제주 펠롱 에일 500ml 3캔 <br>
+                        <h3>제공되는 맥주 : ${ ev.beerNo } <br>
                         제주 위트 에일은 뉴욕 맥주 판매 1위 브랜드 <br>
                         ‘브루클린 브루어리’와 손잡고 만든 밀맥주로, 제주맥주의 주력 상품
                         </h3>
                     </td>
                     <td>
-                        <img src="resources/images/제주 펠롱 에일.jpg" width="200px">
+                        <img src="${ atList[0].changeName }" width="200px">
                     </td>
                 </tr>
                 <tr>
@@ -104,7 +102,7 @@
                         </h3>
                     </td>
                     <td>
-                        <img src="resources/images/온라인 시음회 사진.jpg" width="300px">
+                        <img src="${ atList[1].changeName }" width="300px">
                     </td>
                 </tr>
              </table>

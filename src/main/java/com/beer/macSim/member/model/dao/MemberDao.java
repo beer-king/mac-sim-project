@@ -1,5 +1,6 @@
 package com.beer.macSim.member.model.dao;
 
+import com.beer.macSim.event.model.vo.Event;
 import com.beer.macSim.member.model.vo.Member;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
@@ -46,6 +47,29 @@ public class MemberDao {
 
 
 	}
+
+	public ArrayList<Event> selectEventList(SqlSessionTemplate sqlSession,Member m) {
+		return (ArrayList)sqlSession.selectList("memberMapper.selectEventList",m);
+	}
+
+	public int reviewCount(SqlSessionTemplate sqlSession, Member m) {
+		
+		return sqlSession.selectOne("memberMapper.reviewCount", m);
+	}
+
+	public int eventCount(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.selectOne("memberMapper.eventCount", m);
+	}
+
+	public int groupCount(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.selectOne("memberMapper.groupCount", m);
+	}
+
+	public int deleteEvent(SqlSessionTemplate sqlSession, String title) {
+		return sqlSession.update("memberMapper.deleteEvent", title);
+	}
+
+
 	
 
 /*
