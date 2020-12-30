@@ -36,7 +36,7 @@
         top:30px;
         left:30px;
         float:left;
-    }
+    	}
     #pagingArea{
     	width:fit-content;
      	margin:auto;}    
@@ -69,34 +69,34 @@
 		
         <br><br>
         <c:forEach var="e" items="${ list }">
-        <br>
-        <div class="evList">
-        	<input class="eno" type="text" hidden value="${ e.evNo }">
-            <div class="photo">
-                <img src="${ e.evThumb }" alt="" width="200px">
-            </div>
-
-            <div class="content">
-                <table id="eventList" style="height: 100%;" align="center">
-                    <thead>
-                        <th>${ e.evTitle }</th>
-                        <th>No.${ e.evNo }</th>
-                        <th>D-Day = 8</th>
-                        <th>${ e.evStartTime }</th>
-                    </thead>
-                    <tbody>
-                        <td colspan="4">${ e.evContent }</td>
-                    </tbody>
-                    <tfoot>
-                        <td>조회수 : ${ e.clickNo }</td>
-                        <td>댓글수 : 12</td>
-                        <td>작성자 : ${ e.userNo }</td>
-                        <td>${e.evDate }</td>
-                    </tfoot>
-                </table>
-            </div>
-
-        </div>
+	        <br>
+	        <div class="evList">
+	        	<input class="eno" type="text" hidden value="${ e.evNo }">
+	            <div class="photo">
+	                <img src="${ e.evThumb }" alt="" width="200px">
+	            </div>
+	
+	            <div class="content">
+	                <table id="eventList" style="height: 100%;" align="center">
+	                    <thead>
+	                        <th>${ e.evTitle }</th>
+	                        <th>No.${ e.evNo }</th>
+	                        <th>D-Day = 8</th>
+	                        <th>${ e.evStartTime }</th>
+	                    </thead>
+	                    <tbody>
+	                        <td colspan="4">${ e.evContent }</td>
+	                    </tbody>
+	                    <tfoot>
+	                        <td>조회수 : ${ e.clickNo }</td>
+	                        <td>댓글수 : 12</td>
+	                        <td>작성자 : ${ e.userNo }</td>
+	                        <td>${e.evDate }</td>
+	                    </tfoot>
+	                </table>
+	            </div>
+	
+	        </div>
         </c:forEach>
 		
 		<!-- 

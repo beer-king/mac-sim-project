@@ -10,6 +10,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <style>
+	.outer{
+		width:1000px;
+		margin:auto;
+		}
     .gbList{
         width:800px;
         height:200px;
@@ -32,12 +36,14 @@
         top:30px;
         left:30px;
         float:left;
-    }
-    #pagingArea{width:fit-content; margin-top: 20px;}    
+    	}
+    #pagingArea{
+    	width:fit-content;
+     	margin:auto;
+     	}   
 </style>
 </head>
 <body>
-   <!-- 이쪽에 메뉴바 포함 할꺼임 -->
     
    <jsp:include page="../common/header.jsp"/>    
    
@@ -56,35 +62,42 @@
 
            <button type="submit">검색</button>
        </form>
-
+	
+		<a class="btn btn-primary" style="float:right"  href="enrollForm.gb">글쓰기</a>
        <br><br>
-       <div class="gbList">
-           <div class="photo">
-               <img src="resources/images/카카오 맥주잔.jpg" alt="" width="160px">
-           </div>
-
-           <div class="content">
-               <table style="height: 100%;" align="center">
-                   <thead>
-                       <th>카카오 맥주잔</th>
-                       <th>공구 No.23</th>
-                       <th>D-Day = 10</th>
-                       <th>2020-12-09 PM 8</th>
-                   </thead>
-                   <tbody>
-                       <td colspan="4">안녕하세요 귀여운 카카오 맥주잔 공구합니다!!</td>
-                   </tbody>
-                   <tfoot>
-                       <td>조회수 : 245</td>
-                       <td>댓글수 : 32</td>
-                       <td>작성자 : admin</td>
-                       <td>2020-11-09</td>
-                   </tfoot>
-               </table>
-           </div>
-
-       </div>
-
+       
+       <c:forEach var="g" items="${ list }">
+       		<br>
+	       <div class="gbList">
+	       		<input class="gno" type="text" hidden value="${ g.pno }">
+	           <div class="photo">
+	               <img src="${ g.gbThumb }" alt="" width="160px">
+	           </div>
+	
+	           <div class="content">
+	               <table style="height: 100%;" align="center">
+	                   <thead>
+	                       <th>${ g.gbName }</th>
+	                       <th>공구 No.${ g.pno }</th>
+	                       <th>D-Day = 10</th>
+	                       <th>${ g.gbStart }</th>
+	                   </thead>
+	                   <tbody>
+	                       <td colspan="4">${ g.content }</td>
+	                   </tbody>
+	                   <tfoot>
+	                       <td>조회수 : 245</td>
+	                       <td>댓글수 : 32</td>
+	                       <td>작성자 : ${ g.userNo }</td>
+	                       <td>2020-11-09</td>
+	                   </tfoot>
+	               </table>
+	           </div>
+	
+	       </div>
+	   </c:forEach>
+	   
+	   <!-- 
        <br>
        <div class="gbList">
            <div class="photo">
@@ -110,15 +123,17 @@
                    </tfoot>
                </table>
            </div>
-
-           <script>
+		 -->
+		 
+		 
+          <script>
            	$(function(){
            		$(".gbList").click(function(){
            			location.href="detail.gb"
            		})
            		
            	})
-           </script>
+          </script>
 
        </div>
            <div id="pagingArea">

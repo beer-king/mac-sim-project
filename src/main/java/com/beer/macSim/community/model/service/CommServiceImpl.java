@@ -19,6 +19,7 @@ public class CommServiceImpl  implements CommService{
 	@Autowired
 	private CommDao cmDao;
 
+	// 커뮤니티 (맥일/오맥) 리스트 조회
 	@Override
 	public int selectCommCount(int cate) {
 		return cmDao.selectCommCount(sqlSession, cate);
@@ -34,14 +35,15 @@ public class CommServiceImpl  implements CommService{
 		return 0;
 	}
 
+	// 포럼 리스트 조회
 	@Override
 	public int selectForumCount() {
-		return 0;
+		return cmDao.selectForumCount(sqlSession);
 	}
 
 	@Override
 	public ArrayList<Forum> selectForumList(PageInfo pi) {
-		return null;
+		return cmDao.selectForumList(sqlSession, pi);
 	}
 
 	@Override

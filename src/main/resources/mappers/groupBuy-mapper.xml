@@ -2,20 +2,48 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="groupBuyMapper">
 	<resultMap id="groupBuyResultSet" type="GroupBuy">
-		<result column="" property=""/>
-		<result column="" property=""/>
-		<result column="" property=""/>
-		<result column="" property=""/>
-		<result column="" property=""/>
-		<result column="" property=""/>
-		<result column="" property=""/>
-		<result column="" property=""/>
-		<result column="" property=""/>
-		<result column="" property=""/>
-		<result column="" property=""/>
-		<result column="" property=""/>
-		<result column="" property=""/>		
+		<result column="pno" property="pno"/>
+		<result column="user_id" property="userNo"/>
+		<result column="pname" property="gbName"/>
+		<result column="price" property="price"/>
+		<result column="content" property="content"/>
+		<result column="gb_start" property="gbStart"/>
+		<result column="gb_end" property="gbEnd"/>
+		<result column="gb_point" property="gbPoint"/>
+		<result column="gb_thumb" property="gbThumb"/>
+		<result column="status" property="status"/>
+		<result column="limit_no" property="limitNo"/>
+		<result column="apply_no" property="applyNo"/>	
 	</resultMap>
+
+	<resultMap id="AttachmentResultSet" type="Attachment">
+		<result column="att_no" property="attNo"/>
+		<result column="origin_name" property="originName"/>
+		<result column="change_name" property="changeName"/>
+		<result column="ev_no" property="evNo"/>
+		<result column="pno" property="pNo"/>
+	</resultMap>
+		
+	<select id="selectListCount" resultType="_int">
+		select
+		       count(*)
+		  from group_buy
+		 where status = 'Y'
+	</select>
+	
+	<select id="selectGroupBuyList" resultMap="groupBuyResultSet">
+		select
+		       pno
+		     , user_id
+		     , pname
+		     , price
+		     , content
+		     , gb_start
+		     , gb_thumb
+		 from group_buy g
+		 join member using (user_no)
+		where g.status = 'Y'
+	</select>
 	
 	
 </mapper>
