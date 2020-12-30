@@ -43,7 +43,7 @@
                 >오늘의 맥주</a
               >
             </li>
-            <li><a href="#">포럼</a></li>
+            <li><a href="list.fo">포럼</a></li>
           </ul>
         </div>
         <div class="comm__write-btn">
