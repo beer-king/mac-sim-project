@@ -34,7 +34,7 @@
         text-decoration: none;
         color: gray;
     }
-   
+
  
 </style>
 </head>
@@ -80,42 +80,106 @@
             
        <br><br>
 
-       <table id="replyArea" class="table" style="color: white; width: 80%;">
-        <thead>
-            <tr>
-                <th colspan="3">
-                    <textarea class="form-control" name="" id="content" cols="55" rows="2" style="resize:none; width:90%; margin-left: 60px;"></textarea>
-                </th>
-                <th style="vertical-align: middle; width: 20%;" ><button class="btn btn-secondary">댓글</button></th>
-            </tr>
-            
-            <tr>
-               <td colspan="4">댓글 (<span id="rcount">3</span>) </td> 
-            </tr>
-        </thead>
-        <tbody align="center">
-            <tr>
-                <td>user02</td>
-                <td>댓글입니다.</td>
-                <td>2020-04-10</td>
-                <td><a href="">신고</a></td>
-            </tr>
-            <tr>
-                <td>user01</td>
-                <td>많이봐주세요</td>
-                <td>2020-04-08</td>
-                <td><a href="">신고</a></td>
-            </tr>
-            <tr>
-                <td>admin</td>
-                <td>댓글입니다ㅋㅋㅋ</td>
-                <td>2020-04-02</td>
-                <td><a href="">신고</a></td>
-            </tr>
-        </tbody>
-    </table>
+       <table id="ncoArea" class="table" style="color: white; width: 80%;">
+	        <thead>
+	            <tr>
+	                <th colspan="3">
+	                    <textarea class="form-control" name="ncoComment" id="content" cols="55" rows="2" style="resize:none; width:90%; margin-left: 60px;"></textarea>
+	                </th>
+	                <th style="vertical-align: middle; width: 20%;" >
+	                	<button class="btn btn-secondary"onclick="addReply();">댓글</button>
+	                </th>
+	            </tr>
+	            
+	            <tr>
+	               <td colspan="4">댓글 (<span id="rcount"></span>) </td> 
+	            </tr>
+	        </thead>
+	        <tbody align="center">
+	            
+	        </tbody>
+      </table>
 </div>
 <br><br>
+
+	<script>
+		$(function(){
+			selectNcommentList();
+			
+		})
+		
+		
+		function addReply(){
+			// 작성된 댓글내용, 게시글 번호, 로그인한 사용자의 아이디
+			if($("#content").val().trim().length > 0){
+													   
+				$.ajax({
+					url:"ninsert.bo",
+					data:{
+						ncoComment:$("#content").val(),
+						noticeNo:${n.noticeNo},
+						userNo:"${loginUser.userNo}"
+					},
+					success:function(result){
+
+						if(result == "success"){
+
+							$("#content").val(""); 
+							selectNcommentList(); 
+							
+						}
+						
+					},error:function(){
+						console.log("댓글 작성용 ajax 통신 실패");
+					}
+				});
+				
+			}
+		
+		
+		}
+		function selectNcommentList(){
+			 
+			$.ajax({
+				url:"ncolist.no",
+				data:{nno:${n.noticeNo}},
+				success:function(list){
+					
+
+					$("#rcount").text(list.length); 
+
+					var value=""
+					for(var i in list){
+						value += "<tr>" + 
+									"<td>" + list[i].userId + "</td>" +
+									"<td>" + list[i].ncoComment + "</td>" + 
+									"<td>" + list[i].ncoDate + "</td>" + 
+									"<td>"+"<button type='button' id='deleteReply' class='btn btn-secondary btn-sm'>신고</button>" + "</td>" +
+								"</tr>"
+					}
+					
+					
+					$("#ncoArea tbody").html(value)
+					
+					
+				},error:function(){
+					console.log("댓글 리스트 ajax통신 실패")
+				}
+			});
+			
+		}
+	</script>
+
+
+
+
+
+
+
+
+
+
+
 	
 </body>
 </html>

@@ -11,6 +11,16 @@
 		<result column="count" property="count"/>
 	</resultMap>
 	
+	<resultMap type="NoComment" id="ncoResultSet">
+		<result column="nco_no" property="ncoNo"/>
+		<result column="notice_no" property="noticeNo"/>
+		<result column="user_no" property="userNo"/>
+		<result column="nco_comment" property="ncoComment"/>
+		<result column="nco_date" property="ncoDate"/>
+		<result column="status" property="status"/>
+	</resultMap>
+	
+
 	<select id="selectListCount" resultType="_int">
 		select
 		       count(*)
@@ -54,5 +64,42 @@
 		where notice_no = #{nno}
 		  and status = 'Y'
 	</update>
+	
+	<select id="selectNcommentList" resultMap="ncoResultSet"
+	 		parameterType="_int">
+		select 
+		       nco_no
+		     , user_id
+		     , nco_comment
+		     , to_char(nco_date, 'YYYY-MM-DD') "nco_date"
+		  from ncomments
+		  join member using(user_no)
+		 where notice_no = #{nno}
+		   and ncomments.status = 0
+		 order
+		    by nco_no desc
+	</select>
+	
+	<insert id="insertNcomment" parameterType="NoComment">
+		insert
+		    into ncomments
+		    (
+		        nco_no
+		      , notice_no
+		      , user_no
+		      , nco_comment
+		    )
+		     values
+		     (
+		       seq_nco_no.nextval
+		     , #{noticeNo}
+		     , #{userNo}
+		     , #{ncoComment}
+		     )
+	</insert>
+	
+	
+	
+	
 	
 </mapper>

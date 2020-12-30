@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.beer.macSim.common.model.vo.PageInfo;
 import com.beer.macSim.notice.model.dao.NoticeDao;
+import com.beer.macSim.notice.model.vo.NoComment;
 import com.beer.macSim.notice.model.vo.Notice;
 
 @Service
@@ -38,6 +39,18 @@ public class NoticeServiceImpl implements NoticeService{
 	public Notice selectNotice(int nno) {
 		return nDao.selectNotice(sqlSession, nno);
 	}
+
+	@Override
+	public ArrayList<NoComment> selectNcommentList(int nno) {
+		return nDao.selectNcommentList(sqlSession, nno);
+	}
+
+	@Override
+	public int insertNcomment(NoComment nc) {
+		return nDao.insertNcomment(sqlSession, nc);
+	}
+	
+	
 
 
 	

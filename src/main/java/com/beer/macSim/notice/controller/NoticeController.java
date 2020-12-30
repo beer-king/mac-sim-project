@@ -7,11 +7,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.beer.macSim.common.model.vo.PageInfo;
 import com.beer.macSim.common.template.Pagination;
 import com.beer.macSim.notice.model.service.NoticeService;
+import com.beer.macSim.notice.model.vo.NoComment;
 import com.beer.macSim.notice.model.vo.Notice;
+import com.google.gson.Gson;
+
 
 
 @Controller
@@ -56,6 +60,29 @@ public class NoticeController {
 		
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="ncolist.no", produces = "application/json; charset=utf-8")
+	public String selectNcommentList(int nno) {
+		
+		ArrayList<NoComment> list = nService.selectNcommentList(nno);
+		
+		return new Gson().toJson(list);
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping("ninsert.bo")
+	public String insertReply(NoComment nc) {
+		
+		int result = nService.insertNcomment(nc);
+		
+		if(result > 0) {
+			return "success";
+		}else {
+			return "fail";
+		}
+		
+	}
 	
 	
 }
