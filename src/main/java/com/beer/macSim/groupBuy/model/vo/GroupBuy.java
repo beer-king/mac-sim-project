@@ -14,7 +14,7 @@ public class GroupBuy {
 	
 	private int pno;  		// 공구번호
 	private String userNo;	// 작성자
-	private String pName; 	// 상품
+	private String gbName; 	// 상품
 	private int price;		// 상품가격
 	private String content;	 // 상품설명	
 	private String gbStart; // 시작시간

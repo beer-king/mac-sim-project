@@ -22,14 +22,12 @@ public class GroupBuyServiceImpl implements GroupBuyService {
 	
 	@Override
 	public int selectListCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return gbDao.selectListCount(sqlSession);
 	}
 
 	@Override
 	public ArrayList<GroupBuy> selectGroupBuyList(PageInfo pi) {
-		// TODO Auto-generated method stub
-		return null;
+		return gbDao.selectGroupBuyList(sqlSession, pi);
 	}
 
 	@Override
