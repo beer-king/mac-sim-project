@@ -37,9 +37,13 @@
 	
 	<select id="selectCommList" resultMap="commResultSet">
 		select
-		       comm_src
+		       comm_no
+		     , comm_src
 		     , comm_content
 		     , comm_createdate
+		     , comm_cate
+		     , comm_status
+		     , user_no
 		     , user_id
 		  from community
 		  join member using(user_no)

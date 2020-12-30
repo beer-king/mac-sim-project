@@ -49,7 +49,7 @@
         
         <ul class="comm__items">
           <c:forEach var="f" items="${ list }" >
-	          <li class="forum__item">
+	          <li class="forum__item" onclick="location.href='detail.fo?fno=${ f.forNo }'">
 	            <div class="img-wrapper">
 	              <img src="resources/uploadFiles/${ f.forSrc }" alt="picture" />
 	            </div>
