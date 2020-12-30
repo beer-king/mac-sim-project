@@ -1,6 +1,7 @@
 package com.beer.macSim.member.controller;
 
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -305,7 +306,8 @@ public class MemberController {
 		int result = mService.insertMember(m);
 
 		if (result > 0) { // 성공 => 메인페이지 url재요청
-
+			
+			
 			session.setAttribute("alertMsg", "회원가입 성공! 100point 적립 되었습니다~!");
 			return "redirect:/";
 
@@ -343,8 +345,35 @@ public class MemberController {
     	
     	Member loginUser = mService.loginMember(m); 
     	if(loginUser != null && bcryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())) {
-
+    		
+    		String loginTime =  mService.loginPoint(loginUser.getUserNo());
+    		
+    		if(loginTime == null || Integer.parseInt(loginTime) >= 1 ) {
+    			
+    			//1) memeber 포인트 +3
+    				 int result = mService.memberPointUpdate(loginUser.getUserNo(), 3);
+    				 //System.out.println(result); -> 1 
+    				 
+    			//2) 포인트 내역
+    				 
+    				 int result1= mService.pointHistory(loginUser.getUserNo(),3, 1, "적립");
+    				 
+    				 if(result*result1 > 0) {
+    					 
+    					 session.setAttribute("alertMsg", "3point 적립되었습니다~~!!!");
+    					 
+    				 }//else{
+    					 
+    					 //session.setAttribute("alertMsg", "이미 오늘 포인트 받아가셨어요~");
+    				 //}
+    		}
+    		
+    		// 확인해보기
+    		//System.out.println(loginTime);
+    		
+    		
 			session.setAttribute("loginUser", loginUser);
+			
 			return "redirect:/";
 
 		} else {
@@ -370,7 +399,7 @@ public class MemberController {
 	        System.out.println("#########" + code);
 	        return "member/loginForm";
 	   }*/
-
+	 // 카카오
 	 @RequestMapping(value="/kakaologin.do")
 	 public String login(@RequestParam("code") String code, HttpSession session) {
 	     String access_Token = kakaoService.getAccessToken(code);
@@ -393,6 +422,12 @@ public class MemberController {
 	     session.removeAttribute("userId");
 	     return "redirect:/";
 	 }
+	 
+	 // 인증번호 보내기 
+	 /*
+	 @RequestMapping("findPwd.me")
+	 public String findPwd()
+	 */
 
 
 	

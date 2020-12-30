@@ -5,7 +5,10 @@ import com.beer.macSim.member.model.vo.Member;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 @Repository
 public class MemberDao {
@@ -68,6 +71,46 @@ public class MemberDao {
 	public int deleteEvent(SqlSessionTemplate sqlSession, String title) {
 		return sqlSession.update("memberMapper.deleteEvent", title);
 	}
+
+	public String loginPoint(SqlSessionTemplate sqlSession, int userNo) {
+		return sqlSession.selectOne("memberMapper.loginPoint", userNo);
+	}
+
+	public int memberPointUpdate(SqlSessionTemplate sqlSession, int userNo, int point) {
+		
+		HashMap<String,Integer> map = new HashMap<String,Integer>();
+		map.put("userNo",userNo);
+		map.put("point",point);
+		
+		return sqlSession.update("memberMapper.memberPointUpdate", map);
+	}
+
+	public int pointHistory(SqlSessionTemplate sqlSession, int userNo, int point, int category, String pointHistory) {
+		
+		String cate = "";
+		switch(category) {
+		case 0: cate = "회원가입"; break;
+		case 1: cate = "로그인" ; break;
+		case 2: cate = "맥주리뷰";break;
+		case 3: cate = "맥주정보제공";break;
+		case 4: cate = "맥주정보수정";break;
+		case 5: cate = "이벤트신청";break;
+		case 6: cate = "이벤트생성";break;
+		case 7: cate = "내이벤트참여";break;
+		case 8: cate = "포럼입장";break;
+		case 9: cate = "공구신청";break;
+		}
+		
+		HashMap<String,String> map = new HashMap<String,String>();
+		map.put("userNo",Integer.toString(userNo));
+		map.put("point",Integer.toString(point));
+		map.put("cate",cate);
+		map.put("pointHistory",pointHistory);
+			
+		return sqlSession.insert("memberMapper.pointHistory", map);
+	}
+
+	
 
 
 	

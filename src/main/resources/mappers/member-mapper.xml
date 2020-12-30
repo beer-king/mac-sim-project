@@ -19,9 +19,16 @@
         <result column="status" property="status"/>
         <result column="login_time" property="loginTime"/>
         <result column="report" property="report"/>
-
     </resultMap>
-
+	
+	<resultMap type="PointHistory" id="pointHistoryResultSet">
+		<result column="ph_no" property="pointNo"/>
+		<result column="pdate" property="pointDate"/>
+		<result column="point" property="point"/>
+		<result column="user_no" property="userNo"/>
+		<result column="category" property="category"/>
+		<result column="point_history" property="pointHistory"/>
+	</resultMap>
 
 
 	<!--  
@@ -220,7 +227,56 @@
 	
 	</update>
 	
+	<select id="loginPoint" parameterType="_int" 
+		    resultType="string">
+		select
+		       to_char(sysdate, 'yyyymmdd') - to_char(login_time, 'yyyymmdd')
+		  from member
+		 where user_no = #{ userNo }
+	</select>
 	
+	<update id="memberPointUpdate" parameterType="hashmap">
+		 UPDATE MEMBER
+		    SET
+		       POINT = POINT + #{point},
+		       login_time = sysdate
+		    WHERE
+		        user_no =  #{userNo}
+	</update>
+	
+	<insert id="pointHistory" parameterType="hashmap">
+		 insert
+		   into point_history
+		   (  
+		      ph_no
+		    , user_no
+		    , point
+		    , category
+		    , point_history 
+		   )
+		   values
+		   (
+		      seq_ph_no.nextval
+		    , to_Number(#{userNo})
+		    , to_Number(#{point})
+		    , #{cate}
+		    , #{pointHistory}
+  		   )
+	</insert>
 	
 
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
