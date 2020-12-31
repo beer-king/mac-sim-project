@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.beer.macSim.common.model.vo.PageInfo;
 import com.beer.macSim.common.template.Pagination;
+import com.beer.macSim.event.model.vo.Attachment;
 import com.beer.macSim.groupBuy.model.service.GroupBuyService;
 import com.beer.macSim.groupBuy.model.vo.GroupBuy;
 
@@ -36,8 +37,25 @@ public class GroupBuyController {
 	}
 	
 	@RequestMapping("detail.gb")
-	public String selectGroupBuy() {
+	public String selectGroupBuy(int gno, Model model) {
 		
-		return "groupBuy/groupBuyDetailView";
+		int result = gbService.increaseCount(gno);
+		
+		if(result > 0 ) {
+			GroupBuy gb = gbService.selectGroupBuy(gno);
+			ArrayList<Attachment> atList = gbService.selectGbAttachment(gno);
+			System.out.println(gb);
+			System.out.println(atList);
+			
+			model.addAttribute("gb", gb);
+			model.addAttribute("atList", atList);
+			
+			return "groupBuy/groupBuyDetailView";
+		}else {
+			model.addAttribute("errorMsg", "존재하지 않는 게시글입니다.");
+			return "common/errorPage";
+		}
+		
+		
 	}
 }

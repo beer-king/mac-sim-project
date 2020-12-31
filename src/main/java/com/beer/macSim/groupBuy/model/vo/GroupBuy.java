@@ -1,5 +1,7 @@
 package com.beer.macSim.groupBuy.model.vo;
 
+import java.sql.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,4 +26,6 @@ public class GroupBuy {
 	private String status; 	// 상태값
 	private int limitNo;	// 모집자제한수
 	private int applyNo;	// 신청자수
+	private int clickNo;	// 조회수
+	private Date gbDate;	// 작성일자
 }

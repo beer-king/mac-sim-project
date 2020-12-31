@@ -86,10 +86,10 @@
 	                       <td colspan="4">${ g.content }</td>
 	                   </tbody>
 	                   <tfoot>
-	                       <td>조회수 : 245</td>
+	                       <td>조회수 : ${ g.clickNo }</td>
 	                       <td>댓글수 : 32</td>
 	                       <td>작성자 : ${ g.userNo }</td>
-	                       <td>2020-11-09</td>
+	                       <td>${ g.gbDate }</td>
 	                   </tfoot>
 	               </table>
 	           </div>
@@ -129,7 +129,7 @@
           <script>
            	$(function(){
            		$(".gbList").click(function(){
-           			location.href="detail.gb"
+           			location.href="detail.gb?gno=" + $(this).children(".gno").val();
            		})
            		
            	})

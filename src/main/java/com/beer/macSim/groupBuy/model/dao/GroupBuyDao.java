@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.beer.macSim.common.model.vo.PageInfo;
+import com.beer.macSim.event.model.vo.Attachment;
 import com.beer.macSim.groupBuy.model.vo.GroupBuy;
 
 @Repository
@@ -24,6 +25,18 @@ public class GroupBuyDao {
 		RowBounds rowbounds = new RowBounds(offset, pi.getBoardLimit());
 		
 		return (ArrayList)sqlSession.selectList("groupBuyMapper.selectGroupBuyList", null, rowbounds);
+	}
+	
+	public int increaseCount(SqlSessionTemplate sqlSession, int gno) {
+		return sqlSession.update("groupBuyMapper.increaseCount", gno);
+	}
+	
+	public GroupBuy selectGroupBuy(SqlSessionTemplate sqlSession, int gno) {
+		return sqlSession.selectOne("groupBuyMapper.selectGroupBuy", gno);
+	}
+	
+	public ArrayList<Attachment> selectGbAttachment(SqlSessionTemplate sqlSession, int gno){
+		return (ArrayList)sqlSession.selectList("groupBuyMapper.selectGbAttachment", gno);
 	}
 	
 }

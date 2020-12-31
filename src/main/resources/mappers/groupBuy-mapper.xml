@@ -13,7 +13,9 @@
 		<result column="gb_thumb" property="gbThumb"/>
 		<result column="status" property="status"/>
 		<result column="limit_no" property="limitNo"/>
-		<result column="apply_no" property="applyNo"/>	
+		<result column="apply_no" property="applyNo"/>
+		<result column="click_no" property="clickNo"/>	
+		<result column="gb_date" property="gbDate"/>		
 	</resultMap>
 
 	<resultMap id="AttachmentResultSet" type="Attachment">
@@ -40,10 +42,48 @@
 		     , content
 		     , gb_start
 		     , gb_thumb
+		     , click_no
+		     , gb_date
 		 from group_buy g
 		 join member using (user_no)
 		where g.status = 'Y'
 	</select>
 	
+	<update id="increaseCount" parameterType="_int">
+		update
+		  	   group_buy
+		   set click_no = click_no + 1
+		 where pno = ${gno}  
+	</update>
 	
+	<select id="selectGroupBuy" parameterType="_int" resultMap="groupBuyResultSet">
+		select
+			   pno
+			 , user_no
+			 , pname
+			 , price
+			 , content
+			 , gb_start
+			 , gb_end
+			 , gb_point
+			 , gb_thumb
+			 , status
+			 , limit_no
+			 , apply_no
+			 , click_no
+			 , gb_date
+	      from group_buy
+	     where pno = ${gno}
+	       and status = 'Y'  
+	</select>
+	
+	<select id="selectGbAttachment" parameterType="_int" 
+			resultMap="AttachmentResultSet">
+		select
+  				att_no
+  			  , origin_name
+  			  , change_name
+  		   from attachment
+  		  where pno = ${gno}  
+	</select>
 </mapper>

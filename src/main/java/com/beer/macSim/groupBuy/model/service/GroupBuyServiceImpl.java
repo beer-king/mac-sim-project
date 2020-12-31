@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.beer.macSim.common.model.vo.PageInfo;
+import com.beer.macSim.event.model.vo.Attachment;
 import com.beer.macSim.groupBuy.model.dao.GroupBuyDao;
 import com.beer.macSim.groupBuy.model.vo.GbReply;
 import com.beer.macSim.groupBuy.model.vo.GroupBuy;
@@ -31,19 +32,22 @@ public class GroupBuyServiceImpl implements GroupBuyService {
 	}
 
 	@Override
-	public int increaseCount(int gbno) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int increaseCount(int gno) {
+		return gbDao.increaseCount(sqlSession, gno);
 	}
 
 	@Override
-	public GroupBuy selectGroupBuy(int gbno) {
-		// TODO Auto-generated method stub
-		return null;
+	public GroupBuy selectGroupBuy(int gno) {
+		return gbDao.selectGroupBuy(sqlSession, gno);
+	}
+	
+	@Override
+	public ArrayList<Attachment> selectGbAttachment(int gno) {
+		return gbDao.selectGbAttachment(sqlSession, gno);
 	}
 
 	@Override
-	public ArrayList<GbReply> selectGbReplyList(int gbno) {
+	public ArrayList<GbReply> selectGbReplyList(int gno) {
 		// TODO Auto-generated method stub
 		return null;
 	}
