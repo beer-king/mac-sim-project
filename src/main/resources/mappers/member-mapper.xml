@@ -177,13 +177,14 @@
 	
 	<select id="selectEventList" resultMap="eventResultSet" parameterType="Member">
 		select 
-		      ev_no
-		     ,user_no
-		     ,ev_title
-		     ,ev_content
-		     ,status
-		from event
-		where user_no= #{userNo}    
+				ev_title
+			    ,ev_no
+			    ,ev_content
+			    ,status
+		   from event e
+		   join event_attendee using(ev_no)
+		   where e.user_no = #{userNo}
+			 and EVENT_ENTRY_STATUS = 'Y'
 	</select>
 	
 	
@@ -212,11 +213,11 @@
 	</select>
 	
 	
-	<update id="deleteEvent" parameterType="string">
+	<update id="deleteEvent" parameterType="_int">
 		 update
               event
           set status = 'D'
-       where  ev_title =#{title} 
+       where  ev_no =#{eventNo} 
 	
 	</update>
 	

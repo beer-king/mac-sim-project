@@ -76,6 +76,8 @@ public class MemberController {
 		
 		int listCount = mService.eventCount(m);
 		
+		System.out.println(listCount);
+		
 		PageInfo pi =Pagination.getPageInfo(listCount, currentPage, 10, 5);
 		
 		ArrayList<Event>list = mService.selectEventList(m);
@@ -230,12 +232,12 @@ public class MemberController {
 	public String deleteEvent(Model model,HttpSession session) {
 		
 		
-		String title = (String) model.getAttribute("eventTitle");
-		//System.out.println(title);
+		int eventNo = (int) model.getAttribute("eventNo");
+	
 		
-		int result = mService.deleteEvent(title);
+		int result = mService.deleteEvent(eventNo);
 		
-		System.out.println(result);
+		
 		
 		if(result>0) { // 삭제 성공
 			session.setAttribute("alertMsg", "이벤트가 취소되었습니다");

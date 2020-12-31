@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <html>
 <head>
     <title>이벤트 신청내역</title>
@@ -95,7 +95,8 @@
   		
 			<c:forEach var="e" items="${list}">
 			        <li id="a">
-				            <span id="b">${e.evTitle }</span>
+			        		<span id="b">${e.evNo}</span>
+				            <span>${e.evTitle }</span>
 				            <!-- Button to Open the Modal -->
 				           
 				           
@@ -114,9 +115,9 @@
 <script type="text/javascript">
 	$(function(){
 		$("#c").click(function(){
-		 var title = $("#b").text();
-		 console.log(title);
-		 location.href = "delete.ev?eventTitle="+title;
+		 var eventNo = $("#b").text();
+		 //console.log(eventNo);
+		 location.href = "delete.ev?eventNo="+eventNo;
 		 
 		});
 	});
@@ -140,11 +141,11 @@
             </div>
 
             <!-- Modal footer -->
-            <form action="delete.ev"  class="modal-footer">
-            	
+            <div  class="modal-footer">
+            
                 <button type="button" class="btn btn-primary" data-dismiss="modal">뒤로가기</button>
                 <button id="c" type="submit" class="btn btn-danger" data-dismiss="modal">확인</button>
-            </form>
+            </div>
 
         </div>
     </div>
@@ -156,7 +157,7 @@
 
 <div class="myEvent">
     <table  style="height: 100px;" class="table-hover">
-    <c:forEach var="e" test="${list}">
+    <c:forEach var="e" items="${list}">
         <tr>
             <td rowspan="3" style="color:white;">${e.evTitle }</td>
             <td rowspan="3">

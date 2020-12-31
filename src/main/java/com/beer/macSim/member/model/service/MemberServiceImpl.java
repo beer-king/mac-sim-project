@@ -94,8 +94,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int deleteEvent(String title) {
-		return mDao.deleteEvent(sqlSession,title);
+	public int deleteEvent(int eventNo) {
+		return mDao.deleteEvent(sqlSession,eventNo);
 	}
 
 
