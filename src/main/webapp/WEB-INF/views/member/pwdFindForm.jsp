@@ -49,7 +49,7 @@
             </div>
             <br><br>
             <div id="findIdForm">
-              <form action="" method="">
+              <form action="findPwd.me" method="post">
                   <table align="center">
                     <tr>
                       <th>아이디</th>

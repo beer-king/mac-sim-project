@@ -26,7 +26,7 @@ public class Member {
     private String phone;
     private int point;
     private int status;
-    private Date loginTime;
+    private String loginTime;
     private int report;
 
 

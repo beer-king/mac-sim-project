@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 @Service
@@ -97,6 +98,31 @@ public class MemberServiceImpl implements MemberService {
 	public int deleteEvent(int eventNo) {
 		return mDao.deleteEvent(sqlSession,eventNo);
 	}
+
+	@Override
+	public String loginPoint(int userNo) {
+		return mDao.loginPoint(sqlSession, userNo);
+	}
+
+	// 포인트 증가 메소드
+	@Override
+	public int memberPointUpdate(int userNo, int point) {
+		return mDao.memberPointUpdate(sqlSession, userNo, point);
+	}
+
+
+
+	// 포인트 히스토리에 insert
+	@Override
+	public int pointHistory(int userNo, int point, int category, String pointHistory) {
+		return mDao.pointHistory(sqlSession, userNo, point, category, pointHistory);
+	}
+
+	
+
+	
+
+
 
 
 

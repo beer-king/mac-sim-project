@@ -4,6 +4,7 @@ package com.beer.macSim.member.model.service;
 import com.beer.macSim.event.model.vo.Event;
 import com.beer.macSim.member.model.vo.Member;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 public interface MemberService {
@@ -48,6 +49,13 @@ public interface MemberService {
     int groupCount(Member m);
 
 	int deleteEvent(int eventNo);
+
+	String loginPoint(int userNo);
+
+	int memberPointUpdate(int userNo, int point);
+
+
+	int pointHistory(int userNo, int point, int category, String pointHistory);
 
      
 }

@@ -19,9 +19,14 @@
 		<typeAlias type="com.beer.macSim.administer.model.vo.SelectData" alias="SD"/>
 		<typeAlias type="com.beer.macSim.notice.model.vo.NoComment" alias="NoComment"/>
 
-		<typeAlias type="com.beer.macSim.event.model.vo.Attachment" alias="Attachment"/>
+		 <typeAlias type="com.beer.macSim.event.model.vo.Attachment" alias="Attachment"/>
 		<typeAlias type="com.beer.macSim.community.model.vo.Community" alias="Community"/>
+
+		<typeAlias type="com.beer.macSim.member.model.vo.PointHistory" alias="PointHistory"/>
+
+
 		<typeAlias type="com.beer.macSim.community.model.vo.Forum" alias="Forum"/>
+
 	</typeAliases>
 	
 	<!-- 원래는 DB접속과 관련된 내용들을 작성했었음!! => 다른곳(root-context)에서 할 예정 -->
