@@ -79,5 +79,30 @@
 		    by for_createdate desc
 	</select>
 	
+	<update id="increaseCount" parameterType="_int">
+		update
+		       forum
+		   set for_count = for_count+1
+		 where for_status = 0
+		   and for_no = #{ fno }
+	</update>
+	
+	<select id="selectForumDetail" parameterType="_int" resultMap="forResultSet">
+		select
+		       for_no
+		     , for_src
+		     , for_title
+		     , for_info
+		     , for_createdate
+		     , for_count
+		     , for_comment
+		     , for_status
+		     , user_no
+		     , user_id
+		  from forum
+		  join member using(user_no)
+		 where for_no = #{ fno }		       
+	</select>
+	
 
 </mapper>

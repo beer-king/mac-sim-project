@@ -74,7 +74,10 @@
 	              </div>
 	              <div class="forum-contents">
 	                ${ f.forInfo }
-	                <span>${ f.forComment } comments</span>
+	                <div>
+	                  <span>${ f.forCount } views</span>
+	                  <span>${ f.forComment } comments</span>
+	                </div>
 	              </div>
 	            </div>
 	          </li>

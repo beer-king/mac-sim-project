@@ -17,17 +17,17 @@ public class CommServiceImpl  implements CommService{
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	@Autowired
-	private CommDao cmDao;
+	private CommDao cDao;
 
 	// 커뮤니티 (맥일/오맥) 리스트 조회
 	@Override
 	public int selectCommCount(int cate) {
-		return cmDao.selectCommCount(sqlSession, cate);
+		return cDao.selectCommCount(sqlSession, cate);
 	}
 
 	@Override
 	public ArrayList<Community> selectCommList(int cate, PageInfo pi) {
-		return cmDao.selectCommList(sqlSession, cate, pi);
+		return cDao.selectCommList(sqlSession, cate, pi);
 	}
 
 	@Override
@@ -38,22 +38,23 @@ public class CommServiceImpl  implements CommService{
 	// 포럼 리스트 조회
 	@Override
 	public int selectForumCount() {
-		return cmDao.selectForumCount(sqlSession);
+		return cDao.selectForumCount(sqlSession);
 	}
 
 	@Override
 	public ArrayList<Forum> selectForumList(PageInfo pi) {
-		return cmDao.selectForumList(sqlSession, pi);
+		return cDao.selectForumList(sqlSession, pi);
 	}
 
+	// 포럼 상세 페이지 조회
 	@Override
 	public int increaseCount(int fno) {
-		return 0;
+		return cDao.increaseCount(sqlSession, fno);
 	}
 
 	@Override
-	public Forum selectForum(int fno) {
-		return null;
+	public Forum selectForumDetail(int fno) {
+		return cDao.selectForumDetail(sqlSession, fno);
 	}
 
 	@Override
