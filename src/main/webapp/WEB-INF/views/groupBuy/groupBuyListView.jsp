@@ -18,7 +18,8 @@
         width:800px;
         height:200px;
         position:relative; 
-        background-color:aqua;
+        background-color:#151515;
+        color:white;
         }
     .gbList:hover{cursor:pointer}
     .content{
@@ -40,7 +41,8 @@
     #pagingArea{
     	width:fit-content;
      	margin:auto;
-     	}   
+     	}  
+    #title{color:#ecbf2e;}  
 </style>
 </head>
 <body>
@@ -77,7 +79,7 @@
 	           <div class="content">
 	               <table style="height: 100%;" align="center">
 	                   <thead>
-	                       <th>${ g.gbName }</th>
+	                       <th id="title">${ g.gbName }</th>
 	                       <th>공구 No.${ g.pno }</th>
 	                       <th>D-Day = 10</th>
 	                       <th>${ g.gbStart }</th>
@@ -138,13 +140,29 @@
        </div>
            <div id="pagingArea">
                <ul class="pagination">
-                   <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-                   <li class="page-item"><a class="page-link" href="#">1</a></li>
-                   <li class="page-item"><a class="page-link" href="#">2</a></li>
-                   <li class="page-item"><a class="page-link" href="#">3</a></li>
-                   <li class="page-item"><a class="page-link" href="#">4</a></li>
-                   <li class="page-item"><a class="page-link" href="#">5</a></li>
-                   <li class="page-item"><a class="page-link" href="#">Next</a></li>
+               	   
+               	   <c:choose>
+                   		<c:when test="${ pi.currentPage eq 1 }">
+                   			<li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                   		</c:when>
+                   		<c:otherwise>
+                   			<li class="page-item"><a class="page-link" href="list.gb?currentPage=${ pi.currentPage -1 }">Previous</a></li>
+                   		</c:otherwise>
+                   </c:choose>
+                   
+                   <c:forEach var="p" begin="${pi.startPage }" end="${ pi.endPage }">
+                   		<li class="page-item"><a class="page-link" href="list.gb?currentPage=${ p }">${ p }</a></li>
+                   </c:forEach>
+                   
+                   <c:choose>
+                   		<c:when test="${ pi.currentPage eq pi.maxPage }">
+                   			<li class="page-item"><a class="page-link" href="#">Next</a></li>
+              	   		</c:when>
+              	   		<c:otherwise>
+              	   			<li class="page-item"><a class="page-link" href="${ pi.currentPage +1 }">Next</a></li>
+              	   		</c:otherwise>
+              	   		
+              	   </c:choose>
                </ul>
            </div>
        </div>

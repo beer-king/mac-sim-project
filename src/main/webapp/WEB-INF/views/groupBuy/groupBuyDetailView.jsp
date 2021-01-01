@@ -11,9 +11,14 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <style>
         .head{
-            background-color: cadetblue;
+            background-color: #151515;
             height: 250px;
             width: 1200px;
+            margin: auto;
+            color:white;
+        }
+        #back{
+        	width: 120px;	
         }
         .photo{
             float: left;
@@ -23,16 +28,20 @@
             height: 200px;
             float: left;
             padding-left: 30px;
-            background-color: aqua;
+            background-color: #151515;
         }
         #proTable{
             width: 700px;
             height: 100%;
         }
         .body{
-            background-color: cadetblue;
+            background-color: #151515;
             height: 1050px;
             width: 1200px;
+            margin: auto;
+        }
+        .body *{
+            color:white;
         }
         .table{width: 100%;}
     </style>
@@ -41,24 +50,25 @@
     
     <jsp:include page="../common/header.jsp"/> 
     
-        <button type="button" class="btn btn-primary" onclick="history.back();" >&lt;뒤로가기</button>
-        <br><br>
-
         <div class="head" align="center">
+        
+        <button id="back" type="button" class="btn btn-primary" onclick="history.back();" >&lt;뒤로가기</button>
+        <br><br>
+        
             <div class="photo">
-                <img src="resources/images/카카오 맥주잔.jpg" width="300px">
+                <img src="${ gb.gbThumb }" width="300px">
             </div>
             <div class="profile">
                 <table id="proTable">
                     <tr>
-                        <td colspan="2"><h2>공구 No.12</h2></td>
+                        <td colspan="2"><h2>공구 No.${ gb.pno }</h2></td>
                     </tr>
                     <tr>
-                        <th><h1>카카오 맥주잔</h1></th>
-                        <th><h4>작성자 : admin</h4></th>
+                        <th><h1>${ gb.gbName }</h1></th>
+                        <th><h4>작성자 : ${ gb.userNo }</h4></th>
                     </tr>
                     <tr>
-                        <th>신청마감일 : 2020-12-06 PM 8</th>
+                        <th>신청마감일 : ${ gb.gbEnd }</th>
                         <th>D- Day = 10일 5시 35분 남음</th>
                     </tr>
                     <tr>
@@ -73,25 +83,25 @@
              <table class="table" align="center">
                 <tr>
                     <td colspan="2">
-                        <h3>귀여운 카카오 맥주잔을 공동구매하세요!!</h3>
+                        <h3>${ gb.content }</h3>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <h2>모집자 현황 :  50명 중  35명  마감됨 !!</h2>
+                        <h2>모집자 현황 :  ${ gb.limitNo }명 중  ${ gb.applyNo }명  마감됨 !!</h2>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <h3>기존 거래 가격: 15,000원(1세트: 2잔)</h3>
+                        <h3>기존 거래 가격: ${ gb.price }원(1세트: 2잔)</h3>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <img src="resources/images/카카오 맥주잔2.PNG" width="500px">
+                        <img src="${ atList[0].changeName }" width="500px">
                     </td>
                     <td>
-                        <img src="resources/images/카카오 맥주잔3.PNG" width="500px">
+                        <img src="${ atList[1].changeName }" width="500px">
                     </td>
                 </tr>
                

@@ -11,9 +11,14 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <style>
         .head{
-            background-color: cadetblue;
+            background-color: #151515;
             height: 250px;
             width: 1200px;
+            margin: auto;
+            color:white;
+        }
+        #back{
+        	width: 120px;	
         }
         .photo{
             float: left;
@@ -23,16 +28,20 @@
             height: 200px;
             float: left;
             padding-left: 30px;
-            background-color: aqua;
+            background-color: #151515;
         }
         #proTable{
             width: 700px;
             height: 100%;
         }
         .body{
-            background-color: cadetblue;
+            background-color: #151515;
             height: 1050px;
             width: 1200px;
+            margin: auto;
+        }
+        .body *{
+            color:white;
         }
         .table{width: 100%;}
     </style>
@@ -43,10 +52,12 @@
    	<jsp:include page="../common/header.jsp"/>   
 		
 		<br>
-        <button type="button" class="btn btn-primary" onclick="history.back();">&lt;뒤로가기</button>
-        <br><br>
 
         <div class="head" align="center">
+        
+        <button id="back" type="button" class="btn btn-primary" onclick="history.back();">&lt;뒤로가기</button>
+        <br><br>
+        
             <div class="photo">
                 <img src="${ ev.evThumb }" width="350px">
             </div>

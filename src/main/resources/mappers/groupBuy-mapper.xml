@@ -58,23 +58,24 @@
 	
 	<select id="selectGroupBuy" parameterType="_int" resultMap="groupBuyResultSet">
 		select
-			   pno
-			 , user_no
-			 , pname
-			 , price
-			 , content
-			 , gb_start
-			 , gb_end
-			 , gb_point
-			 , gb_thumb
-			 , status
-			 , limit_no
-			 , apply_no
-			 , click_no
-			 , gb_date
-	      from group_buy
-	     where pno = ${gno}
-	       and status = 'Y'  
+		       pno
+		     , user_id
+		     , pname
+		     , price
+		     , content
+		     , gb_start
+		     , gb_end
+		     , gb_point
+		     , gb_thumb
+		     , gb.status
+		     , limit_no
+		     , apply_no
+		     , click_no
+		     , gb_date
+		  from group_buy gb
+		  join member using (user_no)
+		 where pno = #{gno}
+		   and gb.status = 'Y'  
 	</select>
 	
 	<select id="selectGbAttachment" parameterType="_int" 

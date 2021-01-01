@@ -18,7 +18,8 @@
         width:800px;
         height:200px;
         position:relative; 
-        background-color:aqua;
+        background-color:#151515;
+        color:white;
         }
     .evList:hover{cursor:pointer;}
     .content{
@@ -39,7 +40,8 @@
     	}
     #pagingArea{
     	width:fit-content;
-     	margin:auto;}    
+     	margin:auto;}
+	#title{color:#ecbf2e;}   
 </style>
 </head>
 <body>
@@ -79,7 +81,7 @@
 	            <div class="content">
 	                <table id="eventList" style="height: 100%;" align="center">
 	                    <thead>
-	                        <th>${ e.evTitle }</th>
+	                        <th id="title">${ e.evTitle }</th>
 	                        <th>No.${ e.evNo }</th>
 	                        <th>D-Day = 8</th>
 	                        <th>${ e.evStartTime }</th>
