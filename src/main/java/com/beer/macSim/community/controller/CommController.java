@@ -60,9 +60,34 @@ public class CommController {
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		
-		System.out.println("list : " + list);
+		//System.out.println("list : " + list);
 		
 		return "community/forumList";
+		
+	}
+	
+	// 포럼 상세페이지 조회
+	@RequestMapping("detail.fo") // detail.fo?fno=x
+	public String selectForumDetail(int fno, Model model) {
+
+		System.out.println("fno : " + fno);
+		
+		int result = cService.increaseCount(fno);
+		
+		if(result > 0) {
+			
+			Forum fo = cService.selectForumDetail(fno);
+			
+			// 댓글 가져오기
+			
+			model.addAttribute("fo", fo);
+			// 댓글가져온거 model에
+			return "community/forumDetail";
+			
+		}else {
+			model.addAttribute("errorMsg", "존재하지 않는 포럼입니다");
+			return "common/errorPage";
+		}
 		
 	}
 	

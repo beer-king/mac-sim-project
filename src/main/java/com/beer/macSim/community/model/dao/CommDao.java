@@ -41,4 +41,13 @@ public class CommDao {
 		
 	}
 
+	// 포럼 디테일 페이지
+	public int increaseCount(SqlSessionTemplate sqlSession, int fno) {
+		return sqlSession.update("commMapper.increaseCount", fno);
+	}
+
+	public Forum selectForumDetail(SqlSessionTemplate sqlSession, int fno) {
+		return sqlSession.selectOne("commMapper.selectForumDetail", fno);
+	}
+
 }

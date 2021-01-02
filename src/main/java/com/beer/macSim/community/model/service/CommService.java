@@ -21,7 +21,7 @@ public interface CommService {
 	
 	// 4. 포럼 상세페이지 조회 서비스
 	int increaseCount(int fno);
-	Forum selectForum(int fno);
+	Forum selectForumDetail(int fno);
 	
 	// 5. 포럼 작성용 서비스
 	int insertForum(Forum fo);
