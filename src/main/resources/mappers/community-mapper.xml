@@ -4,7 +4,8 @@
 
 	<resultMap id="commResultSet" type="Community" >
 		<result column="comm_no" property="commNo" />
-		<result column="comm_src" property="commSrc" />
+		<result column="comm_origin_src" property="commOriginSrc" />
+		<result column="comm_change_src" property="commChangeSrc" />
 		<result column="comm_content" property="commContent" />
 		<result column="comm_createdate" property="commCreateDate" />
 		<result column="comm_cate" property="commCate" />
@@ -38,7 +39,7 @@
 	<select id="selectCommList" resultMap="commResultSet">
 		select
 		       comm_no
-		     , comm_src
+		     , comm_change_src
 		     , comm_content
 		     , comm_createdate
 		     , comm_cate
@@ -52,6 +53,33 @@
 		 order
 		    by comm_createdate desc
 	</select>
+	
+	<insert id="insertComm" parameterType="Community">
+		insert
+          into community
+             (
+                comm_no
+              , comm_origin_src
+              , comm_change_src
+              , comm_content
+              , comm_cate
+              , user_no
+             )
+        values
+             ( 
+                seq_comm_no.nextval
+              , #{ commOriginSrc }
+              , #{ commChangeSrc }
+              , #{ commContent }
+              , #{ commCate }
+              , (
+		          select
+		                 user_no
+		            from member
+		           where user_id = #{ userId }
+		        )
+             )
+	</insert>
 	
 	<select id="selectForumCount" resultType="_int">
 		select
