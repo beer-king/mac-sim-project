@@ -25,7 +25,7 @@
 
 		<typeAlias type="com.beer.macSim.member.model.vo.PointHistory" alias="PointHistory"/>
 
-
+		<typeAlias type="com.beer.macSim.event.model.vo.EventAttendee" alias="EventAttendee"/>
 		<typeAlias type="com.beer.macSim.community.model.vo.Forum" alias="Forum"/>
 
 	</typeAliases>

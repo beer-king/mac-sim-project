@@ -122,6 +122,10 @@ public class MemberDao {
     	return (ArrayList)sqlSession.selectList("memberMapper.selectGroupBuyList",m);
 	}
 
+	public int deleteGroupBuy(SqlSessionTemplate sqlSession, Member m) {
+    	return sqlSession.update("memberMapper.deleteGroupBuy",m);
+	}
+
 	
 
 

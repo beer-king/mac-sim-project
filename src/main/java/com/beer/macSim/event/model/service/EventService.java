@@ -6,6 +6,7 @@ import com.beer.macSim.common.model.vo.PageInfo;
 import com.beer.macSim.event.model.vo.Attachment;
 import com.beer.macSim.event.model.vo.EvReply;
 import com.beer.macSim.event.model.vo.Event;
+import com.beer.macSim.event.model.vo.EventAttendee;
 
 public interface EventService {
 	
@@ -26,4 +27,8 @@ public interface EventService {
 	
 	// 5. 이벤트 작성하기용 서비스
 	int insertEvent(Event e, Attachment a);
+	
+	// 6. 이벤트 신청하기용 서비스
+	int decreasePoint(EventAttendee ea);
+	int applyEvent(EventAttendee ea);
 }

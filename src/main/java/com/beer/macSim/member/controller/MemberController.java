@@ -267,6 +267,31 @@ public class MemberController {
 		
 	}
 
+
+	@RequestMapping("delete.gb")
+	public String deleteGroupBuy(Model model,HttpSession session){
+
+		int pNo= (int)model.getAttribute("pNo");
+		
+		System.out.println(pNo);
+		
+		Member m = (Member) model.addAttribute("loginUser");
+		m.setPNo(pNo);
+
+		int result = mService.deleteGroupBuy(m);
+
+		System.out.println(result);
+
+		if(result>0){
+			session.setAttribute("alertMsg","구매취소에 성공했습니다");
+			return "redirect:group.me";
+		}else{
+			model.addAttribute("errorMsg", "구매취소에 실패했습니다");
+			return "common/errorPage";
+		}
+
+	}
+
 	@RequestMapping("enrollForm.me")
 	public String enrollForm() {
 		return "member/enrollForm";

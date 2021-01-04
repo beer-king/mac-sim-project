@@ -22,6 +22,8 @@ import com.beer.macSim.common.template.Pagination;
 import com.beer.macSim.event.model.service.EventService;
 import com.beer.macSim.event.model.vo.Attachment;
 import com.beer.macSim.event.model.vo.Event;
+import com.beer.macSim.event.model.vo.EventAttendee;
+import com.beer.macSim.member.model.vo.Member;
 
 @Controller
 public class EventController {
@@ -78,7 +80,7 @@ public class EventController {
 							  HttpSession session,  Model model) {
 		// 첨부파일 업로드 기능을 하기 위해서는 라이브러리 2개 추가(pom.xml파일에), 빈으로 등록(root-context.xml파일에)해야 됨
 		
-		if(!upfile1.getOriginalFilename().equals("") || !upfile1.getOriginalFilename().equals("")) {
+		if(!upfile1.getOriginalFilename().equals("") || !upfile2.getOriginalFilename().equals("")) {
 			
 			String changeName1 = saveFile(session, upfile1);
 			String changeName2 = saveFile(session, upfile2);
@@ -125,5 +127,20 @@ public class EventController {
 		
 		return changeName;
 		
+	}
+	
+	
+	@RequestMapping("apply.ev")
+	public String applyEvent(EventAttendee ea) {
+		System.out.println(ea);
+		
+		int result = evService.decreasePoint(ea);
+		if(result > 0 ) {
+			
+			return " ";
+		}else {
+			
+			return " ";
+		}
 	}
 }
