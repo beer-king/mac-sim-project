@@ -208,10 +208,10 @@
         </c:if>
         <c:if test="${category eq 2}">
         		<br>
-		        <form class="enrollForm" action="" method="" align="right">
-		            <select name="" id="">
-		                <option value="title">맥주 이름</option>
-		                <option value="content">맥주 번호</option>
+		        <form class="enrollForm" action="" method="post" align="right">
+		            <select name="sort" id="sort">
+		                <option value="name">맥주 이름</option>
+		                <option value="no">맥주 번호</option>
 		            </select>
 		            <input type="text" id="searchbox" placeholder="검색어를 입력하세요" name="search">
 		            <button type="submit" id="sbtn" style="margin-right: 20px;">검색</button>

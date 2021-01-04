@@ -6,6 +6,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.beer.macSim.administer.model.vo.BeerSearch;
 import com.beer.macSim.administer.model.vo.Report;
 import com.beer.macSim.administer.model.vo.SelectData;
 import com.beer.macSim.common.model.vo.PageInfo;
@@ -21,18 +22,18 @@ public class AdminDao {
 		return (i * j);
 	}
 	
-	public int selectListCount(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("noticeMapper.selectListCount");
+	public int selectListCount(BeerSearch bs, SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("noticeMapper.selectListCount", bs);
 	}
 	
 	public Notice selectNotice(SqlSessionTemplate sqlSession, String noticeNo) {
 		return sqlSession.selectOne("noticeMapper.selectNotice", noticeNo);
 	}
 
-	public ArrayList<Notice> selectNoticeList(PageInfo pi, SqlSessionTemplate sqlSession) {
+	public ArrayList<Notice> selectNoticeList(PageInfo pi, BeerSearch bs, SqlSessionTemplate sqlSession) {
 		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		return (ArrayList)sqlSession.selectList("noticeMapper.selectNoticeList", null, rowBounds);
+		return (ArrayList)sqlSession.selectList("noticeMapper.selectNoticeList", bs, rowBounds);
 	}
 	
 	public int insertNotice(SqlSessionTemplate sqlSession, Notice n) {
@@ -47,14 +48,14 @@ public class AdminDao {
 		return sqlSession.update("adminMapper.deleteNotice", noticeNo);
 	}
 	
-	public int selectUserListCount(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("adminMapper.selectUserListCount");
+	public int selectUserListCount(int status, SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("adminMapper.selectUserListCount", status);
 	}
 	
-	public ArrayList<Member> selectUserList(PageInfo pi, SqlSessionTemplate sqlSession) {
+	public ArrayList<Member> selectUserList(PageInfo pi, int status, SqlSessionTemplate sqlSession) {
 		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		return (ArrayList)sqlSession.selectList("adminMapper.selectUserList", null, rowBounds);
+		return (ArrayList)sqlSession.selectList("adminMapper.selectUserList", status, rowBounds);
 	}
 	
 	public int selectCallListCount(SqlSessionTemplate sqlSession, SelectData sd) {
@@ -78,13 +79,13 @@ public class AdminDao {
 		return sqlSession.update("adminMapper.reportBC", sd);
 	}
 	
-	public int selectBeerListCount(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("adminMapper.selectBeerListCount");
+	public int selectBeerListCount(SqlSessionTemplate sqlSession, BeerSearch bs) {
+		return sqlSession.selectOne("adminMapper.selectBeerListCount", bs);
 	}
 	
-	public ArrayList<Beers> selectBeerList(SqlSessionTemplate sqlSession, PageInfo pi){
+	public ArrayList<Beers> selectBeerList(SqlSessionTemplate sqlSession, PageInfo pi, BeerSearch bs){
 		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		return (ArrayList)sqlSession.selectList("adminMapper.selectBeerList", null, rowBounds);
+		return (ArrayList)sqlSession.selectList("adminMapper.selectBeerList", bs, rowBounds);
 	}
 }

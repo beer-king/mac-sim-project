@@ -119,16 +119,16 @@
   			notice_no = #{noticeNo}
   	</update>
   	
-  	<select id="selectUserListCount" resultType="_int">
+  	<select id="selectUserListCount" parameterType="_int" resultType="_int">
 		select count(*)
 		from member
-		where report > 4 and status = 0
+		where report > 4 and status = #{status}
   	</select>
   	
-  	<select id="selectUserList" resultMap="memberResultSet">
+  	<select id="selectUserList" parameterType="_int" resultMap="memberResultSet">
 		select user_no, user_id, report, status
 		from member
-		where report > 4 and status = 0
+		where report > 4 and status = #{status}
         order by user_no asc
   	</select>
   	
@@ -169,16 +169,36 @@
   		 	req_no = #{category}
   	</update>
   	
-  	<select id="selectBeerListCount" resultType="_int">
+  	<select id="selectBeerListCount" resultType="_int" parameterType="BS">
   		select count(*)
   		from beer
-  		where status = 'Y'
+  		<choose>
+  			<when test="category == 'name'">
+  				where status = 'Y' and beer_name like '%'|| #{content} ||'%'
+  			</when>
+  			<when test="category == 'no'">
+  				where status = 'Y' and beer_no = #{content} 
+  			</when>
+  			<otherwise>
+  				where status = 'Y'
+  			</otherwise>
+  		</choose>
   	</select>
   	
-  	<select id="selectBeerList" resultMap="beerResultSet">
+  	<select id="selectBeerList" resultMap="beerResultSet" parameterType="BS">
 		select beer_no, beer_name, beer_ename, beer_style, beer_producer, beer_location, beer_alcohol, beer_container, updated_date, status, reply_count, score_total, origin_name, change_name
 		from beer
-		where status = 'Y'
+		<choose>
+  			<when test="category == 'name'">
+  				where status = 'Y' and beer_name like '%'|| #{content} ||'%'
+  			</when>
+  			<when test="category == 'no'">
+  				where status = 'Y' and beer_no = #{content} 
+  			</when>
+  			<otherwise>
+  				where status = 'Y'
+  			</otherwise>
+  		</choose>
 		order by beer_no asc
   	</select>
   

@@ -22,14 +22,25 @@
 	</resultMap>
 	
 
-	<select id="selectListCount" resultType="_int">
+	<select id="selectListCount" resultType="_int" parameterType="BS">
 		select
 		       count(*)
 		  from notice
-		 where status = 'Y'
+		 <choose>
+		 	<when test="category == 'title'">
+		 		where status = 'Y' and notice_title like '%'|| #{content} ||'%'
+		 	</when>
+		 	<when test="category == 'content'">
+		 		where status = 'Y' and notice_content like '%'|| #{content} ||'%'
+		 	</when>
+		 	<otherwise>
+		 		where status = 'Y'
+		 	</otherwise>
+		 </choose>
+		 
 	</select>
 	
-	<select id="selectNoticeList" resultMap="noticeResultSet">
+	<select id="selectNoticeList" resultMap="noticeResultSet" parameterType="BS">
 		select
 		       notice_no
 		     , user_id
@@ -38,8 +49,17 @@
 		     , count
 		  from notice
 		  join member using(user_no)
-          where
-            notice.status = 'Y'
+          <choose>
+		 	<when test="category == 'title'">
+		 		where notice.status = 'Y' and notice_title like '%'|| #{content} ||'%'
+		 	</when>
+		 	<when test="category == 'content'">
+		 		where notice.status = 'Y' and notice_content like '%'|| #{content} ||'%'
+		 	</when>
+		 	<otherwise>
+		 		where notice.status = 'Y'
+		 	</otherwise>
+		 </choose>
 		 order
 		    by notice_no desc			
 	</select>

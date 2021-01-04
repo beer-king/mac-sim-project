@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.beer.macSim.administer.model.service.AdminService;
+import com.beer.macSim.administer.model.vo.BeerSearch;
 import com.beer.macSim.administer.model.vo.Report;
 import com.beer.macSim.administer.model.vo.SelectData;
 import com.beer.macSim.common.model.vo.PageInfo;
 import com.beer.macSim.common.template.Pagination;
+import com.beer.macSim.common.template.Search;
 import com.beer.macSim.common.template.Selectation;
 import com.beer.macSim.data.model.vo.Beers;
 import com.beer.macSim.member.model.vo.Member;
@@ -38,9 +40,13 @@ public class AdministerController {
 		model.addAttribute("category",category);
 		model.addAttribute("status", status);
 		if(category == 4) {
-			int listCount = aService.selectUserListCount();
+			int Ustatus = 0;
+			if(status.equals("B")) {
+				Ustatus = 1;
+			}
+			int listCount = aService.selectUserListCount(Ustatus);
 			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 6);
-			ArrayList<Member> ulist = aService.selectUserList(pi);
+			ArrayList<Member> ulist = aService.selectUserList(pi, Ustatus);
 			model.addAttribute("pi", pi);
 			model.addAttribute("ulist", ulist);
 		}else {
@@ -103,12 +109,13 @@ public class AdministerController {
 	
 	//비어관리
 	@RequestMapping("beerAd.ad")
-	public String goBeer(@RequestParam(value="currentPage", defaultValue="1")int currentPage, @RequestParam(value="category", defaultValue="1")int category, Model model) {
+	public String goBeer(@RequestParam(value="currentPage", defaultValue="1")int currentPage, @RequestParam(value="category", defaultValue="1")int category, Model model, String sort, String search) {
 		model.addAttribute("category",category);
 		if(category == 2) {
-			int listCount = aService.selectBeerListCount();
+			BeerSearch bs = Search.getBeerSearch(sort, search);
+			int listCount = aService.selectBeerListCount(bs);
 			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
-			ArrayList<Beers> blist= aService.selectBeerList(pi);
+			ArrayList<Beers> blist= aService.selectBeerList(bs, pi);
 			model.addAttribute("pi", pi);
 			model.addAttribute("blist", blist);
 		}
@@ -122,13 +129,15 @@ public class AdministerController {
 	
 	//공지사항 관리
 	@RequestMapping("noticeAd.ad")
-	public String goNotice(@RequestParam(value="currentPage", defaultValue="1")int currentPage,@RequestParam(value="category", defaultValue="1")int category, Model model) {
+	public String goNotice(@RequestParam(value="currentPage", defaultValue="1")int currentPage,@RequestParam(value="category", defaultValue="1")int category, Model model, String cate, String search) {
 		model.addAttribute("category",category);
 		if(category == 1) {
-			int listCount = aService.selectListCount();
+			BeerSearch bs = Search.getBeerSearch(cate, search);
+			System.out.println(bs);
+			int listCount = aService.selectListCount(bs);
 			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
 			
-			ArrayList<Notice> list = aService.selectNoticeList(pi);
+			ArrayList<Notice> list = aService.selectNoticeList(pi, bs);
 			
 			model.addAttribute("pi", pi);
 			model.addAttribute("list", list);

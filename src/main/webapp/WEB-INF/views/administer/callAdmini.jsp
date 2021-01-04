@@ -128,6 +128,51 @@
 <main>
 <div class="outer">
     <div class="content">
+    	<c:if test="${category ne 4}">
+    	<br>
+	    	<div class="search_bar" style="margin-left: 5px;">
+	            <select id="status" name="status">
+	            	<c:choose>
+	            		<c:when test="${status eq 'A' }">
+	            			<option value="A" selected>처리중</option>
+	            			<option value="B">허위신고</option>
+	            			<option value="C">처리완료</option>
+	            		</c:when>
+	            		<c:when test="${status eq 'B' }">
+	            			<option value="A">처리중</option>
+	            			<option value="B" selected>허위신고</option>
+	            			<option value="C">처리완료</option>
+	            		</c:when>
+	            		<c:when test="${status eq 'C' }">
+	            			<option value="A">처리중</option>
+	            			<option value="B">허위신고</option>
+	            			<option value="C" selected>처리완료</option>
+	            		</c:when>
+	            	
+	            	
+	            	</c:choose>
+	            	
+	            </select>
+	        </div>
+        </c:if>
+        <c:if test="${category eq 4}">
+    	<br>
+	    	<div class="search_bar" style="margin-left: 5px;">
+	            <select id="status" name="status">
+	            	<c:choose>
+	            		<c:when test="${status eq 'A' }">
+	            			<option value="A" selected>처리중</option>
+	            			<option value="B">블랙리스트유저</option>
+	            		</c:when>
+	            		<c:when test="${status eq 'B' }">
+	            			<option value="A">처리중</option>
+	            			<option value="B" selected>블랙리스트유저</option>
+	            		</c:when>
+	            	</c:choose>
+	            	
+	            </select>
+	        </div>
+        </c:if>
         <form action="test.do" method="POST">
         	<c:choose>
         		<c:when test="${pi.listCount eq 0}">
@@ -142,99 +187,167 @@
         		<c:when test="${category eq 1}">
         			<c:forEach var="r" items="${ rlist }">	
 		            <table class="dataview" style="width: 90%;">
-		            	<tr>
-		            		<td rowspan="3" style="width: 20px;"><input type="checkbox" name="number" value="${r.reqNo}"></td>
-		            	</tr>
-		                <tr class="clickDataView" onclick="trclick2(${r.reqNo}, `${r.reqContent }`, '${r.reqCateTitle }')">
-		                    <td>신고글 번호 : ${r.reqNo}</td>
-		                    <td>종류 번호 : 이벤트댓글</td>
-		                </tr>
-		                <tr class="clickDataView" onclick="trclick2(${r.reqNo}, `${r.reqContent }`, '${r.reqCateTitle }')">
-		                	<td>신고 카테고리 : ${r.reqCateTitle }</td>
-		                	<td>&nbsp</td>
-		                </tr>
+		            	<c:if test="${status eq 'A' }">
+			            	<tr>
+			            		<td rowspan="3" style="width: 20px;"><input type="checkbox" name="number" value="${r.reqNo}"></td>
+			            	</tr>
+			                <tr class="clickDataView" onclick="trclick2(${r.reqNo}, `${r.reqContent }`, '${r.reqCateTitle }')">
+			                    <td>신고글 번호 : ${r.reqNo}</td>
+			                    <td>종류 번호 : 이벤트댓글</td>
+			                </tr>
+			                <tr class="clickDataView" onclick="trclick2(${r.reqNo}, `${r.reqContent }`, '${r.reqCateTitle }')">
+			                	<td>신고 카테고리 : ${r.reqCateTitle }</td>
+			                	<td>&nbsp</td>
+			                </tr>
+		                </c:if>
+		                <c:if test="${status ne 'A' }">
+			                <tr class="clickDataView">
+			                    <td>신고글 번호 : ${r.reqNo}</td>
+			                    <td>종류 번호 : 이벤트댓글</td>
+			                </tr>
+			                <tr class="clickDataView">
+			                	<td>신고 카테고리 : ${r.reqCateTitle }</td>
+			                	<td>&nbsp</td>
+			                </tr>
+		                </c:if>
 		            </table>
 		            </c:forEach>
 		            
-		            <div align=right style="margin-right: 20px;">
-		            	<button type="submit">일괄처리</button>
-		            </div>
+		            <c:if test="${status eq 'A' }">
+			            <div align=right style="margin-right: 20px;">
+			            	<button type="submit">일괄처리</button>
+			            </div>
+		            </c:if>
         		</c:when>
         		<c:when test="${category eq 2}">
         			<c:forEach var="r" items="${ rlist }">	
 		            <table class="dataview" style="width: 90%;">
-		            	<tr>
-		            		<td rowspan="3" style="width: 20px;"><input type="checkbox" name="number" value="${r.reqNo}"></td>
-		            	</tr>
-		                <tr class="clickDataView" onclick="trclick2(${r.reqNo}, `${r.reqContent }`, '${r.reqCateTitle }')">
-		                    <td>신고글 번호 : ${r.reqNo}</td>
-		                    <c:if test="${r.rfromNo eq 1}">
-		                    	<td>종류 번호 :맥주리뷰</td>
-		                    </c:if>
-		                    <c:if test="${r.rfromNo eq 2}">
-		                    	<td>종류 번호 : 맥주리뷰댓글</td>
-		                    </c:if>
-		                </tr>
-		                <tr class="clickDataView" onclick="trclick2(${r.reqNo}, `${r.reqContent }`, '${r.reqCateTitle }')">
-		                	<td>신고 카테고리 : ${r.reqCateTitle }</td>
-		                	<td>&nbsp</td>
-		                </tr>
+		            	<c:if test="${status eq 'A' }">
+			            	<tr>
+			            		<td rowspan="3" style="width: 20px;"><input type="checkbox" name="number" value="${r.reqNo}"></td>
+			            	</tr>
+			                <tr class="clickDataView" onclick="trclick2(${r.reqNo}, `${r.reqContent }`, '${r.reqCateTitle }')">
+			                    <td>신고글 번호 : ${r.reqNo}</td>
+			                    <c:if test="${r.rfromNo eq 1}">
+			                    	<td>종류 번호 :맥주리뷰</td>
+			                    </c:if>
+			                    <c:if test="${r.rfromNo eq 2}">
+			                    	<td>종류 번호 : 맥주리뷰댓글</td>
+			                    </c:if>
+			                </tr>
+			                <tr class="clickDataView" onclick="trclick2(${r.reqNo}, `${r.reqContent }`, '${r.reqCateTitle }')">
+			                	<td>신고 카테고리 : ${r.reqCateTitle }</td>
+			                	<td>&nbsp</td>
+			                </tr>
+		                </c:if>
+		                <c:if test="${status ne 'A' }">
+			                <tr class="clickDataView">
+			                    <td>신고글 번호 : ${r.reqNo}</td>
+			                    <c:if test="${r.rfromNo eq 1}">
+			                    	<td>종류 번호 :맥주리뷰</td>
+			                    </c:if>
+			                    <c:if test="${r.rfromNo eq 2}">
+			                    	<td>종류 번호 : 맥주리뷰댓글</td>
+			                    </c:if>
+			                </tr>
+			                <tr class="clickDataView">
+			                	<td>신고 카테고리 : ${r.reqCateTitle }</td>
+			                	<td>&nbsp</td>
+			                </tr>
+		                </c:if>
 		            </table>
 		            </c:forEach>
-		            
-		            <div align=right style="margin-right: 20px;">
-		            	<button type="submit">일괄처리</button>
-		            </div>
+		            <c:if test="${status eq 'A' }">
+			            <div align=right style="margin-right: 20px;">
+			            	<button type="submit">일괄처리</button>
+			            </div>
+		            </c:if>
         		</c:when>
         		<c:when test="${category eq 3}">
         			<c:forEach var="r" items="${ rlist }">	
 		            <table class="dataview" style="width: 90%;">
-		            	<tr>
-		            		<td rowspan="3" style="width: 20px;"><input type="checkbox" name="number" value="${r.reqNo}"></td>
-		            	</tr>
-		                <tr class="clickDataView" onclick="trclick2(${r.reqNo}, `${r.reqContent }`, '${r.reqCateTitle }')">
-		                    <td>신고글 번호 : ${r.reqNo}</td>
-		                    <c:if test="${r.rfromNo eq 3}">
-		                    	<td>종류 번호 : 커뮤니티</td>
-		                    </c:if>
-		                    <c:if test="${r.rfromNo eq 4}">
-		                    	<td>종류 번호 : 포럼댓글</td>
-		                    </c:if>
-		                    <c:if test="${r.rfromNo eq 5}">
-		                    	<td>종류 번호 : 포럼 대댓글</td>
-		                    </c:if>
-		                </tr>
-		                <tr class="clickDataView" onclick="trclick2(${r.reqNo}, `${r.reqContent }`, '${r.reqCateTitle }')">
-		                	<td>신고 카테고리 : ${r.reqCateTitle }</td>
-		                	<td>&nbsp</td>
-		                </tr>
+		            	<c:if test="${status eq 'A' }">
+			            	<tr>
+			            		<td rowspan="3" style="width: 20px;"><input type="checkbox" name="number" value="${r.reqNo}"></td>
+			            	</tr>
+			                <tr class="clickDataView" onclick="trclick2(${r.reqNo}, `${r.reqContent }`, '${r.reqCateTitle }')">
+			                    <td>신고글 번호 : ${r.reqNo}</td>
+			                    <c:if test="${r.rfromNo eq 3}">
+			                    	<td>종류 번호 : 커뮤니티</td>
+			                    </c:if>
+			                    <c:if test="${r.rfromNo eq 4}">
+			                    	<td>종류 번호 : 포럼댓글</td>
+			                    </c:if>
+			                    <c:if test="${r.rfromNo eq 5}">
+			                    	<td>종류 번호 : 포럼 대댓글</td>
+			                    </c:if>
+			                </tr>
+			                <tr class="clickDataView" onclick="trclick2(${r.reqNo}, `${r.reqContent }`, '${r.reqCateTitle }')">
+			                	<td>신고 카테고리 : ${r.reqCateTitle }</td>
+			                	<td>&nbsp</td>
+			                </tr>
+		                </c:if>
+		                <c:if test="${status ne 'A' }">
+			                <tr class="clickDataView">
+			                    <td>신고글 번호 : ${r.reqNo}</td>
+			                    <c:if test="${r.rfromNo eq 3}">
+			                    	<td>종류 번호 : 커뮤니티</td>
+			                    </c:if>
+			                    <c:if test="${r.rfromNo eq 4}">
+			                    	<td>종류 번호 : 포럼댓글</td>
+			                    </c:if>
+			                    <c:if test="${r.rfromNo eq 5}">
+			                    	<td>종류 번호 : 포럼 대댓글</td>
+			                    </c:if>
+			                </tr>
+			                <tr class="clickDataView">
+			                	<td>신고 카테고리 : ${r.reqCateTitle }</td>
+			                	<td>&nbsp</td>
+			                </tr>
+		                </c:if>
 		            </table>
 		            </c:forEach>
 		            
-		            <div align=right style="margin-right: 20px;">
-		            	<button type="submit">일괄처리</button>
-		            </div>
+		            <c:if test="${status eq 'A' }">
+			            <div align=right style="margin-right: 20px;">
+			            	<button type="submit">일괄처리</button>
+			            </div>
+		            </c:if>
         		</c:when>
         		<c:when test="${category eq 4}">
         			<c:forEach var="u" items="${ ulist }">	
 					<table class="dataview" style="width: 90%;">
-						<tr>
-							<td rowspan="3" style="width: 20px;"><input type="checkbox" name="number" value="${u.userNo}"></td>
-						</tr>
-		                <tr class="clickDataView" onclick="trclick(${u.userNo})">
-		                    <td>유저 번호 : ${u.userNo}</td>
-		                    <td>유저 아이디 : ${u.userId}</td>
-		                </tr>
-		                <tr class="clickDataView" onclick="trclick(${u.userNo})">
-		                    <td>신고된 수 : ${u.report}</td>
-		                    <td>&nbsp</td>
-		                </tr>
+						<c:if test="${status eq 'A' }">
+							<tr>
+								<td rowspan="3" style="width: 20px;"><input type="checkbox" name="number" value="${u.userNo}"></td>
+							</tr>
+			                <tr class="clickDataView" onclick="trclick(${u.userNo})">
+			                    <td>유저 번호 : ${u.userNo}</td>
+			                    <td>유저 아이디 : ${u.userId}</td>
+			                </tr>
+			                <tr class="clickDataView" onclick="trclick(${u.userNo})">
+			                    <td>신고된 수 : ${u.report}</td>
+			                    <td>&nbsp</td>
+			                </tr>
+		                </c:if>
+		                <c:if test="${status ne 'A' }">
+			                <tr class="clickDataView">
+			                    <td>유저 번호 : ${u.userNo}</td>
+			                    <td>유저 아이디 : ${u.userId}</td>
+			                </tr>
+			                <tr class="clickDataView">
+			                    <td>신고된 수 : ${u.report}</td>
+			                    <td>&nbsp</td>
+			                </tr>
+		                </c:if>
 		            </table>
 		            </c:forEach>
 		            
-		            <div align=right style="margin-right: 20px;">
-		            	<button type="submit">일괄처리</button>
-		            </div>
+		            <c:if test="${status eq 'A' }">
+			            <div align=right style="margin-right: 20px;">
+			            	<button type="submit">일괄처리</button>
+			            </div>
+		            </c:if>
         		</c:when> 
             </c:choose>
             
@@ -304,6 +417,7 @@
     	var num = "";
     	var content = "";
     	var cate = "";
+    	
 	    function trclick(userNo){
 			num = userNo;
 			$("#myModal").modal("show");
@@ -380,6 +494,9 @@
 			});
 			$("#name4").click(function(){
 				location.href = "callAd.ad?category=4";
+			});
+			$("#status").change(function(){
+				location.href = "callAd.ad?status="+$(this).val() + "&category=${category}";
 			});
 		});
 	</script>

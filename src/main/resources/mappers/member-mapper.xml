@@ -170,7 +170,7 @@
 	</select>
 	
 
-	
+	<!-- 
 		<select id="selectBeerReviewList" resultMap="beerReviewResultSet">
 	
 			select
@@ -184,7 +184,7 @@
 			where s.status='Y';
 	
 		</select>
-	
+	 -->
 		<update id="updateBeerReview" parameterType="_int">
 	
 			update

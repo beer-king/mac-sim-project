@@ -140,12 +140,12 @@
     <div class="content">
     	<c:if test="${category eq 1}">
         <br>
-        <form class="enrollForm" action="" method="" align="right">
-            <select name="" id="">
+        <form class="enrollForm" action="" method="post" align="right">
+            <select name="cate" id="cate">
                 <option value="title">제목</option>
                 <option value="content">내용</option>
             </select>
-            <input type="text" id="searchbox" placeholder="검색어를 입력하세요" name="search">
+            <input type="text" id="search" placeholder="검색어를 입력하세요" name="search">
             <button type="submit" id="sbtn">검색</button>
         </form>
         <br>

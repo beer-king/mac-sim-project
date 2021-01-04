@@ -2,6 +2,7 @@ package com.beer.macSim.administer.model.service;
 
 import java.util.ArrayList;
 
+import com.beer.macSim.administer.model.vo.BeerSearch;
 import com.beer.macSim.administer.model.vo.Report;
 import com.beer.macSim.administer.model.vo.SelectData;
 import com.beer.macSim.common.model.vo.PageInfo;
@@ -14,11 +15,11 @@ public interface AdminService {
 	
 	int selectCallListCount(SelectData sd);
 	ArrayList<Report> selectCallList(PageInfo pi, SelectData sd);
-	int selectUserListCount();
-	ArrayList<Member> selectUserList(PageInfo pi);
+	int selectUserListCount(int status);
+	ArrayList<Member> selectUserList(PageInfo pi, int status);
 	
-	int selectListCount();
-	ArrayList<Notice> selectNoticeList(PageInfo pi);
+	int selectListCount(BeerSearch bs);
+	ArrayList<Notice> selectNoticeList(PageInfo pi, BeerSearch bs);
 	
 	int insertNotice(Notice n);
 	
@@ -34,6 +35,6 @@ public interface AdminService {
 	
 	int reportBC(SelectData sd);
 	
-	int selectBeerListCount();
-	ArrayList<Beers> selectBeerList(PageInfo pi);
+	int selectBeerListCount(BeerSearch bs);
+	ArrayList<Beers> selectBeerList(BeerSearch bs,PageInfo pi);
 }
