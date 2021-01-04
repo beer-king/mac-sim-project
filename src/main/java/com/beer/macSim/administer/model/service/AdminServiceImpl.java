@@ -120,6 +120,11 @@ public class AdminServiceImpl implements AdminService{
 	public int updateBatchEvent(Batch b) {
 		return aDao.updateBatchEvent(sqlSession, b);
 	}
+
+	@Override
+	public Event selectEventOne(String evNo) {
+		return aDao.selectEventOne(sqlSession, evNo);
+	}
 	
 	
 }

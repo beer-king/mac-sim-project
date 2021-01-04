@@ -104,4 +104,7 @@ public class AdminDao {
 	public int updateBatchEvent(SqlSessionTemplate sqlSession, Batch b) {
 		return sqlSession.update("adminMapper.updateBatchEvent", b);
 	}
+	public Event selectEventOne(SqlSessionTemplate sqlSession, String evNo) {
+		return sqlSession.selectOne("adminMapper.selectEventOne", evNo);
+	}
 }

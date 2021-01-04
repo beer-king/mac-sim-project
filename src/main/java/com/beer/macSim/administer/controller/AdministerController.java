@@ -223,12 +223,43 @@ public class AdministerController {
 		return "administer/eventAdmini";
 	}
 	
+	@RequestMapping("eventDetailAd.ad")
+	public String goEventDetail(String evNo, Model model) {
+		Event e = aService.selectEventOne(evNo);
+		model.addAttribute("e", e);
+		return "administer/eventDetail";
+	}
+	@RequestMapping("updateEvent.ad")
+	public String updateEvent(Model model, HttpSession session, String evNo, String content, String Astatus) {
+		ArrayList<String> list = new ArrayList<String>();
+		list.add(evNo);
+		if(Astatus.equals("C")) {
+			Batch b = BatchProcess.getBatch(list, Astatus, content);
+			int result = aService.updateBatchEvent(b);
+			if(result > 0) { // 성공
+				session.setAttribute("alertMsg", "성공적으로 처리되었습니다.");
+				return "redirect:eventAd.ad";
+			}else {
+				model.addAttribute("errorMsg", "실패되었습니다.");
+				return "common/errorPage";
+			}
+		}else {
+			Batch b = BatchProcess.getBatch(list, Astatus, null);
+			int result = aService.updateBatchEvent(b);
+			if(result > 0) { // 성공
+				session.setAttribute("alertMsg", "성공적으로 처리되었습니다.");
+				return "redirect:eventAd.ad";
+			}else {
+				model.addAttribute("errorMsg", "실패되었습니다.");
+				return "common/errorPage";
+			}
+		}
+	}
+	
 	@ResponseBody
 	@RequestMapping("processEvent.ad")
 	public String processEvent(@RequestParam(value = "list[]") ArrayList<String> list, String Astatus, String content) {
-		
 		Batch b = BatchProcess.getBatch(list, Astatus, content);
-		System.out.println(b);
 		int result = aService.updateBatchEvent(b);
 		if(result > 0) {
 			return "success";

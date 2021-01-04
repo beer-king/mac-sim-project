@@ -44,4 +44,5 @@ public interface AdminService {
 	ArrayList<Event> selectEventList(BeerSearch bs,PageInfo pi);
 	
 	int updateBatchEvent(Batch b);
+	Event selectEventOne(String evNo);
 }

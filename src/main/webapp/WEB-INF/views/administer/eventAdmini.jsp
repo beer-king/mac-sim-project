@@ -152,6 +152,9 @@
 	width: 200px;
 	vertical-align: middle;
 }
+.clickDataView:hover{
+    cursor: pointer;
+}
 </style>
 </head>
 <body>
@@ -228,18 +231,18 @@
 									<tr>
 										<td rowspan="5" style="width: 5px;"><input type="checkbox" class="number" name="number" value="${e.evNo}"></td>
 									</tr>
-									<tr class="clickDataView">
+									<tr class="clickDataView" onclick="clickE(${e.evNo})">
 										<td rowspan="5" style="width: 20px;"><img
 											src="${e.evThumb }" width="100" height="100"></td>
 									</tr>
-									<tr class="clickDataView">
+									<tr class="clickDataView" onclick="clickE(${e.evNo})">
 										<td colspan="2">이벤트 제목 : ${e.evTitle }</td>
 									</tr>
-									<tr class="clickDataView">
+									<tr class="clickDataView" onclick="clickE(${e.evNo})">
 										<td>포인트 : ${e.evPoint }</td>
 										<td>모집자 수 : ${e.limitNo}</td>
 									</tr>
-									<tr class="clickDataView">
+									<tr class="clickDataView" onclick="clickE(${e.evNo})">
 										<td>시작 날짜: ${e.evStartTime }</td>
 										<td>종료 날짜 : ${e.evEndTime}</td>
 									</tr>
@@ -312,7 +315,7 @@
         		<div class="modal-body">
           			<h3>해당 이유를 전송하겠습니까?</h3>
           			<br>
-          			<textarea name="call_reason_detail" id="content" cols="30" rows="10" style="width: 400px; height: 100; resize: none;"></textarea>
+          			<textarea name="content" id="content" cols="30" rows="10" style="width: 400px; height: 100; resize: none;"></textarea>
           			<br><br>
           			<div align="right">
           			<button id="disagree" type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
@@ -324,92 +327,95 @@
     			</div>
   			</div>
 			<script>
-		$(function(){
-			var checkArr = [];
-			var content = "";
-			$(document).ready(function() {
-	    		
-	    	});
-			$("#status").change(function(){
-				location.href = "eventAd.ad?status="+$(this).val();
-			});
-			$("#agree").click(function(){
-				agree();
-			});
-			$("#disagree").click(function(){
-				disagree();
-			});
-			$("#deleteE").click(function(){
-				deleteE();
-			});			
-			function agree(){
-				$("input[name='number']:checked").each(function(i){
-					checkArr.push($(this).val());
+				function clickE(evNo){
+					var evNo = evNo;
+					location.href = "eventDetailAd.ad?evNo=" + evNo;
+				}
+				$(function(){
+					var checkArr = [];
+					var content = "";
+					$(document).ready(function() {
+			    		
+			    	});
+					$("#status").change(function(){
+						location.href = "eventAd.ad?status="+$(this).val();
+					});
+					$("#agree").click(function(){
+						agree();
+					});
+					$("#disagree").click(function(){
+						disagree();
+					});
+					$("#deleteE").click(function(){
+						deleteE();
+					});			
+					function agree(){
+						$("input[name='number']:checked").each(function(i){
+							checkArr.push($(this).val());
+						});
+						$.ajax({
+							url:"processEvent.ad",
+			    			type:"POST",
+			    			dataType: 'text',
+			    			data: {
+			    	            list: checkArr,
+			    	            Astatus:'B'
+			    	        },
+			    	        success:function(result){
+			    				  alert("처리되었습니다.");
+			    				  location.reload();
+			    			  },error:function(){
+			    				  alert("실패되었습니다.");
+			    				  location.reload();
+			    			  }
+						});
+					}
+					function disagree(){
+						$("input[name='number']:checked").each(function(i){
+							checkArr.push($(this).val());
+						});
+						$.ajax({
+							url:"processEvent.ad",
+			    			type:"POST",
+			    			dataType: 'text',
+			    			data: {
+			    	            list: checkArr,
+			    	            Astatus:'C',
+			    	            content:$("#content").val()
+			    	        },
+			    	        success:function(result){
+			    				  alert("처리되었습니다.");
+			    				  location.reload();
+			    			  },error:function(){
+			    				  alert("실패되었습니다.");
+			    				  location.reload();
+			    			  }
+						});
+					}
+					function deleteE(){
+						$("input[name='number']:checked").each(function(i){
+							checkArr.push($(this).val());
+						});
+						$.ajax({
+							url:"processEvent.ad",
+			    			type:"POST",
+			    			dataType: 'text',
+			    			data: {
+			    	            list: checkArr,
+			    	            Astatus:'D'
+			    	        },
+			    	        success:function(result){
+			    				  alert("처리되었습니다.");
+			    				  location.reload();
+			    			  },error:function(){
+			    				  alert("실패되었습니다.");
+			    				  location.reload();
+			    			  }
+						});
+					}
+					
 				});
-				$.ajax({
-					url:"processEvent.ad",
-	    			type:"POST",
-	    			dataType: 'text',
-	    			data: {
-	    	            list: checkArr,
-	    	            Astatus:'B'
-	    	        },
-	    	        success:function(result){
-	    				  alert("처리되었습니다.");
-	    				  location.reload();
-	    			  },error:function(){
-	    				  alert("실패되었습니다.");
-	    				  location.reload();
-	    			  }
-				});
-			}
-			function disagree(){
-				$("input[name='number']:checked").each(function(i){
-					checkArr.push($(this).val());
-				});
-				$.ajax({
-					url:"processEvent.ad",
-	    			type:"POST",
-	    			dataType: 'text',
-	    			data: {
-	    	            list: checkArr,
-	    	            Astatus:'C',
-	    	            content:$("#content").val()
-	    	        },
-	    	        success:function(result){
-	    				  alert("처리되었습니다.");
-	    				  location.reload();
-	    			  },error:function(){
-	    				  alert("실패되었습니다.");
-	    				  location.reload();
-	    			  }
-				});
-			}
-			function deleteE(){
-				$("input[name='number']:checked").each(function(i){
-					checkArr.push($(this).val());
-				});
-				$.ajax({
-					url:"processEvent.ad",
-	    			type:"POST",
-	    			dataType: 'text',
-	    			data: {
-	    	            list: checkArr,
-	    	            Astatus:'D'
-	    	        },
-	    	        success:function(result){
-	    				  alert("처리되었습니다.");
-	    				  location.reload();
-	    			  },error:function(){
-	    				  alert("실패되었습니다.");
-	    				  location.reload();
-	    			  }
-				});
-			}
-		});
-		
-		
-	</script>
+		</script>
 
 		</div>
 	</main>
