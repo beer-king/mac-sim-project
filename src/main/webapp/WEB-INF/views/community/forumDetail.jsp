@@ -45,27 +45,36 @@
         <ul class="comm__items">
           <li class="fode__info-wrapper">
             <div class="img-wrapper">
-              <img src="./image/corona.jpg" alt="picture" />
+              <img src="resources/uploadFiles/${ fo.forSrc }" alt="picture" />
             </div>
             <div class="fode__info-right">
               <div class="item-top">
-                <p>Stout</p>
+                <p>${ fo.forTitle }</p>
                 <div>
-                  <span>수정</span>
-                  <span>삭제</span>
-                  <!-- <span>신고</span> -->
-                  <small>2020-11-20</small>
+                  <c:choose>
+                    <c:when test="${ !empty loginUser && loginUser.userId eq fo.userId }">
+	                  <span>수정</span>
+	                  <span>삭제</span>
+	                </c:when>
+	                <c:otherwise>
+	                  <span>신고</span>
+	                </c:otherwise>
+                  </c:choose>
+                  <small>${ fo.forCreateDate }</small>
                 </div>
               </div>
               <div class="forum-contents">
-                흑맥주는 흑흑흑 ㅏ까망까망망고망고 흐가흑자갈갈
+                ${ fo.forInfo }
               </div>
               <div class="item-bottom">
                 <div>
                   <span class="fas fa-crown"></span>
-                  <span>user01</span>
+                  <span>${ fo.userId }</span>
                 </div>
-                <span>10 comments</span>
+                <div>
+                  <span>${ fo.forCount } views</span>
+                  <span>${ fo.forComment } comments</span>
+                </div>
               </div>
             </div>
           </li>

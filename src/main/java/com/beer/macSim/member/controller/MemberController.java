@@ -7,6 +7,8 @@ import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
+import com.beer.macSim.groupBuy.model.vo.GroupBuy;
+import com.beer.macSim.member.model.vo.PointHistory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -66,7 +68,14 @@ public class MemberController {
 	}
 
 	@RequestMapping("point.me")
-	public String point() {
+	public String point(HttpSession session,Model model) {
+
+		Member m  = (Member)session.getAttribute("loginUser");
+
+		ArrayList<PointHistory>list = mService.selectPointHistory(m);
+
+		model.addAttribute("list",list);
+
 		return "member/point";
 	}
 
@@ -92,7 +101,14 @@ public class MemberController {
 	}
 
 	@RequestMapping("group.me")
-	public String group() {
+	public String group(HttpSession session, Model model) {
+
+		Member m = (Member)session.getAttribute("loginUser");
+
+		ArrayList<GroupBuy>list = mService.selectGroupBuyList(m);
+
+		model.addAttribute("list", list);
+
 		return "member/group";
 	}
 

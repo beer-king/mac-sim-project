@@ -180,11 +180,13 @@ main .inner h1 {
   font-size: 19px;
   position: relative;
 }
-.forum-contents span {
+.forum-contents div {
   position: absolute;
   bottom: 0;
   right: 0;
   color: #ecbf2e;
+  display: flex;
+  gap: 20px;
 }
 
 .item-right .item-contents {
@@ -291,13 +293,17 @@ main .inner h1 {
   display: flex;
   justify-content: space-between;
 }
-.fode__info-right .item-bottom div span:nth-child(1) {
+.fode__info-right .item-bottom div:nth-child(1) span:nth-child(1) {
   color: #ecbf2e;
 }
-.fode__info-right .item-bottom div span:nth-child(2) {
+.fode__info-right .item-bottom div:nth-child(1) span:nth-child(2) {
   color: #ddd;
 }
-.fode__info-right .item-bottom > span {
+.fode__info-right .item-bottom div:nth-child(2) {
+	display: flex;
+	gap: 20px;
+}
+.fode__info-right .item-bottom div:nth-child(2) span {
   color: #ecbf2e;
 }
 

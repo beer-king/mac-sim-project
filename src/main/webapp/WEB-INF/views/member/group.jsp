@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -65,35 +66,24 @@
 	
 	 <h1 style="margin-left: 30px; color: rgb(236, 191, 46); font-size:30px">공구 신청현황</h1>
       <br>
-      
+
+    <c:if test="${empty list}">
+       <h2 style="color:white;"> 공동구매 내역이 없습니다.</h2>
+    </c:if>
+
       <div id="groupBuy">
+          <c:forEach var="g" items="${list}">
           <ul>
               <li>
-                  <span class="pName">말표맥주뚜껑<span>(2p)</span></span>
+                  <span class="pName">${g.gbName}<span>(${g.gbPoint}p)</span></span>
                     <!-- Button to Openthe Modal -->
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">
                         취소
                     </button>
               </li>
-                <br>
-              <li>
-                <span class="pName">맥주거품기<span>(5p)</span></span>
-                  <!-- Button to Open the Modal -->
-                  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">
-                      취소
-                  </button>
-            </li>
-                <br>
-            <li>
-                <span class="pName">맥주캐리어<span>(10p)</span></span>
-                  <!-- Button to Open the Modal -->
-                  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">
-                      취소
-                  </button>
-            </li>
-
-              
+              <br>
           </ul>
+          </c:forEach>
       </div>
       
       <script>

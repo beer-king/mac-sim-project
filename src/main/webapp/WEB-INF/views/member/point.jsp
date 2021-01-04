@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>포인트내역</title>
@@ -74,40 +75,23 @@
 <br><br>
 
 <div id="pointHistory">
-    <h1 style="margin-left: 30px; color: rgb(236, 191, 46); font-size:30px">포인트 내역</h1>
+    <h1 style="margin-left: 30px; color: rgb(236, 191, 46); font-size:30px">포인트 내역(회원가입시 100P지급)</h1>
+    <br><br>
     <h3 style="margin-left: 30px; font-size:20px">현재 보유 포인트 : <span id="nowPoint">${loginUser.point}</span></h3>
     <br>
-    <ul id="point">
-        <li>
-            <span>2020-12-12</span>
-            <span>적립</span>
-            <span>회원가입</span>
-            <span>100p</span>
-        </li>
-        <br>
-        <li>
-            <span>2020-12-12</span>
-            <span>적립</span>
-            <span>회원가입</span>
-            <span>100p</span>
-        </li>
-        <br>
-        <li>
-            <span>2020-12-13</span>
-            <span>차감</span>
-            <span>이벤트신청</span>
-            <span>-5p</span>
-        </li>
-        <br>
-        <li>
-            <span>2020-12-12</span>
-            <span>적립</span>
-            <span>회원가입</span>
-            <span>100p</span>
-        </li>
-        <br>
 
-    </ul>
+        <c:forEach var="p" items="${list}">
+            <ul id="point">
+                <li>
+                    <span>${p.pointDate}</span>
+                    <span>${p.pointHistory}</span>
+                    <span>${p.category}</span>
+                    <span>${p.point}</span>
+                </li>
+                <br>
+
+            </ul>
+        </c:forEach>
 </div>
 </body>
 </html>
