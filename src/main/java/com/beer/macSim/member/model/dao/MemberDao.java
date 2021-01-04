@@ -70,8 +70,8 @@ public class MemberDao {
 		return sqlSession.selectOne("memberMapper.groupCount", m);
 	}
 
-	public int deleteEvent(SqlSessionTemplate sqlSession, int eventNo) {
-		return sqlSession.update("memberMapper.deleteEvent", eventNo);
+	public int deleteEvent(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.update("memberMapper.deleteEvent", m);
 	}
 
 	public String loginPoint(SqlSessionTemplate sqlSession, int userNo) {

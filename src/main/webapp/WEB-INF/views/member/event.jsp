@@ -112,16 +112,19 @@
     </ol>
 </div>
 
-<script type="text/javascript">
-	$(function(){
-		$("#c").click(function(){
-		 var eventNo = $("#b").text();
-		 //console.log(eventNo);
-		 location.href = "delete.ev?eventNo="+eventNo;
-		 
+	<script type="text/javascript">
+		$(function(){
+			$("#c").click(function(){
+			
+			 var eventNo = $("#b").text();
+			 
+			 console.log(eventNo);
+			 
+			 location.href = "delete.ev?eventNo="+eventNo;
+			 
+			});
 		});
-	});
-</script>
+	</script>
 
 
 <!-- The Modal -->

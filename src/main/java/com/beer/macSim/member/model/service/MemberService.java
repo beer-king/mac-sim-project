@@ -50,7 +50,7 @@ public interface MemberService {
     
     int groupCount(Member m);
 
-	int deleteEvent(int eventNo);
+	int deleteEvent(Member m);
 
 	String loginPoint(int userNo);
 

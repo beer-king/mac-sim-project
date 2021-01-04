@@ -86,7 +86,7 @@
           </c:forEach>
       </div>
 
-
+<!-- 데이터가 없엉서 일단 입시로 해본것 -->
     <div id="groupBuy">
 
             <ul>

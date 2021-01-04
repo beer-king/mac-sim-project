@@ -221,7 +221,6 @@ public class MemberController {
 				
 				if(result>0) { // 탈퇴성공
 					
-					System.out.println(result);
 					
 					//세션에 담겨있던 loginUser 삭제
 					session.removeAttribute("loginUser");
@@ -248,12 +247,13 @@ public class MemberController {
 	@RequestMapping("delete.ev")
 	public String deleteEvent(Model model,HttpSession session) {
 		
-		
 		int eventNo = (int) model.getAttribute("eventNo");
+		
+		Member m  = (Member)session.getAttribute("loginUser");
+		m.setEvNo(eventNo);
 	
 		
-		int result = mService.deleteEvent(eventNo);
-		
+		int result = mService.deleteEvent(m);
 		
 		
 		if(result>0) { // 삭제 성공
@@ -267,7 +267,7 @@ public class MemberController {
 		
 	}
 
-
+  
 	@RequestMapping("delete.gb")
 	public String deleteGroupBuy(Model model,HttpSession session){
 
