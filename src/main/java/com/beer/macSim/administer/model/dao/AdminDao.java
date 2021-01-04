@@ -23,17 +23,17 @@ public class AdminDao {
 	}
 	
 	public int selectListCount(BeerSearch bs, SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("noticeMapper.selectListCount", bs);
+		return sqlSession.selectOne("adminMapper.selectListCount", bs);
 	}
 	
 	public Notice selectNotice(SqlSessionTemplate sqlSession, String noticeNo) {
-		return sqlSession.selectOne("noticeMapper.selectNotice", noticeNo);
+		return sqlSession.selectOne("adminMapper.selectNotice", noticeNo);
 	}
 
 	public ArrayList<Notice> selectNoticeList(PageInfo pi, BeerSearch bs, SqlSessionTemplate sqlSession) {
 		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		return (ArrayList)sqlSession.selectList("noticeMapper.selectNoticeList", bs, rowBounds);
+		return (ArrayList)sqlSession.selectList("adminMapper.selectNoticeList", bs, rowBounds);
 	}
 	
 	public int insertNotice(SqlSessionTemplate sqlSession, Notice n) {

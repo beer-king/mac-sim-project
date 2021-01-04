@@ -44,6 +44,16 @@
     	<result column="req_cate_no" property="reqCateNo"/>
     	<result column="req_cate_title" property="reqCateTitle"/>
     </resultMap>
+    <resultMap type="Notice" id="noticeResultSet">
+		<result column="notice_no" property="noticeNo"/>
+		<result column="user_no" property="userNo"/>
+		<result column="user_id" property="userId"/>
+		<result column="notice_title" property="noticeTitle"/>
+		<result column="notice_content" property="noticeContent"/>
+		<result column="notice_date" property="noticeDate"/>
+		<result column="count" property="count"/>
+	</resultMap>
+	
   	<insert id="insertBeer" parameterType="Beers">
   		insert
   			into beer
@@ -201,5 +211,61 @@
   		</choose>
 		order by beer_no asc
   	</select>
+  	
+  	<select id="selectListCount" resultType="_int" parameterType="BS">
+		select
+		       count(*)
+		  from notice
+		 <choose>
+		 	<when test="category == 'title'">
+		 		where status = 'Y' and notice_title like '%'|| #{content} ||'%'
+		 	</when>
+		 	<when test="category == 'content'">
+		 		where status = 'Y' and notice_content like '%'|| #{content} ||'%'
+		 	</when>
+		 	<otherwise>
+		 		where status = 'Y'
+		 	</otherwise>
+		 </choose>
+		 
+	</select>
+	
+	<select id="selectNoticeList" resultMap="noticeResultSet" parameterType="BS">
+		select
+		       notice_no
+		     , user_id
+		     , notice_title
+		     , notice_date
+		     , count
+		  from notice
+		  join member using(user_no)
+          <choose>
+		 	<when test="category == 'title'">
+		 		where notice.status = 'Y' and notice_title like '%'|| #{content} ||'%'
+		 	</when>
+		 	<when test="category == 'content'">
+		 		where notice.status = 'Y' and notice_content like '%'|| #{content} ||'%'
+		 	</when>
+		 	<otherwise>
+		 		where notice.status = 'Y'
+		 	</otherwise>
+		 </choose>
+		 order
+		    by notice_no desc			
+	</select>
+	
+	<select id="selectNotice" resultMap="noticeResultSet" parameterType="string">
+		select
+		       notice_no
+		     , user_id
+		     , notice_title
+             , notice_content
+		     , notice_date
+		     , count
+		  from notice
+		  join member using(user_no)
+          where
+            notice.status = 'Y' and notice_no = #{noticeNo}
+	</select>
   
 </mapper>
