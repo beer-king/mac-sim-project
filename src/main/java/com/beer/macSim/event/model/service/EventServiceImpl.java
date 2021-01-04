@@ -81,8 +81,7 @@ public class EventServiceImpl implements EventService {
 
 	@Override
 	public int applyEvent(EventAttendee ea) {
-		// TODO Auto-generated method stub
-		return 0;
+		return evDao.applyEvent(sqlSession, ea);
 	}
 
 }

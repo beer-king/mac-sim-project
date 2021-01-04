@@ -131,16 +131,19 @@ public class EventController {
 	
 	
 	@RequestMapping("apply.ev")
-	public String applyEvent(EventAttendee ea) {
+	public String applyEvent(EventAttendee ea,
+					         HttpSession session, Model model) {
+		
 		System.out.println(ea);
 		
-		int result = evService.decreasePoint(ea);
-		if(result > 0 ) {
-			
-			return " ";
+		int result1 = evService.decreasePoint(ea);
+		int result2 = evService.applyEvent(ea);
+		if(result1 * result2 > 0 ) {
+			session.setAttribute("alertMsg", "성공적으로 이벤트가 신청되었습니다.");
+			return "redirect:event.me";
 		}else {
-			
-			return " ";
+			model.addAttribute("errorMsg", "이벤트 신청이 실패하였습니다.");
+			return "common/errorPage";
 		}
 	}
 }

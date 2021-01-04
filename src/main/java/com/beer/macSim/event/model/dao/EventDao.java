@@ -52,4 +52,8 @@ public class EventDao {
 	public int decreasePoint(SqlSessionTemplate sqlSession, EventAttendee ea) {
 		return sqlSession.update("eventMapper.decreasePoint", ea);
 	}
+	
+	public int applyEvent(SqlSessionTemplate sqlSession, EventAttendee ea) {
+		return sqlSession.insert("eventMapper.applyEvent", ea);
+	}
 }
