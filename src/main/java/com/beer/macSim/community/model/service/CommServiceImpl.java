@@ -58,9 +58,10 @@ public class CommServiceImpl  implements CommService{
 		return cDao.selectForumDetail(sqlSession, fno);
 	}
 
+	// 포럼 작성
 	@Override
 	public int insertForum(Forum fo) {
-		return 0;
+		return cDao.insertForum(sqlSession, fo);
 	}
 
 }

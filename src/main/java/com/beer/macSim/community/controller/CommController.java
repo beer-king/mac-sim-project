@@ -145,6 +145,40 @@ public class CommController {
 		
 	}
 	
+	// 포럼 작성
+	@RequestMapping("enrollForm.fo")
+	public String forumEnrollForm() {
+		return "community/editForum";
+	}
+	
+	@RequestMapping("insert.fo")
+	public String insertForum(Forum fo, MultipartFile upfile, HttpSession session, Model model) {
+		
+		if( !upfile.getOriginalFilename().equals("") ) {
+			
+			String changeName = saveFile(session, upfile);
+			
+			fo.setForOriginSrc(upfile.getOriginalFilename());
+			fo.setForChangeSrc(changeName);
+			
+		}
+		
+		int result = cService.insertForum(fo);
+		
+		if(result > 0) { // 성공
+			
+			session.setAttribute("alertMsg", "포럼에 글이 등록되었습니다!");
+			return "redirect:list.fo";
+			
+		}else { // 실패
+			
+			model.addAttribute("errorMsg", "작성하신 글 등록에 실패하였습니다.");
+			return "common/errorPage";
+			
+		}
+		
+	}
+	
 	
 	// 첨부파일 업로드 시켜주는 메소드
 	public String saveFile(HttpSession session, MultipartFile upfile) {

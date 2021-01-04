@@ -53,6 +53,10 @@ public class CommDao {
 	public int insertComm(SqlSessionTemplate sqlSession, Community comm) {
 		return sqlSession.insert("commMapper.insertComm", comm);
 	}
+
+	public int insertForum(SqlSessionTemplate sqlSession, Forum fo) {
+		return sqlSession.insert("commMapper.insertForum", fo);
+	}
 		
 
 }
