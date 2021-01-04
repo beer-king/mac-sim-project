@@ -16,7 +16,7 @@ public class Member {
     private String userPwd;
     private String userName;
     private String newPwd; // 신규비밀번호
-    private String gbName;///////
+    private int pNo;///////
     private String gender;
     private String email;
     private String address;

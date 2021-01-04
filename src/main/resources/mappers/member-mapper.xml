@@ -170,7 +170,7 @@
 	</select>
 	
 
-	
+	<!--
 		<select id="selectBeerReviewList" resultMap="beerReviewResultSet">
 	
 			select
@@ -195,7 +195,7 @@
 	
 		</update>
     
-	
+	-->
 	
 	
 	<select id="selectEventList" resultMap="eventResultSet" parameterType="Member">
@@ -298,12 +298,24 @@
 	<select id="selectGroupBuyList" resultMap="groupResultSet" parameterType="Member">
 		select
 			  pno
-			 ,user_no
+			 ,gr.user_no
 			 ,pname
 			 ,gb_point
-		from group_buy
-		where user_no=#{userNo}
+			 ,request_no
+			 ,req_status
+		from group_buy gb
+				 join gb_request gr using(pno)
+		where gr.user_no=#{userNo}
 	</select>
+
+	<update id="deleteGroupBuy" parameterType="Member">
+        update
+            gb_request
+        set req_status = 'F'
+        where user_no = #{userNo}
+          and pno = #{pNo}
+	</update>
+
 
 
 </mapper>

@@ -91,10 +91,12 @@
 
             <ul>
                 <li>
+                    <span class="pNo">1</span>
                     <span class="pName1">신발</span><span>(12P)</span>
+
                     <!-- Button to Openthe Modal -->
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">
-                        확인
+                        취소
                     </button>
                 </li>
                 <br>
@@ -111,11 +113,10 @@
       <script>
           $(function(){
               $("#groupBuy li").click(function(){
-                  var pName = $(".pName1").text();
-                  console.log(pName);
+                  var pNo = $(".pNo").text();
+                  console.log(pNo);
 
-
-                  $("#nameSpace").text(pName);
+                  $("#nameSpace").text(pNo);
               });
 
              
@@ -144,7 +145,7 @@
                <!-- <form action="delete.gb" method="get" class="modal-footer">-->
                    <div style="color: black">
                        <button type="button" class="btn btn-primary" data-dismiss="modal">뒤로가기</button>
-                       <button type="submit" id="gbBtn" class="btn btn-danger" data-dismiss="modal">취소</button>
+                       <button type="submit" id="gbBtn" class="btn btn-danger" data-dismiss="modal">확인</button>
                    </div>
                 <!--</form>-->
         
@@ -156,11 +157,11 @@
             $(function(){
                 $("#gbBtn").click(function(){
 
-                   var gbName =  $("#nameSpace").text();
+                   var pNo =  $("#nameSpace").text();
                    var uno = ${loginUser.userNo}
-                    console.log(gbName);
+                    console.log(pNo);
                     console.log(uno);
-                   location.href = "delete.gb?gbName="+gbName +"&userNo="+uno;
+                   location.href = "delete.gb?pNo="+pNo +"&userNo="+uno;
 
                 });
 
