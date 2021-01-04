@@ -49,6 +49,22 @@
    		<result column="status" property="status"/>
    </resultMap>
 
+	<resultMap id="historyResultSet" type="PointHistory">
+		<result column="PH_NO" property="pointNo"></result>
+		<result column="PDATE" property="pointDate"></result>
+		<result column="POINT" property="point"></result>
+		<result column="USER_NO" property="userNo"></result>
+		<result column="CATEGORY" property="category"></result>
+		<result column="POINT_HISTORY" property="pointHistory"></result>
+	</resultMap>
+
+	<resultMap id="groupResultSet" type="GroupBuy">
+		<result column="pno" property="pno"></result>
+		<result column="user_no" property="userNo"></result>
+		<result column="pname" property="gbName"></result>
+		<result column="gb_point" property="gbPoint"></result>
+	</resultMap>
+
    <update id="updateMember" parameterType="Member">
        update
               member
@@ -265,6 +281,30 @@
   		   )
 	</insert>
 	
+
+	<select id="selectPointHistory" resultMap="historyResultSet" parameterType="Member">
+		select
+		      ph_no
+		     ,pdate
+		     ,point
+		     ,user_no
+		     ,category
+			 ,point_history
+		   from point_history
+		   where user_no=#{userNo}
+	</select>
+
+
+	<select id="selectGroupBuyList" resultMap="groupResultSet" parameterType="Member">
+		select
+			  pno
+			 ,user_no
+			 ,pname
+			 ,gb_point
+		from group_buy
+		where user_no=#{userNo}
+	</select>
+
 
 </mapper>
 
