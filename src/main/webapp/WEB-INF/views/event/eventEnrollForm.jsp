@@ -74,7 +74,7 @@
                         </tr>
                         <tr>
                             <th><label for="evPoint">포인트 소모량 : </label></th>
-                            <td><input type="text" id="evPoint" class="form-control" placeholder="차감될 포인트를 입력하세요."></td>
+                            <td><input type="number" id="evPoint" class="form-control" placeholder="차감될 포인트를 입력하세요.ex) -2"></td>
                         </tr>
                         <tr>
                             <th><label for="limitNo">총 모집자수 : </label></th>

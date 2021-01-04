@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>이벤트상세페이지</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <style>
         .head{
@@ -159,12 +159,14 @@
                         <button type="button" class="close" data-dismiss="modal">&times;</button> 
                     </div>
     
-                    <form action="신청받아주는서버" method="post">
+                    <form action="apply.ev" method="post">
                         <!-- Modal Body -->
                         <div class="modal-body">
-                            <label >포인트 차감  <h3>-2</h3></label>
+                        	<input type="number" name="evNo" value="${ ev.evNo }" hidden>
+                        	<input type="number" name="userNo" value="${ loginUser.userNo }" hidden>
+                            <label >포인트 차감  <input name="evPoint" value="${ ev.evPoint }" readOnly></label>
                             <br>
-                            <label >차감후 포인트 <h3>35</h3></label>
+                            <label >차감후 포인트 <h3>${ loginUser.point + ev.evPoint }</h3></label>
                             <h5>이벤트를 신청하시겠습니까?</h5>
                         </div>
                         
@@ -177,6 +179,8 @@
                 </div>
             </div>
         </div>
+        
+      
 
         <div class="modal fade" id="catModal">
             <div class="modal-dialog modal-sm">

@@ -11,6 +11,7 @@ import com.beer.macSim.event.model.dao.EventDao;
 import com.beer.macSim.event.model.vo.Attachment;
 import com.beer.macSim.event.model.vo.EvReply;
 import com.beer.macSim.event.model.vo.Event;
+import com.beer.macSim.event.model.vo.EventAttendee;
 
 @Service
 public class EventServiceImpl implements EventService {
@@ -71,6 +72,17 @@ public class EventServiceImpl implements EventService {
 	@Override
 	public ArrayList<Attachment> selectEvAttachment(int eno) {
 		return evDao.selectEvAttachment(sqlSession, eno);
+	}
+
+	@Override
+	public int decreasePoint(EventAttendee ea) {
+		return evDao.decreasePoint(sqlSession, ea);
+	}
+
+	@Override
+	public int applyEvent(EventAttendee ea) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }
