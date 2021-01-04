@@ -63,4 +63,6 @@ public interface MemberService {
     ArrayList<PointHistory> selectPointHistory(Member m);
 
     ArrayList<GroupBuy> selectGroupBuyList(Member m);
+
+    int deleteGroupBuy(Member m);
 }

@@ -267,6 +267,17 @@ public class MemberController {
 		
 	}
 
+
+	@RequestMapping("delete.gb")
+	public String deleteGroupBuy(Model model){
+		String gbName= (String)model.getAttribute("gbName");
+		Member m = (Member) model.addAttribute("loginUser");
+		m.setGbName(gbName);
+
+		int result = mService.deleteGroupBuy(m);
+
+	}
+
 	@RequestMapping("enrollForm.me")
 	public String enrollForm() {
 		return "member/enrollForm";

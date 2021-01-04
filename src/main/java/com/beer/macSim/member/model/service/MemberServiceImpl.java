@@ -133,6 +133,11 @@ public class MemberServiceImpl implements MemberService {
 		return mDao.selectGroupBuyList(sqlSession,m);
 	}
 
+	@Override
+	public int deleteGroupBuy(Member m) {
+		return mDao.deleteGroupBuy(sqlSession,m);
+	}
+
 
 }
 

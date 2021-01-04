@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>공구신청</title>
    <style>
          #mypageMenu{
             list-style: none;
@@ -75,7 +75,7 @@
           <c:forEach var="g" items="${list}">
           <ul>
               <li>
-                  <span class="pName">${g.gbName}<span>(${g.gbPoint}p)</span></span>
+                  <span class="pName1">${g.gbName}</span><span>(${g.gbPoint}P)</span>
                     <!-- Button to Openthe Modal -->
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">
                         취소
@@ -85,11 +85,33 @@
           </ul>
           </c:forEach>
       </div>
+
+
+    <div id="groupBuy">
+
+            <ul>
+                <li>
+                    <span class="pName1">신발</span><span>(12P)</span>
+                    <!-- Button to Openthe Modal -->
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">
+                        확인
+                    </button>
+                </li>
+                <br>
+            </ul>
+
+    </div>
+
+
+
+
+
+
       
       <script>
           $(function(){
-              $("#groupBuy li").click(function(){  
-                  var pName = $("span").text();
+              $("#groupBuy li").click(function(){
+                  var pName = $(".pName1").text();
                   console.log(pName);
 
 
@@ -119,16 +141,31 @@
                 </div>
         
                 <!-- Modal footer -->
-                <form action="delete.ev"  class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">뒤로가기</button>
-                    <button type="submit" class="btn btn-danger" data-dismiss="modal">취소</button>
-                </form>
+               <!-- <form action="delete.gb" method="get" class="modal-footer">-->
+                   <div style="color: black">
+                       <button type="button" class="btn btn-primary" data-dismiss="modal">뒤로가기</button>
+                       <button type="submit" id="gbBtn" class="btn btn-danger" data-dismiss="modal">취소</button>
+                   </div>
+                <!--</form>-->
         
             </div>
             </div>
         </div>
 
+        <script>
+            $(function(){
+                $("#gbBtn").click(function(){
 
+                   var gbName =  $("#nameSpace").text();
+                   var uno = ${loginUser.userNo}
+                    console.log(gbName);
+                    console.log(uno);
+                   location.href = "delete.gb?gbName="+gbName +"&userNo="+uno;
+
+                });
+
+            });
+        </script>
 	
 	
 </body>
