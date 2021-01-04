@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.beer.macSim.common.model.vo.PageInfo;
 import com.beer.macSim.common.template.Pagination;
 import com.beer.macSim.notice.model.service.NoticeService;
-import com.beer.macSim.notice.model.vo.NoComment;
+//import com.beer.macSim.notice.model.vo.NoComment;
 import com.beer.macSim.notice.model.vo.Notice;
 import com.google.gson.Gson;
 
@@ -59,7 +59,7 @@ public class NoticeController {
 		}
 		
 	}
-	
+	/*
 	@ResponseBody
 	@RequestMapping(value="ncolist.no", produces = "application/json; charset=utf-8")
 	public String selectNcommentList(int nno) {
@@ -83,7 +83,7 @@ public class NoticeController {
 		}
 		
 	}
-	
+	*/
 	
 }
 
