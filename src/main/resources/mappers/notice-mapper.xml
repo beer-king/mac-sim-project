@@ -11,7 +11,7 @@
 		<result column="count" property="count"/>
 	</resultMap>
 	
-	<!-- 
+	
 	<resultMap type="NoComment" id="ncoResultSet">
 		<result column="nco_no" property="ncoNo"/>
 		<result column="notice_no" property="noticeNo"/>
@@ -20,7 +20,7 @@
 		<result column="nco_date" property="ncoDate"/>
 		<result column="status" property="status"/>
 	</resultMap>
-	 -->
+	
 
 	<select id="selectListCount" resultType="_int">
 		select
@@ -65,7 +65,7 @@
 		where notice_no = #{nno}
 		  and status = 'Y'
 	</update>
-	<!-- 
+	
 	<select id="selectNcommentList" resultMap="ncoResultSet"
 	 		parameterType="_int">
 		select 
@@ -80,8 +80,8 @@
 		 order
 		    by nco_no desc
 	</select>
-	 -->
-	<!-- 
+	 
+	
 	<insert id="insertNcomment" parameterType="NoComment">
 		insert
 		    into ncomments
@@ -99,7 +99,7 @@
 		     , #{ncoComment}
 		     )
 	</insert>
-	 -->
+	 
 	
 	
 	

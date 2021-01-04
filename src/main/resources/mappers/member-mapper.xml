@@ -20,7 +20,7 @@
         <result column="login_time" property="loginTime"/>
         <result column="report" property="report"/>
     </resultMap>
-	<!-- 
+	
 	<resultMap type="PointHistory" id="pointHistoryResultSet">
 		<result column="ph_no" property="pointNo"/>
 		<result column="pdate" property="pointDate"/>
@@ -29,9 +29,9 @@
 		<result column="category" property="category"/>
 		<result column="point_history" property="pointHistory"/>
 	</resultMap>
-	 -->
+	
 
-	<!--  
+	<!-- 
 		<resultMap id="beerReviewResultSet" type="Score">
 			<result column="score_no" property="scoreNo"></result>
 			<result column="beer_name" property="beerName"></result>
@@ -39,7 +39,7 @@
 			<result column="updated_date" property="updatedDate"></result>
 			<result column="comments" property="comments"></result>
 		</resultMap>
-	-->
+	 -->
 
    <resultMap type="Event" id="eventResultSet">
    		<result column="ev_no" property="evNo"></result>
@@ -170,7 +170,7 @@
 	</select>
 	
 
-	<!--  
+	
 		<select id="selectBeerReviewList" resultMap="beerReviewResultSet">
 	
 			select
@@ -194,7 +194,7 @@
 	
 	
 		</update>
-    -->
+    
 	
 	
 	

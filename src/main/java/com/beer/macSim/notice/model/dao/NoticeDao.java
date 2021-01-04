@@ -8,7 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.beer.macSim.common.model.vo.PageInfo;
-//import com.beer.macSim.notice.model.vo.NoComment;
+import com.beer.macSim.notice.model.vo.NoComment;
 import com.beer.macSim.notice.model.vo.Notice;
 
 @Repository
@@ -31,18 +31,18 @@ public class NoticeDao {
 	public Notice selectNotice(SqlSessionTemplate sqlSession, int nno) {
 		return sqlSession.selectOne("noticeMapper.selectNotice", nno);
 	}
-	/*
+	
 	// 댓글리스트
 	public ArrayList<NoComment> selectNcommentList(SqlSessionTemplate sqlSession, int nno) {
 		return (ArrayList)sqlSession.selectList("noticeMapper.selectNcommentList", nno);
 	}
-	*/
+	
 	// 댓글insert
-	/*
+	
 	public int insertNcomment(SqlSessionTemplate sqlSession, NoComment nc) {
 		return sqlSession.insert("noticeMapper.insertNcomment", nc);
 	}
 
-	*/
+	
 	
 }
