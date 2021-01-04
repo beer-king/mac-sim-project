@@ -197,7 +197,7 @@
 	
 		</update>
     
-	-->
+	
 	
 	
 	<select id="selectEventList" resultMap="eventResultSet" parameterType="Member">
