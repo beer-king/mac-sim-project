@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.beer.macSim.common.model.vo.PageInfo;
 import com.beer.macSim.event.model.vo.Attachment;
 import com.beer.macSim.event.model.vo.Event;
+import com.beer.macSim.event.model.vo.EventAttendee;
 
 @Repository
 public class EventDao {
@@ -46,5 +47,9 @@ public class EventDao {
 	
 	public ArrayList<Attachment> selectEvAttachment(SqlSessionTemplate sqlSession, int eno) {
 		return (ArrayList)sqlSession.selectList("eventMapper.selectEvAttachment", eno);
+	}
+	
+	public int decreasePoint(SqlSessionTemplate sqlSession, EventAttendee ea) {
+		return sqlSession.update("eventMapper.decreasePoint", ea);
 	}
 }
