@@ -50,4 +50,13 @@ public class CommDao {
 		return sqlSession.selectOne("commMapper.selectForumDetail", fno);
 	}
 
+	public int insertComm(SqlSessionTemplate sqlSession, Community comm) {
+		return sqlSession.insert("commMapper.insertComm", comm);
+	}
+
+	public int insertForum(SqlSessionTemplate sqlSession, Forum fo) {
+		return sqlSession.insert("commMapper.insertForum", fo);
+	}
+		
+
 }

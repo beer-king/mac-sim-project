@@ -46,15 +46,18 @@
             <li><a href="list.fo">포럼</a></li>
           </ul>
         </div>
+        
         <div class="comm__write-btn">
-          <button>글쓰기<span class="material-icons"> edit </span></button>
+          <c:if  test="${ !empty loginUser }">
+            <button onclick="location.href='enrollForm.cm'">글쓰기<span class="material-icons"> edit </span></button>
+          </c:if>
         </div>
         
         <ul class="comm__items">
           <c:forEach var="c" items="${ list }" >
 	        <li>
 	          <div class="img-wrapper">
-	            <img src="resources/uploadFiles/${ c.commSrc }" alt="picture" />
+	            <img src="resources/uploadFiles/${ c.commChangeSrc }" alt="picture" />
 	          </div>
 	          <div class="item-right">
 	            <div class="item-info">

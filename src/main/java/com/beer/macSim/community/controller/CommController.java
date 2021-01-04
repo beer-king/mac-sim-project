@@ -1,12 +1,19 @@
 package com.beer.macSim.community.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.beer.macSim.common.model.vo.PageInfo;
 import com.beer.macSim.common.template.Pagination;
@@ -45,6 +52,53 @@ public class CommController {
 		return "community/commList";
 		
 	}
+	
+	// 커뮤니티 (맥일/오맥) 작성
+	@RequestMapping("enrollForm.cm")
+	public String commEnrollForm() {
+		return "community/editComm";
+	}
+	
+	@RequestMapping("insert.cm")
+	public String insertComm(Community comm, MultipartFile upfile, HttpSession session, Model model) {
+		
+		//System.out.println("Coummnity : " + c);
+		//System.out.println("upfile : " + upfile.getOriginalFilename());
+		
+		if( !upfile.getOriginalFilename().equals("") ) {
+			
+			String changeName = saveFile(session, upfile);
+			
+			comm.setCommOriginSrc(upfile.getOriginalFilename());
+			comm.setCommChangeSrc(changeName);
+			
+		}
+		
+		System.out.println("comm.getCommCate() : " + comm.getCommCate());
+		int result = cService.insertComm(comm);
+		
+		if(result > 0) { // 성공
+			
+			System.out.println("comm : " + comm);
+			System.out.println("comm.getCommCate() : " + comm.getCommCate());
+			String cate = "";
+			switch(comm.getCommCate()) {
+				case 0: cate = "맥심의 일상"; break;
+				case 1: cate = "오늘의 맥주"; break;
+			}
+			
+			System.out.println("cate : " + cate);
+			session.setAttribute("alertMsg", cate + "에 글이 등록되었습니다!");
+
+			return "redirect:list.cm?cate=" + comm.getCommCate();
+			
+		}else { // 실패
+			model.addAttribute("errorMsg", "작성하신 글 등록에 실패하였습니다.");
+			return "common/errorPage";
+		}
+		
+	}
+	
 	
 	// 포럼 리스트 조회
 	@RequestMapping("list.fo")
@@ -88,6 +142,66 @@ public class CommController {
 			model.addAttribute("errorMsg", "존재하지 않는 포럼입니다");
 			return "common/errorPage";
 		}
+		
+	}
+	
+	// 포럼 작성
+	@RequestMapping("enrollForm.fo")
+	public String forumEnrollForm() {
+		return "community/editForum";
+	}
+	
+	@RequestMapping("insert.fo")
+	public String insertForum(Forum fo, MultipartFile upfile, HttpSession session, Model model) {
+		
+		if( !upfile.getOriginalFilename().equals("") ) {
+			
+			String changeName = saveFile(session, upfile);
+			
+			fo.setForOriginSrc(upfile.getOriginalFilename());
+			fo.setForChangeSrc(changeName);
+			
+		}
+		
+		int result = cService.insertForum(fo);
+		
+		if(result > 0) { // 성공
+			
+			session.setAttribute("alertMsg", "포럼에 글이 등록되었습니다!");
+			return "redirect:list.fo";
+			
+		}else { // 실패
+			
+			model.addAttribute("errorMsg", "작성하신 글 등록에 실패하였습니다.");
+			return "common/errorPage";
+			
+		}
+		
+	}
+	
+	
+	// 첨부파일 업로드 시켜주는 메소드
+	public String saveFile(HttpSession session, MultipartFile upfile) {
+		
+		String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/");
+		
+		String originName = upfile.getOriginalFilename();
+		
+		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+		int ranNum = (int)(Math.random() * 90000 + 10000);
+		String ext = originName.substring(originName.lastIndexOf("."));
+		
+		String changeName = currentTime + ranNum + ext;
+		
+		try {
+			upfile.transferTo(new File(savePath + changeName));
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return changeName;
 		
 	}
 	

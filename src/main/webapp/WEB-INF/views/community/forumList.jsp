@@ -44,14 +44,16 @@
           </ul>
         </div>
         <div class="comm__write-btn">
-          <button>새포럼<span class="material-icons"> edit </span></button>
+          <c:if test="${ !empty loginUser }">
+            <button onclick="location.href='enrollForm.fo'">새포럼<span class="material-icons"> edit </span></button>
+          </c:if>
         </div>
         
         <ul class="comm__items">
           <c:forEach var="f" items="${ list }" >
 	          <li class="forum__item" onclick="location.href='detail.fo?fno=${ f.forNo }'">
 	            <div class="img-wrapper">
-	              <img src="resources/uploadFiles/${ f.forSrc }" alt="picture" />
+	              <img src="resources/uploadFiles/${ f.forChangeSrc }" alt="picture" />
 	            </div>
 	            <div class="item-right">
 	              <div class="item-info">
