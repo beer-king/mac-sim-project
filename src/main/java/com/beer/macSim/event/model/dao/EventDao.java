@@ -56,4 +56,8 @@ public class EventDao {
 	public int applyEvent(SqlSessionTemplate sqlSession, EventAttendee ea) {
 		return sqlSession.insert("eventMapper.applyEvent", ea);
 	}
+	
+	public int checkApplyEvent(SqlSessionTemplate sqlSession, EventAttendee ea) {
+		return sqlSession.selectOne("eventMapper.checkApplyEvent", ea);
+	}
 }
