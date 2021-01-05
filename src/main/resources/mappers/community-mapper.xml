@@ -29,6 +29,35 @@
 		<!-- <result column="" property="" /> -->
 	</resultMap>
 	
+	<resultMap id="clikesResultSet" type="CommLikes" >
+		<result column="user_no" property="userNo" />
+		<result column="comm_no" property="commNo" />
+		<result column="clike_createdate" property="clickCreateDate" />
+	</resultMap>
+	
+	<resultMap id="replyResultSet" type="Reply" >
+		<result column="for_no" property="forNo" />
+		<result column="co_no" property="coNo" />
+		<result column="co_content" property="coContent" />
+		<result column="co_createdate" property="coCreateDate" />
+		<result column="co_updatedate" property="coUpdateDate" />
+		<result column="co_status" property="coStatus" />
+		<result column="reco_count" property="recoCount" />
+		<result column="user_no" property="userNo" />
+		<result column="user_id" property="userId" />
+	</resultMap>
+	
+	<resultMap id="subReplyResultSet" type="SubReply" >
+		<result column="co_no" property="coNo" />
+		<result column="reco_no" property="recoNo" />
+		<result column="reco_content" property="recoContent" />
+		<result column="reco_createdate" property="recoCreateDate" />
+		<result column="reco_updatedate" property="recoUpdateDate" />
+		<result column="reco_status" property="recoStatus" />
+		<result column="user_no" property="userNo" />
+		<result column="user_id" property="userId" />
+	</resultMap>
+	
 	<select id="selectCommCount" resultType="_int" >
 		select
 		       count(*)
@@ -163,5 +192,59 @@
              )
 	</insert>
 	
+	<select id="selectCommLikes" resultMap="clikesResultSet" parameterType="_int" >
+		select
+		       USER_NO
+		     , COMM_NO
+		     , CLIKE_CREATEDATE
+		  from CLIKES
+		 where user_no = #{ userNo }
+	</select>
+	
+	<select id="selectReplyList" resultMap="replyResultSet" parameterType="_int">
+		select
+		       FOR_NO
+		     , CO_NO
+		     , CO_CONTENT
+		     , CO_CREATEDATE
+		     , CO_UPDATEDATE
+		     , CO_STATUS
+		     , RECO_COUNT
+		     , USER_NO
+		     , USER_ID
+		  from FCOMMENTS
+		  join MEMBER using(user_no)
+		 where for_no = #{ fno }
+	</select>
+	
+	<select id="selectSubReplyList" resultMap="subReplyResultSet" parameterType="_int" >
+		 select
+		        CO_NO
+		      , RECO_NO
+		      , RECO_CONTENT
+		      , RECO_CREATEDATE
+		      , RECO_UPDATEDATE
+		      , RECO_STATUS
+		      , USER_NO
+		      , USER_ID
+		   from FRECOMMENTS
+		   join member using(user_no)
+	   	  where co_no = #{ coNo }
+	</select>
+	
+	<!-- 
+	<select id="" resultMap="" parameterType="">
+		select
+		       ph_no
+		     , pdate
+		     , point
+		     , user_no
+		     , category
+		     , point_history
+		  from POINT_HISTORY
+		 where user_no = #{ userNo }
+		   and category like '포럼입장%'
+	</select>
+	 -->
 
 </mapper>

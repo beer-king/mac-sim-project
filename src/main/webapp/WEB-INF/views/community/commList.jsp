@@ -71,8 +71,14 @@
 		              </c:otherwise>
 	                </c:choose>
 	                <small>${ c.commCreateDate }</small>
-	                <b class="material-icons">favorite_border</b>
-	                <!-- <i class="material-icons">favorite</i> -->
+	                <c:choose>
+	                  <c:when test ="${ c.like eq 'Y' }" >
+	                    <i class="material-icons">favorite</i>
+	                  </c:when>
+	                  <c:otherwise>
+	                    <b class="material-icons">favorite_border</b>
+	                  </c:otherwise>
+	                </c:choose>
 	              </div>
 	            </div>
 	            <div class="item-contents">

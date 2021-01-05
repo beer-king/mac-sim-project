@@ -8,8 +8,11 @@ import org.springframework.stereotype.Service;
 
 import com.beer.macSim.common.model.vo.PageInfo;
 import com.beer.macSim.community.model.dao.CommDao;
+import com.beer.macSim.community.model.vo.CommLikes;
 import com.beer.macSim.community.model.vo.Community;
 import com.beer.macSim.community.model.vo.Forum;
+import com.beer.macSim.community.model.vo.Reply;
+import com.beer.macSim.community.model.vo.SubReply;
 
 @Service
 public class CommServiceImpl  implements CommService{
@@ -34,6 +37,12 @@ public class CommServiceImpl  implements CommService{
 	@Override
 	public int insertComm(Community comm) {
 		return cDao.insertComm(sqlSession, comm);
+	}
+
+	// 커뮤니티 좋아요 조회
+	@Override
+	public ArrayList<CommLikes> selectCommLikes(int userNo) {
+		return cDao.selectCommLikes(sqlSession, userNo);
 	}
 
 	// 포럼 리스트 조회
@@ -62,6 +71,17 @@ public class CommServiceImpl  implements CommService{
 	@Override
 	public int insertForum(Forum fo) {
 		return cDao.insertForum(sqlSession, fo);
+	}
+
+	// 포럼 댓글 조회
+	@Override
+	public ArrayList<Reply> selectReplyList(int fno) {
+		return cDao.selectReplyList(sqlSession, fno);
+	}
+	// 포럼 대댓글 조회
+	@Override
+	public ArrayList<SubReply> selectSubReplyList(int coNo) {
+		return cDao.selectSubReplyList(sqlSession, coNo);
 	}
 
 }
