@@ -84,4 +84,9 @@ public class EventServiceImpl implements EventService {
 		return evDao.applyEvent(sqlSession, ea);
 	}
 
+	@Override
+	public int checkApplyEvent(EventAttendee ea) {
+		return evDao.checkApplyEvent(sqlSession, ea);
+	}
+
 }

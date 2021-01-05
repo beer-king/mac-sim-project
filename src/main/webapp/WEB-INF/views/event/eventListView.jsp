@@ -73,6 +73,7 @@
         <c:forEach var="e" items="${ list }">
 	        <br>
 	        <div class="evList">
+	        	<input name="userNo" type="number" hidden value="${loginUser.userNo }">
 	        	<input class="eno" type="text" hidden value="${ e.evNo }">
 	            <div class="photo">
 	                <img src="${ e.evThumb }" alt="" width="200px">
@@ -128,15 +129,26 @@
                 </table>
             </div>
 			-->
-			
-            <script>
-            	$(function(){
-            		$(".evList").click(function(){
-            			location.href = "detail.ev?eno=" + $(this).children(".eno").val();
-            		});
-            	});
-            </script>
-	
+			<c:choose>
+				<c:when test="${ !empty loginUser }">
+		            <script>
+		            	$(function(){
+		            		$(".evList").click(function(){
+		            			location.href = "detail.ev?eno=" + $(this).children(".eno").val() + "&userNo=" + ${loginUser.userNo};
+		            		});
+		            	});
+		            </script>
+	            </c:when>
+	            <c:otherwise>
+	            	<script>
+		            	$(function(){
+		            		$(".evList").click(function(){
+		            			location.href = "detail.ev?eno=" + $(this).children(".eno").val();
+		            		});
+		            	});
+		            </script>
+	            </c:otherwise>
+			</c:choose>
 		<br><br>
         </div>
             <div id="pagingArea">

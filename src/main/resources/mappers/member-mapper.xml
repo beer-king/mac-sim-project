@@ -59,7 +59,7 @@
 	</resultMap>
 
 	<resultMap id="groupResultSet" type="GroupBuy">
-		<result column="pno" property="pno"></result>
+		<result column="pno" property="pNo"></result>
 		<result column="user_no" property="userNo"></result>
 		<result column="pname" property="gbName"></result>
 		<result column="gb_point" property="gbPoint"></result>
@@ -207,8 +207,8 @@
 			    ,ev_content
 			    ,status
 		   from event e
-		   join event_attendee using(ev_no)
-		   where e.user_no = #{userNo}
+		   join event_attendee ea using(ev_no)
+		   where ea.user_no = #{userNo}
 			 and EVENT_ENTRY_STATUS = 'Y'
 	</select>
 	
@@ -224,25 +224,27 @@
 	<select id="eventCount" resultType="_int" parameterType="Member">
 		
 		   select count(*) 
-		         from event 
+		         from event_attendee 
 		         where user_no =#{userNo}
+		           and EVENT_ENTRY_STATUS = 'Y'
 	
 	</select>
 	
 	<select id="groupCount" resultType="_int" parameterType="Member">
 		
 		   select count(*) 
-		         from group_buy
+		         from gb_request
 		         where user_no =#{userNo}
 	
 	</select>
 	
 	
-	<update id="deleteEvent" parameterType="_int">
+	<update id="deleteEvent" parameterType="Member">
 		 update
-              event
-          set status = 'D'
-       where  ev_no =#{eventNo} 
+		         event_attendee
+		     set event_entry_status='N'
+		   where user_no =#{userNo}
+		     and ev_no=#{evNo}
 	
 	</update>
 	
@@ -303,6 +305,7 @@
 			 ,point_history
 		   from point_history
 		   where user_no=#{userNo}
+		   order by pdate desc
 	</select>
 
 

@@ -32,6 +32,7 @@
 		<result column="pno" property="pNo"/>
 	</resultMap>
   	
+  	 
   	<resultMap id="EventAttendeeResultSet" type="EventAttendee">
   		<result column="evat_no" property="evatNo"/>
   		<result column="ev_no" property="evNo"/>
@@ -40,7 +41,7 @@
   		<result column="event_entry_date" property="eventEntryDate"/>
   		<result column="ev_point" property="evPoint"/>
   	</resultMap>
-  	
+  	 
   	<select id="selectEventCount" resultType="_int">
   		select
 		        count(*)
@@ -176,4 +177,13 @@
 		 , 'Y'
 		 )	   
   	</insert>
+  	
+  	<select id="checkApplyEvent"
+  		    resultType="_int" parameterType="EventAttendee">
+  		select
+		       count(*)
+		  from event_attendee
+		 where user_no = #{userNo}
+		   and ev_no = #{evNo}
+  	</select>
 </mapper>

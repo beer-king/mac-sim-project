@@ -47,16 +47,26 @@ public class EventController {
 	}
 	
 	@RequestMapping("detail.ev")
-	public String selectEvent(int eno, Model model) {
+	public String selectEvent(@RequestParam(defaultValue="0")int userNo, int eno, Model model) {
+		System.out.println(userNo);
 		
-		int result = evService.increaseCount(eno);
+		int result1 = evService.increaseCount(eno);
 		
-		if(result > 0) {
+		if(result1 > 0) {
 			Event ev = evService.selectEvent(eno);
 			ArrayList<Attachment> atList = evService.selectEvAttachment(eno);
+			
 			System.out.println(ev);
 			System.out.println(atList);
 			
+			EventAttendee ea = new EventAttendee();
+			ea.setEvNo(eno);
+			ea.setUserNo(userNo);
+			
+			int chApp = 0;
+			chApp = evService.checkApplyEvent(ea);
+			
+			model.addAttribute("chApp", chApp);
 			model.addAttribute("ev", ev);
 			model.addAttribute("atList", atList);
 			return "event/eventDetailView";

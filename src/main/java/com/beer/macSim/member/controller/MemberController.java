@@ -77,7 +77,11 @@ public class MemberController {
 		
 		int listCount = mService.eventCount(m);
 		
-		PageInfo pi =Pagination.getPageInfo(listCount, currentPage, 10, 5);
+
+		
+		
+
+		PageInfo pi =Pagination.getPageInfo(listCount, currentPage, 5, 3);
 		
 		ArrayList<Event>list = mService.selectEventList(m);
 		
@@ -203,7 +207,6 @@ public class MemberController {
 				
 				if(result>0) { // 탈퇴성공
 					
-					System.out.println(result);
 					
 					//세션에 담겨있던 loginUser 삭제
 					session.removeAttribute("loginUser");
@@ -228,26 +231,52 @@ public class MemberController {
 	}
 
 	@RequestMapping("delete.ev")
-	public String deleteEvent(Model model,HttpSession session) {
+	public String deleteEvent(Model model,HttpSession session,int evNo) {
 		
+
+		System.out.println(evNo);
 		
-		String title = (String) model.getAttribute("eventTitle");
-		//System.out.println(title);
+		Member m  = (Member)session.getAttribute("loginUser");
+		m.setEvNo(evNo);
+	
 		
-		int result = mService.deleteEvent(title);
-		
-		System.out.println(result);
+		int result = mService.deleteEvent(m);
+
+	
 		
 		if(result>0) { // 삭제 성공
 			session.setAttribute("alertMsg", "이벤트가 취소되었습니다");
 			return "redirect:event.me";
 		}else { // 삭제 실패
-			model.addAttribute("errorMsg", "비밀번호가 틀렸습니다");
+			model.addAttribute("errorMsg", "취소하는데 실패하셧습니다");
 			return "common/errorPage";
 		}
 		
 		
 	}
+
+  
+	@RequestMapping("delete.gb")
+	public String deleteGroupBuy(Model model,HttpSession session,int pNo){
+
+		
+		Member m = (Member) model.addAttribute("loginUser");
+		m.setPNo(pNo);
+
+		int result = mService.deleteGroupBuy(m);
+
+		System.out.println(result);
+
+		if(result>0){
+			session.setAttribute("alertMsg","구매취소에 성공했습니다");
+			return "redirect:group.me";
+		}else{
+			model.addAttribute("errorMsg", "구매취소에 실패했습니다");
+			return "common/errorPage";
+		}
+
+	}
+
 
 	@RequestMapping("enrollForm.me")
 	public String enrollForm() {

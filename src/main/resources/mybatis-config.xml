@@ -18,8 +18,10 @@
 		<typeAlias type="com.beer.macSim.administer.model.vo.Report" alias="Report"/>
 		<typeAlias type="com.beer.macSim.administer.model.vo.SelectData" alias="SD"/>
 		<typeAlias type="com.beer.macSim.notice.model.vo.NoComment" alias="NoComment"/>
+
 		<typeAlias type="com.beer.macSim.administer.model.vo.BeerSearch" alias="BS"/>
 		<typeAlias type="com.beer.macSim.administer.model.vo.Batch" alias="Batch"/>
+
 		<typeAlias type="com.beer.macSim.event.model.vo.Attachment" alias="Attachment"/>
 		<typeAlias type="com.beer.macSim.community.model.vo.Community" alias="Community"/>
 
