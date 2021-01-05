@@ -95,96 +95,60 @@
                 <button>등록</button>
               </div>
             </div>
+            
+            <!-- 댓글 -->
             <ul class="fode__co-items">
-              <li class="co-contents">
-                <div class="fode__co-info">
-                  <p onclick="replayTo('beerbeer23');">beerbeer23</p>
-                  <div>
-                    <span>수정</span>
-                    <span onclick="deleteModalOpen();">삭제</span>
-                    <!-- <span>신고</span> -->
-                    <small>2020-11-20 16:00</small>
-                  </div>
-                </div>
-                <div class="fode__co-con">흑맥주는 무슨맛인가요??</div>
-              </li>
-              <li class="co-contents">
-                <div class="fode__co-info">
-                  <p onclick="replayTo('beerbeer23');">beerbeer23</p>
-                  <!-- <a href="#comment-top">beerbeer23</a> -->
-                  <div>
-                    <span>수정</span>
-                    <span>삭제</span>
-                    <!-- <span>신고</span> -->
-                    <small>2020-11-20 16:00</small>
-                  </div>
-                </div>
-                <div class="fode__co-con">흑맥주는 무슨맛인가요??</div>
-                <ul class="fode__re-items">
-                  <li class="co-contents">
-                    <div class="fode__co-info">
-                      <p>orange11</p>
-                      <div>
-                        <span>수정</span>
-                        <span>삭제</span>
-                        <!-- <span>신고</span> -->
-                        <small>2020-11-20 16:00</small>
-                      </div>
-                    </div>
-                    <div class="fode__co-con">까만맛입니다.</div>
-                  </li>
-                  <li class="co-contents">
-                    <div class="fode__co-info">
-                      <p>orange11</p>
-                      <div>
-                        <span>수정</span>
-                        <span>삭제</span>
-                        <!-- <span>신고</span> -->
-                        <small>2020-11-20 16:00</small>
-                      </div>
-                    </div>
-                    <div class="fode__co-con">까만맛입니다.</div>
-                  </li>
-                </ul>
-              </li>
-              <li class="co-contents">
-                <div class="fode__co-info">
-                  <p onclick="replayTo('beerbeer23');">beerbeer23</p>
-                  <div>
-                    <span>수정</span>
-                    <span>삭제</span>
-                    <!-- <span>신고</span> -->
-                    <small>2020-11-20 16:00</small>
-                  </div>
-                </div>
-                <div class="fode__co-con">흑맥주는 무슨맛인가요??</div>
-                <ul class="fode__re-items">
-                  <li class="co-contents">
-                    <div class="fode__co-info">
-                      <p>orange11</p>
-                      <div>
-                        <span>수정</span>
-                        <span>삭제</span>
-                        <!-- <span>신고</span> -->
-                        <small>2020-11-20 16:00</small>
-                      </div>
-                    </div>
-                    <div class="fode__co-con">까만맛입니다.</div>
-                  </li>
-                  <li class="co-contents">
-                    <div class="fode__co-info">
-                      <p>orange11</p>
-                      <div>
-                        <span>수정</span>
-                        <span>삭제</span>
-                        <!-- <span>신고</span> -->
-                        <small>2020-11-20 16:00</small>
-                      </div>
-                    </div>
-                    <div class="fode__co-con">까만맛입니다.</div>
-                  </li>
-                </ul>
-              </li>
+              
+              <c:forEach var="r" items="${ rpList }">
+	              <li class="co-contents">
+	                <div class="fode__co-info">
+	                  <p onclick="replayTo('${ r.userId }');">${ r.userId }</p>
+	                  <div>
+	                    <c:choose>
+	                      <c:when test="${ loginUser.userNo eq r.userNo }">
+		                    <span>수정</span>
+		                    <span onclick="deleteModalOpen();">삭제</span>
+	                      </c:when>
+	                      <c:otherwise>
+	                    	<span>신고</span>
+	                      </c:otherwise>
+	                    </c:choose>
+	                    <small>${ r.coCreateDate }</small>
+	                  </div>
+	                </div>
+	                <div class="fode__co-con">${ r.coContent }</div>
+	                
+	                
+	                <!-- 대댓글 -->
+	                <ul class="fode__re-items">
+	                
+	                  <c:forEach var="sr" items="${ r.subReply }">
+		                  <li class="co-contents">
+		                    <div class="fode__co-info">
+		                      <p>${ sr.userId }</p>
+		                      <div>
+		                        <c:choose>
+		                          <c:when test="${ loginUser.userNo eq sr.userNo }">
+			                        <span>수정</span>
+			                        <span>삭제</span>
+			                      </c:when>
+			                      <c:otherwise>
+			                        <span>신고</span>
+			                      </c:otherwise>
+		                        </c:choose>
+		                        <small>${ sr.recoCreateDate }</small>
+		                      </div>
+		                    </div>
+		                    <div class="fode__co-con">${ sr.recoContent }</div>
+		                  </li>
+	                  </c:forEach>
+	                  
+	                </ul>
+	                
+	                
+	              </li>
+              </c:forEach>
+              
             </ul>
           </div>
         </div>
@@ -200,9 +164,6 @@
         </ul> -->
       </div>
     </main>
-
-    <!-- footer -->
-    <footer></footer>
 
     <!-- 모달 -->
     <div id="delete-modal" class="modal__layout">

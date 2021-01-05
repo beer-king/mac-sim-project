@@ -102,6 +102,23 @@
   				, #{changeName}
   			)
   	</insert>
+  	<update id="updateBeer" parameterType="Beers">
+  		update
+  			beer
+  		 set
+  			   beer_name = #{beerName}
+  			 , beer_ename = #{beerEname}
+  			 , beer_style = #{beerStyle}
+  			 , beer_producer = #{beerProducer}
+  			 , beer_location = #{beerLocation}
+  			 , beer_alcohol = #{alcohol}
+  			 , beer_container = #{beerContainer}
+  			 , origin_name = #{originName}
+  			 , change_name = #{changeName}
+  			 , updated_date = sysdate
+  		 where
+  		 	beer_no = #{beerNo}
+  	</update>
   	<update id="updatePoint" parameterType="Member">
   		update
   			member
@@ -341,5 +358,12 @@
 		join member using(user_no)
 		where ev_no = #{evNo}
   	</select>
+  	
+  	<select id="selectBeerOne" parameterType="string" resultMap="beerResultSet">
+		select beer_no, beer_name, beer_ename, beer_style, beer_producer, beer_location, beer_alcohol, beer_container, origin_name, change_name
+		from beer
+		where status = 'Y' and beer_no = #{beerNo}
+  	</select>
+  	
   
 </mapper>

@@ -125,6 +125,16 @@ public class AdminServiceImpl implements AdminService{
 	public Event selectEventOne(String evNo) {
 		return aDao.selectEventOne(sqlSession, evNo);
 	}
+
+	@Override
+	public Beers selectBeerOne(String beerNo) {
+		return aDao.selectBeerOne(sqlSession, beerNo);
+	}
+
+	@Override
+	public int updateBeer(Beers b, Member m) {
+		return aDao.updateBeer(sqlSession, b, m);
+	}
 	
 	
 }

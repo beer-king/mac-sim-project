@@ -95,7 +95,7 @@
   		
 			<c:forEach var="e" items="${list}">
 			        <li id="a">
-			        		<span id="b">${e.evNo}</span>
+			        		<span class="b">${e.evNo}</span>
 				            <span>${e.evTitle }</span>
 				            <!-- Button to Open the Modal -->
 				           
@@ -117,7 +117,7 @@
 			
 			$("#c").click(function(){
 			
-			 var eventNo = $("#b").text();
+			 var eventNo = $("#a").children(".b").text();
 			 
 			 console.log(eventNo);
 			 

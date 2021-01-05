@@ -18,8 +18,12 @@ import org.springframework.web.multipart.MultipartFile;
 import com.beer.macSim.common.model.vo.PageInfo;
 import com.beer.macSim.common.template.Pagination;
 import com.beer.macSim.community.model.service.CommService;
+import com.beer.macSim.community.model.vo.CommLikes;
 import com.beer.macSim.community.model.vo.Community;
 import com.beer.macSim.community.model.vo.Forum;
+import com.beer.macSim.community.model.vo.Reply;
+import com.beer.macSim.community.model.vo.SubReply;
+import com.beer.macSim.member.model.vo.Member;
 
 @Controller
 public class CommController {
@@ -31,7 +35,17 @@ public class CommController {
 	@RequestMapping("list.cm") // list.cm?cate=x&currentPage=x
 	public String selectCommList(@RequestParam(value="cate", defaultValue="0") int cate,
 								 @RequestParam(value="currentPage", defaultValue="1") int currentPage,
+								 HttpSession session,
 								 Model model) {
+		
+		Member m = (Member)session.getAttribute("loginUser");
+		
+		//System.out.println("Member m : " + m);
+		if(m != null) {
+			
+			ArrayList<CommLikes> clikes = cService.selectCommLikes(m.getUserNo());
+			System.out.println("clikes : " + clikes);
+		}
 		
 		//System.out.println("cate : " + cate);
 		//System.out.println("currentPage : " + currentPage);
@@ -122,26 +136,55 @@ public class CommController {
 	
 	// 포럼 상세페이지 조회
 	@RequestMapping("detail.fo") // detail.fo?fno=x
-	public String selectForumDetail(int fno, Model model) {
+	public String selectForumDetail(int fno, HttpSession session, Model model) {
 
-		System.out.println("fno : " + fno);
+		//System.out.println("fno : " + fno);
 		
-		int result = cService.increaseCount(fno);
-		
-		if(result > 0) {
+		// 포럼 입장가능한지 확인
+		Member m = (Member)session.getAttribute("loginUser");
+		if(m != null) {
 			
-			Forum fo = cService.selectForumDetail(fno);
+			// 이미 입장한 포럼인지
+//			ArrayList<> = cService.select
 			
-			// 댓글 가져오기
+			// 첫입장이면 포인트 쓸 수 있는지
 			
-			model.addAttribute("fo", fo);
-			// 댓글가져온거 model에
-			return "community/forumDetail";
+			// 포인트 쓸 수 있으면 사용할건지 물어보는..???????? 물어봐? 뭘물어봐 그렇다고 그냥써? 으에에에에에ㅔ
 			
 		}else {
-			model.addAttribute("errorMsg", "존재하지 않는 포럼입니다");
-			return "common/errorPage";
+			// 죽여
 		}
+		
+			// 포럼 입장 -->
+			int result = cService.increaseCount(fno);
+			
+			if(result > 0) {
+				
+				Forum fo = cService.selectForumDetail(fno);
+				
+				// 댓글 가져오기
+				ArrayList<Reply> rpList = cService.selectReplyList(fno);
+				
+				// 대댓글 가져오기
+				for(Reply r : rpList) {
+					ArrayList<SubReply> subList = cService.selectSubReplyList(r.getCoNo());
+					r.setSubReply(subList);
+				}
+				
+				//System.out.println("rpList : " + rpList);
+				
+				model.addAttribute("fo", fo);
+				model.addAttribute("rpList", rpList);
+				return "community/forumDetail";
+				
+			}else {
+				model.addAttribute("errorMsg", "존재하지 않는 포럼입니다");
+				return "common/errorPage";
+			}
+			
+//		}else {
+//			살려
+//		}
 		
 	}
 	

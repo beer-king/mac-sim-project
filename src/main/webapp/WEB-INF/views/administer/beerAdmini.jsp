@@ -136,6 +136,9 @@
             width: 200px;
             vertical-align: middle;
         }
+        .dataview:hover{
+		    cursor: pointer;
+		}
     </style>
 </head>
 <body>
@@ -199,7 +202,7 @@
             	<div>부여포인트</div>
             	<div><input type="number" id="point" class="form-control" name="point"></div>
             </div>
-
+			
             <div align="right">
                 <button type="submit" class="btn btn-primary">등록하기</button>
                 <button type="reset" class="btn btn-danger">취소하기</button>
@@ -208,17 +211,19 @@
         </c:if>
         <c:if test="${category eq 2}">
         		<br>
-		        <form class="enrollForm" action="" method="post" align="right">
+      			<form class="enrollForm" action="" method="post" align="right">
 		            <select name="sort" id="sort">
-		                <option value="name">맥주 이름</option>
+		                <option value="name" selected>맥주 이름</option>
 		                <option value="no">맥주 번호</option>
 		            </select>
 		            <input type="text" id="searchbox" placeholder="검색어를 입력하세요" name="search">
 		            <button type="submit" id="sbtn" style="margin-right: 20px;">검색</button>
 		        </form>
+       
+		        
 		        <br>
 		        <c:forEach var="b" items="${ blist }">	
-	        		<table class="dataview" style="width: 90%;">
+	        		<table class="dataview" style="width: 90%;" onclick="clickB(${b.beerNo})">
 			            	<tr>
 			            		<td rowspan="2" style="width: 20px;"><img src="${b.changeName }" width="100" height="100"></td>
 			            	</tr>
@@ -259,12 +264,22 @@
         </c:if>
     </div>
     <script>
+	    function clickB(bNo){
+			var bNo = bNo;
+			location.href = "beerUpdate.ad?beerNo=" + bNo;
+		}
 		$(function(){
 			$(document).ready(function() {
 	    		if (${category} == 2) {
 					$(".content").height('800');
 					$(".outer").height('1000');
 				}
+	    		if('${sort}' == 'no'){
+	    			$('#sort option:eq(1)').prop('selected', true);
+	    		}else{
+	    			$('#sort option:eq(2)').prop('selected', true);
+	    		}
+	    		
 	    	});
 			$("#upfile").hide();
 			$("#titleImg").click(function(){
