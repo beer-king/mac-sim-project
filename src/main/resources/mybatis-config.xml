@@ -22,11 +22,12 @@
 		<typeAlias type="com.beer.macSim.administer.model.vo.Batch" alias="Batch"/>
 		<typeAlias type="com.beer.macSim.event.model.vo.Attachment" alias="Attachment"/>
 		<typeAlias type="com.beer.macSim.community.model.vo.Community" alias="Community"/>
-
 		<typeAlias type="com.beer.macSim.member.model.vo.PointHistory" alias="PointHistory"/>
-
 		<typeAlias type="com.beer.macSim.event.model.vo.EventAttendee" alias="EventAttendee"/>
 		<typeAlias type="com.beer.macSim.community.model.vo.Forum" alias="Forum"/>
+		<typeAlias type="com.beer.macSim.community.model.vo.CommLikes" alias="CommLikes"/>
+		<typeAlias type="com.beer.macSim.community.model.vo.Reply" alias="Reply"/>
+		<typeAlias type="com.beer.macSim.community.model.vo.SubReply" alias="SubReply"/>
 
 	</typeAliases>
 	
