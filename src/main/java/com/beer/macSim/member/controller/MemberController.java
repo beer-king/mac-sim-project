@@ -21,6 +21,7 @@ import com.beer.macSim.event.model.vo.Event;
 import com.beer.macSim.member.model.service.KakaoService;
 import com.beer.macSim.member.model.service.MemberService;
 import com.beer.macSim.member.model.vo.Member;
+import com.beer.macSim.member.model.vo.PointHistory;
 
 
 
@@ -66,7 +67,14 @@ public class MemberController {
 	}
 
 	@RequestMapping("point.me")
-	public String point() {
+	public String point(HttpSession session, Model model) {
+		
+		Member m = (Member) session.getAttribute("loginUser");
+		
+		ArrayList<PointHistory>list = mService.selectPointHistory(m);
+		
+		model.addAttribute("list", list);
+		
 		return "member/point";
 	}
 

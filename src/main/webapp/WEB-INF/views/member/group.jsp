@@ -160,8 +160,8 @@
 
                    var pNo =  $(".modal-body").children("#nameSpace").text();
                    var uno = ${loginUser.userNo}
-                    console.log(pNo);
-                    console.log(uno);
+                    //console.log(pNo);
+                    //console.log(uno);
                    location.href = "delete.gb?pNo="+pNo +"&userNo="+uno;
 
                 });
