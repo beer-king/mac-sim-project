@@ -7,8 +7,11 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.beer.macSim.common.model.vo.PageInfo;
+import com.beer.macSim.community.model.vo.CommLikes;
 import com.beer.macSim.community.model.vo.Community;
 import com.beer.macSim.community.model.vo.Forum;
+import com.beer.macSim.community.model.vo.Reply;
+import com.beer.macSim.community.model.vo.SubReply;
 
 @Repository
 public class CommDao {
@@ -56,6 +59,18 @@ public class CommDao {
 
 	public int insertForum(SqlSessionTemplate sqlSession, Forum fo) {
 		return sqlSession.insert("commMapper.insertForum", fo);
+	}
+
+	public ArrayList<CommLikes> selectCommLikes(SqlSessionTemplate sqlSession, int userNo) {
+		return (ArrayList)sqlSession.selectList("commMapper.selectCommLikes", userNo);
+	}
+
+	public ArrayList<Reply> selectReplyList(SqlSessionTemplate sqlSession, int fno) {
+		return (ArrayList)sqlSession.selectList("commMapper.selectReplyList", fno);
+	}
+
+	public ArrayList<SubReply> selectSubReplyList(SqlSessionTemplate sqlSession, int coNo) {
+		return (ArrayList)sqlSession.selectList("commMapper.selectSubReplyList", coNo);
 	}
 		
 
