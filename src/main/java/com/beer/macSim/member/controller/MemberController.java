@@ -1,7 +1,6 @@
 package com.beer.macSim.member.controller;
 
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -86,8 +85,10 @@ public class MemberController {
 		
 		int listCount = mService.eventCount(m);
 		
+
 		
 		
+
 		PageInfo pi =Pagination.getPageInfo(listCount, currentPage, 10, 5);
 		
 		ArrayList<Event>list = mService.selectEventList(m);
@@ -248,6 +249,7 @@ public class MemberController {
 	public String deleteEvent(Model model,HttpSession session,int evNo) {
 		
 		
+
 		
 		System.out.println(evNo);
 		
@@ -256,8 +258,8 @@ public class MemberController {
 	
 		
 		int result = mService.deleteEvent(m);
-		
-		System.out.println(result);
+
+	
 		
 		if(result>0) { // 삭제 성공
 			session.setAttribute("alertMsg", "이벤트가 취소되었습니다");
@@ -406,7 +408,7 @@ public class MemberController {
     				 
     				 if(result*result1 > 0) {
     					 
-    					 session.setAttribute("alertMsg", "3point 적립되었습니다~~!!!");
+    					 session.setAttribute("alertMsg", "출석 포인트로 3point 적립되었습니다~~!!!");
     					 
     				 }//else{
     					 
@@ -469,30 +471,7 @@ public class MemberController {
 	     return "redirect:/";
 	 }
 	 
-	 // 인증번호 보내기 
-	 /*
-	 @RequestMapping("findPwd.me")
-	 public String findPwd()
-	 */
-
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	 
 	
 	
 }

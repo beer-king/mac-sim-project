@@ -6,11 +6,13 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.beer.macSim.administer.model.vo.Batch;
 import com.beer.macSim.administer.model.vo.BeerSearch;
 import com.beer.macSim.administer.model.vo.Report;
 import com.beer.macSim.administer.model.vo.SelectData;
 import com.beer.macSim.common.model.vo.PageInfo;
 import com.beer.macSim.data.model.vo.Beers;
+import com.beer.macSim.event.model.vo.Event;
 import com.beer.macSim.member.model.vo.Member;
 import com.beer.macSim.notice.model.vo.Notice;
 
@@ -87,5 +89,22 @@ public class AdminDao {
 		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		return (ArrayList)sqlSession.selectList("adminMapper.selectBeerList", bs, rowBounds);
+	}
+	
+	public int selectEventListCount(SqlSessionTemplate sqlSession, BeerSearch bs) {
+		return sqlSession.selectOne("adminMapper.selectEventListCount", bs);
+	}
+	
+	public ArrayList<Event> selectEventList(SqlSessionTemplate sqlSession, PageInfo pi, BeerSearch bs){
+		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("adminMapper.selectEventList", bs, rowBounds);
+	}
+	
+	public int updateBatchEvent(SqlSessionTemplate sqlSession, Batch b) {
+		return sqlSession.update("adminMapper.updateBatchEvent", b);
+	}
+	public Event selectEventOne(SqlSessionTemplate sqlSession, String evNo) {
+		return sqlSession.selectOne("adminMapper.selectEventOne", evNo);
 	}
 }

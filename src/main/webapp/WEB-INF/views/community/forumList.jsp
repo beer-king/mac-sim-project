@@ -31,12 +31,11 @@
         <div class="comm__nav">
           <ul>
             <li>
-              <a href="list.cm">맥심의 일상</a>
+              <a href="list.cm?cate=0">맥심의 일상</a>
             </li>
             <li><a href="list.cm?cate=1">오늘의 맥주</a></li>
-            <li>
+            <li class="nav-active">
               <img src="resources/images/beer-chat-icon-yellow.png" alt="selectedImg" /><a
-                class="nav-active"
                 href="#"
                 >포럼</a
               >

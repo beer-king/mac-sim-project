@@ -284,6 +284,15 @@
   		   )
 	</insert>
 	
+	<!--  
+	<update id="updatePw" parameterType="Member">
+		update member 
+	       set userPwd = ?
+	     where userId = ?     
+
+	</update>-->
+	
+	
 
 	<select id="selectPointHistory" resultMap="historyResultSet" parameterType="Member">
 		select

@@ -2,11 +2,13 @@ package com.beer.macSim.administer.model.service;
 
 import java.util.ArrayList;
 
+import com.beer.macSim.administer.model.vo.Batch;
 import com.beer.macSim.administer.model.vo.BeerSearch;
 import com.beer.macSim.administer.model.vo.Report;
 import com.beer.macSim.administer.model.vo.SelectData;
 import com.beer.macSim.common.model.vo.PageInfo;
 import com.beer.macSim.data.model.vo.Beers;
+import com.beer.macSim.event.model.vo.Event;
 import com.beer.macSim.member.model.vo.Member;
 import com.beer.macSim.notice.model.vo.Notice;
 
@@ -37,4 +39,10 @@ public interface AdminService {
 	
 	int selectBeerListCount(BeerSearch bs);
 	ArrayList<Beers> selectBeerList(BeerSearch bs,PageInfo pi);
+	
+	int selectEventListCount(BeerSearch bs);
+	ArrayList<Event> selectEventList(BeerSearch bs,PageInfo pi);
+	
+	int updateBatchEvent(Batch b);
+	Event selectEventOne(String evNo);
 }

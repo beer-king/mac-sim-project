@@ -36,7 +36,7 @@
   	<resultMap id="EventAttendeeResultSet" type="EventAttendee">
   		<result column="evat_no" property="evatNo"/>
   		<result column="ev_no" property="evNo"/>
-  		<result column="user_no" property=""/>
+  		<result column="user_no" property="userNo"/>
   		<result column="event_entry_status" property="eventEntryStatus"/>
   		<result column="event_entry_date" property="eventEntryDate"/>
   		<result column="ev_point" property="evPoint"/>
@@ -160,4 +160,21 @@
   		 where  user_no = #{userNo}
   	</update>
   	
+  	<insert id="applyEvent" parameterType="EventAttendee">
+  		insert
+		 into event_attendee
+		 (
+		   evat_no
+		 , ev_no
+		 , user_no
+		 , event_entry_status
+		 )
+		 values
+		 (
+		   SEQ_EVAT_NO.nextval
+		 , #{evNo}
+		 , #{userNo}
+		 , 'Y'
+		 )	   
+  	</insert>
 </mapper>

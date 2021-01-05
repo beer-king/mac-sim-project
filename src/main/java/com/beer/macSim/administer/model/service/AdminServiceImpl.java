@@ -7,11 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.beer.macSim.administer.model.dao.AdminDao;
+import com.beer.macSim.administer.model.vo.Batch;
 import com.beer.macSim.administer.model.vo.BeerSearch;
 import com.beer.macSim.administer.model.vo.Report;
 import com.beer.macSim.administer.model.vo.SelectData;
 import com.beer.macSim.common.model.vo.PageInfo;
 import com.beer.macSim.data.model.vo.Beers;
+import com.beer.macSim.event.model.vo.Event;
 import com.beer.macSim.member.model.vo.Member;
 import com.beer.macSim.notice.model.vo.Notice;
 
@@ -102,6 +104,26 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public ArrayList<Beers> selectBeerList(BeerSearch bs, PageInfo pi) {
 		return aDao.selectBeerList(sqlSession, pi, bs);
+	}
+
+	@Override
+	public int selectEventListCount(BeerSearch bs) {
+		return aDao.selectEventListCount(sqlSession, bs);
+	}
+
+	@Override
+	public ArrayList<Event> selectEventList(BeerSearch bs, PageInfo pi) {
+		return aDao.selectEventList(sqlSession, pi, bs);
+	}
+
+	@Override
+	public int updateBatchEvent(Batch b) {
+		return aDao.updateBatchEvent(sqlSession, b);
+	}
+
+	@Override
+	public Event selectEventOne(String evNo) {
+		return aDao.selectEventOne(sqlSession, evNo);
 	}
 	
 	

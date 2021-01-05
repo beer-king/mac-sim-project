@@ -17,14 +17,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.beer.macSim.administer.model.service.AdminService;
+import com.beer.macSim.administer.model.vo.Batch;
 import com.beer.macSim.administer.model.vo.BeerSearch;
 import com.beer.macSim.administer.model.vo.Report;
 import com.beer.macSim.administer.model.vo.SelectData;
 import com.beer.macSim.common.model.vo.PageInfo;
+import com.beer.macSim.common.template.BatchProcess;
 import com.beer.macSim.common.template.Pagination;
 import com.beer.macSim.common.template.Search;
 import com.beer.macSim.common.template.Selectation;
 import com.beer.macSim.data.model.vo.Beers;
+import com.beer.macSim.event.model.vo.Event;
 import com.beer.macSim.member.model.vo.Member;
 import com.beer.macSim.notice.model.vo.Notice;
 
@@ -133,7 +136,6 @@ public class AdministerController {
 		model.addAttribute("category",category);
 		if(category == 1) {
 			BeerSearch bs = Search.getBeerSearch(cate, search);
-			System.out.println(bs);
 			int listCount = aService.selectListCount(bs);
 			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
 			
@@ -206,6 +208,65 @@ public class AdministerController {
 	}
 	
 	
+	//이벤트 관리
+	@RequestMapping("eventAd.ad")
+	public String goEvent(@RequestParam(value="currentPage", defaultValue="1")int currentPage, @RequestParam(value="status", defaultValue="A")String status, Model model, String search) {
+		model.addAttribute("status",status);
+		BeerSearch bs = Search.getBeerSearch(status, search);
+		int listCount = aService.selectEventListCount(bs);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		ArrayList<Event> elist= aService.selectEventList(bs, pi);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("elist", elist);
+		
+		return "administer/eventAdmini";
+	}
+	
+	@RequestMapping("eventDetailAd.ad")
+	public String goEventDetail(String evNo, Model model) {
+		Event e = aService.selectEventOne(evNo);
+		model.addAttribute("e", e);
+		return "administer/eventDetail";
+	}
+	@RequestMapping("updateEvent.ad")
+	public String updateEvent(Model model, HttpSession session, String evNo, String content, String Astatus) {
+		ArrayList<String> list = new ArrayList<String>();
+		list.add(evNo);
+		if(Astatus.equals("C")) {
+			Batch b = BatchProcess.getBatch(list, Astatus, content);
+			int result = aService.updateBatchEvent(b);
+			if(result > 0) { // 성공
+				session.setAttribute("alertMsg", "성공적으로 처리되었습니다.");
+				return "redirect:eventAd.ad";
+			}else {
+				model.addAttribute("errorMsg", "실패되었습니다.");
+				return "common/errorPage";
+			}
+		}else {
+			Batch b = BatchProcess.getBatch(list, Astatus, null);
+			int result = aService.updateBatchEvent(b);
+			if(result > 0) { // 성공
+				session.setAttribute("alertMsg", "성공적으로 처리되었습니다.");
+				return "redirect:eventAd.ad";
+			}else {
+				model.addAttribute("errorMsg", "실패되었습니다.");
+				return "common/errorPage";
+			}
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping("processEvent.ad")
+	public String processEvent(@RequestParam(value = "list[]") ArrayList<String> list, String Astatus, String content) {
+		Batch b = BatchProcess.getBatch(list, Astatus, content);
+		int result = aService.updateBatchEvent(b);
+		if(result > 0) {
+			return "success";
+		}else {
+			return "fail";
+		}
+	}
 	
 	
 	//일반 함수

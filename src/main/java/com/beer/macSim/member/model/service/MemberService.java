@@ -9,6 +9,8 @@ import com.beer.macSim.member.model.vo.PointHistory;
 import java.sql.Date;
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
+
 public interface MemberService {
 
     //1. 로그인용 서비스
@@ -60,9 +62,19 @@ public interface MemberService {
 	int pointHistory(int userNo, int point, int category, String pointHistory);
 
 
+	//void sendTempLoginPwToEmail(Member loginMember,String contextPath);
+
+	
+
+
+
+     
+
+
     ArrayList<PointHistory> selectPointHistory(Member m);
 
     ArrayList<GroupBuy> selectGroupBuyList(Member m);
 
     int deleteGroupBuy(Member m);
+
 }

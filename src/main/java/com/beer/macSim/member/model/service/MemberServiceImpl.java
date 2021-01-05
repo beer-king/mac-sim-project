@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Date;
 import java.util.ArrayList;
 
+
 @Service
 public class MemberServiceImpl implements MemberService {
     @Autowired
@@ -19,6 +20,9 @@ public class MemberServiceImpl implements MemberService {
 
     @Autowired
     private SqlSessionTemplate sqlSession;
+    
+    @Autowired
+    private MailService mailService;
 
     @Override
     public Member loginMember(Member m) {
@@ -133,10 +137,20 @@ public class MemberServiceImpl implements MemberService {
 		return mDao.selectGroupBuyList(sqlSession,m);
 	}
 
+
+
+	
+
+	
+
+
+
+
 	@Override
 	public int deleteGroupBuy(Member m) {
 		return mDao.deleteGroupBuy(sqlSession,m);
 	}
+
 
 
 }
