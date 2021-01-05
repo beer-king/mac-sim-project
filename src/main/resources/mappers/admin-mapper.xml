@@ -365,16 +365,5 @@
 		where status = 'Y' and beer_no = #{beerNo}
   	</select>
   	
-  	<update id="updateBatchReport" parameterType="Batch">
-  		update
-		    report
-		set
-			req_status = #{status} 
-		where
-			<foreach item="item" index="index" collection="list" separator="or">
-				req_no = #{item}
-			</foreach>
-  	</update>
-  	
   
 </mapper>

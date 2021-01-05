@@ -214,8 +214,8 @@
 		            </c:forEach>
 		            
 		            <c:if test="${status eq 'A' }">
-			            <div style="margin-right: 20px; text-align: right;">
-			            	<button type="button"  data-toggle="modal" data-target="#myModal2" >일괄 삭제</button>
+			            <div align=right style="margin-right: 20px;">
+			            	<button type="submit">일괄처리</button>
 			            </div>
 		            </c:if>
         		</c:when>
@@ -258,8 +258,8 @@
 		            </table>
 		            </c:forEach>
 		            <c:if test="${status eq 'A' }">
-			            <div style="margin-right: 20px; text-align: right;">
-			            	<button type="button"  data-toggle="modal" data-target="#myModal2" >일괄 삭제</button>
+			            <div align=right style="margin-right: 20px;">
+			            	<button type="submit">일괄처리</button>
 			            </div>
 		            </c:if>
         		</c:when>
@@ -309,8 +309,8 @@
 		            </c:forEach>
 		            
 		            <c:if test="${status eq 'A' }">
-			            <div style="margin-right: 20px; text-align: right;">
-			            	<button type="button"  data-toggle="modal" data-target="#myModal2" >일괄 삭제</button>
+			            <div align=right style="margin-right: 20px;">
+			            	<button type="submit">일괄처리</button>
 			            </div>
 		            </c:if>
         		</c:when>
@@ -417,7 +417,7 @@
     	var num = "";
     	var content = "";
     	var cate = "";
-    	var checkArr = [];
+    	
 	    function trclick(userNo){
 			num = userNo;
 			$("#myModal").modal("show");
@@ -440,12 +440,6 @@
 	        });
 	    	$("#reportC").click(function(){
 	    		reportC();
-	        });
-	    	$("#passR").click(function(){
-	    		passR();
-	        });
-	    	$("#deleteR").click(function(){
-	    		deleteR();
 	        });
 	    	function userBan(){
 	    		  $.ajax({
@@ -504,48 +498,6 @@
 			$("#status").change(function(){
 				location.href = "callAd.ad?status="+$(this).val() + "&category=${category}";
 			});
-			function passR(){
-				$("input[name='number']:checked").each(function(i){
-					checkArr.push($(this).val());
-				});
-				$.ajax({
-					url:"processReport.ad",
-	    			type:"POST",
-	    			dataType: 'text',
-	    			data: {
-	    	            list: checkArr,
-	    	            Astatus:'B'
-	    	        },
-	    	        success:function(result){
-	    				  alert("처리되었습니다.");
-	    				  location.reload();
-	    			  },error:function(){
-	    				  alert("실패되었습니다.");
-	    				  location.reload();
-	    			  }
-				});
-			}
-			function deleteR(){
-				$("input[name='number']:checked").each(function(i){
-					checkArr.push($(this).val());
-				});
-				$.ajax({
-					url:"processReport.ad",
-	    			type:"POST",
-	    			dataType: 'text',
-	    			data: {
-	    	            list: checkArr,
-	    	            Astatus:'C'
-	    	        },
-	    	        success:function(result){
-	    				  alert("처리되었습니다.");
-	    				  location.reload();
-	    			  },error:function(){
-	    				  alert("실패되었습니다.");
-	    				  location.reload();
-	    			  }
-				});
-			}
 		});
 	</script>
 	<c:if test="${category eq 4}">
@@ -588,23 +540,6 @@
 		    </div>
 	    </div>
     </c:if>
-    <div class="modal fade" id="myModal2">
-   			<div class="modal-dialog">
-     		<div class="modal-content">
-     
-       		<!-- Modal body -->
-       		<div class="modal-body">
-         			<h3>선택한 신고를 전부 처리하시겠습니까?</h3>
-         			<br><br><br>
-         			<div align="right">
-         			<button id="passR" type="button" class="btn btn-primary" data-dismiss="modal">허위신고</button>
-         			<button id="deleteR" type="button" class="btn btn-primary" data-dismiss="modal">삭제</button>
-         			<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
-         	</div>
-       		</div>
-     		</div>
-   			</div>
-  	</div>
 </div>
 </main>
 

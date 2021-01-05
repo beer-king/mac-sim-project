@@ -116,22 +116,4 @@ public class AdminDao {
 	public Beers selectBeerOne(SqlSessionTemplate sqlSession, String beerNo) {
 		return sqlSession.selectOne("adminMapper.selectBeerOne", beerNo);
 	}
-	
-	public int updateBatchReport(SqlSessionTemplate sqlSession, Batch b) {
-		int i = sqlSession.update("adminMapper.updateBatchReport", b);
-		int j = 1;
-		if(b.getStatus().equals("C")) {
-			
-			/* 해당 글 및 댓글 삭제처리 작업후 돌아갈 부분
-			for(String s : b.getList()) {
-				j = sqlSession.update("adminMapper.deleteReport", s);
-				if(j <= 0) {
-					break;
-				}
-			}*/
-		}
-		
-		
-		return i*j;
-	}
 }

@@ -135,11 +135,6 @@ public class AdminServiceImpl implements AdminService{
 	public int updateBeer(Beers b, Member m) {
 		return aDao.updateBeer(sqlSession, b, m);
 	}
-
-	@Override
-	public int updateBatchReport(Batch b) {
-		return aDao.updateBatchReport(sqlSession, b);
-	}
 	
 	
 }
