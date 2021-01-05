@@ -2,6 +2,7 @@ package com.beer.macSim.notice.model.dao;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -41,6 +42,32 @@ public class NoticeDao {
 	
 	public int insertNcomment(SqlSessionTemplate sqlSession, NoComment nc) {
 		return sqlSession.insert("noticeMapper.insertNcomment", nc);
+	}
+
+	public int searchNoticeListCount(SqlSessionTemplate sqlSession, String condition, String keyword) {
+		
+		HashMap<String, String> map = new HashMap();
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+		
+		return sqlSession.selectOne("noticeMapper.searchNoticeListCount", map);
+		
+		
+	}
+
+	public ArrayList<Notice> searchNoticeList(SqlSessionTemplate sqlSession, String condition, String keyword,
+			PageInfo pi) {
+		
+		HashMap<String, String> map = new HashMap();
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+		
+		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("noticeMapper.searchNoticeList",map, rowBounds);
+		
+		
 	}
 
 	

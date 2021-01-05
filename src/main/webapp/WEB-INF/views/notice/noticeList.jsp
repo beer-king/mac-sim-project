@@ -65,12 +65,13 @@
         
         <br><br>
         <div>
-            <form class="example" action="" method="" align="right">
-                <select name="" id="">
+            <form class="example" action="search.no" method="" align="right">
+            	<input type="hidden" name=currentPage" value="1">
+                <select name="condition" id="condition">
                     <option value="title">제목</option>
                     <option value="content">내용</option>
                 </select>
-                <input type="text" id="searchbox" placeholder="검색어를 입력하세요" name="search">
+                <input type="text" id="searchbox" placeholder="검색어를 입력하세요" name="keyword">
                 <button type="submit" id="sbtn">검색</button>
             </form>
         </div>
@@ -116,30 +117,58 @@
 
         <div class="paging-area">
 			 <ul class="pagination pagination-sm">
-                	
-                	<c:choose>
-                		<c:when test="${ pi.currentPage eq 1 }">
-	                    	<li class="page-item disabled"><a class="page-link" href="#">이전</a></li>
-	                    </c:when>
-	                    <c:otherwise>
-	                    	<li class="page-item"><a class="page-link" href="list.no?currentPage=${ pi.currentPage-1 }">이전</a></li>
-                    	</c:otherwise>
-                    </c:choose>
-                    
-                    
-                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-                    	<li class="page-item"><a class="page-link" href="list.no?currentPage=${ p }">${ p }</a></li>
-                    </c:forEach>
-                    
-                    
-                    <c:choose>
-						<c:when test="${ pi.currentPage eq pi.maxPage }">
-	                    	<li class="page-item disabled"><a class="page-link" href="#">다음</a></li>
-	                    </c:when>
-	                    <c:otherwise>
-	                    	<li class="page-item"><a class="page-link" href="list.no?currentPage=${ pi.currentPage+1 }">다음</a></li>
-                    	</c:otherwise>
-                    </c:choose>
+                <c:choose>
+                  <c:when test="${ empty condition }">
+	                	<c:choose>
+	                		<c:when test="${ pi.currentPage eq 1 }">
+		                    	<li class="page-item disabled"><a class="page-link" href="#">이전</a></li>
+		                    </c:when>
+		                    <c:otherwise>
+		                    	<li class="page-item"><a class="page-link" href="list.no?currentPage=${ pi.currentPage-1 }">이전</a></li>
+	                    	</c:otherwise>
+	                    </c:choose>
+	                    
+	                    
+	                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+	                    	<li class="page-item"><a class="page-link" href="list.no?currentPage=${ p }">${ p }</a></li>
+	                    </c:forEach>
+	                    
+	                    
+	                    <c:choose>
+							<c:when test="${ pi.currentPage eq pi.maxPage }">
+		                    	<li class="page-item disabled"><a class="page-link" href="#">다음</a></li>
+		                    </c:when>
+		                    <c:otherwise>
+		                    	<li class="page-item"><a class="page-link" href="list.no?currentPage=${ pi.currentPage+1 }">다음</a></li>
+	                    	</c:otherwise>
+	                    </c:choose>
+                   </c:when>
+                   <c:otherwise>
+                   		<c:choose>
+	                		<c:when test="${ pi.currentPage eq 1 }">
+		                    	<li class="page-item disabled"><a class="page-link" href="#">이전</a></li>
+		                    </c:when>
+		                    <c:otherwise>
+		                    	<li class="page-item"><a class="page-link" href="search.no?currentPage=${ pi.currentPage-1 }">이전</a></li>
+	                    	</c:otherwise>
+	                    </c:choose>
+	                    
+	                    
+	                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+	                    	<li class="page-item"><a class="page-link" href="search.no?currentPage=${ p }">${ p }</a></li>
+	                    </c:forEach>
+	                    
+	                    
+	                    <c:choose>
+							<c:when test="${ pi.currentPage eq pi.maxPage }">
+		                    	<li class="page-item disabled"><a class="page-link" href="#">다음</a></li>
+		                    </c:when>
+		                    <c:otherwise>
+		                    	<li class="page-item"><a class="page-link" href="search.no?currentPage=${ pi.currentPage+1 }">다음</a></li>
+	                    	</c:otherwise>
+	                    </c:choose>
+              	   </c:otherwise>
+                  </c:choose> 
                     
                 </ul>
                 	
