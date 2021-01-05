@@ -75,6 +75,7 @@
           <c:forEach var="g" items="${list}">
           <ul>
               <li>
+              	  <span class="pNo">${g.pNo}</span>	
                   <span class="pName1">${g.gbName}</span><span>(${g.gbPoint}P)</span>
                     <!-- Button to Openthe Modal -->
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">
@@ -145,7 +146,7 @@
                <!-- <form action="delete.gb" method="get" class="modal-footer">-->
                    <div style="color: black">
                        <button type="button" class="btn btn-primary" data-dismiss="modal">뒤로가기</button>
-                       <button type="submit" id="gbBtn" class="btn btn-danger" data-dismiss="modal">확인</button>
+                       <button type="submit" id="gbBtn" class="btn btn-danger">확인</button>
                    </div>
                 <!--</form>-->
         

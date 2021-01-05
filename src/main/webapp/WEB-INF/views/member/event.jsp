@@ -158,25 +158,30 @@
 
 
 <hr style="height:2px;border-width:0;color:white;background-color:white">
-<c:forEach var="e" items="${list}">
-<div class="myEvent">
-    <table  style="height: 50px;" class="table-hover">
-    
-        <tr>
-            <td rowspan="3" style="color:white;">${e.evTitle }</td>
-            <td rowspan="3">
-                         <textarea name="" id="" cols="100" rows="5" style="resize: none;" disabled>
-                          ${e.evContent}
-                         </textarea>
-            </td>
-            <td rowspan="3" width="50px">
-                <span style="color:white;">${e.status}</span>
-            </td>
 
-        </tr>
-    </table>
+<div align="center" style="color:white; font-size:20px">A:확인중,B:승인,C:미승인,D:삭제</div>
+
+	<c:forEach var="e" items="${list}">
+	
+		<div class="myEvent" align="center">
+		    <table  style="height: 50px;" class="table-hover">
+		    
+		        <tr>
+		            <td rowspan="3" style="color:white;">${e.evTitle }</td>
+		            
+		            <td rowspan="3" width="300px">
+		                 <textarea  cols="100" rows="5" style="resize: none;" disabled >${e.evContent} </textarea>
+		            </td>
+		  
+		            <td rowspan="3" width="50px">
+		                <span style="color:white;">${e.status}</span>
+		            </td>
+		
+		        </tr>
+		    </table>
+		</div>
+		
 	</c:forEach>
-</div>
 
 
 <div style="margin-left:17px">

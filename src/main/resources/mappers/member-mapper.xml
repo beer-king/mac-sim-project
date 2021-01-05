@@ -59,7 +59,7 @@
 	</resultMap>
 
 	<resultMap id="groupResultSet" type="GroupBuy">
-		<result column="pno" property="pno"></result>
+		<result column="pno" property="pNo"></result>
 		<result column="user_no" property="userNo"></result>
 		<result column="pname" property="gbName"></result>
 		<result column="gb_point" property="gbPoint"></result>
@@ -226,13 +226,14 @@
 		   select count(*) 
 		         from event_attendee 
 		         where user_no =#{userNo}
+		           and EVENT_ENTRY_STATUS = 'Y'
 	
 	</select>
 	
 	<select id="groupCount" resultType="_int" parameterType="Member">
 		
 		   select count(*) 
-		         from group_buy
+		         from gb_request
 		         where user_no =#{userNo}
 	
 	</select>

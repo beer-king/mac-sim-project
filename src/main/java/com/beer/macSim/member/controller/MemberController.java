@@ -248,9 +248,7 @@ public class MemberController {
 	@RequestMapping("delete.ev")
 	public String deleteEvent(Model model,HttpSession session,int evNo) {
 		
-		
 
-		
 		System.out.println(evNo);
 		
 		Member m  = (Member)session.getAttribute("loginUser");
@@ -265,7 +263,7 @@ public class MemberController {
 			session.setAttribute("alertMsg", "이벤트가 취소되었습니다");
 			return "redirect:event.me";
 		}else { // 삭제 실패
-			model.addAttribute("errorMsg", "비밀번호가 틀렸습니다");
+			model.addAttribute("errorMsg", "취소하는데 실패하셧습니다");
 			return "common/errorPage";
 		}
 		
@@ -274,11 +272,8 @@ public class MemberController {
 
   
 	@RequestMapping("delete.gb")
-	public String deleteGroupBuy(Model model,HttpSession session){
+	public String deleteGroupBuy(Model model,HttpSession session,int pNo){
 
-		int pNo= (int)model.getAttribute("pNo");
-		
-		System.out.println(pNo);
 		
 		Member m = (Member) model.addAttribute("loginUser");
 		m.setPNo(pNo);
