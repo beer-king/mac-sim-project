@@ -179,6 +179,7 @@
   		 	req_no = #{category}
   	</update>
   	
+  	<!-- 
   	<select id="selectBeerListCount" resultType="_int" parameterType="BS">
   		select count(*)
   		from beer
@@ -253,7 +254,7 @@
 		 order
 		    by notice_no desc			
 	</select>
-	
+	 -->
 	<select id="selectNotice" resultMap="noticeResultSet" parameterType="string">
 		select
 		       notice_no

@@ -86,7 +86,7 @@ public class MemberController {
 		
 		int listCount = mService.eventCount(m);
 		
-		System.out.println(listCount);
+		
 		
 		PageInfo pi =Pagination.getPageInfo(listCount, currentPage, 10, 5);
 		
@@ -245,16 +245,19 @@ public class MemberController {
 	}
 
 	@RequestMapping("delete.ev")
-	public String deleteEvent(Model model,HttpSession session) {
+	public String deleteEvent(Model model,HttpSession session,int evNo) {
 		
-		int eventNo = (int) model.getAttribute("eventNo");
+		
+		
+		System.out.println(evNo);
 		
 		Member m  = (Member)session.getAttribute("loginUser");
-		m.setEvNo(eventNo);
+		m.setEvNo(evNo);
 	
 		
 		int result = mService.deleteEvent(m);
 		
+		System.out.println(result);
 		
 		if(result>0) { // 삭제 성공
 			session.setAttribute("alertMsg", "이벤트가 취소되었습니다");

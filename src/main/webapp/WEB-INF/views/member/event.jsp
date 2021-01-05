@@ -114,13 +114,14 @@
 
 	<script type="text/javascript">
 		$(function(){
+			
 			$("#c").click(function(){
 			
 			 var eventNo = $("#b").text();
 			 
 			 console.log(eventNo);
 			 
-			 location.href = "delete.ev?eventNo="+eventNo;
+			 location.href = "delete.ev?evNo="+eventNo;
 			 
 			});
 		});
@@ -147,7 +148,7 @@
             <div  class="modal-footer">
             
                 <button type="button" class="btn btn-primary" data-dismiss="modal">뒤로가기</button>
-                <button id="c" type="submit" class="btn btn-danger" data-dismiss="modal">확인</button>
+                <button id="c" type="submit" class="btn btn-danger" >확인</button>
             </div>
 
         </div>
@@ -157,10 +158,10 @@
 
 
 <hr style="height:2px;border-width:0;color:white;background-color:white">
-
+<c:forEach var="e" items="${list}">
 <div class="myEvent">
-    <table  style="height: 100px;" class="table-hover">
-    <c:forEach var="e" items="${list}">
+    <table  style="height: 50px;" class="table-hover">
+    
         <tr>
             <td rowspan="3" style="color:white;">${e.evTitle }</td>
             <td rowspan="3">
@@ -168,13 +169,13 @@
                           ${e.evContent}
                          </textarea>
             </td>
-            <td rowspan="3" width="100px">
+            <td rowspan="3" width="50px">
                 <span style="color:white;">${e.status}</span>
             </td>
 
         </tr>
-	</c:forEach>
     </table>
+	</c:forEach>
 </div>
 
 
