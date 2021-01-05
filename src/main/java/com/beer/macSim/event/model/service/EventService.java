@@ -18,6 +18,7 @@ public interface EventService {
 	int increaseCount(int eno);
 	Event selectEvent(int eno);
 	ArrayList<Attachment> selectEvAttachment(int eno);
+	int checkApplyEvent(EventAttendee ea);
 	
 	// 3. 이벤트 댓글리스트 조회용 서비스
 	ArrayList<EvReply> selectEvReplyList(int eno);

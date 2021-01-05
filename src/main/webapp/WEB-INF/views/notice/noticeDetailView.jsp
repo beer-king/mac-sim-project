@@ -63,10 +63,10 @@
                     <tr>
                         <td colspan="4"><hr style="border:solid 0.3px white;"></td>
                     </tr>
-                    <tr align="center">
+                    <tr>
                         <td colspan="4" >
                         	<br>
-                            <p style="height:180px;color:#ecbf2e;">${n.noticeContent }</p>
+                            <pre style="height:180px;color:#ecbf2e;">${n.noticeContent }</pre>
                         </td>
                     </tr>
                     <tr>

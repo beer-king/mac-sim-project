@@ -68,24 +68,24 @@
       <br>
 
     <c:if test="${empty list}">
-       <h2 style="color:white;"> 공동구매 내역이 없습니다.</h2>
+       <h2 style="color:white; margin-left:20px;"> 공동구매 내역이 없습니다.</h2>
     </c:if>
 
+   <c:forEach var="g" items="${list}">
       <div id="groupBuy">
-          <c:forEach var="g" items="${list}">
           <ul>
               <li>
               	  <span class="pNo">${g.pNo}</span>	
                   <span class="pName1">${g.gbName}</span><span>(${g.gbPoint}P)</span>
                     <!-- Button to Openthe Modal -->
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">
-                        취소
+                       	 취소
                     </button>
               </li>
               <br>
           </ul>
-          </c:forEach>
       </div>
+   </c:forEach>
 
 <!-- 데이터가 없엉서 일단 입시로 해본것 -->
     <div id="groupBuy">
@@ -158,7 +158,7 @@
             $(function(){
                 $("#gbBtn").click(function(){
 
-                   var pNo =  $("#nameSpace").text();
+                   var pNo =  $(".modal-body").children("#nameSpace").text();
                    var uno = ${loginUser.userNo}
                     console.log(pNo);
                     console.log(uno);

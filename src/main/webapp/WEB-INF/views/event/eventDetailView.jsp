@@ -75,7 +75,14 @@
                         <th>신청마감일 : ${ ev.reqTime }</th>
                     </tr>
                     <tr>
-                        <th><button class="btn btn-danger" data-toggle="modal" data-target="#appModal">신청하기</button></th>
+                    	<c:choose>
+                    		<c:when test="${ chApp eq 0 }">
+                        		<th><button class="btn btn-danger" data-toggle="modal" data-target="#appModal">신청하기</button></th>
+                    		</c:when>
+                    		<c:otherwise>
+                    			<th>이미 신청하신 이벤트입니다.</th>
+                    		</c:otherwise>
+                        </c:choose>
                         <th><a href="" data-toggle="modal" data-target="#catModal">카테고리에 담기</a></th>
                     </tr>
                 </table>

@@ -23,5 +23,7 @@ public interface NoticeService {
 	ArrayList<NoComment> selectNcommentList(int nno);
 	
 	int insertNcomment(NoComment nc);
+	int searchNoticeListCount(String condition, String keyword);
+	ArrayList<Notice> searchNoticeList(String condition, String keyword, PageInfo pi);
 	
 }

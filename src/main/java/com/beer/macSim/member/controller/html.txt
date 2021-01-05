@@ -10,7 +10,7 @@
 <html>
 <head>
     <title>이벤트 신청내역</title>
-    <style>
+    <style></style>
         #mypageMenu{
             list-style: none;
             color:white;
@@ -95,7 +95,7 @@
   		
 			<c:forEach var="e" items="${list}">
 			        <li id="a">
-			        		<span class="b">${e.evNo}</span>
+			        		<span id="b">${e.evNo}</span>
 				            <span>${e.evTitle }</span>
 				            <!-- Button to Open the Modal -->
 				           
@@ -117,7 +117,7 @@
 			
 			$("#c").click(function(){
 			
-			 var eventNo = $("#a").children(".b").text();
+			 var eventNo = $("#b").text();
 			 
 			 console.log(eventNo);
 			 

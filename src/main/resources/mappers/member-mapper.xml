@@ -201,8 +201,8 @@
 	
 	
 	<select id="selectEventList" resultMap="eventResultSet" parameterType="Member">
-		select 
-				ev_title
+		  select 
+				 ev_title
 			    ,ev_no
 			    ,ev_content
 			    ,status
@@ -210,6 +210,7 @@
 		   join event_attendee ea using(ev_no)
 		   where ea.user_no = #{userNo}
 			 and EVENT_ENTRY_STATUS = 'Y'
+		   order by ev_no desc
 	</select>
 	
 	

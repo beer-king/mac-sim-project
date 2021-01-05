@@ -3,8 +3,11 @@ package com.beer.macSim.community.model.service;
 import java.util.ArrayList;
 
 import com.beer.macSim.common.model.vo.PageInfo;
+import com.beer.macSim.community.model.vo.CommLikes;
 import com.beer.macSim.community.model.vo.Community;
 import com.beer.macSim.community.model.vo.Forum;
+import com.beer.macSim.community.model.vo.Reply;
+import com.beer.macSim.community.model.vo.SubReply;
 
 public interface CommService {
 	
@@ -14,6 +17,13 @@ public interface CommService {
 	
 	// 2. 커뮤니티 작성용 서비스
 	int insertComm(Community comm);
+	
+	// 3. 커뮤니티 좋아요 조회
+	ArrayList<CommLikes> selectCommLikes(int userNo);
+	
+	// 4. 커뮤니티 좋아요 추가
+	
+	// 5. 커뮤니티 좋아요 삭제
 	
 	// 3. 포럼 리스트 조회용 서비스
 	int selectForumCount();
@@ -27,6 +37,8 @@ public interface CommService {
 	int insertForum(Forum fo);
 	
 	// 6. 포럼 댓글/대댓글 리스트 조회용 서비스
+	ArrayList<Reply> selectReplyList(int fno);
+	ArrayList<SubReply> selectSubReplyList(int coNo);
 	
 	// 7. 포럼 댓글 작성용 서비스
 	 

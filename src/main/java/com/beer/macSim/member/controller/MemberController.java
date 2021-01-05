@@ -4,10 +4,9 @@ package com.beer.macSim.member.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import com.beer.macSim.groupBuy.model.vo.GroupBuy;
-import com.beer.macSim.member.model.vo.PointHistory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -67,14 +66,7 @@ public class MemberController {
 	}
 
 	@RequestMapping("point.me")
-	public String point(HttpSession session,Model model) {
-
-		Member m  = (Member)session.getAttribute("loginUser");
-
-		ArrayList<PointHistory>list = mService.selectPointHistory(m);
-
-		model.addAttribute("list",list);
-
+	public String point() {
 		return "member/point";
 	}
 
@@ -89,7 +81,7 @@ public class MemberController {
 		
 		
 
-		PageInfo pi =Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		PageInfo pi =Pagination.getPageInfo(listCount, currentPage, 5, 5);
 		
 		ArrayList<Event>list = mService.selectEventList(m);
 		
@@ -102,14 +94,7 @@ public class MemberController {
 	}
 
 	@RequestMapping("group.me")
-	public String group(HttpSession session, Model model) {
-
-		Member m = (Member)session.getAttribute("loginUser");
-
-		ArrayList<GroupBuy>list = mService.selectGroupBuyList(m);
-
-		model.addAttribute("list", list);
-
+	public String group() {
 		return "member/group";
 	}
 
@@ -292,6 +277,7 @@ public class MemberController {
 
 	}
 
+
 	@RequestMapping("enrollForm.me")
 	public String enrollForm() {
 		return "member/enrollForm";
@@ -466,7 +452,111 @@ public class MemberController {
 	     return "redirect:/";
 	 }
 	 
+	 // 인증번호 보내기 
+	 /*
+	 @RequestMapping("findPwd.me")
+	 public String findPwd()
+	 */
+
+	 // 비번찾기(메일발송)
+	 @RequestMapping("findPwd.me")
+	 public String findPwd(Member m,String userId, String email,String div, Model model, HttpSession session, HttpServletRequest request) {
+		 
+		 Member member = mService.loginMember(m);
+		 
+		 //System.out.println(member);
+		 if(member == null) {
+			 model.addAttribute("historyBack", true);
+			 session.setAttribute("alertMsg", "해당 회원이 존재하지 않습니다.");
+			 return "redirect:/";
+		 }
+		 
+		 if(member.getEmail().equals(email)==false) {
+			 model.addAttribute("historyBack", true);
+			 session.setAttribute("alertMsg", "이메일이 올바르지 않습니다.");
+			 return "redirect:/";
+		 }
+		 
+		 
+		 /*else {
+			 
+			    String charSet = "utf-8";
+				String hostSMTP = "smtp.naver.com";
+				String hostSMTPid = "이메일 입력";
+				String hostSMTPpwd = "비밀번호 입력";
+
+				// 보내는 사람 EMail, 제목, 내용
+				String fromEmail = "이메일 입력";
+				String fromName = "Spring Homepage";
+				String subject = "";
+				String msg = "";
+				
+				if(div.equals("find_pw")) {
+					subject = "Spring Homepage 임시 비밀번호 입니다.";
+					msg += "<div align='center' style='border:1px solid black; font-family:verdana'>";
+					msg += "<h3 style='color: blue;'>";
+					msg += member.getUserId() + "님의 임시 비밀번호 입니다. 비밀번호를 변경하여 사용하세요.</h3>";
+					msg += "<p>임시 비밀번호 : ";
+					msg += member.getUserPwd() + "</p></div>";
+				}
+				// 받는 사람 E-Mail 주소
+				String mail = member.getEmail();
+				try {
+					HtmlEmail email = new HtmlEmail();
+					email.setDebug(true);
+					email.setCharset(charSet);
+					email.setSSL(true);
+					email.setHostName(hostSMTP);
+					email.setSmtpPort(587);
+
+					email.setAuthentication(hostSMTPid, hostSMTPpwd);
+					email.setTLS(true);
+					email.addTo(mail, charSet);
+					email.setFrom(fromEmail, fromName, charSet);
+					email.setSubject(subject);
+					email.setHtmlMsg(msg);
+					email.send();
+				} catch (Exception e) {
+					System.out.println("메일발송 실패 : " + e);
+				}
+			}
+			 
+			 
+			 
+		 }
+		 
+		 Member loginMember = (Member)session.getAttribute("loginMember");
+		 /*
+		 String contextPath = request.getContextPath();
+		 mService.sendTempLoginPwToEmail(loginMember, contextPath);
+		 */
+		 
+		 
+		 
+		 
+		 return "redirect:/";
+		 
+		 
+		 
+	 }
 	 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }

@@ -100,6 +100,52 @@
 		     )
 	</insert>
 	 
+	<!-- 검색 후 갯수 --> 
+	 <select id="searchNoticeListCount" resultType="_int"
+	 		 parameterType="hashmap">
+	 	 select
+		       count(*)
+		  from notice n
+		  join member using(user_no)
+		 where n.status = 'Y'
+		 <choose>
+		    <when test="condition == 'title'">  
+		       AND notice_title
+		    </when>  
+		    <otherwise>
+		       AND notice_content
+		    </otherwise> 	     
+		 </choose>		 
+		       LIKE '%' || #{keyword} || '%' 
+	 </select>
+	 
+	 <!-- 검색 후 리스트 -->
+	 <select id="searchNoticeList" resultMap="noticeResultSet"
+	 		  parameterType="hashmap">
+	 	select
+		       notice_no
+		     , user_id
+		     , notice_title
+		     , notice_date
+		     , count
+		  from notice n
+		  join member using(user_no)
+		 where n.status = 'Y'
+		 <choose>
+		    <when test="condition == 'title'">  
+		       AND notice_title
+		    </when>  
+		    <otherwise>
+		       AND notice_content
+		    </otherwise> 	     
+		 </choose>		 
+		       LIKE '%' || #{keyword} || '%' 
+		 order
+		    by notice_no desc
+	 </select>
+	 
+	 
+	 
 	
 	
 	

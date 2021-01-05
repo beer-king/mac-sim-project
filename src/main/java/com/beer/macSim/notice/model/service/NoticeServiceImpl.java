@@ -49,6 +49,17 @@ public class NoticeServiceImpl implements NoticeService{
 	public int insertNcomment(NoComment nc) {
 		return nDao.insertNcomment(sqlSession, nc);
 	}
+
+	@Override
+	public int searchNoticeListCount(String condition, String keyword) {
+		return nDao.searchNoticeListCount(sqlSession, condition, keyword);
+	}
+
+	// 검색 후 리스트
+	@Override
+	public ArrayList<Notice> searchNoticeList(String condition, String keyword, PageInfo pi) {
+		return nDao.searchNoticeList(sqlSession, condition, keyword, pi);
+	}
 	
 
 
