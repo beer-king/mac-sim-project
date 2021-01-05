@@ -215,6 +215,7 @@
 		  from FCOMMENTS
 		  join MEMBER using(user_no)
 		 where for_no = #{ fno }
+		   and co_status = 0
 	</select>
 	
 	<select id="selectSubReplyList" resultMap="subReplyResultSet" parameterType="_int" >
@@ -230,6 +231,7 @@
 		   from FRECOMMENTS
 		   join member using(user_no)
 	   	  where co_no = #{ coNo }
+		    and reco_status = 0
 	</select>
 	
 	<update id="updateReplyUpdate" parameterType="Reply">
