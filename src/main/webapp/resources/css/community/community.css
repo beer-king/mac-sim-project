@@ -26,7 +26,7 @@ main .inner h1 {
 .comm__nav ul li + li {
   border-left: 1px solid #5a5a5a;
 }
-.comm__nav li .nav-active {
+.comm__nav .nav-active a {
   padding: 5px 0;
   border-bottom: 3px solid #ecbf2e;
 }
@@ -35,8 +35,11 @@ main .inner h1 {
   width: 25px;
   top: -20px;
   left: 13px;
+  display: none;
 }
-
+.comm__nav .nav-active img {
+  display: initial;
+}
 .comm__write-btn {
   width: 100%;
   display: flex;
@@ -300,8 +303,8 @@ main .inner h1 {
   color: #ddd;
 }
 .fode__info-right .item-bottom div:nth-child(2) {
-	display: flex;
-	gap: 20px;
+  display: flex;
+  gap: 20px;
 }
 .fode__info-right .item-bottom div:nth-child(2) span {
   color: #ecbf2e;

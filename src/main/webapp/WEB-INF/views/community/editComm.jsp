@@ -67,8 +67,8 @@
               <div>
                 <p>CONTENT</p>
                 <div class="textarea-wrapper">
-                  <textarea placeholder="내용을 입력해주세요" name="commContent" required></textarea>
-                  <span>180/180자</span>
+                  <textarea id="content-input" placeholder="내용을 입력해주세요" name="commContent" maxlength="180" required></textarea>
+                  <span><b id="content-length">0</b>/180자</span>
                 </div>
               </div>
               <div>
@@ -172,6 +172,22 @@
 
       fileImg.value = e.target.value;
     });
+    
+    // 글자수
+    const onChangeContent = () => {
+    	
+    	const contentInput = document.querySelector("#content-input");
+    	
+    	contentInput.addEventListener("input", () => {
+    		
+    		if(contentInput.value.length >= 180){
+    			alert("최대 180자 까지 입력할 수 있습니다.");
+    		}
+    		document.querySelector("#content-length").innerText = contentInput.value.length;
+    	});
+    	
+    }
+    onChangeContent();
 </script>
 
 </html>

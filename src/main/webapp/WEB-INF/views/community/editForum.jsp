@@ -45,8 +45,8 @@
               <div>
                 <p>INFO</p>
                 <div class="textarea-wrapper">
-                  <textarea placeholder="포럼 소개글을 입력해주세요" name="forInfo" required></textarea>
-                  <span>40/40자</span>
+                  <textarea id="content-input" placeholder="포럼 소개글을 입력해주세요" name="forInfo" maxlength="40" required></textarea>
+                  <span><b id="content-length">0</b>/40자</span>
                 </div>
               </div>
               <div>
@@ -127,5 +127,22 @@
 
       fileImg.value = e.target.value;
     });
+    
+    // 글자수
+    const onChangeContent = () => {
+    	
+    	const contentInput = document.querySelector("#content-input");
+    	
+    	contentInput.addEventListener("input", () => {
+    		
+    		if(contentInput.value.length >= 40){
+    			alert("최대 40자 까지 입력할 수 있습니다.");
+    		}
+    		document.querySelector("#content-length").innerText = contentInput.value.length;
+    	});
+    	
+    }
+    onChangeContent();
+    
 </script>
 </html>
