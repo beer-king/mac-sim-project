@@ -68,7 +68,7 @@
       <br>
 
     <c:if test="${empty list}">
-       <h2 style="color:white;"> 공동구매 내역이 없습니다.</h2>
+       <h2 style="color:white; margin-left:20px;"> 공동구매 내역이 없습니다.</h2>
     </c:if>
 
    <c:forEach var="g" items="${list}">
@@ -158,7 +158,7 @@
             $(function(){
                 $("#gbBtn").click(function(){
 
-                   var pNo =  $("#nameSpace").text();
+                   var pNo =  $(".modal-body").children("#nameSpace").text();
                    var uno = ${loginUser.userNo}
                     console.log(pNo);
                     console.log(uno);
