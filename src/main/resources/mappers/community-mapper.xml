@@ -32,7 +32,7 @@
 	<resultMap id="clikesResultSet" type="CommLikes" >
 		<result column="user_no" property="userNo" />
 		<result column="comm_no" property="commNo" />
-		<result column="clike_createdate" property="clickCreateDate" />
+		<result column="clike_createdate" property="clikeCreateDate" />
 	</resultMap>
 	
 	<resultMap id="replyResultSet" type="Reply" >
@@ -230,6 +230,45 @@
 		   from FRECOMMENTS
 		   join member using(user_no)
 	   	  where co_no = #{ coNo }
+	</select>
+	
+	<update id="updateReplyUpdate" parameterType="Reply">
+		UPDATE MACSIM.FCOMMENTS t
+		   SET t.CO_CONTENT = #{coContent}
+		 WHERE t.CO_NO = #{coNo}
+	</update>
+	
+	<update id="updateSubReplyUpdate" parameterType="Reply">
+		UPDATE MACSIM.FRECOMMENTS t
+		   SET t.RECO_CONTENT = #{coContent}
+		 WHERE t.RECO_NO = #{coNo}
+	</update>
+	
+	<update id="replyDelete" parameterType="_int">
+		update fcomments
+		   set co_status = 3
+		 where co_no = #{coNo}
+	</update>
+	
+	<update id="subReplyDelete" parameterType="_int">
+		update frecomments
+		   set reco_status = 3
+		 where reco_no = #{coNo}
+	</update>
+	
+	<select id="selectLikeLength" resultType="_int" parameterType="_int">
+		select
+		       COUNT(*)
+		  FROM CLIKES
+		 where CLIKES.COMM_NO = #{cNo}
+	</select>
+	
+	<select id="selectIsLike" resultType="_int" parameterType="CommLikes">
+	SELECT
+	       COUNT(*)
+	  FROM MACSIM.CLIKES
+	 WHERE CLIKES.COMM_NO = #{commNo}
+	   AND CLIKES.USER_NO = #{userNo}
 	</select>
 	
 	<!-- 

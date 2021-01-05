@@ -17,6 +17,6 @@ public class CommLikes {
 
 	private int userNo;				// 좋아요한 유저 넘버
 	private int commNo;				// 좋아요당한 커뮤게시글 넘버
-	private Date clikeCreatedate;	// 좋아요한 날짜
+	private Date clikeCreateDate;	// 좋아요한 날짜
 	
 }

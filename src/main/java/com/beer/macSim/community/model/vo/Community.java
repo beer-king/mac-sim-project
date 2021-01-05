@@ -25,5 +25,7 @@ public class Community {
 	private int userNo;				// 작성자 회원번호
 	private String userId;			// 작성자 아이디
 	private String like;			// 좋아요여부 -- 'N'/'Y'
+	private int likeLength;
+	private int isLike;
 	
 }

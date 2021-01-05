@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.beer.macSim.common.model.vo.PageInfo;
@@ -56,6 +57,29 @@ public class CommController {
 		
 		// 리스트
 		ArrayList<Community> list = cService.selectCommList(cate, pi);
+		
+		for(Community c : list) {
+			
+			int cNo = c.getCommNo();
+			int likeLength = cService.selectLikeLength(cNo);
+			
+			if( m != null) {
+				
+				int uNo = m.getUserNo();
+				
+				CommLikes cl = new CommLikes();
+				cl.setUserNo(uNo);
+				cl.setCommNo(cNo);
+				
+				int isLike = cService.selectIsLike(cl);	
+				c.setIsLike(isLike);
+				
+			}else {
+				c.setIsLike(9999999);
+			}
+			c.setLikeLength(likeLength);
+			
+		}
 		
 		model.addAttribute("cate", cate);
 		model.addAttribute("pi", pi);
@@ -218,6 +242,84 @@ public class CommController {
 			model.addAttribute("errorMsg", "작성하신 글 등록에 실패하였습니다.");
 			return "common/errorPage";
 			
+		}
+		
+	}
+	
+	// 포럼에 댓글 수정시 업데이트
+	@ResponseBody
+	@RequestMapping("replyUpdate.fo")
+	public String updateReplyUpdate(int coNo, String coContent) {
+		
+		//System.out.println("coNo : " + coNo);
+		//System.out.println("coContent : " + coContent);
+		
+		Reply r = new Reply();
+		r.setCoNo(coNo);
+		r.setCoContent(coContent);
+		int result = cService.updateReplyUpdate(r);
+		
+		if(result > 0) {
+			return "S";
+		}else {
+			return "F";
+		}
+		
+	}
+	
+	// 포럼에 대댓글 수정시 업데이트
+	@ResponseBody
+	@RequestMapping("subReplyUpdate.fo")
+	public String updateSubReplyUpdate(int coNo, String coContent) {
+		
+		//System.out.println("coNo : " + coNo);
+		//System.out.println("coContent : " + coContent);
+		
+		Reply r = new Reply();
+		r.setCoNo(coNo);
+		r.setCoContent(coContent);
+		int result = cService.updateSubReplyUpdate(r);
+		
+		if(result > 0) {
+			return "S";
+		}else {
+			return "F";
+		}
+		
+	}
+
+	// 포럼에 댓글 삭제시 업데이트
+	@ResponseBody
+	@RequestMapping("replyDelete.fo")
+	public String replyDelete(int coNo) {
+		
+		//System.out.println("coNo : " + coNo);
+		//System.out.println("coContent : " + coContent);
+		
+		int result = cService.replyDelete(coNo);
+		
+		if(result > 0) {
+			return "S";
+		}else {
+			return "F";
+		}
+		
+	}
+
+	// 포럼에 대댓글 삭제시 업데이트
+	@ResponseBody
+	@RequestMapping("subReplyDelete.fo")
+	public String subReplyDelete(int coNo) {
+		
+		//System.out.println("coNo : " + coNo);
+		//System.out.println("coContent : " + coContent);
+		
+		int result = cService.subReplyDelete(coNo);
+		
+		if(result > 0) {
+			return "S";
+		}else {
+			return "F";
 		}
 		
 	}
