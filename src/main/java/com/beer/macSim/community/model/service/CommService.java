@@ -39,6 +39,12 @@ public interface CommService {
 	// 6. 포럼 댓글/대댓글 리스트 조회용 서비스
 	ArrayList<Reply> selectReplyList(int fno);
 	ArrayList<SubReply> selectSubReplyList(int coNo);
+	int updateReplyUpdate(Reply r);
+	int updateSubReplyUpdate(Reply r);
+	int replyDelete(int coNo);
+	int subReplyDelete(int coNo);
+	int selectLikeLength(int cNo);
+	int selectIsLike(CommLikes cl);
 	
 	// 7. 포럼 댓글 작성용 서비스
 	 

@@ -72,6 +72,30 @@ public class CommDao {
 	public ArrayList<SubReply> selectSubReplyList(SqlSessionTemplate sqlSession, int coNo) {
 		return (ArrayList)sqlSession.selectList("commMapper.selectSubReplyList", coNo);
 	}
+
+	public int updateReplyUpdate(SqlSessionTemplate sqlSession, Reply r) {
+		return sqlSession.update("commMapper.updateReplyUpdate", r);
+	}
+
+	public int updateSubReplyUpdate(SqlSessionTemplate sqlSession, Reply r) {
+		return sqlSession.update("commMapper.updateSubReplyUpdate", r);
+	}
+
+	public int replyDelete(SqlSessionTemplate sqlSession, int coNo) {
+		return sqlSession.update("commMapper.replyDelete", coNo);
+	}
+
+	public int subReplyDelete(SqlSessionTemplate sqlSession, int coNo) {
+		return sqlSession.update("commMapper.subReplyDelete", coNo);
+	}
+
+	public int selectLikeLength(SqlSessionTemplate sqlSession, int cNo) {
+		return sqlSession.selectOne("commMapper.selectLikeLength", cNo);
+	}
+
+	public int selectIsLike(SqlSessionTemplate sqlSession, CommLikes cl) {
+		return sqlSession.selectOne("commMapper.selectIsLike", cl);
+	}
 		
 
 }

@@ -25,6 +25,7 @@
 <link rel="stylesheet" href="./header.css" />
  -->
 <link rel="stylesheet" href="resources/css/community/community.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -100,14 +101,14 @@
             <ul class="fode__co-items">
               
               <c:forEach var="r" items="${ rpList }">
-	              <li class="co-contents">
+	              <li class="co-contents comment-box${r.coNo}">
 	                <div class="fode__co-info">
 	                  <p onclick="replayTo('${ r.userId }');">${ r.userId }</p>
 	                  <div>
 	                    <c:choose>
 	                      <c:when test="${ loginUser.userNo eq r.userNo }">
-		                    <span>수정</span>
-		                    <span onclick="deleteModalOpen();">삭제</span>
+		                    <span onclick="updateModalOpen('${ r.coNo }', 0, '${ r.coContent }');">수정</span>
+		                    <span onclick="deleteModalOpen('${ r.coNo }', 0);">삭제</span>
 	                      </c:when>
 	                      <c:otherwise>
 	                    	<span>신고</span>
@@ -116,21 +117,21 @@
 	                    <small>${ r.coCreateDate }</small>
 	                  </div>
 	                </div>
-	                <div class="fode__co-con">${ r.coContent }</div>
+	                <div class="fode__co-con comment-content${r.coNo}">${ r.coContent }</div>
 	                
 	                
 	                <!-- 대댓글 -->
 	                <ul class="fode__re-items">
 	                
 	                  <c:forEach var="sr" items="${ r.subReply }">
-		                  <li class="co-contents">
+		                  <li class="co-contents recomment-box${sr.recoNo}">
 		                    <div class="fode__co-info">
 		                      <p>${ sr.userId }</p>
 		                      <div>
 		                        <c:choose>
 		                          <c:when test="${ loginUser.userNo eq sr.userNo }">
-			                        <span>수정</span>
-			                        <span>삭제</span>
+			                        <span onclick="updateModalOpen('${ sr.recoNo }', 1, '${ sr.recoContent }');">수정</span>
+			                        <span onclick="deleteModalOpen('${ sr.recoNo }', 1);">삭제</span>
 			                      </c:when>
 			                      <c:otherwise>
 			                        <span>신고</span>
@@ -139,7 +140,7 @@
 		                        <small>${ sr.recoCreateDate }</small>
 		                      </div>
 		                    </div>
-		                    <div class="fode__co-con">${ sr.recoContent }</div>
+		                    <div class="fode__co-con recomment-content${sr.recoNo}">${ sr.recoContent }</div>
 		                  </li>
 	                  </c:forEach>
 	                  
@@ -165,18 +166,29 @@
       </div>
     </main>
 
-    <!-- 모달 -->
+    <!-- 삭제 모달 -->
     <div id="delete-modal" class="modal__layout">
       <div id="delete-modal-box" class="modal__box">
         <h1>삭제</h1>
         <span>정말로 삭제하시겠습니까?</span>
-        <!-- <input type="text" /> -->
-        <!-- <span>내용</span> -->
-        <!-- <textarea name="" id=""></textarea> -->
 
         <div class="modal__btn_wrapper">
-          <button class="btn">확인</button>
-          <button onclick="deleteModalClose();" class="btn">취소</button>
+          <button type="button" onclick="deleteComment();" class="btn">확인</button>
+          <button type="button" onclick="deleteModalClose();" class="btn">취소</button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 수정 모달 -->
+    <div id="update-modal" class="modal__layout">
+      <div id="update-modal-box" class="modal__box">
+        <h1>수정</h1>
+        <span>내용</span>
+        <textarea id="update-content" value="" name="coContent" ></textarea>
+
+        <div class="modal__btn_wrapper">
+          <button type="button" onclick="updateComment();" class="btn">확인</button>
+          <button type="button" onclick="updateModalClose();" class="btn">취소</button>
         </div>
       </div>
     </div>
@@ -184,12 +196,14 @@
 </body>
 
 <script defer>
-  // MODAL
+  // MODAL ------------------------
+  let modalCoNo = 0;
+  let isComm = 0;
 
-  // const deleteModalToggle = () => {
-  //   document.querySelector("#delete-modal").classList.toggle("modal__active");
-  // };
-  const deleteModalOpen = () => {
+  // 삭제모달 -----
+  const deleteModalOpen = (coNo, isComs) => {
+	modalCoNo = coNo;
+	isComm = isComs;
     document.querySelector("#delete-modal").classList.add("modal__active");
   };
   const deleteModalClose = () => {
@@ -208,9 +222,83 @@
         "slideUp 0.4s ease-in-out forwards";
     }, 400);
   };
-</script>
 
-<script defer>
+  const deleteComment = () => {
+	  console.log(isComm, "삭제시작");
+	  if(isComm === 0){
+		  axios.get("replyDelete.fo", {
+			  params:{
+				  coNo:modalCoNo,
+			  }
+		  }).then((res) => {
+			  document.querySelector(".comment-box"+modalCoNo).remove();
+			  deleteModalClose();
+		  })
+	  }else if(isComm === 1){
+		  axios.get("subReplyDelete.fo", {
+			  params:{
+				  coNo:modalCoNo,
+			  }
+		  }).then((res) => {
+			  document.querySelector(".recomment-box"+modalCoNo).remove();
+			  deleteModalClose();
+		  })
+	  }
+  }
+  
+  // 수정모달 -----
+  const updateContent = document.querySelector("#update-content");
+  
+  const updateModalOpen = (coNo, isComs, coContent) => {
+	isComm = isComs;
+	modalCoNo = coNo; 
+	updateContent.value = coContent;
+	document.querySelector("#update-modal").classList.add("modal__active");
+  };
+  const updateModalClose = () => {
+	    document.querySelector("#update-modal").style.animation =
+	      "fadeOut 0.4s ease-in-out forwards";
+	    document.querySelector("#update-modal-box").style.animation =
+	      "slideDown 0.4s ease-in-out forwards";
+	    setTimeout(() => {
+	      document
+	        .querySelector("#update-modal")
+	        .classList.remove("modal__active");
+
+	      document.querySelector("#update-modal").style.animation =
+	        "fadeIn 0.4s ease-in-out forwards";
+	      document.querySelector("#update-modal-box").style.animation =
+	        "slideUp 0.4s ease-in-out forwards";
+	    }, 400);
+	  };
+
+  const updateComment = () => {
+	  console.log(isComm, "업데이트시작");
+	  if(isComm === 0){
+		  axios.get("replyUpdate.fo", {
+			  params:{
+				  coNo:modalCoNo,
+				  coContent:updateContent.value,
+			  }
+		  }).then((res) => {
+			  //console.log(res.data);
+			  document.querySelector(".comment-content"+modalCoNo).innerText = updateContent.value;
+			  updateModalClose();
+		  })
+	  }else if(isComm === 1){
+		  axios.get("subReplyUpdate.fo", {
+			  params:{
+				  coNo:modalCoNo,
+				  coContent:updateContent.value				  
+			  }
+		  }).then((res) => {
+			  document.querySelector(".recomment-content"+modalCoNo).innerText = updateContent.value;
+			  updateModalClose();
+		  })
+	  }
+  }
+  
+  // 대댓글 작성 하려고 막 클릭 막 그랬어 --------------
   const coTitle = document.querySelector("#comment-box");
   const replayTo = (userId) => {
     //   console.log(userId);
@@ -227,6 +315,7 @@
   const cancleReply = () => {
     coTitle.innerHTML = "댓글작성";
   };
+  
 </script>
 
 </html>

@@ -71,12 +71,16 @@
 		              </c:otherwise>
 	                </c:choose>
 	                <small>${ c.commCreateDate }</small>
+	                <small class="like-length${c.commNo}">${ c.likeLength }</small>
 	                <c:choose>
-	                  <c:when test ="${ c.like eq 'Y' }" >
-	                    <i class="material-icons">favorite</i>
+	                  <c:when test ="${ c.isLike eq 0 }" >
+	                    <b class="material-icons">favorite_border</b>
+	                  </c:when>
+	                  <c:when test ="${ c.isLike eq 9999999 }" >
+	                    <b class="material-icons">favorite_border</b>
 	                  </c:when>
 	                  <c:otherwise>
-	                    <b class="material-icons">favorite_border</b>
+	                    <i class="material-icons">favorite</i>
 	                  </c:otherwise>
 	                </c:choose>
 	              </div>

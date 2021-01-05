@@ -84,4 +84,34 @@ public class CommServiceImpl  implements CommService{
 		return cDao.selectSubReplyList(sqlSession, coNo);
 	}
 
+	@Override
+	public int updateReplyUpdate(Reply r) {
+		return cDao.updateReplyUpdate(sqlSession, r);
+	}
+
+	@Override
+	public int updateSubReplyUpdate(Reply r) {
+		return cDao.updateSubReplyUpdate(sqlSession, r);
+	}
+
+	@Override
+	public int replyDelete(int coNo) {
+		return cDao.replyDelete(sqlSession, coNo);
+	}
+
+	@Override
+	public int subReplyDelete(int coNo) {
+		return cDao.subReplyDelete(sqlSession, coNo);
+	}
+
+	@Override
+	public int selectLikeLength(int cNo) {
+		return cDao.selectLikeLength(sqlSession, cNo);
+	}
+
+	@Override
+	public int selectIsLike(CommLikes cl) {
+		return cDao.selectIsLike(sqlSession, cl);
+	}
+
 }
