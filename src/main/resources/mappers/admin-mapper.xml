@@ -44,6 +44,35 @@
     	<result column="req_cate_no" property="reqCateNo"/>
     	<result column="req_cate_title" property="reqCateTitle"/>
     </resultMap>
+    <resultMap type="Notice" id="noticeResultSet">
+		<result column="notice_no" property="noticeNo"/>
+		<result column="user_no" property="userNo"/>
+		<result column="user_id" property="userId"/>
+		<result column="notice_title" property="noticeTitle"/>
+		<result column="notice_content" property="noticeContent"/>
+		<result column="notice_date" property="noticeDate"/>
+		<result column="count" property="count"/>
+	</resultMap>
+	<resultMap id="eventResultSet" type="Event">
+		<result column="ev_no" property="evNo"/>
+		<result column="user_id" property="userNo"/>
+		<result column="ev_title" property="evTitle"/>
+		<result column="ev_content" property="evContent"/>
+		<result column="ev_starttime" property="evStartTime"/>
+		<result column="ev_endtime" property="evEndTime"/>
+		<result column="beer_no" property="beerNo"/>
+		<result column="beer_name" property="beerNo"/>
+		<result column="req_time" property="reqTime"/>
+		<result column="limit_no" property="limitNo"/>
+		<result column="apply_no" property="applyNo"/>
+		<result column="ev_point" property="evPoint"/>
+		<result column="click_no" property="clickNo"/>
+		<result column="status" property="status"/>
+		<result column="ev_date" property="evDate"/>
+		<result column="ev_thumb" property="evThumb"/>
+		<result column="ev_deny" property="evDeny"/>		
+	</resultMap>
+	
   	<insert id="insertBeer" parameterType="Beers">
   		insert
   			into beer
@@ -119,16 +148,16 @@
   			notice_no = #{noticeNo}
   	</update>
   	
-  	<select id="selectUserListCount" resultType="_int">
+  	<select id="selectUserListCount" parameterType="_int" resultType="_int">
 		select count(*)
 		from member
-		where report > 4 and status = 0
+		where report > 4 and status = #{status}
   	</select>
   	
-  	<select id="selectUserList" resultMap="memberResultSet">
+  	<select id="selectUserList" parameterType="_int" resultMap="memberResultSet">
 		select user_no, user_id, report, status
 		from member
-		where report > 4 and status = 0
+		where report > 4 and status = #{status}
         order by user_no asc
   	</select>
   	
@@ -169,17 +198,147 @@
   		 	req_no = #{category}
   	</update>
   	
-  	<select id="selectBeerListCount" resultType="_int">
+  	<select id="selectBeerListCount" resultType="_int" parameterType="BS">
   		select count(*)
   		from beer
-  		where status = 'Y'
+  		<choose>
+  			<when test="category == 'name'">
+  				where status = 'Y' and beer_name like '%'|| #{content} ||'%'
+  			</when>
+  			<when test="category == 'no'">
+  				where status = 'Y' and beer_no = #{content} 
+  			</when>
+  			<otherwise>
+  				where status = 'Y'
+  			</otherwise>
+  		</choose>
   	</select>
   	
-  	<select id="selectBeerList" resultMap="beerResultSet">
+  	<select id="selectBeerList" resultMap="beerResultSet" parameterType="BS">
 		select beer_no, beer_name, beer_ename, beer_style, beer_producer, beer_location, beer_alcohol, beer_container, updated_date, status, reply_count, score_total, origin_name, change_name
 		from beer
-		where status = 'Y'
+		<choose>
+  			<when test="category == 'name'">
+  				where status = 'Y' and beer_name like '%'|| #{content} ||'%'
+  			</when>
+  			<when test="category == 'no'">
+  				where status = 'Y' and beer_no = #{content} 
+  			</when>
+  			<otherwise>
+  				where status = 'Y'
+  			</otherwise>
+  		</choose>
 		order by beer_no asc
+  	</select>
+  	
+  	<select id="selectListCount" resultType="_int" parameterType="BS">
+		select
+		       count(*)
+		  from notice
+		 <choose>
+		 	<when test="category == 'title'">
+		 		where status = 'Y' and notice_title like '%'|| #{content} ||'%'
+		 	</when>
+		 	<when test="category == 'content'">
+		 		where status = 'Y' and notice_content like '%'|| #{content} ||'%'
+		 	</when>
+		 	<otherwise>
+		 		where status = 'Y'
+		 	</otherwise>
+		 </choose>
+		 
+	</select>
+	
+	<select id="selectNoticeList" resultMap="noticeResultSet" parameterType="BS">
+		select
+		       notice_no
+		     , user_id
+		     , notice_title
+		     , notice_date
+		     , count
+		  from notice
+		  join member using(user_no)
+          <choose>
+		 	<when test="category == 'title'">
+		 		where notice.status = 'Y' and notice_title like '%'|| #{content} ||'%'
+		 	</when>
+		 	<when test="category == 'content'">
+		 		where notice.status = 'Y' and notice_content like '%'|| #{content} ||'%'
+		 	</when>
+		 	<otherwise>
+		 		where notice.status = 'Y'
+		 	</otherwise>
+		 </choose>
+		 order
+		    by notice_no desc			
+	</select>
+	
+	<select id="selectNotice" resultMap="noticeResultSet" parameterType="string">
+		select
+		       notice_no
+		     , user_id
+		     , notice_title
+             , notice_content
+		     , notice_date
+		     , count
+		  from notice
+		  join member using(user_no)
+          where
+            notice.status = 'Y' and notice_no = #{noticeNo}
+	</select>
+	
+	<select id="selectEventListCount" resultType="_int" parameterType="BS">
+  		select count(*)
+  		from event
+  		<choose>
+  			<when test="content != null">
+  				where status = #{category} and ev_title like '%'|| #{content} ||'%'
+  			</when>
+  			<otherwise>
+  				where status = #{category}
+  			</otherwise>
+  		</choose>
+  	</select>
+  	
+  	<select id="selectEventList" resultMap="eventResultSet" parameterType="BS">
+		select ev_no, user_id, ev_title, ev_content, ev_starttime, ev_endtime, beer_no, req_time, limit_no, apply_no, ev_point, click_no, event.status, ev_date, ev_thumb, ev_deny
+		from event
+		join member using(user_no)
+  		<choose>
+  			<when test="category != null">
+  				where event.status = #{category} and ev_title like '%'|| #{content} ||'%'
+  			</when>
+  			<otherwise>
+  				where event.status = #{category}
+  			</otherwise>
+  		</choose>
+		order by ev_date asc
+  	</select>
+  	
+  	<update id="updateBatchEvent" parameterType="Batch">
+		update
+		    event
+		set
+		<choose>
+			<when test="content !=null">
+				status = 'C',
+				ev_deny = #{content}
+			</when>
+			<otherwise>
+				status = #{status} 
+			</otherwise>
+		</choose>
+		where
+			<foreach item="item" index="index" collection="list" separator="or">
+				ev_no = #{item}
+			</foreach>
+  	</update>
+  	
+  	<select id="selectEventOne" parameterType="string" resultMap="eventResultSet">
+		select ev_no, user_id, ev_title, ev_content, ev_starttime, ev_endtime, beer_no, req_time, limit_no, apply_no, ev_point, click_no, event.status, ev_date, ev_thumb, ev_deny
+		from event
+		join member using(user_no)
+		where ev_no = #{evNo}
   	</select>
   
 </mapper>

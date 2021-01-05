@@ -1,8 +1,10 @@
 package com.beer.macSim.member.model.service;
 
 import com.beer.macSim.event.model.vo.Event;
+import com.beer.macSim.groupBuy.model.vo.GroupBuy;
 import com.beer.macSim.member.model.dao.MemberDao;
 import com.beer.macSim.member.model.vo.Member;
+import com.beer.macSim.member.model.vo.PointHistory;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -122,16 +124,32 @@ public class MemberServiceImpl implements MemberService {
 		return mDao.pointHistory(sqlSession, userNo, point, category, pointHistory);
 	}
 
+	// 회원의 포인트 상태조회
+	@Override
+	public ArrayList<PointHistory> selectPointHistory(Member m) {
+		return mDao.selectPointHistory(sqlSession,m);
+	}
+	
+	
+	// 회원 공동구매 상태조회
+	@Override
+	public ArrayList<GroupBuy> selectGroupBuyList(Member m) {
+		return mDao.selectGroupBuyList(sqlSession,m);
+	}
+
+
+
 	
 
 	
 
 
-	
-
-	
 
 
+	@Override
+	public int deleteGroupBuy(Member m) {
+		return mDao.deleteGroupBuy(sqlSession,m);
+	}
 
 
 

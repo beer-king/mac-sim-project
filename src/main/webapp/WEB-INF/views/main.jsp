@@ -137,7 +137,7 @@
 			<br>
 			<a href="#">공구관리</a>
 			<br>
-			<a href="#">이벤트관리</a>
+			<a href="eventAd.ad">이벤트관리</a>
 			<br>
 			<a href="noticeAd.ad">공지사항관리</a>
 			<br>
@@ -195,7 +195,7 @@
 							BEER<span class="material-icons"> chevron_right </span>
 						</button>
 					</li>
-					<li onclick="location.href='list.cm'">
+					<li onclick="location.href='list.cm?cate=0'">
 						<button>
 							COMMUNITY<i
 						><span class="material-icons"> chevron_right </span></i

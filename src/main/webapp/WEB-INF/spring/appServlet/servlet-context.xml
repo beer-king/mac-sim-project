@@ -30,6 +30,8 @@
 			<mapping path="/detail.bo"/>
 			<mapping path="/updateForm.bo"/>
 			<mapping path="/delete.bo"/>
+			<mapping path="/apply.ev"/>
+			<mapping path="/enrollForm.ev"/>
 			<beans:bean id="loginInterceptor" class="com.beer.macSim.common.interceptor.LoginInterceptor"/>
 
 		</interceptor>

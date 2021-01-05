@@ -1,0 +1,187 @@
+@charset "UTF-8";
+.editC__header {
+  display: flex;
+  align-items: center;
+  position: relative;
+  left: -100px;
+}
+main .inner h1 {
+  color: #ecbf2e;
+  font-weight: bold;
+  font-size: 28px;
+  text-shadow: -3px -3px 0px #777;
+  margin: 50px 0;
+}
+.editC__header h2 {
+  border-left: 2px solid #5a5a5a;
+  color: #808080;
+  font-size: 25px;
+  font-weight: bold;
+  padding-left: 30px;
+  margin-left: 30px;
+}
+
+.editC__content .con-wrapper {
+  width: 85%;
+  height: 100%;
+  margin: 0 auto;
+  background: #151515;
+  border: none;
+  border-radius: 10px;
+  padding: 30px;
+}
+.con-wrapper div + div {
+  border-top: 1px solid #424242;
+}
+.con-wrapper > div {
+  display: flex;
+}
+.con-wrapper > div:nth-child(1) {
+  height: 90px;
+}
+.con-wrapper > div:nth-child(2) {
+  height: 220px;
+}
+.con-wrapper > div:nth-child(3) {
+  height: 250px;
+}
+.con-wrapper p {
+  display: inline;
+  width: 150px;
+  height: 100%;
+  color: #ddd;
+  text-align: center;
+  padding-top: 30px;
+  font-weight: 600;
+}
+.con-wrapper div > p {
+  border-right: 1px solid #424242;
+}
+.con-wrapper p + div {
+  margin-top: 30px;
+  margin-left: 30px;
+  margin-bottom: 30px;
+
+  width: 100%;
+}
+.con-wrapper p + div:nth-child(1) {
+  margin-top: 10px;
+}
+.editC__content .cate-btn ul {
+  width: 240px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transform: translateY(-8px);
+}
+.editC__content .cate-btn li {
+  width: 120px;
+}
+.cate-btn ul li:nth-child(1) {
+  border-right: 1px solid #424242;
+}
+.cate-btn ul li:nth-child(2) {
+  display: flex;
+  justify-content: flex-end;
+}
+.editC__content .textarea-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 20px;
+}
+.editC__content .textarea-wrapper textarea {
+  display: block;
+  width: 100%;
+  flex: 1;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  background: none;
+  color: #ddd;
+  resize: none;
+  font-size: 15px;
+  outline: none;
+  line-height: 1.3;
+  padding: 7px;
+}
+.editC__content .textarea-wrapper span {
+  color: #777;
+}
+
+.editC__content .img-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.img-wrapper div {
+  display: flex;
+}
+.img-wrapper div label {
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  width: 250px;
+  height: 25px;
+  color: #ddd;
+  cursor: pointer;
+  /* vertical-align: middle; */
+}
+.img-wrapper div button {
+  border: 1px solid #ddd;
+  transform: translateX(-5px);
+}
+.editC__content .img-wrapper .real-img {
+  display: block;
+  /* flex: 1; */
+  width: 250px;
+  height: 150px;
+  /* background: #5e5e5e; */
+  border: 1px solid #424242;
+  background: none;
+  border-radius: 5px;
+  color: #7e7e7e;
+  font-size: 14px;
+  cursor: pointer;
+  position: relative;
+}
+.img-wrapper .real-img img {
+  max-width: 100%;
+  max-height: 100%;
+  position: absolute;
+  margin: auto;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.editC__content .btn-wrapper {
+  width: 85%;
+  margin: 30px auto;
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+}
+.editC__content .btn-wrapper button {
+  width: 90px;
+  height: 35px;
+}
+
+/* EDIT FORUM 포럼 */
+.editF__content .title-wrapper input {
+  /* display: block; */
+  width: 100%;
+  height: 100%;
+  /* flex: 1; */
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  background: none;
+  color: #ddd;
+  /* resize: none; */
+  font-size: 15px;
+  outline: none;
+  /* line-height: 1.3; */
+  padding: 7px;
+}
+.editF__content .con-wrapper > div:nth-child(2) {
+  height: 135px;
+}

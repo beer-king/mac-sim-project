@@ -7,10 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.beer.macSim.administer.model.dao.AdminDao;
+import com.beer.macSim.administer.model.vo.Batch;
+import com.beer.macSim.administer.model.vo.BeerSearch;
 import com.beer.macSim.administer.model.vo.Report;
 import com.beer.macSim.administer.model.vo.SelectData;
 import com.beer.macSim.common.model.vo.PageInfo;
 import com.beer.macSim.data.model.vo.Beers;
+import com.beer.macSim.event.model.vo.Event;
 import com.beer.macSim.member.model.vo.Member;
 import com.beer.macSim.notice.model.vo.Notice;
 
@@ -29,13 +32,13 @@ public class AdminServiceImpl implements AdminService{
 	}
 	
 	@Override
-	public ArrayList<Notice> selectNoticeList(PageInfo pi) {
-		return aDao.selectNoticeList(pi, sqlSession);
+	public ArrayList<Notice> selectNoticeList(PageInfo pi, BeerSearch bs) {
+		return aDao.selectNoticeList(pi, bs, sqlSession);
 	}
 
 	@Override
-	public int selectListCount() {
-		return aDao.selectListCount(sqlSession);
+	public int selectListCount(BeerSearch bs) {
+		return aDao.selectListCount(bs, sqlSession);
 	}
 
 	@Override
@@ -69,13 +72,13 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public int selectUserListCount() {
-		return aDao.selectUserListCount(sqlSession);
+	public int selectUserListCount(int status) {
+		return aDao.selectUserListCount(status, sqlSession);
 	}
 
 	@Override
-	public ArrayList<Member> selectUserList(PageInfo pi) {
-		return aDao.selectUserList(pi, sqlSession);
+	public ArrayList<Member> selectUserList(PageInfo pi, int status) {
+		return aDao.selectUserList(pi, status, sqlSession);
 	}
 
 	@Override
@@ -94,13 +97,33 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public int selectBeerListCount() {
-		return aDao.selectBeerListCount(sqlSession);
+	public int selectBeerListCount(BeerSearch bs) {
+		return aDao.selectBeerListCount(sqlSession, bs);
 	}
 
 	@Override
-	public ArrayList<Beers> selectBeerList(PageInfo pi) {
-		return aDao.selectBeerList(sqlSession, pi);
+	public ArrayList<Beers> selectBeerList(BeerSearch bs, PageInfo pi) {
+		return aDao.selectBeerList(sqlSession, pi, bs);
+	}
+
+	@Override
+	public int selectEventListCount(BeerSearch bs) {
+		return aDao.selectEventListCount(sqlSession, bs);
+	}
+
+	@Override
+	public ArrayList<Event> selectEventList(BeerSearch bs, PageInfo pi) {
+		return aDao.selectEventList(sqlSession, pi, bs);
+	}
+
+	@Override
+	public int updateBatchEvent(Batch b) {
+		return aDao.updateBatchEvent(sqlSession, b);
+	}
+
+	@Override
+	public Event selectEventOne(String evNo) {
+		return aDao.selectEventOne(sqlSession, evNo);
 	}
 	
 	

@@ -39,7 +39,7 @@ public class NoticeServiceImpl implements NoticeService{
 	public Notice selectNotice(int nno) {
 		return nDao.selectNotice(sqlSession, nno);
 	}
-
+	
 	@Override
 	public ArrayList<NoComment> selectNcommentList(int nno) {
 		return nDao.selectNcommentList(sqlSession, nno);
@@ -50,7 +50,7 @@ public class NoticeServiceImpl implements NoticeService{
 		return nDao.insertNcomment(sqlSession, nc);
 	}
 	
-	
+
 
 
 	

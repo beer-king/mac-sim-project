@@ -29,9 +29,9 @@
 		<result column="category" property="category"/>
 		<result column="point_history" property="pointHistory"/>
 	</resultMap>
+	
 
-
-	<!--  
+	<!-- 
 		<resultMap id="beerReviewResultSet" type="Score">
 			<result column="score_no" property="scoreNo"></result>
 			<result column="beer_name" property="beerName"></result>
@@ -39,7 +39,7 @@
 			<result column="updated_date" property="updatedDate"></result>
 			<result column="comments" property="comments"></result>
 		</resultMap>
-	-->
+	 -->
 
    <resultMap type="Event" id="eventResultSet">
    		<result column="ev_no" property="evNo"></result>
@@ -48,6 +48,22 @@
    		<result column="ev_content" property="evContent"/>
    		<result column="status" property="status"/>
    </resultMap>
+
+	<resultMap id="historyResultSet" type="PointHistory">
+		<result column="PH_NO" property="pointNo"></result>
+		<result column="PDATE" property="pointDate"></result>
+		<result column="POINT" property="point"></result>
+		<result column="USER_NO" property="userNo"></result>
+		<result column="CATEGORY" property="category"></result>
+		<result column="POINT_HISTORY" property="pointHistory"></result>
+	</resultMap>
+
+	<resultMap id="groupResultSet" type="GroupBuy">
+		<result column="pno" property="pno"></result>
+		<result column="user_no" property="userNo"></result>
+		<result column="pname" property="gbName"></result>
+		<result column="gb_point" property="gbPoint"></result>
+	</resultMap>
 
    <update id="updateMember" parameterType="Member">
        update
@@ -154,7 +170,9 @@
 	</select>
 	
 
-	<!--  
+
+	<!--
+
 		<select id="selectBeerReviewList" resultMap="beerReviewResultSet">
 	
 			select
@@ -168,7 +186,7 @@
 			where s.status='Y';
 	
 		</select>
-	
+	 -->
 		<update id="updateBeerReview" parameterType="_int">
 	
 			update
@@ -178,7 +196,7 @@
 	
 	
 		</update>
-    -->
+    
 	
 	
 	
@@ -274,6 +292,42 @@
 	</update>-->
 	
 	
+
+	<select id="selectPointHistory" resultMap="historyResultSet" parameterType="Member">
+		select
+		      ph_no
+		     ,pdate
+		     ,point
+		     ,user_no
+		     ,category
+			 ,point_history
+		   from point_history
+		   where user_no=#{userNo}
+	</select>
+
+
+	<select id="selectGroupBuyList" resultMap="groupResultSet" parameterType="Member">
+		select
+			  pno
+			 ,gr.user_no
+			 ,pname
+			 ,gb_point
+			 ,request_no
+			 ,req_status
+		from group_buy gb
+				 join gb_request gr using(pno)
+		where gr.user_no=#{userNo}
+	</select>
+
+	<update id="deleteGroupBuy" parameterType="Member">
+        update
+            gb_request
+        set req_status = 'F'
+        where user_no = #{userNo}
+          and pno = #{pNo}
+	</update>
+
+
 
 </mapper>
 

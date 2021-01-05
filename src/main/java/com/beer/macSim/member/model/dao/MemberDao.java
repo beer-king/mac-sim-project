@@ -1,7 +1,9 @@
 package com.beer.macSim.member.model.dao;
 
 import com.beer.macSim.event.model.vo.Event;
+import com.beer.macSim.groupBuy.model.vo.GroupBuy;
 import com.beer.macSim.member.model.vo.Member;
+import com.beer.macSim.member.model.vo.PointHistory;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -108,6 +110,20 @@ public class MemberDao {
 		map.put("pointHistory",pointHistory);
 			
 		return sqlSession.insert("memberMapper.pointHistory", map);
+	}
+
+	public ArrayList<PointHistory> selectPointHistory(SqlSessionTemplate sqlSession, Member m) {
+
+    	return (ArrayList)sqlSession.selectList("memberMapper.selectPointHistory",m);
+
+	}
+
+	public ArrayList<GroupBuy> selectGroupBuyList(SqlSessionTemplate sqlSession, Member m) {
+    	return (ArrayList)sqlSession.selectList("memberMapper.selectGroupBuyList",m);
+	}
+
+	public int deleteGroupBuy(SqlSessionTemplate sqlSession, Member m) {
+    	return sqlSession.update("memberMapper.deleteGroupBuy",m);
 	}
 
 	

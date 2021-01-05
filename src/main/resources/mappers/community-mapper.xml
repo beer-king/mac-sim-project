@@ -4,7 +4,8 @@
 
 	<resultMap id="commResultSet" type="Community" >
 		<result column="comm_no" property="commNo" />
-		<result column="comm_src" property="commSrc" />
+		<result column="comm_origin_src" property="commOriginSrc" />
+		<result column="comm_change_src" property="commChangeSrc" />
 		<result column="comm_content" property="commContent" />
 		<result column="comm_createdate" property="commCreateDate" />
 		<result column="comm_cate" property="commCate" />
@@ -15,7 +16,8 @@
 	
 	<resultMap id="forResultSet" type="Forum" >
 		<result column="for_no" property="forNo" />
-		<result column="for_src" property="forSrc" />
+		<result column="for_origin_src" property="forOriginSrc" />
+		<result column="for_change_src" property="forChangeSrc" />
 		<result column="for_title" property="forTitle" />
 		<result column="for_info" property="forInfo" />
 		<result column="for_createdate" property="forCreateDate" />
@@ -38,7 +40,8 @@
 	<select id="selectCommList" resultMap="commResultSet">
 		select
 		       comm_no
-		     , comm_src
+		     , comm_origin_src
+		     , comm_change_src
 		     , comm_content
 		     , comm_createdate
 		     , comm_cate
@@ -53,6 +56,33 @@
 		    by comm_createdate desc
 	</select>
 	
+	<insert id="insertComm" parameterType="Community">
+		insert
+          into community
+             (
+                comm_no
+              , comm_origin_src
+              , comm_change_src
+              , comm_content
+              , comm_cate
+              , user_no
+             )
+        values
+             ( 
+                seq_comm_no.nextval
+              , #{ commOriginSrc }
+              , #{ commChangeSrc }
+              , #{ commContent }
+              , #{ commCate }
+              , (
+		          select
+		                 user_no
+		            from member
+		           where user_id = #{ userId }
+		        )
+             )
+	</insert>
+	
 	<select id="selectForumCount" resultType="_int">
 		select
 		       count(*)
@@ -63,7 +93,8 @@
 	<select id="selectForumList" resultMap="forResultSet">
 		select
 		       for_no
-		     , for_src
+		     , for_origin_src
+		     , for_change_src
 		     , for_title
 		     , for_info
 		     , for_createdate
@@ -90,7 +121,8 @@
 	<select id="selectForumDetail" parameterType="_int" resultMap="forResultSet">
 		select
 		       for_no
-		     , for_src
+		     , for_origin_src
+		     , for_change_src
 		     , for_title
 		     , for_info
 		     , for_createdate
@@ -103,6 +135,33 @@
 		  join member using(user_no)
 		 where for_no = #{ fno }		       
 	</select>
+	
+	<insert id="insertForum" parameterType="Forum">
+		insert
+          into forum
+             (
+                for_no
+              , for_origin_src
+              , for_change_src
+              , for_title
+              , for_info
+              , user_no
+             )
+        values
+             ( 
+                seq_comm_no.nextval
+              , #{ forOriginSrc }
+              , #{ forChangeSrc }
+              , #{ forTitle }
+              , #{ forInfo }
+              , (
+		          select
+		                 user_no
+		            from member
+		           where user_id = #{ userId }
+		        )
+             )
+	</insert>
 	
 
 </mapper>

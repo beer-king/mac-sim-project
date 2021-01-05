@@ -2,7 +2,9 @@ package com.beer.macSim.member.model.service;
 
 
 import com.beer.macSim.event.model.vo.Event;
+import com.beer.macSim.groupBuy.model.vo.GroupBuy;
 import com.beer.macSim.member.model.vo.Member;
+import com.beer.macSim.member.model.vo.PointHistory;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -59,6 +61,7 @@ public interface MemberService {
 
 	int pointHistory(int userNo, int point, int category, String pointHistory);
 
+
 	//void sendTempLoginPwToEmail(Member loginMember,String contextPath);
 
 	
@@ -66,4 +69,12 @@ public interface MemberService {
 
 
      
+
+
+    ArrayList<PointHistory> selectPointHistory(Member m);
+
+    ArrayList<GroupBuy> selectGroupBuyList(Member m);
+
+    int deleteGroupBuy(Member m);
+
 }

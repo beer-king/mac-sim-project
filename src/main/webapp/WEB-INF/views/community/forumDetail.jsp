@@ -45,7 +45,7 @@
         <ul class="comm__items">
           <li class="fode__info-wrapper">
             <div class="img-wrapper">
-              <img src="resources/uploadFiles/${ fo.forSrc }" alt="picture" />
+              <img src="resources/uploadFiles/${ fo.forChangeSrc }" alt="picture" />
             </div>
             <div class="fode__info-right">
               <div class="item-top">

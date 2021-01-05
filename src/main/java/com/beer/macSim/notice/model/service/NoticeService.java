@@ -19,7 +19,9 @@ public interface NoticeService {
 	Notice selectNotice(int nno);
 	
 	// 댓글
+	
 	ArrayList<NoComment> selectNcommentList(int nno);
 	
 	int insertNcomment(NoComment nc);
+	
 }

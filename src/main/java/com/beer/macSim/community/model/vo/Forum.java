@@ -16,7 +16,8 @@ import lombok.ToString;
 public class Forum {
 
 	private int forNo;		 	// 포럼 게시글 번호
-	private String forSrc;		// 대표 이미지 경로
+	private String forOriginSrc;// 이미지 경로
+	private String forChangeSrc;// 바뀐 이미지 경로
 	private String forTitle;	// 포럼 게시글 제목
 	private String forInfo;		// 게시글 내용
 	private Date forCreateDate;	// 생성일

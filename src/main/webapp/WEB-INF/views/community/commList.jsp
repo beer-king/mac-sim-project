@@ -29,16 +29,14 @@
         <h1 class="comm__h1">COMMUNITY</h1>
         <div class="comm__nav">
           <ul id="comm__nav">
-            <li>
+            <li class="nav-active nav-list">
               <img src="resources/images/beer-chat-icon-yellow.png" alt="selectedImg" /><a
-                class="nav-active"
-                href="list.cm"
+                href="list.cm?cate=0"
                 >맥심의 일상</a
               >
             </li>
-            <li>
-              <!--<img src="resources/images/beer-chat-icon-yellow.png" alt="selectedImg" />--><a
-                class=""
+            <li class="nav-list">
+              <img src="resources/images/beer-chat-icon-yellow.png" alt="selectedImg" /><a
                 href="list.cm?cate=1"
                 >오늘의 맥주</a
               >
@@ -46,15 +44,18 @@
             <li><a href="list.fo">포럼</a></li>
           </ul>
         </div>
+        
         <div class="comm__write-btn">
-          <button>글쓰기<span class="material-icons"> edit </span></button>
+          <c:if  test="${ !empty loginUser }">
+            <button onclick="location.href='enrollForm.cm'">글쓰기<span class="material-icons"> edit </span></button>
+          </c:if>
         </div>
         
         <ul class="comm__items">
           <c:forEach var="c" items="${ list }" >
 	        <li>
 	          <div class="img-wrapper">
-	            <img src="resources/uploadFiles/${ c.commSrc }" alt="picture" />
+	            <img src="resources/uploadFiles/${ c.commChangeSrc }" alt="picture" />
 	          </div>
 	          <div class="item-right">
 	            <div class="item-info">
@@ -114,6 +115,35 @@
     
     <script defer>
       // 탭  /  active된 탭에 클래스 부여 -> nav-active
+      const urlSearchParams = new URLSearchParams(window.location.href);
+      const navList = document.querySelectorAll(".nav-list");
+      
+      function getUrlParams() {
+    	    var params = {};
+    	    window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(str, key, value) { params[key] = value; });
+    	    return params;
+      }
+      
+      const onChange = () => {
+    	  
+    	  let qParams = getUrlParams();
+    	  
+          if(qParams.cate === "0"){
+        	  navList[0].classList.add("nav-active");
+        	  navList[1].classList.remove("nav-active");
+          }else if(qParams.cate === "1"){
+        	  navList[0].classList.remove("nav-active");
+        	  navList[1].classList.add("nav-active");
+          }
+        	  
+      }
+      
+      onChange();
+      /*
+      navList.forEach(v => {
+	      v.addEventListener("click", onChange);
+      });
+      */
       
       // 페이징  /  active된 페이지 숫자에 클래스 부여 -> paging-active
     

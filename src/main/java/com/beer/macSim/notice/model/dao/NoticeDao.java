@@ -31,13 +31,14 @@ public class NoticeDao {
 	public Notice selectNotice(SqlSessionTemplate sqlSession, int nno) {
 		return sqlSession.selectOne("noticeMapper.selectNotice", nno);
 	}
-
+	
 	// 댓글리스트
 	public ArrayList<NoComment> selectNcommentList(SqlSessionTemplate sqlSession, int nno) {
 		return (ArrayList)sqlSession.selectList("noticeMapper.selectNcommentList", nno);
 	}
 	
 	// 댓글insert
+	
 	public int insertNcomment(SqlSessionTemplate sqlSession, NoComment nc) {
 		return sqlSession.insert("noticeMapper.insertNcomment", nc);
 	}

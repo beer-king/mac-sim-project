@@ -32,6 +32,15 @@
 		<result column="pno" property="pNo"/>
 	</resultMap>
   	
+  	<resultMap id="EventAttendeeResultSet" type="EventAttendee">
+  		<result column="evat_no" property="evatNo"/>
+  		<result column="ev_no" property="evNo"/>
+  		<result column="user_no" property="userNo"/>
+  		<result column="event_entry_status" property="eventEntryStatus"/>
+  		<result column="event_entry_date" property="eventEntryDate"/>
+  		<result column="ev_point" property="evPoint"/>
+  	</resultMap>
+  	
   	<select id="selectEventCount" resultType="_int">
   		select
 		        count(*)
@@ -143,4 +152,28 @@
   		  where ev_no  = ${eno} 
   	</select>
   	
+  	<update id="decreasePoint" parameterType="EventAttendee">
+  		update
+  			    member
+  		   set  point = point + #{evPoint}
+  		 where  user_no = #{userNo}
+  	</update>
+  	
+  	<insert id="applyEvent" parameterType="EventAttendee">
+  		insert
+		 into event_attendee
+		 (
+		   evat_no
+		 , ev_no
+		 , user_no
+		 , event_entry_status
+		 )
+		 values
+		 (
+		   SEQ_EVAT_NO.nextval
+		 , #{evNo}
+		 , #{userNo}
+		 , 'Y'
+		 )	   
+  	</insert>
 </mapper>

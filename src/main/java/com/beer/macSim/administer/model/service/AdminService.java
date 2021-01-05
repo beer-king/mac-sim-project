@@ -2,10 +2,13 @@ package com.beer.macSim.administer.model.service;
 
 import java.util.ArrayList;
 
+import com.beer.macSim.administer.model.vo.Batch;
+import com.beer.macSim.administer.model.vo.BeerSearch;
 import com.beer.macSim.administer.model.vo.Report;
 import com.beer.macSim.administer.model.vo.SelectData;
 import com.beer.macSim.common.model.vo.PageInfo;
 import com.beer.macSim.data.model.vo.Beers;
+import com.beer.macSim.event.model.vo.Event;
 import com.beer.macSim.member.model.vo.Member;
 import com.beer.macSim.notice.model.vo.Notice;
 
@@ -14,11 +17,11 @@ public interface AdminService {
 	
 	int selectCallListCount(SelectData sd);
 	ArrayList<Report> selectCallList(PageInfo pi, SelectData sd);
-	int selectUserListCount();
-	ArrayList<Member> selectUserList(PageInfo pi);
+	int selectUserListCount(int status);
+	ArrayList<Member> selectUserList(PageInfo pi, int status);
 	
-	int selectListCount();
-	ArrayList<Notice> selectNoticeList(PageInfo pi);
+	int selectListCount(BeerSearch bs);
+	ArrayList<Notice> selectNoticeList(PageInfo pi, BeerSearch bs);
 	
 	int insertNotice(Notice n);
 	
@@ -34,6 +37,12 @@ public interface AdminService {
 	
 	int reportBC(SelectData sd);
 	
-	int selectBeerListCount();
-	ArrayList<Beers> selectBeerList(PageInfo pi);
+	int selectBeerListCount(BeerSearch bs);
+	ArrayList<Beers> selectBeerList(BeerSearch bs,PageInfo pi);
+	
+	int selectEventListCount(BeerSearch bs);
+	ArrayList<Event> selectEventList(BeerSearch bs,PageInfo pi);
+	
+	int updateBatchEvent(Batch b);
+	Event selectEventOne(String evNo);
 }

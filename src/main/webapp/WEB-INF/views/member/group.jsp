@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>공구신청</title>
    <style>
          #mypageMenu{
             list-style: none;
@@ -65,45 +66,57 @@
 	
 	 <h1 style="margin-left: 30px; color: rgb(236, 191, 46); font-size:30px">공구 신청현황</h1>
       <br>
-      
+
+    <c:if test="${empty list}">
+       <h2 style="color:white;"> 공동구매 내역이 없습니다.</h2>
+    </c:if>
+
       <div id="groupBuy">
+          <c:forEach var="g" items="${list}">
           <ul>
               <li>
-                  <span class="pName">말표맥주뚜껑<span>(2p)</span></span>
+                  <span class="pName1">${g.gbName}</span><span>(${g.gbPoint}P)</span>
                     <!-- Button to Openthe Modal -->
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">
                         취소
                     </button>
               </li>
-                <br>
-              <li>
-                <span class="pName">맥주거품기<span>(5p)</span></span>
-                  <!-- Button to Open the Modal -->
-                  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">
-                      취소
-                  </button>
-            </li>
-                <br>
-            <li>
-                <span class="pName">맥주캐리어<span>(10p)</span></span>
-                  <!-- Button to Open the Modal -->
-                  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">
-                      취소
-                  </button>
-            </li>
-
-              
+              <br>
           </ul>
+          </c:forEach>
       </div>
+
+
+    <div id="groupBuy">
+
+            <ul>
+                <li>
+                    <span class="pNo">1</span>
+                    <span class="pName1">신발</span><span>(12P)</span>
+
+                    <!-- Button to Openthe Modal -->
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">
+                        취소
+                    </button>
+                </li>
+                <br>
+            </ul>
+
+    </div>
+
+
+
+
+
+
       
       <script>
           $(function(){
-              $("#groupBuy li").click(function(){  
-                  var pName = $("span").text();
-                  console.log(pName);
+              $("#groupBuy li").click(function(){
+                  var pNo = $(".pNo").text();
+                  console.log(pNo);
 
-
-                  $("#nameSpace").text(pName);
+                  $("#nameSpace").text(pNo);
               });
 
              
@@ -129,16 +142,31 @@
                 </div>
         
                 <!-- Modal footer -->
-                <form action="delete.ev"  class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">뒤로가기</button>
-                    <button type="submit" class="btn btn-danger" data-dismiss="modal">취소</button>
-                </form>
+               <!-- <form action="delete.gb" method="get" class="modal-footer">-->
+                   <div style="color: black">
+                       <button type="button" class="btn btn-primary" data-dismiss="modal">뒤로가기</button>
+                       <button type="submit" id="gbBtn" class="btn btn-danger" data-dismiss="modal">확인</button>
+                   </div>
+                <!--</form>-->
         
             </div>
             </div>
         </div>
 
+        <script>
+            $(function(){
+                $("#gbBtn").click(function(){
 
+                   var pNo =  $("#nameSpace").text();
+                   var uno = ${loginUser.userNo}
+                    console.log(pNo);
+                    console.log(uno);
+                   location.href = "delete.gb?pNo="+pNo +"&userNo="+uno;
+
+                });
+
+            });
+        </script>
 	
 	
 </body>

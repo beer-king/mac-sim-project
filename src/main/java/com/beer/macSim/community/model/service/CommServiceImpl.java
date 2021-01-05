@@ -30,9 +30,10 @@ public class CommServiceImpl  implements CommService{
 		return cDao.selectCommList(sqlSession, cate, pi);
 	}
 
+	// 커뮤니티 (맥일/오맥) 작성
 	@Override
 	public int insertComm(Community comm) {
-		return 0;
+		return cDao.insertComm(sqlSession, comm);
 	}
 
 	// 포럼 리스트 조회
@@ -57,9 +58,10 @@ public class CommServiceImpl  implements CommService{
 		return cDao.selectForumDetail(sqlSession, fno);
 	}
 
+	// 포럼 작성
 	@Override
 	public int insertForum(Forum fo) {
-		return 0;
+		return cDao.insertForum(sqlSession, fo);
 	}
 
 }
