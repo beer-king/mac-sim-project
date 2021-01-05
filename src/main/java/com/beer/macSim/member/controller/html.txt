@@ -10,7 +10,7 @@
 <html>
 <head>
     <title>이벤트 신청내역</title>
-    <style>
+    <style></style>
         #mypageMenu{
             list-style: none;
             color:white;
