@@ -84,7 +84,21 @@ public class NoticeController {
 		
 	}
 	
-	
+	@RequestMapping("search.no")
+	public String searchNoticeList(@RequestParam(value="currentPage", defaultValue="1")int currentPage,Model model, String condition, String keyword) {
+		
+		int searchCount = nService.searchNoticeListCount(condition,keyword);
+		PageInfo pi = Pagination.getPageInfo(searchCount, currentPage, 10, 5);
+		
+		ArrayList<Notice> list = nService.searchNoticeList(condition, keyword, pi);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		
+		return "notice/noticeList";
+		
+		
+	}	
 }
 
 
