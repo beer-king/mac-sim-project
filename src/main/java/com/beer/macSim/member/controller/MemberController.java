@@ -89,7 +89,7 @@ public class MemberController {
 		
 		
 
-		PageInfo pi =Pagination.getPageInfo(listCount, currentPage, 5, 3);
+		PageInfo pi =Pagination.getPageInfo(listCount, currentPage, 5, 5);
 		
 		ArrayList<Event>list = mService.selectEventList(m);
 		
