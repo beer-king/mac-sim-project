@@ -2,6 +2,7 @@ package com.beer.macSim.event.model.dao;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -11,6 +12,7 @@ import com.beer.macSim.common.model.vo.PageInfo;
 import com.beer.macSim.event.model.vo.Attachment;
 import com.beer.macSim.event.model.vo.Event;
 import com.beer.macSim.event.model.vo.EventAttendee;
+import com.beer.macSim.event.model.vo.EventSearch;
 
 @Repository
 public class EventDao {
@@ -59,5 +61,26 @@ public class EventDao {
 	
 	public int checkApplyEvent(SqlSessionTemplate sqlSession, EventAttendee ea) {
 		return sqlSession.selectOne("eventMapper.checkApplyEvent", ea);
+	}
+	
+	public int searchEventCount(SqlSessionTemplate sqlSession, EventSearch es) {
+		
+		HashMap<String, String> map = new HashMap<>();
+		map.put("category", es.getCategory());
+		map.put("searchWord", es.getSearchWord());
+		
+		return sqlSession.selectOne("eventMapper.searchEventCount", map);
+	}
+	
+	public ArrayList<Event> searchEventList(SqlSessionTemplate sqlSession, PageInfo pi, EventSearch es){
+		
+		HashMap<String, String> map = new HashMap<>();
+		map.put("category", es.getCategory());
+		map.put("searchWord", es.getSearchWord());
+		
+		int offset = (pi.getCurrentPage()-1)* pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("eventMapper.searchEventList", map, rowBounds);
 	}
 }

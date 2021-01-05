@@ -19,10 +19,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.beer.macSim.common.model.vo.PageInfo;
 import com.beer.macSim.common.template.Pagination;
+import com.beer.macSim.common.template.Search;
 import com.beer.macSim.event.model.service.EventService;
 import com.beer.macSim.event.model.vo.Attachment;
 import com.beer.macSim.event.model.vo.Event;
 import com.beer.macSim.event.model.vo.EventAttendee;
+import com.beer.macSim.event.model.vo.EventSearch;
 import com.beer.macSim.member.model.vo.Member;
 
 @Controller
@@ -155,5 +157,22 @@ public class EventController {
 			model.addAttribute("errorMsg", "이벤트 신청이 실패하였습니다.");
 			return "common/errorPage";
 		}
+	}
+	
+	@RequestMapping("search.ev")
+	public String searchEventList(@RequestParam(value="currentPage", defaultValue="1")int currentPage, 
+							      String category, String searchWord, Model model) {
+
+		EventSearch es = Search.getEventSearch(category, searchWord);
+		int searchCount = evService.searchEventCount(es);
+		
+		PageInfo pi = Pagination.getPageInfo(searchCount, currentPage, 5, 5);
+		ArrayList<Event> list = evService.searchEventList(pi, es);
+		
+		model.addAttribute("list", list);
+		model.addAttribute("pi", pi);
+		model.addAttribute("es", es);
+		
+		return "event/eventListView";
 	}
 }

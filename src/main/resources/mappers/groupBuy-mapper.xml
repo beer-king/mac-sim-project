@@ -47,6 +47,8 @@
 		 from group_buy g
 		 join member using (user_no)
 		where g.status = 'Y'
+		order 
+		   by pno desc
 	</select>
 	
 	<update id="increaseCount" parameterType="_int">

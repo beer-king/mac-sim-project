@@ -12,6 +12,7 @@ import com.beer.macSim.event.model.vo.Attachment;
 import com.beer.macSim.event.model.vo.EvReply;
 import com.beer.macSim.event.model.vo.Event;
 import com.beer.macSim.event.model.vo.EventAttendee;
+import com.beer.macSim.event.model.vo.EventSearch;
 
 @Service
 public class EventServiceImpl implements EventService {
@@ -87,6 +88,16 @@ public class EventServiceImpl implements EventService {
 	@Override
 	public int checkApplyEvent(EventAttendee ea) {
 		return evDao.checkApplyEvent(sqlSession, ea);
+	}
+
+	@Override
+	public int searchEventCount(EventSearch es) {
+		return evDao.searchEventCount(sqlSession, es);
+	}
+
+	@Override
+	public ArrayList<Event> searchEventList(PageInfo pi, EventSearch es) {
+		return evDao.searchEventList(sqlSession, pi, es);
 	}
 
 }

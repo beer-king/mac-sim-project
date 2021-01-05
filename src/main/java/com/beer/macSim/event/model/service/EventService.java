@@ -7,6 +7,7 @@ import com.beer.macSim.event.model.vo.Attachment;
 import com.beer.macSim.event.model.vo.EvReply;
 import com.beer.macSim.event.model.vo.Event;
 import com.beer.macSim.event.model.vo.EventAttendee;
+import com.beer.macSim.event.model.vo.EventSearch;
 
 public interface EventService {
 	
@@ -32,4 +33,8 @@ public interface EventService {
 	// 6. 이벤트 신청하기용 서비스
 	int decreasePoint(EventAttendee ea);
 	int applyEvent(EventAttendee ea);
+	
+	// 7. 이벤트 검색결과 리스트용 서비스
+	int searchEventCount(EventSearch es);
+	ArrayList<Event> searchEventList(PageInfo pi, EventSearch es);
 }

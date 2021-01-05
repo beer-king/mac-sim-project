@@ -60,8 +60,11 @@
 		     , click_no
 		     , ev_date
 		     , ev_thumb
-		  from event
+		  from event e
 		  join member using (user_no)
+		 where (e.status = 'A' or e.status = 'B')
+		 order 
+		    by ev_no desc 
   	</select>
   	
   	<update id="increaseCount" parameterType="_int"	>
@@ -86,10 +89,11 @@
   			 , ev_point
   			 , ev_date
   			 , ev_thumb
-  	      from event
+  	      from event e
   	      join member using(user_no)
   	      join beer using(beer_no)
-  	     where ev_no = #{eno}
+  	     where (e.status = 'A' or e.status = 'B') 
+  	       and ev_no = #{eno}
   	</select>
   	
   	<insert id="insertEvent" parameterType="Event">
@@ -185,5 +189,49 @@
 		  from event_attendee
 		 where user_no = #{userNo}
 		   and ev_no = #{evNo}
+		   and event_entry_status = 'Y'
+  	</select>
+  	
+  	<select id="searchEventCount" resultType="_int"
+  			parameterType="hashmap">
+  		select
+  			   count(*)
+  		  from event
+  		 where (status = 'A' or status = 'B')
+  		 <if test="category == 'catTitle'">
+  		   and ev_title
+  		 </if>  
+  		 <if test="category == 'catContent'">
+  		 	and ev_content 
+  		 </if>
+  		 	like '%' || #{searchWord} || '%'
+  	</select>
+  	
+  	<select id="searchEventList" parameterType="hashmap"
+  			resultMap="eventResultSet">
+  		select
+  		   	    ev_no
+		     ,  user_id
+		     , ev_title
+		     , ev_content
+		     , ev_starttime
+		     , ev_endtime
+		     , click_no
+		     , ev_date
+		     , ev_thumb
+		  from event e
+		  join member using (user_no)
+		 where (e.status = 'A' or e.status = 'B')
+		 <choose>
+		 	<when test="category == 'catTitle'">
+		 		and ev_title
+		 	</when>
+		 	<when test="category == 'catContent'">
+		 		and ev_content 
+		 	</when>
+		 </choose>
+		  like '%' || #{searchWord} || '%'
+		 order 
+		    by ev_no desc
   	</select>
 </mapper>
