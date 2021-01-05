@@ -265,6 +265,15 @@
   		   )
 	</insert>
 	
+	<!--  
+	<update id="updatePw" parameterType="Member">
+		update member 
+	       set userPwd = ?
+	     where userId = ?     
+
+	</update>-->
+	
+	
 
 </mapper>
 

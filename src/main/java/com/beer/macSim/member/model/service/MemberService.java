@@ -7,6 +7,8 @@ import com.beer.macSim.member.model.vo.Member;
 import java.sql.Date;
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
+
 public interface MemberService {
 
     //1. 로그인용 서비스
@@ -56,6 +58,12 @@ public interface MemberService {
 
 
 	int pointHistory(int userNo, int point, int category, String pointHistory);
+
+	//void sendTempLoginPwToEmail(Member loginMember,String contextPath);
+
+	
+
+
 
      
 }
