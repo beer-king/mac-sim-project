@@ -14,6 +14,7 @@ import com.beer.macSim.notice.model.vo.Notice;
 
 public interface AdminService {
 	int insertBeer(Beers b, Member m);
+	Beers selectBeerOne(String beerNo);
 	
 	int selectCallListCount(SelectData sd);
 	ArrayList<Report> selectCallList(PageInfo pi, SelectData sd);
@@ -45,4 +46,6 @@ public interface AdminService {
 	
 	int updateBatchEvent(Batch b);
 	Event selectEventOne(String evNo);
+	
+	int updateBeer(Beers b, Member m);
 }

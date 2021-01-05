@@ -24,6 +24,11 @@ public class AdminDao {
 		return (i * j);
 	}
 	
+	public int updateBeer(SqlSessionTemplate sqlSession, Beers b, Member m) {
+		int i = sqlSession.update("adminMapper.updateBeer", b);
+		int j = sqlSession.update("adminMapper.updatePoint", m);
+		return (i * j);
+	}
 	public int selectListCount(BeerSearch bs, SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("adminMapper.selectListCount", bs);
 	}
@@ -106,5 +111,9 @@ public class AdminDao {
 	}
 	public Event selectEventOne(SqlSessionTemplate sqlSession, String evNo) {
 		return sqlSession.selectOne("adminMapper.selectEventOne", evNo);
+	}
+	
+	public Beers selectBeerOne(SqlSessionTemplate sqlSession, String beerNo) {
+		return sqlSession.selectOne("adminMapper.selectBeerOne", beerNo);
 	}
 }

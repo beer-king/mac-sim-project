@@ -114,6 +114,7 @@ public class AdministerController {
 	@RequestMapping("beerAd.ad")
 	public String goBeer(@RequestParam(value="currentPage", defaultValue="1")int currentPage, @RequestParam(value="category", defaultValue="1")int category, Model model, String sort, String search) {
 		model.addAttribute("category",category);
+		model.addAttribute("sort", sort);
 		if(category == 2) {
 			BeerSearch bs = Search.getBeerSearch(sort, search);
 			int listCount = aService.selectBeerListCount(bs);
@@ -125,7 +126,55 @@ public class AdministerController {
 		return "administer/beerAdmini";
 	}
 	
+	@RequestMapping("enrollBeer.ad")
+	public String enrollBeer(Beers b, Member m, MultipartFile upfile, HttpSession session, Model model) {
+		String changeName = saveFile(session, upfile);
+		
+		b.setOriginName(upfile.getOriginalFilename());
+		b.setChangeName("resources/uploadFiles/" + changeName);
+		
+		int result = aService.insertBeer(b, m);
+		
+		if(result > 0) { // 성공
+			session.setAttribute("alertMsg", "성공적으로 게시글이 등록되었습니다.");
+			return "redirect:beerAd.ad";
+			
+		}else { // 실패
+			model.addAttribute("errorMsg", "게시글 작성 실패!");
+			return "common/errorPage";
+		}
+	}
 	
+	@RequestMapping("beerUpdate.ad")
+	public String goUpdate(Model model, String beerNo) {
+		Beers b = aService.selectBeerOne(beerNo);
+		model.addAttribute("b", b);
+		return "administer/beerUpdate";
+	}
+	
+	@RequestMapping("updateBeer.ad")
+	public String updateBeer(Beers b, MultipartFile upfile, HttpSession session, Model model, Member m) {
+		Beers b2 = aService.selectBeerOne(Integer.toString(b.getBeerNo()));
+		String changeName;
+		if(upfile.getOriginalFilename().isEmpty()) {
+			b.setOriginName(b2.getOriginName());
+			b.setChangeName(b2.getChangeName());
+		}else {
+			changeName = saveFile(session, upfile);
+			b.setOriginName(upfile.getOriginalFilename());
+			b.setChangeName("resources/uploadFiles/" + changeName);
+		}
+		m.setPoint(10);
+		int result = aService.updateBeer(b, m);
+		if(result > 0) { // 성공
+			session.setAttribute("alertMsg", "성공적으로 게시글이 업데이트 되었습니다.");
+			return "redirect:beerAd.ad?category=2";
+			
+		}else { // 실패
+			model.addAttribute("errorMsg", "게시글 업데이트 실패!");
+			return "common/errorPage";
+		}
+	}
 	
 	
 	
@@ -146,24 +195,7 @@ public class AdministerController {
 		}
 		return "administer/noticeAdmini";
 	}
-	@RequestMapping("enrollBeer.ad")
-	public String enrollBeer(Beers b, Member m, MultipartFile upfile, HttpSession session, Model model) {
-		String changeName = saveFile(session, upfile);
-		
-		b.setOriginName(upfile.getOriginalFilename());
-		b.setChangeName("resources/uploadFiles/" + changeName);
-		
-		int result = aService.insertBeer(b, m);
-		
-		if(result > 0) { // 성공
-			session.setAttribute("alertMsg", "성공적으로 게시글이 등록되었습니다.");
-			return "redirect:beerAd.ad";
-			
-		}else { // 실패
-			model.addAttribute("errorMsg", "게시글 작성 실패!");
-			return "common/errorPage";
-		}
-	}
+	
 	@RequestMapping("enrollNotice.ad")
 	public String enrollNotice(Notice n, HttpSession session, Model model) {
 		int result = aService.insertNotice(n);
