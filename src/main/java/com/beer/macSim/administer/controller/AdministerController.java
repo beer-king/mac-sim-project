@@ -106,7 +106,17 @@ public class AdministerController {
 		}
 	}
 	
-	
+	@ResponseBody
+	@RequestMapping("processReport.ad")
+	public String processReport(@RequestParam(value = "list[]") ArrayList<String> list, String Astatus) {
+		Batch b = BatchProcess.getBatch(list, Astatus, null);
+		int result = aService.updateBatchReport(b);
+		if(result > 0) {
+			return "success";
+		}else {
+			return "fail";
+		}
+	}
 	
 	
 	

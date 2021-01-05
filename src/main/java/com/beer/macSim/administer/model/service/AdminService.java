@@ -48,4 +48,5 @@ public interface AdminService {
 	Event selectEventOne(String evNo);
 	
 	int updateBeer(Beers b, Member m);
+	int updateBatchReport(Batch b);
 }
