@@ -18,6 +18,7 @@ public class NoComment {
 	 private int ncoNo;
 	 private int noticeNo;
 	 private String userNo;
+	 private String userId;
 	 private String ncoComment;
 	 private String ncoDate;
 	 private int status;

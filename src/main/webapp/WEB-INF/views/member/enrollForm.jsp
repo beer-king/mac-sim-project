@@ -121,7 +121,7 @@
         			}else{
         				//사용가능
         				alert("사용가능한 아이디입니다.")
-        				$('#entollBtn').removeAttr('disabled');
+        				$('#enrollBtn').removeAttr("disabled");
         			}
         			
         		},error:function(){

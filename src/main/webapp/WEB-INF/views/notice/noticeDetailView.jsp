@@ -84,6 +84,7 @@
 	        <thead>
 	            <tr>
 	                <th colspan="3">
+	                	<input type="hidden" value="${loginUser.userNo }" id="userNo">
 	                    <textarea class="form-control" name="ncoComment" id="content" cols="55" rows="2" style="resize:none; width:90%; margin-left: 60px;"></textarea>
 	                </th>
 	                <th style="vertical-align: middle; width: 20%;" >
@@ -112,30 +113,34 @@
 		function addReply(){
 			// 작성된 댓글내용, 게시글 번호, 로그인한 사용자의 아이디
 			if($("#content").val().trim().length > 0){
-													   
-				$.ajax({
-					url:"ninsert.bo",
-					data:{
-						ncoComment:$("#content").val(),
-						noticeNo:${n.noticeNo},
-						userNo:"${loginUser.userNo}"
-					},
-					success:function(result){
-
-						if(result == "success"){
-
-							$("#content").val(""); 
-							selectNcommentList(); 
-							
-						}
-						
-					},error:function(){
-						console.log("댓글 작성용 ajax 통신 실패");
-					}
-				});
 				
-			}
+				if(!"${loginUser}"){
+					alert("로그인하고 이용해주세요~");
+					$("#content").val(""); 
+				}else{
+					$.ajax({
+						url:"ninsert.bo",
+						data:{
+							ncoComment:$("#content").val(),
+							noticeNo:${n.noticeNo},
+							userNo:"${loginUser.userNo}"
+						},
+						success:function(result){
+							
+							if(result == "success"){
+	
+								$("#content").val(""); 
+								selectNcommentList(); 
+							}
+							
+						},error:function(){
+							console.log("댓글 작성용 ajax 통신 실패");
+						}
+					});
+					
+				}
 		
+			}
 		
 		}
 		function selectNcommentList(){
@@ -145,7 +150,7 @@
 				data:{nno:${n.noticeNo}},
 				success:function(list){
 					
-
+					console.log(list);
 					$("#rcount").text(list.length); 
 
 					var value=""

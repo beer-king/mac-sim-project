@@ -16,6 +16,7 @@
 		<result column="nco_no" property="ncoNo"/>
 		<result column="notice_no" property="noticeNo"/>
 		<result column="user_no" property="userNo"/>
+		<result column="user_id" property="userId"/>
 		<result column="nco_comment" property="ncoComment"/>
 		<result column="nco_date" property="ncoDate"/>
 		<result column="status" property="status"/>
@@ -73,10 +74,10 @@
 		     , user_id
 		     , nco_comment
 		     , to_char(nco_date, 'YYYY-MM-DD') "nco_date"
-		  from ncomments
+		  from ncomments n
 		  join member using(user_no)
-		 where notice_no = #{nno}
-		   and ncomments.status = 0
+		 where n.notice_no = #{nno}
+		   and n.status = 0
 		 order
 		    by nco_no desc
 	</select>
@@ -90,6 +91,7 @@
 		      , notice_no
 		      , user_no
 		      , nco_comment
+		      , nco_date
 		    )
 		     values
 		     (
@@ -97,6 +99,7 @@
 		     , #{noticeNo}
 		     , #{userNo}
 		     , #{ncoComment}
+		     , sysdate
 		     )
 	</insert>
 	 
