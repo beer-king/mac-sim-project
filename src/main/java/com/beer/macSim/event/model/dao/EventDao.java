@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.beer.macSim.common.model.vo.PageInfo;
 import com.beer.macSim.event.model.vo.Attachment;
+import com.beer.macSim.event.model.vo.EvReply;
 import com.beer.macSim.event.model.vo.Event;
 import com.beer.macSim.event.model.vo.EventAttendee;
 import com.beer.macSim.event.model.vo.EventSearch;
@@ -82,5 +83,13 @@ public class EventDao {
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
 		return (ArrayList)sqlSession.selectList("eventMapper.searchEventList", map, rowBounds);
+	}
+	
+	public ArrayList<EvReply> selectEvReplyList(SqlSessionTemplate sqlSession, int eno){
+		return (ArrayList)sqlSession.selectList("eventMapper.selectEvReplyList", eno);
+	}
+	
+	public int insertEvReply(SqlSessionTemplate sqlSession, EvReply er) {
+		return sqlSession.insert("eventMapper.insertEvReply", er);
 	}
 }

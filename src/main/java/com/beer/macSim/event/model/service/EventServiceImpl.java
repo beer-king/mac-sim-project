@@ -45,14 +45,12 @@ public class EventServiceImpl implements EventService {
 
 	@Override
 	public ArrayList<EvReply> selectEvReplyList(int eno) {
-		// TODO Auto-generated method stub
-		return null;
+		return evDao.selectEvReplyList(sqlSession, eno);
 	}
 
 	@Override
 	public int insertEvReply(EvReply er) {
-		// TODO Auto-generated method stub
-		return 0;
+		return evDao.insertEvReply(sqlSession, er);
 	}
 
 
