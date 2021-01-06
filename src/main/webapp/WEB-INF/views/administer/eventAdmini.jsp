@@ -277,13 +277,13 @@
 						
 						<div class="paging-area" align="center">
 							<c:if test="${ pi.currentPage ne 1}">
-								<a href="beerAd.ad?category=2&currentPage=${ pi.currentPage-1 }">이전</a>
+								<a href="eventAd.ad?status=${status }&currentPage=${ pi.currentPage-1 }">이전</a>
 							</c:if>
 							<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-								<a href="beerAd.ad?category=2&currentPage=${ p }">${ p }</a>
+								<a href="eventAd.ad?status=${status }&currentPage=${ p }">${ p }</a>
 							</c:forEach>
 							<c:if test="${pi.maxPage > 0 and pi.maxPage ne pi.currentPage}">
-								<a href="beerAd.ad?category=2&currentPage=${ pi.currentPage+1 }">다음</a>
+								<a href="eventAd.ad?status=${status }&currentPage=${ pi.currentPage+1 }">다음</a>
 							</c:if>
 						</div>
 					</c:otherwise>

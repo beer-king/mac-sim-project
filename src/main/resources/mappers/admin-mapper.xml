@@ -376,5 +376,62 @@
 			</foreach>
   	</update>
   	
+  	<select id="selectPnocurrent" resultType="_int">
+		select pno
+		from group_buy
+		where pno = (SELECT last_number 
+		FROM user_sequences
+		WHERE sequence_name = 'SEQ_PNO') - 1
+  	</select>
+  	
+  	<insert id="insertAttachment" parameterType="Attachment">
+  		insert
+  			into attachment
+  			(
+  				    att_no
+  				  , origin_name
+  				  , change_name
+  				  , pno
+  			)
+  			values
+  			(
+  				  seq_att_no.nextval
+  				, #{originName}
+  				, #{changeName}
+  				, SEQ_PNO.CURRVAL
+  			)
+  	</insert>
+  	
+  	<insert id="insertGB" parameterType="GroupBuy">
+  		insert
+  			into group_buy
+  			(
+  				  pno
+  				, user_no
+  				, pname
+  				, price
+  				, content
+  				, gb_start
+  				, gb_end
+  				, gb_point
+  				, gb_thumb
+  				, limit_no
+  			)
+  			values
+  			(
+  				  seq_pno.nextval
+  				, #{userNo}
+  				, #{gbName}
+  				, #{price}
+  				, #{content}
+  				, #{gbStart}
+  				, #{gbEnd}
+  				, #{gbPoint}
+  				, #{gbThumb}
+  				, #{limitNo}
+  			)
+  			
+  	</insert>
+  	
   
 </mapper>
