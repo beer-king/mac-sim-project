@@ -13,7 +13,9 @@ import com.beer.macSim.administer.model.vo.Report;
 import com.beer.macSim.administer.model.vo.SelectData;
 import com.beer.macSim.common.model.vo.PageInfo;
 import com.beer.macSim.data.model.vo.Beers;
+import com.beer.macSim.event.model.vo.Attachment;
 import com.beer.macSim.event.model.vo.Event;
+import com.beer.macSim.groupBuy.model.vo.GroupBuy;
 import com.beer.macSim.member.model.vo.Member;
 import com.beer.macSim.notice.model.vo.Notice;
 
@@ -139,6 +141,21 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public int updateBatchReport(Batch b) {
 		return aDao.updateBatchReport(sqlSession, b);
+	}
+
+	@Override
+	public int selectPnocurrent() {
+		return aDao.selectPnocurrent(sqlSession);
+	}
+
+	@Override
+	public int enrollGB(GroupBuy GB) {
+		return  aDao.enrollGB(sqlSession, GB);
+	}
+
+	@Override
+	public int enrollAT(Attachment a1, Attachment a2) {
+		return aDao.enrollAT(sqlSession, a1, a2);
 	}
 	
 	

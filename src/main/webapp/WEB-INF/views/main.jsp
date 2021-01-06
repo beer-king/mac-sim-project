@@ -135,7 +135,7 @@
 			<br>
 			<a href="beerAd.ad">맥주관리</a>
 			<br>
-			<a href="#">공구관리</a>
+			<a href="GB.ad">공구관리</a>
 			<br>
 			<a href="eventAd.ad">이벤트관리</a>
 			<br>
