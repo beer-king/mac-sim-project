@@ -88,4 +88,8 @@ public class EventDao {
 	public ArrayList<EvReply> selectEvReplyList(SqlSessionTemplate sqlSession, int eno){
 		return (ArrayList)sqlSession.selectList("eventMapper.selectEvReplyList", eno);
 	}
+	
+	public int insertEvReply(SqlSessionTemplate sqlSession, EvReply er) {
+		return sqlSession.insert("eventMapper.insertEvReply", er);
+	}
 }

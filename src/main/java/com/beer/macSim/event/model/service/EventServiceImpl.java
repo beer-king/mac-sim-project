@@ -50,8 +50,7 @@ public class EventServiceImpl implements EventService {
 
 	@Override
 	public int insertEvReply(EvReply er) {
-		// TODO Auto-generated method stub
-		return 0;
+		return evDao.insertEvReply(sqlSession, er);
 	}
 
 

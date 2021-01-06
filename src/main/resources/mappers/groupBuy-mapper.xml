@@ -89,4 +89,5 @@
   		   from attachment
   		  where pno = ${gno}  
 	</select>
+	
 </mapper>

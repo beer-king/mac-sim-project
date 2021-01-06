@@ -188,4 +188,18 @@ public class EventController {
 		
 		return new Gson().toJson(list);
 	}
+	
+	// 댓글 작성용
+	@ResponseBody
+	@RequestMapping("rinsert.ev")
+	public String insertEvReply(EvReply er) {
+		
+		int result = evService.insertEvReply(er);
+		
+		if(result>0) {
+			return "success";
+		}else {
+			return "fail";
+		}
+	}
 }

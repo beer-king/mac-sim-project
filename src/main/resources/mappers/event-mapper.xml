@@ -260,4 +260,26 @@
 		 order
 		    by ev_rpno desc
   	</select>
+  	
+  	<insert id="insertEvReply" parameterType="EvReply">
+		insert
+		  into ev_reply
+		  (
+		    ev_rpno
+		  , ev_no
+		  , user_no
+		  , ev_rpcontent
+		  , rp_date
+		  , status
+		  )
+		  values
+		  (
+		    seq_ev_rpno.nextval
+		  , #{evNo}
+		  , #{userNo}
+		  , #{evRpContent}
+		  , sysdate
+		  , 'Y'
+		  )
+	</insert>
 </mapper>

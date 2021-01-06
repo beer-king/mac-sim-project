@@ -172,12 +172,18 @@
         			$.ajax({
         				url:"rinsert.ev",
         				data:{
-        					replyContent:$("#content").val(),
-        					refEventNo:${ev.evNo},
-        					replyWriter:"${loginUser.userId}"
+        					evRpContent:$("#content").val(),
+        					evNo:${ev.evNo},
+        					userNo:"${loginUser.userNo}"
         				},
         				success:function(result){
         					
+        					if(result == "success"){
+        						//textarea 초기화
+        						$("#content").val("");
+        						// 댓글 리스트 조회하는 ajax호출
+        						selectReplyList();
+        					}
         				},error:function(){
         					console.log("댓글 작성용 ajax통신 실패");
         				}
@@ -208,7 +214,7 @@
         				$("#replyArea tbody").html(value);
         				
         			},error:function(){
-        				console.log("댓글 작성용 ajax 통신 실패");
+        				console.log("댓글 조회용 ajax 통신 실패");
         			}
         		})
         	}
