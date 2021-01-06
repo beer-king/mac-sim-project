@@ -92,4 +92,8 @@ public class EventDao {
 	public int insertEvReply(SqlSessionTemplate sqlSession, EvReply er) {
 		return sqlSession.insert("eventMapper.insertEvReply", er);
 	}
+	
+	public int increaseApplyNo(SqlSessionTemplate sqlSession, EventAttendee ea) {
+		return sqlSession.update("eventMapper.increaseApplyNo", ea);
+	}
 }

@@ -33,6 +33,7 @@ public interface EventService {
 	// 6. 이벤트 신청하기용 서비스
 	int decreasePoint(EventAttendee ea);
 	int applyEvent(EventAttendee ea);
+	int increaseApplyNo(EventAttendee ea);
 	
 	// 7. 이벤트 검색결과 리스트용 서비스
 	int searchEventCount(EventSearch es);
