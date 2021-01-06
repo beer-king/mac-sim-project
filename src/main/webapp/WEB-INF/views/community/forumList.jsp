@@ -63,8 +63,8 @@
 	                <div>
 	                  <c:choose>
 	                    <c:when test="${ !empty loginUser && loginUser.userId eq f.userId }">
-		                  <span>수정</span>
-		                  <span>삭제</span>
+		                <!-- <span>수정</span>
+		                  <span>삭제</span> -->  
 		                </c:when>
 		                <c:otherwise>
 		                  <span>신고</span>

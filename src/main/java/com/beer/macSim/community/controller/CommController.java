@@ -181,7 +181,6 @@ public class CommController {
 			return "common/errorPage";
 		}
 		
-		
 	}
 	
 	
@@ -292,6 +291,48 @@ public class CommController {
 		}
 		
 	}
+	
+	// 포럼 수정
+	@RequestMapping("updateForm.fo")
+	public String updateFormForum(int forNo, Model model) {
+
+		Forum f = cService.updateFormForum(forNo);
+		System.out.println(f);
+		
+		if(f != null) { // 성공
+			model.addAttribute("f", f);
+			return "community/editForumUpdate";
+		}else { // 실패
+			model.addAttribute("errorMsg", "포럼 수정 페이지를 불러올 수 없습니다.");
+			return "common/errorPage";
+		}
+		
+	}
+	
+	@RequestMapping("update.fo")
+	public String updateForum(Forum f, MultipartFile upfile, HttpSession session, Model model) {
+		
+		if( !upfile.getOriginalFilename().equals("") ) {
+			
+			String changeName = saveFile(session, upfile);
+			
+			f.setForOriginSrc(upfile.getOriginalFilename());
+			f.setForChangeSrc(changeName);
+			
+		}
+		
+		int result = cService.updateForum(f);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", "수정되었습니다!");
+			return "redirect:list.fo";
+		}else {
+			model.addAttribute("errorMsg", "수정 실패!");
+			return "common/errorPage";
+		}
+		
+	}
+	
 	
 	// 포럼에 댓글 수정시 업데이트
 	@ResponseBody

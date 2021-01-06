@@ -144,4 +144,14 @@ public class CommServiceImpl  implements CommService{
 		return cDao.updateComm(sqlSession, c);
 	}
 
+	@Override
+	public Forum updateFormForum(int forNo) {
+		return cDao.updateFormForum(sqlSession, forNo);
+	}
+
+	@Override
+	public int updateForum(Forum f) {
+		return cDao.updateForum(sqlSession, f);
+	}
+
 }

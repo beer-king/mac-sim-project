@@ -44,6 +44,12 @@ public interface CommService {
 	// 포럼 작성용 서비스
 	int insertForum(Forum fo);
 	
+	// 포럼 수정
+	Forum updateFormForum(int forNo);
+	int updateForum(Forum f);
+	
+	// 포럼 삭제
+	
 	// 4. 포럼 댓글/대댓글 조회
 	ArrayList<Reply> selectReplyList(int fno);
 	ArrayList<SubReply> selectSubReplyList(int coNo);

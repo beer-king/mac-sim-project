@@ -386,6 +386,35 @@
 		   and user_no = #{ userNo }
 	</update>
 	
+	<select id="updateFormForum" resultMap="forResultSet" parameterType="_int">
+		select
+		       for_no
+		     , for_origin_src
+		     , for_change_src
+		     , for_title
+		     , for_info
+		     , for_createdate
+		     , for_count
+		     , for_comment
+		     , for_status
+		     , user_no
+		     , user_id
+		  from FORUM
+		  join MEMBER using(user_no)
+		 where for_no = #{ forNo }
+		   and for_status = 0
+	</select>
+	
+	<update id="updateForum" parameterType="Forum">
+		update forum
+		   set for_origin_src = #{ forOriginSrc }
+		     , for_change_src = #{ forChangeSrc }
+		     , for_title = #{ forTitle }
+		     , for_info = #{ forInfo }
+		 where for_no = #{ forNo }
+		   and user_no = #{ userNo }
+	</update>
+	
 	<!-- 
 	<select id="" resultMap="" parameterType="">
 		select

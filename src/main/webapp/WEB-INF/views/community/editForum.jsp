@@ -89,6 +89,11 @@
     </main>
 </body>
 <script defer>
+	const hiddenBtn = document.querySelector("#hiddenBtn");
+	const fileBtn = document.querySelector("#fileBtn");
+	const fileLabel = document.querySelector("#fileLabel");
+	const fileImg = document.querySelector("#fileImg");
+	
     fileBtn.addEventListener("click", () => {
       hiddenBtn.click();
     });

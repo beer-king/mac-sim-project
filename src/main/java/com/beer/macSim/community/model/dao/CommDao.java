@@ -126,6 +126,14 @@ public class CommDao {
 	public int updateComm(SqlSessionTemplate sqlSession, Community c) {
 		return sqlSession.update("commMapper.updateComm", c);
 	}
+
+	public Forum updateFormForum(SqlSessionTemplate sqlSession, int forNo) {
+		return sqlSession.selectOne("commMapper.updateFormForum", forNo);
+	}
+
+	public int updateForum(SqlSessionTemplate sqlSession, Forum f) {
+		return sqlSession.update("commMapper.updateForum", f);
+	}
 		
 
 }
