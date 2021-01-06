@@ -64,7 +64,7 @@
 	              	<c:choose>
 	              	  <c:when test="${ !empty loginUser && loginUser.userId eq c.userId }">
 		                <span onclick="location.href='updateForm.cm?commNo=${c.commNo}'">수정</span>
-		                <span>삭제</span>
+		                <span onclick="location.href='delete.cm?commNo=${c.commNo}'">삭제</span>
 		              </c:when>
 		              <c:otherwise>
 		                <span>신고</span>

@@ -183,6 +183,21 @@ public class CommController {
 		
 	}
 	
+	// 커뮤니티 삭제
+	@RequestMapping("delete.cm")
+	public String deleteComm(int commNo, HttpSession session, Model model) {
+		
+		int result = cService.deleteComm(commNo);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", "글이 삭제 되었습니다ㅠㅠ");
+			return "redirect:list.cm?cate=0";
+		}else {
+			model.addAttribute("errorMsg", "수정 실패!");
+			return "common/errorPage";
+		}
+		
+	}
 	
 	// 포럼 리스트 조회
 	@RequestMapping("list.fo")
@@ -325,6 +340,22 @@ public class CommController {
 		
 		if(result > 0) {
 			session.setAttribute("alertMsg", "수정되었습니다!");
+			return "redirect:list.fo";
+		}else {
+			model.addAttribute("errorMsg", "수정 실패!");
+			return "common/errorPage";
+		}
+		
+	}
+	
+	// 포럼 삭제
+	@RequestMapping("delete.fo")
+	public String deleteForum(int forNo, HttpSession session, Model model) {
+		
+		int result = cService.deleteForum(forNo);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", "포럼이 삭제 되었습니다ㅠㅠ");
 			return "redirect:list.fo";
 		}else {
 			model.addAttribute("errorMsg", "수정 실패!");

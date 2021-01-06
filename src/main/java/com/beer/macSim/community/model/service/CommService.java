@@ -23,6 +23,7 @@ public interface CommService {
 	int updateComm(Community c);
 	
 	// 커뮤니티 삭제
+	int deleteComm(int commNo);
 	
 	// 2. 커뮤니티 좋아요 조회
 	ArrayList<CommLikes> selectCommLikes(int userNo);
@@ -49,6 +50,7 @@ public interface CommService {
 	int updateForum(Forum f);
 	
 	// 포럼 삭제
+	int deleteForum(int forNo);
 	
 	// 4. 포럼 댓글/대댓글 조회
 	ArrayList<Reply> selectReplyList(int fno);

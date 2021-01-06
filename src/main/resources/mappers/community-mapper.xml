@@ -415,6 +415,18 @@
 		   and user_no = #{ userNo }
 	</update>
 	
+	<update id="deleteComm" parameterType="_int">
+		update community
+		   set comm_status = 3
+		 where comm_no = #{ commNo }
+	</update>
+	
+	<update id="deleteForum" parameterType="_int">
+		update forum
+		   set for_status = 3
+		 where for_no = #{ forNo }
+	</update>
+	
 	<!-- 
 	<select id="" resultMap="" parameterType="">
 		select

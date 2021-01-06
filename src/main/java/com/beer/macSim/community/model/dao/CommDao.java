@@ -134,6 +134,14 @@ public class CommDao {
 	public int updateForum(SqlSessionTemplate sqlSession, Forum f) {
 		return sqlSession.update("commMapper.updateForum", f);
 	}
+
+	public int deleteComm(SqlSessionTemplate sqlSession, int commNo) {
+		return sqlSession.update("commMapper.deleteComm", commNo);
+	}
+
+	public int deleteForum(SqlSessionTemplate sqlSession, int forNo) {
+		return sqlSession.update("commMapper.deleteForum", forNo);
+	}
 		
 
 }
