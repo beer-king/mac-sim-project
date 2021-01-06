@@ -25,6 +25,7 @@ import com.beer.macSim.community.model.vo.Forum;
 import com.beer.macSim.community.model.vo.Reply;
 import com.beer.macSim.community.model.vo.SubReply;
 import com.beer.macSim.member.model.vo.Member;
+import com.google.gson.Gson;
 
 @Controller
 public class CommController {
@@ -321,6 +322,66 @@ public class CommController {
 		}else {
 			return "F";
 		}
+		
+	}
+	
+	// 포럼에 댓글 작성
+	@ResponseBody
+	@RequestMapping(value="replyInsert.fo", produces="application/json; charset=utf-8")
+	public String replyInsert(HttpSession session,int fno, String coContent) {
+		
+		Member m = (Member)session.getAttribute("loginUser");
+
+		//System.out.println(m);
+		//System.out.println(fno);
+				
+		Reply r = new Reply();
+		r.setForNo(fno); 			// 무슨 포럼에 대한 댓글인지
+		r.setUserNo(m.getUserNo());	// 댓글 작성자
+		r.setCoContent(coContent);	// insert하려는 댓글
+		
+		//System.out.println(r);
+		int result = cService.replyInsert(r);
+		
+		if(result > 0) {
+			
+			ArrayList<Reply> rNew = cService.selectReplyOne(r);
+			//System.out.println(rNew);
+			String json = new Gson().toJson(rNew);
+			return json;
+
+		}else {
+			return "F";
+		}		
+		
+	}
+	
+	// 포럼에 대댓글 작성
+	@ResponseBody
+	@RequestMapping(value="subReplyInsert.fo", produces="application/json; charset=utf-8")
+	public String subReplyInsert(HttpSession session, int fno, String cno, String sId, String coContent) {
+		
+		Member m = (Member)session.getAttribute("loginUser");
+		
+		Reply r = new Reply();
+		r.setForNo(fno);
+		r.setCoNo(Integer.parseInt(cno));
+		r.setUserId(sId);
+		r.setCoContent(coContent);
+		
+		//System.out.println(r);
+		int result = cService.subReplyInsert(r);
+		
+		if(result > 0) {
+			
+			ArrayList<SubReply> rNew = cService.selectSubReplyOne(r);
+			//System.out.println(rNew);
+			String json = new Gson().toJson(rNew);
+			return json;
+			
+		}else {
+			return "F";
+		}		
 		
 	}
 	

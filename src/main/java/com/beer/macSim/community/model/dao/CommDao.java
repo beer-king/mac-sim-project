@@ -96,6 +96,26 @@ public class CommDao {
 	public int selectIsLike(SqlSessionTemplate sqlSession, CommLikes cl) {
 		return sqlSession.selectOne("commMapper.selectIsLike", cl);
 	}
+
+	public int replyInsert(SqlSessionTemplate sqlSession, Reply r) {
+		int i = sqlSession.insert("commMapper.replyInsert", r);
+		int j = sqlSession.update("commMapper.replyIncrease", r);
+		return i*j;
+	}
+
+	public int subReplyInsert(SqlSessionTemplate sqlSession, Reply r) {
+		int i = sqlSession.insert("commMapper.subReplyInsert", r);
+		int j = sqlSession.update("commMapper.replyIncrease", r);
+		return i*j;
+	}
+
+	public ArrayList<Reply> selectReplyOne(SqlSessionTemplate sqlSession, Reply r) {
+		return (ArrayList)sqlSession.selectList("commMapper.selectReplyOne", r);
+	}
+
+	public ArrayList<SubReply> selectSubReplyOne(SqlSessionTemplate sqlSession, Reply r) {
+		return (ArrayList)sqlSession.selectList("commMapper.selectSubReplyOne", r);
+	}
 		
 
 }

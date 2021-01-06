@@ -114,4 +114,24 @@ public class CommServiceImpl  implements CommService{
 		return cDao.selectIsLike(sqlSession, cl);
 	}
 
+	@Override
+	public int replyInsert(Reply r) {
+		return cDao.replyInsert(sqlSession, r);
+	}
+
+	@Override
+	public int subReplyInsert(Reply r) {
+		return cDao.subReplyInsert(sqlSession, r);
+	}
+
+	@Override
+	public ArrayList<Reply> selectReplyOne(Reply r) {
+		return cDao.selectReplyOne(sqlSession, r);
+	}
+
+	@Override
+	public ArrayList<SubReply> selectSubReplyOne(Reply r) {
+		return cDao.selectSubReplyOne(sqlSession, r);
+	}
+
 }

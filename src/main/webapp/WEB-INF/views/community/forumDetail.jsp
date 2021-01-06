@@ -93,17 +93,17 @@
                   type="text"
                   placeholder="내용을 입력해주세요"
                 />
-                <button>등록</button>
+                <button type="button" onclick="replyInsert(${fo.forNo});">등록</button>
               </div>
             </div>
             
             <!-- 댓글 -->
-            <ul class="fode__co-items">
+            <ul class="fode__co-items" id="comment-top-wrapper">
               
               <c:forEach var="r" items="${ rpList }">
 	              <li class="co-contents comment-box${r.coNo}">
 	                <div class="fode__co-info">
-	                  <p onclick="replayTo('${ r.userId }');">${ r.userId }</p>
+	                  <p onclick="replyTo('${ r.userId }', ${ r.coNo });">${ r.userId }</p>
 	                  <div>
 	                    <c:choose>
 	                      <c:when test="${ loginUser.userNo eq r.userNo }">
@@ -121,7 +121,7 @@
 	                
 	                
 	                <!-- 대댓글 -->
-	                <ul class="fode__re-items">
+	                <ul class="fode__re-items" id="re-comment-top-wrapper${r.coNo}">
 	                
 	                  <c:forEach var="sr" items="${ r.subReply }">
 		                  <li class="co-contents recomment-box${sr.recoNo}">
@@ -298,13 +298,16 @@
 	  }
   }
   
+  
   // 대댓글 작성 하려고 막 클릭 막 그랬어 --------------
   const coTitle = document.querySelector("#comment-box");
-  const replayTo = (userId) => {
+  const replyTo = (userId, coNo) => {
     //   console.log(userId);
     coTitle.innerHTML =
-      "대댓글 작성 <b>@" +
+      "대댓글 작성 <b>@</b><b id='sub-reply-id'>" +
       userId +
+      "</b><b id='sub-reply-cono' hidden>" +
+      coNo + 
       "</b><button class='cancle-reply-btn' onclick='cancleReply();'>x</button>";
     window.scrollTo(0, 420);
     // window.scrollTo("#comment-top");
@@ -315,6 +318,170 @@
   const cancleReply = () => {
     coTitle.innerHTML = "댓글작성";
   };
+  
+  
+  // 포럼 댓글 추가된거 화면에 뿌려주기
+  const createReplyTag = (v) => {
+	console.log(v);
+	  
+    const commentBox = document.createElement('li');
+      commentBox.classList.add('co-contents');
+      commentBox.classList.add('comment-box'+v.coNo);
+	    
+	const commentInfo = document.createElement('div');
+	  commentInfo.className = 'fode__co-info';
+	  
+	const userIdTag = document.createElement('p');
+      userIdTag.onclick = () => {replyTo(v.userId, v.coNo)};
+      userIdTag.innerText = v.userId;
+    
+    const selectBtn = document.createElement('div');
+      if('${loginUser.userNo}' === v.userNo+''){
+        const updateBtn = document.createElement('span');
+          updateBtn.onclick = () => {updateModalOpen(v.coNo, 0, v.coContent)};
+          updateBtn.innerText = "수정";
+          selectBtn.appendChild(updateBtn);
+        const deleteBtn = document.createElement('span');
+          deleteBtn.onclick = () => {deleteModalOpen(v.coNo, 0)};
+          deleteBtn.innerText = "삭제";
+          selectBtn.appendChild(deleteBtn);
+      }else{
+        const reportBtn = document.createElement('span');
+          reportBtn.innerText = "신고";
+          selectBtn.appendChild(reportBtn);
+      }
+    
+    const dateTag = document.createElement('small');
+      dateTag.innerText = v.coCreateDate;
+    
+    const contentBox = document.createElement('div');
+      contentBox.classList.add('fode__co-con');
+      contentBox.classList.add('comment-content'+v.coNo);
+      contentBox.innerText = v.coContent;
+      
+    // 추가추가
+    commentInfo.appendChild(userIdTag);
+    commentInfo.appendChild(selectBtn);
+
+    commentBox.appendChild(commentInfo);
+    commentBox.appendChild(contentBox);
+
+    const commentWrapper = document.querySelector("#comment-top-wrapper");
+      commentWrapper.prepend(commentBox);
+  }
+  
+  // 포럼 대댓글 추가된거 화면에 뿌려주기
+  const createSubReplyTag = (v) => {
+	console.log(v);
+	  
+    const commentBox = document.createElement('li');
+      commentBox.classList.add('co-contents');
+      commentBox.classList.add('recomment-box'+v.recoNo);
+	    
+	const commentInfo = document.createElement('div');
+	  commentInfo.className = 'fode__co-info';
+	  
+	const userIdTag = document.createElement('p');
+      userIdTag.innerText = v.userId;
+    
+    const selectBtn = document.createElement('div');
+      if('${loginUser.userNo}' === v.userNo+''){
+        const updateBtn = document.createElement('span');
+          updateBtn.onclick = () => {updateModalOpen(v.recoNo, 1, v.recoContent)};
+          updateBtn.innerText = "수정";
+          selectBtn.appendChild(updateBtn);
+        const deleteBtn = document.createElement('span');
+          deleteBtn.onclick = () => {deleteModalOpen(v.recoNo, 1)};
+          deleteBtn.innerText = "삭제";
+          selectBtn.appendChild(deleteBtn);
+      }else{
+        const reportBtn = document.createElement('span');
+          reportBtn.innerText = "신고";
+          selectBtn.appendChild(reportBtn);
+      }
+    
+    const dateTag = document.createElement('small');
+      dateTag.innerText = v.recoCreateDate;
+    
+    const contentBox = document.createElement('div');
+      contentBox.classList.add('fode__co-con');
+      contentBox.classList.add('recomment-content'+v.recoNo);
+      contentBox.innerText = v.recoContent;
+      
+    // 추가추가
+    selectBtn.appendChild(dateTag);
+
+    commentInfo.appendChild(userIdTag);
+    commentInfo.appendChild(selectBtn);
+
+    commentBox.appendChild(commentInfo);
+    commentBox.appendChild(contentBox);
+
+    const commentWrapper = document.querySelector("#re-comment-top-wrapper"+v.coNo);
+      commentWrapper.prepend(commentBox);
+  }
+  
+  // 댓글/대댓글 작성
+  const replyInsert = (forNo) => {
+	  
+	  const inputContent = document.querySelector("#co-input-box");
+	  const supId = document.querySelector("#sub-reply-id");
+	  //console.log(supId.innerText);
+	  
+	  console.log(supId, "추가시작");
+	  if(supId === null){ // 댓글 추가
+		  
+		  axios.get("replyInsert.fo", {
+			  params:{
+				  fno:forNo,
+				  coContent:inputContent.value,
+			  }
+		  }).then((res) => {
+			  console.log("추가됨");
+			  if(res.data){
+				  const data = res.data[0];
+				  //alert('댓글등록 성공!');
+				  
+				  // 본격적으로 추가를 해보자!!
+				  createReplyTag(data);
+				  inputContent.value = "";
+				  
+			  }else{
+				  alert('댓글 등록 실패');
+			  }
+			  
+		  })
+		  
+	  }else if(supId !== null){ // 대댓글 추가
+		  
+		  const subReplyCoNo = document.querySelector("#sub-reply-cono");
+		  
+		  axios.get("subReplyInsert.fo", {
+			  params:{
+				  fno:forNo,
+				  cno:subReplyCoNo.innerText,
+				  sId:supId.innerText,
+				  coContent:inputContent.value,			  
+			  }
+		  }).then((res) => {
+			  console.log("추가됨");
+			  
+			  if(res.data){
+				  const data = res.data[0];
+	
+				  // 아아으아 또해보자!!
+				  createSubReplyTag(data);
+				  inputContent.value = "";
+				  
+			  }else{
+				  alert('댓글 등록 실패');
+			  }
+			  
+		  })
+		  
+	  }
+	  
+  }
   
 </script>
 
