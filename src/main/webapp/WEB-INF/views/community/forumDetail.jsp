@@ -98,12 +98,12 @@
             </div>
             
             <!-- 댓글 -->
-            <ul class="fode__co-items">
+            <ul class="fode__co-items" id="comment-top-wrapper">
               
               <c:forEach var="r" items="${ rpList }">
 	              <li class="co-contents comment-box${r.coNo}">
 	                <div class="fode__co-info">
-	                  <p onclick="replayTo('${ r.userId }', ${ r.coNo });">${ r.userId }</p>
+	                  <p onclick="replyTo('${ r.userId }', ${ r.coNo });">${ r.userId }</p>
 	                  <div>
 	                    <c:choose>
 	                      <c:when test="${ loginUser.userNo eq r.userNo }">
@@ -301,7 +301,7 @@
   
   // 대댓글 작성 하려고 막 클릭 막 그랬어 --------------
   const coTitle = document.querySelector("#comment-box");
-  const replayTo = (userId, coNo) => {
+  const replyTo = (userId, coNo) => {
     //   console.log(userId);
     coTitle.innerHTML =
       "대댓글 작성 <b>@</b><b id='sub-reply-id'>" +
@@ -318,6 +318,57 @@
   const cancleReply = () => {
     coTitle.innerHTML = "댓글작성";
   };
+  
+  
+  // 포럼 댓글 추가된거 화면에 뿌려주기
+  const createReplyTag = (v) => {
+	console.log(v);
+	  
+    const commentBox = document.createElement('li');
+      commentBox.classList.add('co-contents');
+      commentBox.classList.add('comment-box'+v.coNo);
+	    
+	const commentInfo = document.createElement('div');
+	  commentInfo.className = 'fode__co-info';
+	  
+	const userIdTag = document.createElement('p');
+      userIdTag.onclick = () => {replyTo(v.userId, v.coNo)};
+      userIdTag.innerText = v.userId;
+    
+    const selectBtn = document.createElement('div');
+      if('${loginUser.userNo}' === v.userNo+''){
+        const updateBtn = document.createElement('span');
+          updateBtn.onclick = () => {updateModalOpen(v.coNo, 0, v.coContent)};
+          updateBtn.innerText = "수정";
+          selectBtn.appendChild(updateBtn);
+        const deleteBtn = document.createElement('span');
+          deleteBtn.onclick = () => {deleteModalOpen(v.coNo, 0)};
+          deleteBtn.innerText = "삭제";
+          selectBtn.appendChild(deleteBtn);
+      }else{
+        const reportBtn = document.createElement('span');
+          reportBtn.innerText = "신고";
+          selectBtn.appendChild(reportBtn);
+      }
+    
+    const dateTag = document.createElement('small');
+      dateTag.innerText = v.coCreateDate;
+    
+    const contentBox = document.createElement('div');
+      contentBox.classList.add('fode__co-con');
+      contentBox.classList.add('comment-content'+v.coNo);
+      contentBox.innerText = v.coContent;
+      
+    // 추가추가
+    commentInfo.appendChild(userIdTag);
+    commentInfo.appendChild(selectBtn);
+
+    commentBox.appendChild(commentInfo);
+    commentBox.appendChild(contentBox);
+
+    const commentWrapper = document.querySelector("#comment-top-wrapper");
+      commentWrapper.prepend(commentBox);
+  }
   
   
   // 댓글/대댓글 작성
@@ -337,9 +388,17 @@
 			  }
 		  }).then((res) => {
 			  console.log("추가됨");
-			  
-			  // 본격적으로 추가를 해보자!!
-			  
+			  if(res.data){
+				  const data = res.data[0];
+				  //alert('댓글등록 성공!');
+				  
+				  // 본격적으로 추가를 해보자!!
+				  createReplyTag(data);
+				  inputContent.value = "";
+				  
+			  }else{
+				  alert('댓글 등록 실패');
+			  }
 			  
 		  })
 		  

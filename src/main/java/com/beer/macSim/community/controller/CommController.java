@@ -25,6 +25,7 @@ import com.beer.macSim.community.model.vo.Forum;
 import com.beer.macSim.community.model.vo.Reply;
 import com.beer.macSim.community.model.vo.SubReply;
 import com.beer.macSim.member.model.vo.Member;
+import com.google.gson.Gson;
 
 @Controller
 public class CommController {
@@ -326,7 +327,7 @@ public class CommController {
 	
 	// 포럼에 댓글 작성
 	@ResponseBody
-	@RequestMapping("replyInsert.fo")
+	@RequestMapping(value="replyInsert.fo", produces="application/json; charset=utf-8")
 	public String replyInsert(HttpSession session,int fno, String coContent) {
 		
 		Member m = (Member)session.getAttribute("loginUser");
@@ -343,7 +344,14 @@ public class CommController {
 		int result = cService.replyInsert(r);
 		
 		if(result > 0) {
-			return "S";
+			
+			ArrayList<Reply> rNew = cService.selectReplyOne(r);
+			System.out.println(rNew);
+			
+			String json = new Gson().toJson(rNew);
+			return json;
+			
+			//return "S";
 		}else {
 			return "F";
 		}		

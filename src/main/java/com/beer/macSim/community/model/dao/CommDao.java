@@ -108,6 +108,10 @@ public class CommDao {
 		int j = sqlSession.update("commMapper.replyIncrease", r);
 		return i*j;
 	}
+
+	public ArrayList<Reply> selectReplyOne(SqlSessionTemplate sqlSession, Reply r) {
+		return (ArrayList)sqlSession.selectList("commMapper.selectReplyOne", r);
+	}
 		
 
 }

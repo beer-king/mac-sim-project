@@ -48,6 +48,9 @@ public interface CommService {
 	int replyInsert(Reply r);
 	int subReplyInsert(Reply r);
 	
+	// 방금 만들어진 댓글 하나 조회해오는 서비스
+	ArrayList<Reply> selectReplyOne(Reply r);
+	
 	// 7. 포럼 댓글 작성용 서비스
 	 
 

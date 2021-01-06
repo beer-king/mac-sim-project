@@ -217,7 +217,7 @@
 		 where for_no = #{ fno }
 		   and co_status = 0
 		  order
-		     by co_createdate asc
+		     by co_createdate desc
 	</select>
 	
 	<select id="selectSubReplyList" resultMap="subReplyResultSet" parameterType="_int" >
@@ -235,7 +235,7 @@
 	   	  where co_no = #{ coNo }
 		    and reco_status = 0
 		  order
-		     by reco_createdate asc
+		     by reco_createdate desc
 	</select>
 	
 	<update id="updateReplyUpdate" parameterType="Reply">
@@ -322,8 +322,26 @@
 		update forum
 		   set for_comment = for_comment + 1
 		 where for_no = #{ forNo }
-		
 	</update>
+	
+	
+	<select id="selectReplyOne" resultMap="replyResultSet" parameterType="Reply">
+		select
+		       FOR_NO
+		     , CO_NO
+		     , CO_CONTENT
+		     , CO_CREATEDATE
+		     , CO_UPDATEDATE
+		     , CO_STATUS
+		     , RECO_COUNT
+		     , USER_NO
+		     , USER_ID
+		  from FCOMMENTS
+		  join MEMBER using(user_no)
+		 where for_no = #{ forNo }
+		   and user_no = #{ userNo }
+		   and co_content = #{ coContent }
+	</select>
 	
 	<!-- 
 	<select id="" resultMap="" parameterType="">
