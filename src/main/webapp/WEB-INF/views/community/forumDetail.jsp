@@ -93,7 +93,7 @@
                   type="text"
                   placeholder="내용을 입력해주세요"
                 />
-                <button>등록</button>
+                <button type="button" onclick="replyInsert(${fo.forNo});">등록</button>
               </div>
             </div>
             
@@ -103,7 +103,7 @@
               <c:forEach var="r" items="${ rpList }">
 	              <li class="co-contents comment-box${r.coNo}">
 	                <div class="fode__co-info">
-	                  <p onclick="replayTo('${ r.userId }');">${ r.userId }</p>
+	                  <p onclick="replayTo('${ r.userId }', ${ r.coNo });">${ r.userId }</p>
 	                  <div>
 	                    <c:choose>
 	                      <c:when test="${ loginUser.userNo eq r.userNo }">
@@ -298,13 +298,16 @@
 	  }
   }
   
+  
   // 대댓글 작성 하려고 막 클릭 막 그랬어 --------------
   const coTitle = document.querySelector("#comment-box");
-  const replayTo = (userId) => {
+  const replayTo = (userId, coNo) => {
     //   console.log(userId);
     coTitle.innerHTML =
-      "대댓글 작성 <b>@" +
+      "대댓글 작성 <b>@</b><b id='sub-reply-id'>" +
       userId +
+      "</b><b id='sub-reply-cono' hidden>" +
+      coNo + 
       "</b><button class='cancle-reply-btn' onclick='cancleReply();'>x</button>";
     window.scrollTo(0, 420);
     // window.scrollTo("#comment-top");
@@ -315,6 +318,53 @@
   const cancleReply = () => {
     coTitle.innerHTML = "댓글작성";
   };
+  
+  
+  // 댓글/대댓글 작성
+  const replyInsert = (forNo) => {
+	  
+	  const inputContent = document.querySelector("#co-input-box");
+	  const supId = document.querySelector("#sub-reply-id");
+	  //console.log(supId.innerText);
+	  
+	  console.log(supId, "추가시작");
+	  if(supId === null){ // 댓글 추가
+		  
+		  axios.get("replyInsert.fo", {
+			  params:{
+				  fno:forNo,
+				  coContent:inputContent.value,
+			  }
+		  }).then((res) => {
+			  console.log("추가됨");
+			  
+			  // 본격적으로 추가를 해보자!!
+			  
+			  
+		  })
+		  
+	  }else if(supId !== null){ // 대댓글 추가
+		  
+		  const subReplyCoNo = document.querySelector("#sub-reply-cono");
+		  
+		  axios.get("subReplyInsert.fo", {
+			  params:{
+				  fno:forNo,
+				  cno:subReplyCoNo.innerText,
+				  sId:supId.innerText,
+				  coContent:inputContent.value,			  
+			  }
+		  }).then((res) => {
+			  console.log("추가됨");
+			  
+			  // 아아으아 또해보자!!
+			  
+			  
+		  })
+		  
+	  }
+	  
+  }
   
 </script>
 

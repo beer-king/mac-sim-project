@@ -324,6 +324,56 @@ public class CommController {
 		
 	}
 	
+	// 포럼에 댓글 작성
+	@ResponseBody
+	@RequestMapping("replyInsert.fo")
+	public String replyInsert(HttpSession session,int fno, String coContent) {
+		
+		Member m = (Member)session.getAttribute("loginUser");
+
+		//System.out.println(m);
+		//System.out.println(fno);
+				
+		Reply r = new Reply();
+		r.setForNo(fno); 			// 무슨 포럼에 대한 댓글인지
+		r.setUserNo(m.getUserNo());	// 댓글 작성자
+		r.setCoContent(coContent);	// insert하려는 댓글
+		
+		//System.out.println(r);
+		int result = cService.replyInsert(r);
+		
+		if(result > 0) {
+			return "S";
+		}else {
+			return "F";
+		}		
+		
+	}
+	
+	// 포럼에 대댓글 작성
+	@ResponseBody
+	@RequestMapping("subReplyInsert.fo")
+	public String subReplyInsert(HttpSession session, int fno, String cno, String sId, String coContent) {
+		
+		Member m = (Member)session.getAttribute("loginUser");
+		
+		Reply r = new Reply();
+		r.setForNo(fno);
+		r.setCoNo(Integer.parseInt(cno));
+		r.setUserId(sId);
+		r.setCoContent(coContent);
+		
+		System.out.println(r);
+		int result = cService.subReplyInsert(r);
+		
+		if(result > 0) {
+			return "S";
+		}else {
+			return "F";
+		}		
+		
+	}
+	
 	
 	// 첨부파일 업로드 시켜주는 메소드
 	public String saveFile(HttpSession session, MultipartFile upfile) {

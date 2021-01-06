@@ -216,6 +216,8 @@
 		  join MEMBER using(user_no)
 		 where for_no = #{ fno }
 		   and co_status = 0
+		  order
+		     by co_createdate asc
 	</select>
 	
 	<select id="selectSubReplyList" resultMap="subReplyResultSet" parameterType="_int" >
@@ -232,6 +234,8 @@
 		   join member using(user_no)
 	   	  where co_no = #{ coNo }
 		    and reco_status = 0
+		  order
+		     by reco_createdate asc
 	</select>
 	
 	<update id="updateReplyUpdate" parameterType="Reply">
@@ -272,6 +276,54 @@
 	 WHERE CLIKES.COMM_NO = #{commNo}
 	   AND CLIKES.USER_NO = #{userNo}
 	</select>
+	
+	<insert id="replyInsert" parameterType="Reply">
+		insert
+		  into FCOMMENTS
+		     (
+		       CO_NO
+		     , FOR_NO
+		     , CO_CONTENT
+		     , USER_NO
+		     )
+		VALUES
+		     (
+		       seq_co_no.nextval
+		     , #{ forNo }
+		     , #{ coContent }
+		     , #{ userNo }
+		     )
+	</insert>
+	
+	<insert id="subReplyInsert" parameterType="Reply">
+		insert
+		  into FRECOMMENTS
+		     (
+		       RECO_NO
+		     , CO_NO
+		     , RECO_CONTENT
+		     , USER_NO
+		     )
+		VALUES
+		     (
+		       seq_reco_no.nextval
+		     , #{ coNo }
+		     , #{ coContent }
+		     , (
+		          select
+		                 user_no
+		            from member
+		           where user_id = #{ userId }
+		        )
+		     )
+	</insert>
+	
+	<update id="replyIncrease" parameterType="Reply">
+		update forum
+		   set for_comment = for_comment + 1
+		 where for_no = #{ forNo }
+		
+	</update>
 	
 	<!-- 
 	<select id="" resultMap="" parameterType="">

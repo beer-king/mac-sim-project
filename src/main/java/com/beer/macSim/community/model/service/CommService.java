@@ -45,6 +45,8 @@ public interface CommService {
 	int subReplyDelete(int coNo);
 	int selectLikeLength(int cNo);
 	int selectIsLike(CommLikes cl);
+	int replyInsert(Reply r);
+	int subReplyInsert(Reply r);
 	
 	// 7. 포럼 댓글 작성용 서비스
 	 
