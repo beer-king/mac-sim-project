@@ -125,19 +125,21 @@
                 </tr>
              </table>
         
-            <table class="table" align="center">
+        	<!-- 댓글 테이블 -->
+            <table id="replyArea" class="table" align="center">
                 <thead>
                     <tr>
                         <th colspan="2">
                             <textarea class="form-control" name="" id="content" cols="55" rows="2" style="resize:none; width:100%"></textarea>
                         </th>
-                        <th style="vertical-align: middle"><button class="btn btn-secondary">등록하기</button></th>
+                        <th style="vertical-align: middle"><button class="btn btn-secondary" onclick="addReply();">등록하기</button></th>
                     </tr>
                     <tr>
-                       <td colspan="3">댓글 (<span id="rcount">3</span>) </td> 
+                       <td colspan="3">댓글 (<span id="rcount"></span>) </td> 
                     </tr>
                 </thead>
                 <tbody>
+                	<!-- 
                     <tr>
                         <th>BeerQueen</th>
                         <td>저번 시음회 신청하신분 어떠셨나요? ㅎㅎ</td>
@@ -153,10 +155,68 @@
                         <td>댓글입니다ㅋㅋㅋ</td>
                         <td>2020-11-02</td>
                     </tr>
+                    -->
                 </tbody>
             </table>
         </div>
         
+        <!-- 댓글작성용 ajax -->
+        <script>
+        	$(function(){
+        		selectReplyList(); // 게시글에 달린 댓글리스트 조회용
+        	})
+        	
+        	function addReply(){
+        		// 작성된 댓글내용,, 게시글번호, 로그인한 사용자의 아이디
+        		if($("#content").val().trim().length > 0){
+        			$.ajax({
+        				url:"rinsert.ev",
+        				data:{
+        					replyContent:$("#content").val(),
+        					refEventNo:${ev.evNo},
+        					replyWriter:"${loginUser.userId}"
+        				},
+        				success:function(result){
+        					
+        				},error:function(){
+        					console.log("댓글 작성용 ajax통신 실패");
+        				}
+        			})
+        		}
+        	}
+        	
+        	function selectReplyList(){
+        		// 게시글에 달린 댓글리스트 조회용 ajax
+        		
+        		$.ajax({
+        			url:"rlist.ev",
+        			data:{eno:${ev.evNo}},
+        			success:function(list){
+        				
+        				console.log(list);
+        				$("#rcount").text(list.length);
+        				
+        				var value= "";
+        				for(var i in list){
+        					value += "<tr>" +
+			                            "<th>" + list[i].userNo + "</th>" +
+			                            "<td>" + list[i].evRpContent + "</td>" +
+			                            "<td>" + list[i].rpDate + "</td>" +
+			                        "</tr>";
+        				}
+        				
+        				$("#replyArea tbody").html(value);
+        				
+        			},error:function(){
+        				console.log("댓글 작성용 ajax 통신 실패");
+        			}
+        		})
+        	}
+        	
+        </script>
+        
+        
+        <!-- 신청하기 모달창 -->
         <div class="modal fade" id="appModal">
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">
@@ -188,7 +248,7 @@
         </div>
         
       
-
+		<!-- 카테고리 담기 모달창 -->
         <div class="modal fade" id="catModal">
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">

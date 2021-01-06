@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.beer.macSim.common.model.vo.PageInfo;
@@ -22,10 +23,12 @@ import com.beer.macSim.common.template.Pagination;
 import com.beer.macSim.common.template.Search;
 import com.beer.macSim.event.model.service.EventService;
 import com.beer.macSim.event.model.vo.Attachment;
+import com.beer.macSim.event.model.vo.EvReply;
 import com.beer.macSim.event.model.vo.Event;
 import com.beer.macSim.event.model.vo.EventAttendee;
 import com.beer.macSim.event.model.vo.EventSearch;
 import com.beer.macSim.member.model.vo.Member;
+import com.google.gson.Gson;
 
 @Controller
 public class EventController {
@@ -174,5 +177,15 @@ public class EventController {
 		model.addAttribute("es", es);
 		
 		return "event/eventListView";
+	}
+	
+	// 댓글리스트 조회용
+	@ResponseBody
+	@RequestMapping(value="rlist.ev", produces="application/json; charset=utf-8")
+	public String selectEvReplyList(int eno) {
+		
+		ArrayList<EvReply> list = evService.selectEvReplyList(eno);
+		
+		return new Gson().toJson(list);
 	}
 }

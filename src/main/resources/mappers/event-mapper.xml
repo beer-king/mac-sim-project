@@ -41,7 +41,18 @@
   		<result column="event_entry_date" property="eventEntryDate"/>
   		<result column="ev_point" property="evPoint"/>
   	</resultMap>
-  	 
+  	
+  	<resultMap id="EvReplyResultSet" type="EvReply">
+  		<result column="ev_rpno" property="evRpno"/>
+  		<result column="ev_no" property="evNo"/>
+  		<result column="user_no" property="userNo"/>
+  		<result column="user_id" property="userNo"/>
+  		<result column="ev_rpcontent" property="evRpContent"/>
+  		<result column="rp_date" property="rpDate"/>
+  		<result column="status" property="status"/>
+  	</resultMap>
+  	
+  	
   	<select id="selectEventCount" resultType="_int">
   		select
 		        count(*)
@@ -233,5 +244,20 @@
 		  like '%' || #{searchWord} || '%'
 		 order 
 		    by ev_no desc
+  	</select>
+  	
+  	<select id="selectEvReplyList"
+  		    parameterType="_int" resultMap="EvReplyResultSet">
+  		select
+		       ev_rpno
+		     , user_id
+		     , ev_rpcontent
+		     , rp_date
+		  from ev_reply er
+		  join member using(user_no)
+		 where ev_no = #{eno}
+		   and er.status = 'Y'
+		 order
+		    by ev_rpno desc
   	</select>
 </mapper>
