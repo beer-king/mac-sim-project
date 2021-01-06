@@ -6,18 +6,6 @@
 <head>
 <meta charset="UTF-8">
 <title>MACSIM</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-<!-- 부트스트랩에서 제공하고 있는 스크립트 -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-<!-- JavaScript -->
-<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
-<!-- CSS -->
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
-<!-- Default theme -->
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
-<!-- Semantic UI theme -->
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
 	<link
 			rel="stylesheet"
 			href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css"
@@ -32,9 +20,12 @@
 			rel="stylesheet"
 			href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
 	/>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	<link rel="stylesheet" href="resources/css/header.css" />
 	<link rel="stylesheet" href="resources/css/mainPage.css" />
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+ 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<style>
 		.sidenav {
 			height:100%;
@@ -84,7 +75,7 @@
 			margin-top: 50px;
 			margin-left: 200px;
             width: 60%;
-            height: 600px;
+            height: 620px;
             background: rgb(236, 191, 46);
             float: left;
         }
@@ -141,7 +132,7 @@
        	.dataSheet *{
        		vertical-align: middle;
        	}
-        .dataview:hover{
+        .clickDataView:hover{
 		    cursor: pointer;
 		}
     </style>
@@ -212,38 +203,130 @@
         </form>
         </c:if>
         <c:if test="${category eq 2}">
-        		<br>
-      			<form class="enrollForm" action="" method="post" align="right">
-		            <select name="sort" id="sort">
-		                <option value="name" selected>맥주 이름</option>
-		                <option value="no">맥주 번호</option>
-		            </select>
-		            <input type="text" id="searchbox" placeholder="검색어를 입력하세요" name="search">
+        	<br>     
+		        <div class="search_bar" style="margin-left: 5px;">
+	            <select id="status" name="status">
+	            	<c:choose>
+	            		<c:when test="${status eq 'R' }">
+	            			<option value="R" selected>배송준비</option>
+	            			<option value="C">배송완료</option>
+	            			<option value="F">배송취소</option>
+	            			<option value="D">배송취소완료</option>
+	            		</c:when>
+	            		<c:when test="${status eq 'C' }">
+	            			<option value="R">배송준비</option>
+	            			<option value="C" selected>배송완료</option>
+	            			<option value="F">배송취소</option>
+	            			<option value="D">배송취소완료</option>
+	            		</c:when>
+	            		<c:when test="${status eq 'F' }">
+	            			<option value="R">배송준비</option>
+	            			<option value="C">배송완료</option>
+	            			<option value="F" selected>배송취소</option>
+	            			<option value="D">배송취소완료</option>
+	            		</c:when>
+	            		<c:when test="${status eq 'D' }">
+	            			<option value="R">배송준비</option>
+	            			<option value="C">배송완료</option>
+	            			<option value="F">배송취소</option>
+	            			<option value="D" selected>배송취소완료</option>
+	            		</c:when>
+	            	</c:choose>
+	            	
+	            </select>
+	        	</div>
+		        <br>
+		        <form class="enrollForm" action="" method="post" align="right">
+		            <input type="text" id="searchbox" placeholder="상품명을 입력하세요" name="search">
 		            <button type="submit" id="sbtn" style="margin-right: 20px;">검색</button>
 		        </form>
-       
-		        
-		        <br>
-		        <table class="dataview" style="width: 90%;" onclick="clickB(${b.beerNo})">
-			            	<tr>
-			            		<td rowspan="2" style="width: 20px;"><img src="${b.changeName }" width="100" height="100"></td>
-			            	</tr>
-			                <tr class="clickDataView">
-			                    <td>맥주 번호 : ${b.beerNo }</td>
-			                    <td>맥주 이름 : ${b.beerName }</td>
-			                </tr>
-			    </table>
+        	<c:choose>
+        		<c:when test="${pi.listCount eq 0}">
+		        	<table class="dataview" style="width: 90%;">
+		                <tr>
+		                    <td><h3>게시물이 없습니다.</h3></td>
+		               
+		                </tr>
+		                
+		            </table>
+        		</c:when>
+        		<c:otherwise>
+		        <c:forEach var="gb" items="${ gblist }">	
+		        	<table class="dataview" style="width: 90%;">
+		        			<c:choose>
+		        				<c:when test="${status eq 'R' }">
+				        			<tr>
+					            		<td rowspan="4" style="width: 20px;"><input id="${gb.requestNo}" type="checkbox" name="number" value="${r.reqNo}"></td>
+					            	</tr>
+					            	<tr class="clickDataView" onclick="trclick(${gb.requestNo});">
+					            		<td rowspan="4" style="width: 20px;"><img src="${gb.thumb }" width="100" height="100"></td>
+					            	</tr>
+					                <tr class="clickDataView" onclick="trclick(${gb.requestNo});">
+					                    <td>주문 아이디 : ${gb.userId }</td>
+					                    <td>배송 상태 : ${gb.statusName }</td>
+					                </tr>
+					                <tr class="clickDataView" onclick="trclick(${gb.requestNo});">
+					                    <td>상품명 : ${gb.pname }</td>
+					                    <td>주소 : ${gb.address }</td>
+					                </tr>
+		        				</c:when>
+		        				<c:when test="${status eq 'F' }">
+		        					<tr>
+					            		<td rowspan="4" style="width: 20px;"><input id="${gb.requestNo}" type="checkbox" name="number" value="${r.reqNo}"></td>
+					            	</tr>
+					            	<tr class="clickDataView" onclick="trclick2(${gb.requestNo});">
+					            		<td rowspan="4" style="width: 20px;"><img src="${gb.thumb }" width="100" height="100"></td>
+					            	</tr>
+					                <tr class="clickDataView" onclick="trclick2(${gb.requestNo});">
+					                    <td>주문 아이디 : ${gb.userId }</td>
+					                    <td>배송 상태 : ${gb.statusName }</td>
+					                </tr>
+					                <tr class="clickDataView" onclick="trclick2(${gb.requestNo});">
+					                    <td>상품명 : ${gb.pname }</td>
+					                    <td>주소 : ${gb.address }</td>
+					                </tr>
+		        				</c:when>
+		        				<c:otherwise>
+					            	<tr>
+					            		<td rowspan="3" style="width: 20px;"><img src="${gb.thumb }" width="100" height="100"></td>
+					            	</tr>
+					                <tr>
+					                    <td>주문 아이디 : ${gb.userId }</td>
+					                    <td>배송 상태 : ${gb.statusName }</td>
+					                </tr>
+					                <tr>
+					                    <td>상품명 : ${gb.pname }</td>
+					                    <td>주소 : ${gb.address }</td>
+					                </tr>
+		        				</c:otherwise>
+		        			</c:choose>
+			    	</table>
+			    </c:forEach>
+			    <c:choose>
+		        	<c:when test="${status eq 'R' }">
+					    <div style="margin-right: 20px; text-align: right;">
+					    	<button type="button"  data-toggle="modal" data-target="#myModal" >일괄 처리</button>
+					    </div>
+			    	</c:when>
+			    	<c:when test="${status eq 'F' }">
+			    	<div style="margin-right: 20px; text-align: right;">
+					    	<button type="button"  data-toggle="modal" data-target="#myModal2" >일괄 처리</button>
+					    </div>
+			    	</c:when>
+			    </c:choose>
 		     	<div class="paging-area" align="center">     
 		        	<c:if test="${ pi.currentPage ne 1}">
-		        		<a href="GB.ad?category=${category }&currentPage=${ pi.currentPage-1 }">이전</a>
+		        		<a href="GB.ad?category=${category }&status=${status }&currentPage=${ pi.currentPage-1 }">이전</a>
 		        	</c:if>	
 		        	<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-		        		<a href="GB.ad?category=${category }&currentPage=${ p }">${ p }</a>
+		        		<a href="GB.ad?category=${category }&status=${status }&currentPage=${ p }">${ p }</a>
 		            </c:forEach>
 		            <c:if test="${pi.maxPage > 0 and pi.maxPage ne pi.currentPage}">
-		            	<a href="GB.ad?category=${category }&currentPage=${ pi.currentPage+1 }">다음</a>
+		            	<a href="GB.ad?category=${category }&status=${status }&currentPage=${ pi.currentPage+1 }">다음</a>
 		            </c:if>
         		</div>
+        		</c:otherwise>
+        	</c:choose>
         </c:if>
         <c:if test="${category eq 3}">
         		<br>
@@ -309,7 +392,40 @@
         <br>
         </c:if>
     </div>
+    <div class="modal fade" id="myModal">
+	    <div class="modal-dialog">
+	      <div class="modal-content">
+	      <br>
+	      	<h4>&nbsp해당 상품을 배송완료 처리하시겠습니까?</h4>
+	        <!-- Modal body -->
+	        <div class="modal-body">
+	          <br><br>
+	          <div align="right">
+	          	<button id="complete" type="button" class="btn btn-primary" data-dismiss="modal">처리하기</button>
+	          	<button type="button" class="btn btn-danger" data-dismiss="modal">취소하기</button>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+    </div>
+    <div class="modal fade" id="myModal2">
+	    <div class="modal-dialog">
+	      <div class="modal-content">
+	      <br>
+	      	<h4>&nbsp해당 상품을 취소 처리하시겠습니까?</h4>
+	        <!-- Modal body -->
+	        <div class="modal-body">
+	          <br><br>
+	          <div align="right">
+	          	<button id="cancel" type="button" class="btn btn-primary" data-dismiss="modal">처리하기</button>
+	          	<button type="button" class="btn btn-danger" data-dismiss="modal">취소하기</button>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+    </div>
     <script>
+    	var checkArr = [];
 	    function clickB(bNo){
 			var bNo = bNo;
 			location.href = "beerUpdate.ad?beerNo=" + bNo;
@@ -384,6 +500,69 @@
 		function checkAlert(){
 			alert("이미지를 넣어주세요.");
 		}
+		$("#status").change(function(){
+			location.href = "GB.ad?status="+$(this).val() + "&category=${category}";
+		});
+		function trclick(rNo){
+			num = rNo;
+			$("#"+num).prop("checked",true);
+			$("#myModal").modal("show");
+		};
+		function trclick2(rNo){
+			num = rNo;
+			$("#"+num).prop("checked",true);
+			$("#myModal2").modal("show");
+		};
+		$(function(){
+	    	$("#complete").click(function(){
+	    		complete();
+	        });
+	    	$("#cancel").click(function(){
+	    		cancel();
+	        });
+			function complete(){
+				$("input[name='number']:checked").each(function(i){
+					checkArr.push($(this).attr("id"));
+				});
+				$.ajax({
+					url:"processGB.ad",
+	    			type:"POST",
+	    			dataType: 'text',
+	    			data: {
+	    	            list: checkArr,
+	    	            Astatus:'C'
+	    	        },
+	    	        success:function(result){
+	    				  alert("처리되었습니다.");
+	    				  location.reload();
+	    			  },error:function(){
+	    				  alert("실패되었습니다.");
+	    				  location.reload();
+	    			  }
+				});
+			}
+			function cancel(){
+				$("input[name='number']:checked").each(function(i){
+					checkArr.push($(this).attr("id"));
+				});
+				$.ajax({
+					url:"processGB.ad",
+	    			type:"POST",
+	    			dataType: 'text',
+	    			data: {
+	    	            list: checkArr,
+	    	            Astatus:'D'
+	    	        },
+	    	        success:function(result){
+	    				  alert("처리되었습니다.");
+	    				  location.reload();
+	    			  },error:function(){
+	    				  alert("실패되었습니다.");
+	    				  location.reload();
+	    			  }
+				});
+			}
+		});
 	</script>
 	
 </div>

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.beer.macSim.administer.model.vo.Batch;
 import com.beer.macSim.administer.model.vo.BeerSearch;
+import com.beer.macSim.administer.model.vo.GbRequest;
 import com.beer.macSim.administer.model.vo.Report;
 import com.beer.macSim.administer.model.vo.SelectData;
 import com.beer.macSim.common.model.vo.PageInfo;
@@ -55,4 +56,7 @@ public interface AdminService {
 	int selectPnocurrent();
 	int enrollGB(GroupBuy GB);
 	int enrollAT(Attachment a1, Attachment a2);
+	int selectGBRlistCount(BeerSearch bs);
+	ArrayList<GbRequest> selectGBRlist(BeerSearch bs, PageInfo pi);
+	int updateBatchGB(Batch b);
 }

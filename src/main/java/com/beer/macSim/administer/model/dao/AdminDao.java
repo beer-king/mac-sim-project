@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.beer.macSim.administer.model.vo.Batch;
 import com.beer.macSim.administer.model.vo.BeerSearch;
+import com.beer.macSim.administer.model.vo.GbRequest;
 import com.beer.macSim.administer.model.vo.Report;
 import com.beer.macSim.administer.model.vo.SelectData;
 import com.beer.macSim.common.model.vo.PageInfo;
@@ -158,5 +159,18 @@ public class AdminDao {
 			result3 = sqlSession.update("adminMapper.insertAttachment", a2);
 		}
 		return result2 * result3;
+	}
+	public int selectGBRlistCount(SqlSessionTemplate sqlSession, BeerSearch bs) {
+		return sqlSession.selectOne("adminMapper.selectGBRlistCount", bs);
+	}
+	
+	public ArrayList<GbRequest> selectGBRlist(SqlSessionTemplate sqlSession, BeerSearch bs, PageInfo pi){
+		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("adminMapper.selectGBRlist", bs, rowBounds);
+	}
+	
+	public int updateBatchGB(SqlSessionTemplate sqlSession, Batch b) {
+		return sqlSession.update("adminMapper.updateBatchGB", b);
 	}
 }

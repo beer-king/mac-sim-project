@@ -426,7 +426,6 @@
 			num = reportNo;
 			content = rcontent;
 			cate = rcate;
-			console.log(cate);
 			$("#mcate").html(cate);
 			$("#mcontent").html(content);
 			$("#myModal").modal("show");

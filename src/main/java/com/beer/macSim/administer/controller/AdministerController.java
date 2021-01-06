@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.beer.macSim.administer.model.service.AdminService;
 import com.beer.macSim.administer.model.vo.Batch;
 import com.beer.macSim.administer.model.vo.BeerSearch;
+import com.beer.macSim.administer.model.vo.GbRequest;
 import com.beer.macSim.administer.model.vo.Report;
 import com.beer.macSim.administer.model.vo.SelectData;
 import com.beer.macSim.common.model.vo.PageInfo;
@@ -311,12 +312,32 @@ public class AdministerController {
 			return "fail";
 		}
 	}
+	
 	//공구 관리
 	@RequestMapping("GB.ad")
-	public String goGB(@RequestParam(value="currentPage", defaultValue="1")int currentPage, @RequestParam(value="category", defaultValue="1")int category, Model model, String sort, String search) {
+	public String goGB(@RequestParam(value="currentPage", defaultValue="1")int currentPage, @RequestParam(value="category", defaultValue="1")int category, @RequestParam(value="status", defaultValue="R")String status, Model model, String sort, String search) {
 		model.addAttribute("category",category);
 		model.addAttribute("sort", sort);
-		
+		if(category == 2) {
+			model.addAttribute("status", status);
+			BeerSearch bs = Search.getBeerSearch(status, search);
+			int listCount = aService.selectGBRlistCount(bs);
+			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+			ArrayList<GbRequest> gblist= aService.selectGBRlist(bs, pi);
+			for(GbRequest g : gblist) {
+				if(g.getReqStatus().equals("R")) {
+					g.setStatusName("배송준비");
+				}else if(g.getReqStatus().equals("C")) {
+					g.setStatusName("배송완료");
+				}else if(g.getReqStatus().equals("F")) {
+					g.setStatusName("배송취소");
+				}else {
+					g.setStatusName("배송취소완료");
+				}
+			}
+			model.addAttribute("pi", pi);
+			model.addAttribute("gblist", gblist);
+		}
 		return "administer/groupBuyAdmini";
 	}
 	@RequestMapping("enrollGB.ad")
@@ -340,6 +361,18 @@ public class AdministerController {
 		
 	}
 	
+	@ResponseBody
+	@RequestMapping("processGB.ad")
+	public String processGB(@RequestParam(value = "list[]") ArrayList<String> list, String Astatus) {
+		Batch b = BatchProcess.getBatch(list, Astatus, null);
+		
+		int result = aService.updateBatchGB(b);
+		if(result > 0) {
+			return "success";
+		}else {
+			return "fail";
+		}
+	}
 	
 	
 	

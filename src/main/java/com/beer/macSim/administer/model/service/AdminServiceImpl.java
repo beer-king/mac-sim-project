@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.beer.macSim.administer.model.dao.AdminDao;
 import com.beer.macSim.administer.model.vo.Batch;
 import com.beer.macSim.administer.model.vo.BeerSearch;
+import com.beer.macSim.administer.model.vo.GbRequest;
 import com.beer.macSim.administer.model.vo.Report;
 import com.beer.macSim.administer.model.vo.SelectData;
 import com.beer.macSim.common.model.vo.PageInfo;
@@ -156,6 +157,21 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public int enrollAT(Attachment a1, Attachment a2) {
 		return aDao.enrollAT(sqlSession, a1, a2);
+	}
+
+	@Override
+	public ArrayList<GbRequest> selectGBRlist(BeerSearch bs, PageInfo pi) {
+		return aDao.selectGBRlist(sqlSession, bs, pi);
+	}
+
+	@Override
+	public int selectGBRlistCount(BeerSearch bs) {
+		return aDao.selectGBRlistCount(sqlSession, bs);
+	}
+
+	@Override
+	public int updateBatchGB(Batch b) {
+		return aDao.updateBatchGB(sqlSession, b);
 	}
 	
 	

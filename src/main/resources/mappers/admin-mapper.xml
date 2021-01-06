@@ -72,6 +72,15 @@
 		<result column="ev_thumb" property="evThumb"/>
 		<result column="ev_deny" property="evDeny"/>		
 	</resultMap>
+	<resultMap type="GBR" id="GBRresultSet">
+		<result column="request_no" property="requestNo"/>
+		<result column="pno" property="pNo"/>
+		<result column="user_id" property="userId"/>
+		<result column="req_status" property="reqStatus"/>
+		<result column="address" property="address"/>
+		<result column="pname" property="pname"/>
+		<result column="gb_thumb" property="thumb"/>
+	</resultMap>
 	
   	<insert id="insertBeer" parameterType="Beers">
   		insert
@@ -433,5 +442,45 @@
   			
   	</insert>
   	
+  	<select id="selectGBRlistCount" resultType="_int" parameterType="BS">
+		select count(*)
+		from gb_request
+		join group_buy using(pno)
+		<choose>
+			<when test="content != null">
+				where req_status = #{category} and pname like '%' || #{content} || '%'
+			</when>
+			<otherwise>
+				where req_status = #{category}
+			</otherwise>
+		</choose>
+  	</select>
+  	
+  	<select id="selectGBRlist" resultMap="GBRresultSet" parameterType="BS">
+		select request_no, pno, user_id, req_status, g.address, pname, gb_thumb
+		from gb_request g
+		join member using(user_no)
+		join group_buy using(pno)
+		<choose>
+			<when test="content != null">
+				where req_status = #{category} and pname like '%' || #{content} || '%'
+			</when>
+			<otherwise>
+				where req_status = #{category}
+			</otherwise>
+		</choose>
+		order by request_no desc
+  	</select>
+  	
+  	<update id="updateBatchGB" parameterType="Batch">
+  		update
+		    gb_request
+		set
+			req_status = #{status} 
+		where
+			<foreach item="item" index="index" collection="list" separator="or">
+				request_no = #{item}
+			</foreach>
+  	</update>
   
 </mapper>
