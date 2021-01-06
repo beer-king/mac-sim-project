@@ -63,7 +63,7 @@
 	              <div>
 	              	<c:choose>
 	              	  <c:when test="${ !empty loginUser && loginUser.userId eq c.userId }">
-		                <span>수정</span>
+		                <span onclick="location.href='updateForm.cm?commNo=${c.commNo}'">수정</span>
 		                <span>삭제</span>
 		              </c:when>
 		              <c:otherwise>

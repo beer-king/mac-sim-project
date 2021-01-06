@@ -238,13 +238,13 @@
 		     by reco_createdate desc
 	</select>
 	
-	<update id="updateReplyUpdate" parameterType="Reply">
+	<update id="replyUpdate" parameterType="Reply">
 		UPDATE MACSIM.FCOMMENTS t
 		   SET t.CO_CONTENT = #{coContent}
 		 WHERE t.CO_NO = #{coNo}
 	</update>
 	
-	<update id="updateSubReplyUpdate" parameterType="Reply">
+	<update id="subReplyUpdate" parameterType="Reply">
 		UPDATE MACSIM.FRECOMMENTS t
 		   SET t.RECO_CONTENT = #{coContent}
 		 WHERE t.RECO_NO = #{coNo}
@@ -358,6 +358,33 @@
 	   	    and user_id = #{ userId }
 	   	    and reco_content = #{ coContent }
 	</select>
+	
+	<select id="updateFormComm" resultMap="commResultSet" parameterType="_int" >
+		select
+		       comm_no
+		     , comm_origin_src
+		     , comm_change_src
+		     , comm_content
+		     , comm_createdate
+		     , comm_cate
+		     , comm_status
+		     , user_no
+		     , user_id
+		  from COMMUNITY
+		  join MEMBER using(user_no)
+		 where comm_no = #{ commNo }
+		   and comm_status = 0
+	</select>
+	
+	<update id="updateComm" parameterType="Community">
+		update community
+		   set comm_origin_src = #{ commOriginSrc }
+		     , comm_change_src = #{ commChangeSrc }
+		     , comm_content = #{ commContent }
+		     , comm_cate = #{ commCate }
+		 where comm_no = #{ commNo }
+		   and user_no = #{ userNo }
+	</update>
 	
 	<!-- 
 	<select id="" resultMap="" parameterType="">

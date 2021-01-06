@@ -1,6 +1,7 @@
 package com.beer.macSim.community.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -73,12 +74,12 @@ public class CommDao {
 		return (ArrayList)sqlSession.selectList("commMapper.selectSubReplyList", coNo);
 	}
 
-	public int updateReplyUpdate(SqlSessionTemplate sqlSession, Reply r) {
-		return sqlSession.update("commMapper.updateReplyUpdate", r);
+	public int replyUpdate(SqlSessionTemplate sqlSession, Reply r) {
+		return sqlSession.update("commMapper.replyUpdate", r);
 	}
 
-	public int updateSubReplyUpdate(SqlSessionTemplate sqlSession, Reply r) {
-		return sqlSession.update("commMapper.updateSubReplyUpdate", r);
+	public int subReplyUpdate(SqlSessionTemplate sqlSession, Reply r) {
+		return sqlSession.update("commMapper.subReplyUpdate", r);
 	}
 
 	public int replyDelete(SqlSessionTemplate sqlSession, int coNo) {
@@ -115,6 +116,15 @@ public class CommDao {
 
 	public ArrayList<SubReply> selectSubReplyOne(SqlSessionTemplate sqlSession, Reply r) {
 		return (ArrayList)sqlSession.selectList("commMapper.selectSubReplyOne", r);
+	}
+
+	public Community updateFormComm(SqlSessionTemplate sqlSession, int commNo) {
+		//HashMap<Integer, Community> map = new HashMap<Integer, Community>();
+		return sqlSession.selectOne("commMapper.updateFormComm", commNo);
+	}
+
+	public int updateComm(SqlSessionTemplate sqlSession, Community c) {
+		return sqlSession.update("commMapper.updateComm", c);
 	}
 		
 

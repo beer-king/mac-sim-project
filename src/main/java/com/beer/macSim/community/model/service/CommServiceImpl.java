@@ -85,13 +85,13 @@ public class CommServiceImpl  implements CommService{
 	}
 
 	@Override
-	public int updateReplyUpdate(Reply r) {
-		return cDao.updateReplyUpdate(sqlSession, r);
+	public int replyUpdate(Reply r) {
+		return cDao.replyUpdate(sqlSession, r);
 	}
 
 	@Override
-	public int updateSubReplyUpdate(Reply r) {
-		return cDao.updateSubReplyUpdate(sqlSession, r);
+	public int subReplyUpdate(Reply r) {
+		return cDao.subReplyUpdate(sqlSession, r);
 	}
 
 	@Override
@@ -132,6 +132,16 @@ public class CommServiceImpl  implements CommService{
 	@Override
 	public ArrayList<SubReply> selectSubReplyOne(Reply r) {
 		return cDao.selectSubReplyOne(sqlSession, r);
+	}
+
+	@Override
+	public Community updateFormComm(int commNo) {
+		return cDao.updateFormComm(sqlSession, commNo);
+	}
+
+	@Override
+	public int updateComm(Community c) {
+		return cDao.updateComm(sqlSession, c);
 	}
 
 }
