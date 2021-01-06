@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -138,6 +139,65 @@ public class CommController {
 		
 	}
 	
+	// 커뮤니티 수정
+	@RequestMapping("updateForm.cm")
+	public String updateFormComm(int commNo, Model model) {
+
+		Community c = cService.updateFormComm(commNo);
+		//System.out.println(c);
+		
+		if(c != null) { // 성공
+			model.addAttribute("c", c);
+			return "community/editCommUpdate";
+		}else { // 실패
+			model.addAttribute("errorMsg", "글 수정 페이지를 불러올 수 없습니다.");
+			return "common/errorPage";
+		}
+		
+	}
+	
+	@RequestMapping("update.cm")
+	public String updateComm(Community c, MultipartFile upfile, HttpSession session, Model model) {
+		
+		//System.out.println(c);
+		//System.out.println(upfile.getOriginalFilename());
+		
+		if( !upfile.getOriginalFilename().equals("") ) {
+			
+			String changeName = saveFile(session, upfile);
+			
+			c.setCommOriginSrc(upfile.getOriginalFilename());
+			c.setCommChangeSrc(changeName);
+			
+		}
+		
+		int result = cService.updateComm(c);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", "수정되었습니다!");
+			return "redirect:list.cm?cate=" + c.getCommCate();
+		}else {
+			model.addAttribute("errorMsg", "수정 실패!");
+			return "common/errorPage";
+		}
+		
+	}
+	
+	// 커뮤니티 삭제
+	@RequestMapping("delete.cm")
+	public String deleteComm(int commNo, HttpSession session, Model model) {
+		
+		int result = cService.deleteComm(commNo);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", "글이 삭제 되었습니다ㅠㅠ");
+			return "redirect:list.cm?cate=0";
+		}else {
+			model.addAttribute("errorMsg", "수정 실패!");
+			return "common/errorPage";
+		}
+		
+	}
 	
 	// 포럼 리스트 조회
 	@RequestMapping("list.fo")
@@ -247,10 +307,68 @@ public class CommController {
 		
 	}
 	
+	// 포럼 수정
+	@RequestMapping("updateForm.fo")
+	public String updateFormForum(int forNo, Model model) {
+
+		Forum f = cService.updateFormForum(forNo);
+		System.out.println(f);
+		
+		if(f != null) { // 성공
+			model.addAttribute("f", f);
+			return "community/editForumUpdate";
+		}else { // 실패
+			model.addAttribute("errorMsg", "포럼 수정 페이지를 불러올 수 없습니다.");
+			return "common/errorPage";
+		}
+		
+	}
+	
+	@RequestMapping("update.fo")
+	public String updateForum(Forum f, MultipartFile upfile, HttpSession session, Model model) {
+		
+		if( !upfile.getOriginalFilename().equals("") ) {
+			
+			String changeName = saveFile(session, upfile);
+			
+			f.setForOriginSrc(upfile.getOriginalFilename());
+			f.setForChangeSrc(changeName);
+			
+		}
+		
+		int result = cService.updateForum(f);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", "수정되었습니다!");
+			return "redirect:list.fo";
+		}else {
+			model.addAttribute("errorMsg", "수정 실패!");
+			return "common/errorPage";
+		}
+		
+	}
+	
+	// 포럼 삭제
+	@RequestMapping("delete.fo")
+	public String deleteForum(int forNo, HttpSession session, Model model) {
+		
+		int result = cService.deleteForum(forNo);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", "포럼이 삭제 되었습니다ㅠㅠ");
+			return "redirect:list.fo";
+		}else {
+			model.addAttribute("errorMsg", "수정 실패!");
+			return "common/errorPage";
+		}
+		
+	}
+	
+	
 	// 포럼에 댓글 수정시 업데이트
 	@ResponseBody
 	@RequestMapping("replyUpdate.fo")
-	public String updateReplyUpdate(int coNo, String coContent) {
+	public String replyUpdate(int coNo, String coContent) {
 		
 		//System.out.println("coNo : " + coNo);
 		//System.out.println("coContent : " + coContent);
@@ -258,7 +376,7 @@ public class CommController {
 		Reply r = new Reply();
 		r.setCoNo(coNo);
 		r.setCoContent(coContent);
-		int result = cService.updateReplyUpdate(r);
+		int result = cService.replyUpdate(r);
 		
 		if(result > 0) {
 			return "S";
@@ -271,7 +389,7 @@ public class CommController {
 	// 포럼에 대댓글 수정시 업데이트
 	@ResponseBody
 	@RequestMapping("subReplyUpdate.fo")
-	public String updateSubReplyUpdate(int coNo, String coContent) {
+	public String subReplyUpdate(int coNo, String coContent) {
 		
 		//System.out.println("coNo : " + coNo);
 		//System.out.println("coContent : " + coContent);
@@ -279,7 +397,7 @@ public class CommController {
 		Reply r = new Reply();
 		r.setCoNo(coNo);
 		r.setCoContent(coContent);
-		int result = cService.updateSubReplyUpdate(r);
+		int result = cService.subReplyUpdate(r);
 		
 		if(result > 0) {
 			return "S";

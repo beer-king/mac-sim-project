@@ -33,8 +33,11 @@
         </div>
 
         <div class="editC__content">
-          <form action="insert.cm" method="post" enctype="multipart/form-data">          
-            <input type="text" value="${ loginUser.userId }" name="userId" hidden />
+          <form action="update.cm" method="post" enctype="multipart/form-data">          
+            <input type="text" value="${ loginUser.userNo }" name="userNo" hidden />
+            <input type="text" value="${ c.commNo }" name="commNo" hidden />
+            <input type="text" value="${ c.commOriginSrc }" name="commOriginSrc" hidden />
+            <input type="text" value="${ c.commChangeSrc }" name="commChangeSrc" hidden />
             <div class="con-wrapper">
               <div>
                 <p>CATEGORY</p>
@@ -67,7 +70,7 @@
               <div>
                 <p>CONTENT</p>
                 <div class="textarea-wrapper">
-                  <textarea id="content-input" placeholder="내용을 입력해주세요" name="commContent" maxlength="180" required></textarea>
+                  <textarea id="content-input" placeholder="내용을 입력해주세요" name="commContent" maxlength="180" required>${ c.commContent }</textarea>
                   <span><b id="content-length">0</b>/180자</span>
                 </div>
               </div>
@@ -75,7 +78,7 @@
                 <p>IMAGE</p>
                 <div class="img-wrapper">
                   <div>
-                    <input id="hiddenBtn" type="file" name="upfile" hidden required />
+                    <input id="hiddenBtn" type="file" name="upfile" hidden />
                     <label id="fileLabel"></label>
                     <button
                       id="fileBtn"
@@ -89,7 +92,7 @@
                     <img
                       id="fileImg"
                       src=""
-                      alt="업로드할 이미지를 선택해주세요"
+                      alt="사진을 새로 선택하지 않을시, 자동으로 기존 이미지가 등록됩니다."
                     />
                   </div>
                 </div>
@@ -121,7 +124,7 @@
     const fileBtn = document.querySelector("#fileBtn");
     const fileLabel = document.querySelector("#fileLabel");
     const fileImg = document.querySelector("#fileImg");
-
+    
     const cateSelect = (num) => {
       if (num === 1) {
         btn2.classList.remove("btn-gray");
@@ -170,6 +173,7 @@
       fileImg.value = e.target.value;
     });
     
+    
     // 글자수
     const onChangeContent = () => {
     	
@@ -185,6 +189,33 @@
     	
     }
     onChangeContent();
+    
+    
+    // 페이지가 로딩된 직후 상태 설정해두기
+    const pageSetting = () => {
+    	
+    	// 카테고리 상태 설정
+    	if(${c.commCate} === 0){
+            btn2.classList.remove("btn-gray");
+            btn1.classList.add("btn-gray");
+            selectedBtn.value = "0";
+    	}else if(${c.commCate} === 1){
+            btn1.classList.remove("btn-gray");
+            btn2.classList.add("btn-gray");
+            selectedBtn.value = "1";
+    	}
+    	
+    	// 글자수 파악
+    	document.querySelector("#content-length").innerText = 
+    		document.querySelector("#content-input").value.length;
+    	
+    	// 사진 상태 설정
+        fileLabel.innerHTML = "${ c.commChangeSrc }";
+        fileImg.src = "resources/uploadFiles/${ c.commChangeSrc }";
+    	
+    }
+    pageSetting();
+    
 </script>
 
 </html>

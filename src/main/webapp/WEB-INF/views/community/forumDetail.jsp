@@ -54,8 +54,8 @@
                 <div>
                   <c:choose>
                     <c:when test="${ !empty loginUser && loginUser.userId eq fo.userId }">
-	                  <span>수정</span>
-	                  <span>삭제</span>
+	                  <span onclick="location.href='updateForm.fo?forNo=${fo.forNo}'">수정</span>
+	                  <span onclick="location.href='delete.fo?forNo=${fo.forNo}'">삭제</span>
 	                </c:when>
 	                <c:otherwise>
 	                  <span>신고</span>

@@ -33,19 +33,22 @@
         </div>
 
         <div class="editC__content editF__content">
-          <form action="insert.fo" method="post" enctype="multipart/form-data">
-            <input type="text" value="${ loginUser.userId }" name="userId" hidden />
+          <form action="update.fo" method="post" enctype="multipart/form-data">
+            <input type="text" value="${ loginUser.userNo }" name="userNo" hidden />
+            <input type="text" value="${ f.forNo }" name="forNo" hidden />
+            <input type="text" value="${ f.forOriginSrc }" name="forOriginSrc" hidden />
+            <input type="text" value="${ f.forChangeSrc }" name="forChangeSrc" hidden />
             <div class="con-wrapper">
               <div>
                 <p>TITLE</p>
                 <div class="title-wrapper">
-                  <input type="text" placeholder="포럼의 이름을 입력해주세요" name="forTitle" required />
+                  <input type="text" placeholder="포럼의 이름을 입력해주세요" value="${ f.forTitle }" name="forTitle" required />
                 </div>
               </div>
               <div>
                 <p>INFO</p>
                 <div class="textarea-wrapper">
-                  <textarea id="content-input" placeholder="포럼 소개글을 입력해주세요" name="forInfo" maxlength="40" required></textarea>
+                  <textarea id="content-input" placeholder="포럼 소개글을 입력해주세요" name="forInfo" maxlength="40" required>${ f.forInfo }</textarea>
                   <span><b id="content-length">0</b>/40자</span>
                 </div>
               </div>
@@ -53,7 +56,7 @@
                 <p>IMAGE</p>
                 <div class="img-wrapper">
                   <div>
-                    <input id="hiddenBtn" type="file" name="upfile" hidden required />
+                    <input id="hiddenBtn" type="file" name="upfile" hidden />
                     <label id="fileLabel"></label>
                     <button
                       id="fileBtn"
@@ -67,7 +70,7 @@
                     <img
                       id="fileImg"
                       src=""
-                      alt="업로드할 이미지를 선택해주세요"
+                      alt="사진을 새로 선택하지 않을시, 자동으로 기존 이미지가 등록됩니다."
                     />
                   </div>
                 </div>
@@ -93,7 +96,7 @@
 	const fileBtn = document.querySelector("#fileBtn");
 	const fileLabel = document.querySelector("#fileLabel");
 	const fileImg = document.querySelector("#fileImg");
-	
+
     fileBtn.addEventListener("click", () => {
       hiddenBtn.click();
     });
@@ -145,6 +148,21 @@
     	
     }
     onChangeContent();
+    
+    
+    // 페이지가 로딩된 직후 상태 설정해두기
+    const pageSetting = () => {
+    	
+    	// 글자수 파악
+    	document.querySelector("#content-length").innerText = 
+    		document.querySelector("#content-input").value.length;
+    	
+    	// 사진 상태 설정
+        fileLabel.innerHTML = "${ f.forChangeSrc }";
+        fileImg.src = "resources/uploadFiles/${ f.forChangeSrc }";
+    	
+    }
+    pageSetting();
     
 </script>
 </html>
