@@ -121,7 +121,7 @@
 	                
 	                
 	                <!-- 대댓글 -->
-	                <ul class="fode__re-items">
+	                <ul class="fode__re-items" id="re-comment-top-wrapper${r.coNo}">
 	                
 	                  <c:forEach var="sr" items="${ r.subReply }">
 		                  <li class="co-contents recomment-box${sr.recoNo}">
@@ -370,6 +370,56 @@
       commentWrapper.prepend(commentBox);
   }
   
+  // 포럼 대댓글 추가된거 화면에 뿌려주기
+  const createSubReplyTag = (v) => {
+	console.log(v);
+	  
+    const commentBox = document.createElement('li');
+      commentBox.classList.add('co-contents');
+      commentBox.classList.add('recomment-box'+v.recoNo);
+	    
+	const commentInfo = document.createElement('div');
+	  commentInfo.className = 'fode__co-info';
+	  
+	const userIdTag = document.createElement('p');
+      userIdTag.innerText = v.userId;
+    
+    const selectBtn = document.createElement('div');
+      if('${loginUser.userNo}' === v.userNo+''){
+        const updateBtn = document.createElement('span');
+          updateBtn.onclick = () => {updateModalOpen(v.recoNo, 1, v.recoContent)};
+          updateBtn.innerText = "수정";
+          selectBtn.appendChild(updateBtn);
+        const deleteBtn = document.createElement('span');
+          deleteBtn.onclick = () => {deleteModalOpen(v.recoNo, 1)};
+          deleteBtn.innerText = "삭제";
+          selectBtn.appendChild(deleteBtn);
+      }else{
+        const reportBtn = document.createElement('span');
+          reportBtn.innerText = "신고";
+          selectBtn.appendChild(reportBtn);
+      }
+    
+    const dateTag = document.createElement('small');
+      dateTag.innerText = v.recoCreateDate;
+    
+    const contentBox = document.createElement('div');
+      contentBox.classList.add('fode__co-con');
+      contentBox.classList.add('recomment-content'+v.recoNo);
+      contentBox.innerText = v.recoContent;
+      
+    // 추가추가
+    selectBtn.appendChild(dateTag);
+
+    commentInfo.appendChild(userIdTag);
+    commentInfo.appendChild(selectBtn);
+
+    commentBox.appendChild(commentInfo);
+    commentBox.appendChild(contentBox);
+
+    const commentWrapper = document.querySelector("#re-comment-top-wrapper"+v.coNo);
+      commentWrapper.prepend(commentBox);
+  }
   
   // 댓글/대댓글 작성
   const replyInsert = (forNo) => {
@@ -416,8 +466,16 @@
 		  }).then((res) => {
 			  console.log("추가됨");
 			  
-			  // 아아으아 또해보자!!
-			  
+			  if(res.data){
+				  const data = res.data[0];
+	
+				  // 아아으아 또해보자!!
+				  createSubReplyTag(data);
+				  inputContent.value = "";
+				  
+			  }else{
+				  alert('댓글 등록 실패');
+			  }
 			  
 		  })
 		  

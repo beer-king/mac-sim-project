@@ -324,7 +324,6 @@
 		 where for_no = #{ forNo }
 	</update>
 	
-	
 	<select id="selectReplyOne" resultMap="replyResultSet" parameterType="Reply">
 		select
 		       FOR_NO
@@ -341,6 +340,23 @@
 		 where for_no = #{ forNo }
 		   and user_no = #{ userNo }
 		   and co_content = #{ coContent }
+	</select>
+	
+	<select id="selectSubReplyOne" resultMap="subReplyResultSet" parameterType="SubReply">
+		select
+		        CO_NO
+		      , RECO_NO
+		      , RECO_CONTENT
+		      , RECO_CREATEDATE
+		      , RECO_UPDATEDATE
+		      , RECO_STATUS
+		      , USER_NO
+		      , USER_ID
+		   from FRECOMMENTS
+		   join member using(user_no)
+	   	  where co_no = #{ coNo }
+	   	    and user_id = #{ userId }
+	   	    and reco_content = #{ coContent }
 	</select>
 	
 	<!-- 

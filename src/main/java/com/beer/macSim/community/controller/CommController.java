@@ -346,12 +346,10 @@ public class CommController {
 		if(result > 0) {
 			
 			ArrayList<Reply> rNew = cService.selectReplyOne(r);
-			System.out.println(rNew);
-			
+			//System.out.println(rNew);
 			String json = new Gson().toJson(rNew);
 			return json;
-			
-			//return "S";
+
 		}else {
 			return "F";
 		}		
@@ -360,7 +358,7 @@ public class CommController {
 	
 	// 포럼에 대댓글 작성
 	@ResponseBody
-	@RequestMapping("subReplyInsert.fo")
+	@RequestMapping(value="subReplyInsert.fo", produces="application/json; charset=utf-8")
 	public String subReplyInsert(HttpSession session, int fno, String cno, String sId, String coContent) {
 		
 		Member m = (Member)session.getAttribute("loginUser");
@@ -371,11 +369,16 @@ public class CommController {
 		r.setUserId(sId);
 		r.setCoContent(coContent);
 		
-		System.out.println(r);
+		//System.out.println(r);
 		int result = cService.subReplyInsert(r);
 		
 		if(result > 0) {
-			return "S";
+			
+			ArrayList<SubReply> rNew = cService.selectSubReplyOne(r);
+			//System.out.println(rNew);
+			String json = new Gson().toJson(rNew);
+			return json;
+			
 		}else {
 			return "F";
 		}		

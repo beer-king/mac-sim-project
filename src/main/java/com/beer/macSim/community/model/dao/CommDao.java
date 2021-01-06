@@ -112,6 +112,10 @@ public class CommDao {
 	public ArrayList<Reply> selectReplyOne(SqlSessionTemplate sqlSession, Reply r) {
 		return (ArrayList)sqlSession.selectList("commMapper.selectReplyOne", r);
 	}
+
+	public ArrayList<SubReply> selectSubReplyOne(SqlSessionTemplate sqlSession, Reply r) {
+		return (ArrayList)sqlSession.selectList("commMapper.selectSubReplyOne", r);
+	}
 		
 
 }
