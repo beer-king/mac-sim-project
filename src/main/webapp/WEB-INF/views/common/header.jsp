@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="resources/css/header.css" />
 </head>
 <body>
+
 <!-- header -->
 <header>
 
@@ -32,8 +33,6 @@
 		</script>
 		<c:remove var="alertMsg" scope="session"/>
 	</c:if>
-	
-	
 
     <div class="inner">
         <div class="header__left">

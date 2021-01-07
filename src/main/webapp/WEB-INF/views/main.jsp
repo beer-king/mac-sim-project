@@ -22,6 +22,14 @@
 	/>
 	<link rel="stylesheet" href="resources/css/header.css" />
 	<link rel="stylesheet" href="resources/css/mainPage.css" />
+	<script>
+		<c:if test="${a eq null}">
+			(() => {
+				console.log("!!!!");
+				location.href="main.load";
+			})()
+		</c:if>
+	</script>
 	<style>
 		.sidenav {
 			height:100%;
@@ -84,7 +92,7 @@
 
 	<div class="inner">
 		<c:if test="${loginUser.status eq 3}">
-			<span class="openmenu" onclick='openNav()'>></span>
+			<span class="openmenu" onclick='openNav()'></span>
 		</c:if>
 		<div class="header__left">
 			<a class="header__logo" href="#">
@@ -176,12 +184,15 @@
 				<div class="main__recom">
 					<h2 class="main__title">Today's Recommendation</h2>
 					<div class="recom__wrapper">
-						<img class="recom__img" src="resources/images/heineken.png" alt="beer" />
+						<img class="recom__img" src="${ to.changeName }" alt="beer" />
 						<div>
-							<span class="recom__title">곰표맥주</span>
+							<span class="recom__title">${ to.beerName }</span>
 							<span class="recom__desc"
-							>시원하고 맛있고 어떠어떠한 맥주입니다.
-                    정보접ㅇ보정보정보정보접ㅇ보정보정보정보접ㅇ보정보정보</span
+							>
+							* ${ to.alcohol }<br>
+							* ${ to.beerStyle }<br>
+							* ${ to.beerLocation }
+							</span
 							>
 							<a class="recom__more" href="#">이 맥주 보러가기 &Gt;</a>
 						</div>
@@ -202,7 +213,7 @@
 						>
 						</button>
 					</li>
-					<li>
+					<li onclick="openRank();">
 						<button>
 							RANK<i><span class="material-icons"> expand_more </span></i>
 						</button>
@@ -210,7 +221,7 @@
 				</ul>
 			</div>
 		</div>
-		<div class="main__bottom">
+		<div class="main__bottom" id="bottomRank" style="display:none;">
 			<p>맥심의 맥주 순위</p>
 			<h2 class="main__title">BEER OF HONER</h2>
 			<div class="bottom__middle">
@@ -218,12 +229,12 @@
 					<ul>
 						<li>
                   <span class="rank__first-icon">1</span
-				  ><span class="rank__first-name">곰표맥주</span>
+				  ><span class="rank__first-name">${ rList[0].beerName }</span>
 						</li>
-						<li><span>2</span><span>곰표맥주</span></li>
-						<li><span>3</span><span>곰표맥주</span></li>
-						<li><span>4</span><span>곰표맥주</span></li>
-						<li><span>5</span><span>곰표맥주</span></li>
+						<li><span>2</span><span>${ rList[1].beerName }</span></li>
+						<li><span>3</span><span>${ rList[2].beerName }</span></li>
+						<li><span>4</span><span>${ rList[3].beerName }</span></li>
+						<li><span>5</span><span>${ rList[4].beerName }</span></li>
 					</ul>
 				</div>
 				<div class="middle__right">
@@ -231,18 +242,19 @@
 						<li>
 							<img
 									class="rank__beer-img"
-									src="resources/images/heineken.png"
+									src="${ rList[0].changeName }"
 									alt="winner-beer"
 							/>
 						</li>
 						<li class="rank__beer-desc">
-							시원하고 맛있고 어떠어떠한 맥주입니다.
-							정보접ㅇ보정보정보정보접ㅇ보정보정보정보접ㅇ보정보정보
+							* ${ rList[0].alcohol }<br>
+							* ${ rList[0].beerStyle }<br>
+							* ${ rList[0].beerLocation }
 						</li>
 						<li class="rank__beer-score">
 							<div>
 								<i><span class="material-icons"> grade </span></i>
-								<span>&nbsp;&nbsp;89점</span>
+								<span>&nbsp;&nbsp;${ rList[0].scoreTotal }점</span>
 							</div>
 							<a class="recom__more" href="#">이 맥주 보러가기 &Gt;</a>
 						</li>
@@ -256,12 +268,12 @@
 						<li class="bottom__img">
 							<img
 									class="rank__beer-img"
-									src="resources/images/heineken.png"
+									src="${ mRank.changeName }"
 									alt="men's beer"
 							/>
 						</li>
 						<li class="bottom__name">
-							<i class="fas fa-crown"></i> 곰표맥주
+							<i class="fas fa-crown"></i> ${ mRank.beerName }
 						</li>
 						<li>
 							<a class="recom__more" href="#">이 맥주 보러가기 &Gt;</a>
@@ -274,12 +286,12 @@
 						<li class="bottom__img">
 							<img
 									class="rank__beer-img"
-									src="resources/images/heineken.png"
+									src="${ fRank.changeName }"
 									alt="women's beer"
 							/>
 						</li>
 						<li class="bottom__name">
-							<i class="fas fa-crown"></i> 곰표맥주
+							<i class="fas fa-crown"></i> ${ fRank.beerName }
 						</li>
 						<li>
 							<a class="recom__more" href="#">이 맥주 보러가기 &Gt;</a>
@@ -291,6 +303,14 @@
 	</div>
 </main>
 
-<footer></footer>
+<script defer>
+	
+	const openRank = () => {
+		bottomRank.style.marginTop = "150px";
+		bottomRank.style.display = "initial";
+	}
+
+</script>
+
 </body>
 </html>

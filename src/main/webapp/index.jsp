@@ -8,6 +8,12 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<jsp:forward page="WEB-INF/views/main.jsp"/>
+	<!--<jsp:forward page="WEB-INF/views/main.jsp"/>-->
 </body>
+<script defer>
+	(() => {
+		console.log("!!!!");
+		location.href="main.load";
+	})()
+</script>
 </html>
