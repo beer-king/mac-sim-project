@@ -149,16 +149,35 @@ public class EventController {
 	public String applyEvent(EventAttendee ea,
 					         HttpSession session, Model model) {
 		
-		System.out.println(ea);
+		int result1 = 0;
+		result1 = evService.increaseApplyNo(ea);
 		
-		int result1 = evService.decreasePoint(ea);
-		int result2 = evService.applyEvent(ea);
-		if(result1 * result2 > 0 ) {
-			session.setAttribute("alertMsg", "성공적으로 이벤트가 신청되었습니다.");
-			return "redirect:event.me";
-		}else {
-			model.addAttribute("errorMsg", "이벤트 신청이 실패하였습니다.");
-			return "common/errorPage";
+		if(result1 > 0 ) {
+			int result2 = 0;
+			result2 = evService.decreasePoint(ea);
+			
+			if(result2 > 0 ){
+				
+				int result3 = 0;
+				result3 = evService.applyEvent(ea);
+				
+				if(result3 > 0) {
+					
+					session.setAttribute("alertMsg", "성공적으로 이벤트가 신청되었습니다.");
+					return "redirect:event.me";
+				}else {
+					session.setAttribute("alertMsg", "이벤트 신청이 실패하였습니다.");
+					return "redirect:list.ev";
+				}
+				
+			}else{
+				session.setAttribute("alertMsg", "이벤트 신청할 포인트가 부족합니다.");
+				return "redirect:point.me";
+			}
+				
+		}else{
+			session.setAttribute("alertMsg", "해당 이벤트 참여가 마감되었습니다.");
+			return "redirect:list.ev";
 		}
 	}
 	

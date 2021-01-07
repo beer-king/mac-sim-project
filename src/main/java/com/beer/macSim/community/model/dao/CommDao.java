@@ -12,6 +12,7 @@ import com.beer.macSim.community.model.vo.Community;
 import com.beer.macSim.community.model.vo.Forum;
 import com.beer.macSim.community.model.vo.Reply;
 import com.beer.macSim.community.model.vo.SubReply;
+import com.beer.macSim.member.model.vo.PointHistory;
 
 @Repository
 public class CommDao {
@@ -73,12 +74,12 @@ public class CommDao {
 		return (ArrayList)sqlSession.selectList("commMapper.selectSubReplyList", coNo);
 	}
 
-	public int updateReplyUpdate(SqlSessionTemplate sqlSession, Reply r) {
-		return sqlSession.update("commMapper.updateReplyUpdate", r);
+	public int replyUpdate(SqlSessionTemplate sqlSession, Reply r) {
+		return sqlSession.update("commMapper.replyUpdate", r);
 	}
 
-	public int updateSubReplyUpdate(SqlSessionTemplate sqlSession, Reply r) {
-		return sqlSession.update("commMapper.updateSubReplyUpdate", r);
+	public int subReplyUpdate(SqlSessionTemplate sqlSession, Reply r) {
+		return sqlSession.update("commMapper.subReplyUpdate", r);
 	}
 
 	public int replyDelete(SqlSessionTemplate sqlSession, int coNo) {
@@ -95,6 +96,55 @@ public class CommDao {
 
 	public int selectIsLike(SqlSessionTemplate sqlSession, CommLikes cl) {
 		return sqlSession.selectOne("commMapper.selectIsLike", cl);
+	}
+
+	public int replyInsert(SqlSessionTemplate sqlSession, Reply r) {
+		int i = sqlSession.insert("commMapper.replyInsert", r);
+		int j = sqlSession.update("commMapper.replyIncrease", r);
+		return i*j;
+	}
+
+	public int subReplyInsert(SqlSessionTemplate sqlSession, Reply r) {
+		int i = sqlSession.insert("commMapper.subReplyInsert", r);
+		int j = sqlSession.update("commMapper.replyIncrease", r);
+		return i*j;
+	}
+
+	public ArrayList<Reply> selectReplyOne(SqlSessionTemplate sqlSession, Reply r) {
+		return (ArrayList)sqlSession.selectList("commMapper.selectReplyOne", r);
+	}
+
+	public ArrayList<SubReply> selectSubReplyOne(SqlSessionTemplate sqlSession, Reply r) {
+		return (ArrayList)sqlSession.selectList("commMapper.selectSubReplyOne", r);
+	}
+
+	public Community updateFormComm(SqlSessionTemplate sqlSession, int commNo) {
+		//HashMap<Integer, Community> map = new HashMap<Integer, Community>();
+		return sqlSession.selectOne("commMapper.updateFormComm", commNo);
+	}
+
+	public int updateComm(SqlSessionTemplate sqlSession, Community c) {
+		return sqlSession.update("commMapper.updateComm", c);
+	}
+
+	public Forum updateFormForum(SqlSessionTemplate sqlSession, int forNo) {
+		return sqlSession.selectOne("commMapper.updateFormForum", forNo);
+	}
+
+	public int updateForum(SqlSessionTemplate sqlSession, Forum f) {
+		return sqlSession.update("commMapper.updateForum", f);
+	}
+
+	public int deleteComm(SqlSessionTemplate sqlSession, int commNo) {
+		return sqlSession.update("commMapper.deleteComm", commNo);
+	}
+
+	public int deleteForum(SqlSessionTemplate sqlSession, int forNo) {
+		return sqlSession.update("commMapper.deleteForum", forNo);
+	}
+
+	public int selectForumEnter(SqlSessionTemplate sqlSession, PointHistory ph) {
+		return sqlSession.selectOne("commMapper.selectForumEnter", ph);
 	}
 		
 

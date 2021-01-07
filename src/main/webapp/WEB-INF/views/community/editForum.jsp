@@ -76,12 +76,9 @@
 
             <!-- 작성 버튼 -->
             <div class="btn-wrapper">
-              <button class="btn btn-lightgray btn-bold" type="button">
+              <button class="btn btn-lightgray btn-bold" type="button" onclick="history.back()">
                                작성취소
               </button>
-              <!-- "작성을 취소하고 이전페이지로 돌아가시겠습니까?
-                    작성중이던 내용은 저장되지 않습니다."
-                    alert 띄우기 -->
               <button class="btn btn-yellow btn-bold" type="submit">
                	작성하기
               </button>
@@ -92,6 +89,11 @@
     </main>
 </body>
 <script defer>
+	const hiddenBtn = document.querySelector("#hiddenBtn");
+	const fileBtn = document.querySelector("#fileBtn");
+	const fileLabel = document.querySelector("#fileLabel");
+	const fileImg = document.querySelector("#fileImg");
+	
     fileBtn.addEventListener("click", () => {
       hiddenBtn.click();
     });

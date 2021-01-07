@@ -65,11 +65,11 @@
 				/></a>
 			<span class="div-line"></span>
 			<ul class="header__nav">
-				<li><a href="#">맥주검색</a></li>
-				<li><a href="#">커뮤니티</a></li>
-				<li><a href="#">이벤트</a></li>
-				<li><a href="#">공동구매</a></li>
-				<li><a href="#">공지사항</a></li>
+				<li><a href="beers.db">맥주검색</a></li>
+				<li><a href="list.cm">커뮤니티</a></li>
+				<li><a href="list.ev">이벤트</a></li>
+				<li><a href="list.gb">공동구매</a></li>
+				<li><a href="list.no">공지사항</a></li>
 			</ul>
 		</div>
 		<div class="header__right">
@@ -100,7 +100,7 @@
 			<br>
 			<a href="beerAd.ad">맥주관리</a>
 			<br>
-			<a href="#">공구관리</a>
+			<a href="GB.ad">공구관리</a>
 			<br>
 			<a href="eventAd.ad">이벤트관리</a>
 			<br>

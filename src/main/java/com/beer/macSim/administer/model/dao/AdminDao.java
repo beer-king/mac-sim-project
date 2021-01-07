@@ -3,16 +3,20 @@ package com.beer.macSim.administer.model.dao;
 import java.util.ArrayList;
 
 import org.apache.ibatis.session.RowBounds;
+import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.beer.macSim.administer.model.vo.Batch;
 import com.beer.macSim.administer.model.vo.BeerSearch;
+import com.beer.macSim.administer.model.vo.GbRequest;
 import com.beer.macSim.administer.model.vo.Report;
 import com.beer.macSim.administer.model.vo.SelectData;
 import com.beer.macSim.common.model.vo.PageInfo;
 import com.beer.macSim.data.model.vo.Beers;
+import com.beer.macSim.event.model.vo.Attachment;
 import com.beer.macSim.event.model.vo.Event;
+import com.beer.macSim.groupBuy.model.vo.GroupBuy;
 import com.beer.macSim.member.model.vo.Member;
 import com.beer.macSim.notice.model.vo.Notice;
 
@@ -133,5 +137,40 @@ public class AdminDao {
 		
 		
 		return i*j;
+	}
+	
+	public int selectPnocurrent(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("adminMapper.selectPnocurrent");
+	}
+	
+	public int enrollGB(SqlSession sqlSession, GroupBuy GB) {
+		int result = sqlSession.update("adminMapper.insertGB", GB);
+		return result;
+	}
+	
+	public int enrollAT(SqlSession sqlSession, Attachment a1, Attachment a2) {
+		int result2 = 1;
+		int result3 = 1;
+		
+		if(a1 != null) {
+			result2 = sqlSession.update("adminMapper.insertAttachment", a1);
+		}
+		if(a2 != null) {
+			result3 = sqlSession.update("adminMapper.insertAttachment", a2);
+		}
+		return result2 * result3;
+	}
+	public int selectGBRlistCount(SqlSessionTemplate sqlSession, BeerSearch bs) {
+		return sqlSession.selectOne("adminMapper.selectGBRlistCount", bs);
+	}
+	
+	public ArrayList<GbRequest> selectGBRlist(SqlSessionTemplate sqlSession, BeerSearch bs, PageInfo pi){
+		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("adminMapper.selectGBRlist", bs, rowBounds);
+	}
+	
+	public int updateBatchGB(SqlSessionTemplate sqlSession, Batch b) {
+		return sqlSession.update("adminMapper.updateBatchGB", b);
 	}
 }

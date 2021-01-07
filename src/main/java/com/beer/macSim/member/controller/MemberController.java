@@ -7,6 +7,7 @@ import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.beer.macSim.data.model.vo.Score;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -37,7 +38,7 @@ public class MemberController {
 
 	@RequestMapping("mypage.me")
 	public String myPage(HttpSession session, Model model) {
-		
+
 		Member m = (Member)session.getAttribute("loginUser");
 		
 		int reviewCount = mService.reviewCount(m);
@@ -56,11 +57,15 @@ public class MemberController {
 	}
 
 	@RequestMapping("review.me")
-	public String review(Model model) {
+	public String review(Model model,HttpSession session) {
 
-		// ArrayList<> list = mService.selectBeerReivewList();
+		Member m = (Member) session.getAttribute("loginUser");
 
-		// model.addAttribute("list",list);
+		int userNo = m.getUserNo();
+
+		ArrayList<Score> list = mService.selectBeerReivewList(userNo);
+
+		 model.addAttribute("list",list);
 
 
 		return "member/review";
@@ -311,12 +316,37 @@ public class MemberController {
 		return "member/agreeForm";
 	}
 
-	
 
-/*
+    // 나의 리뷰 수정
+	@RequestMapping("updateBeerReview")
+	public String updateBeerReview(int newScore, String myReview,HttpSession session){
+
+		Score score = new Score();
+		score.setScore(newScore);
+		score.setComments(myReview);
+
+		Member m = (Member) session.getAttribute("loginUser");
+		score.setUserNo(m.getUserNo());
+
+		int result = mService.updateBeerReview(score);
+
+    	return "redirect:review.me";
+	}
+
+
+
+    // 나의 리뷰 삭제
     @RequestMapping("deleteReview")
     public String deleteReview(int scoreNo , HttpSession session){
-        int deleteReview = mService.deleteReview(scoreNo);
+
+    	Score score = new Score();
+    	score.setScoreNo(scoreNo);
+
+    	Member m = (Member) session.getAttribute("loginUser");
+
+    	score.setUserNo(m.getUserNo());
+
+        int deleteReview = mService.deleteReview(score);
 
         if(deleteReview>0){
            session.setAttribute("alertMsg","리뷰삭제 성공");
@@ -327,7 +357,7 @@ public class MemberController {
         }
 
     }
-    */
+
 
   
     
@@ -341,9 +371,23 @@ public class MemberController {
 		m.setUserPwd(encPwd); // 암호문이 담겨있음! 이것을 dao까지 쭉 넘길것이다.
 
 		int result = mService.insertMember(m);
+		
 
 		
 		if (result > 0) { // 성공 => 메인페이지 url재요청
+
+			
+			Member loginUser = mService.loginMember(m); 
+			
+			// (포인트적립 + 내역에추가)
+			PointHistory ph = new PointHistory();
+			ph.setPoint(100);
+			ph.setUserNo(loginUser.getUserNo());
+			ph.setCategory("회원가입");
+			ph.setPointHistory("적립");
+			
+			mService.updateMemberPoint(ph);
+			
 
 			session.setAttribute("alertMsg", "회원가입 성공! 100point 적립 되었습니다~!");
 			return "redirect:/";
@@ -387,6 +431,7 @@ public class MemberController {
     		
     		if(loginTime == null || Integer.parseInt(loginTime) >= 1 ) {
     			
+    			/*
     			//1) memeber 포인트 +3
     				 int result = mService.memberPointUpdate(loginUser.getUserNo(), 3);
     				 //System.out.println(result); -> 1 
@@ -403,6 +448,26 @@ public class MemberController {
     					 
     					 //session.setAttribute("alertMsg", "이미 오늘 포인트 받아가셨어요~");
     				 //}
+				*/
+    				 
+    			// 하나로 퉁치기 (포인트적립 + 내역에추가)
+					PointHistory ph = new PointHistory();
+					ph.setPoint(3);
+					ph.setUserNo(loginUser.getUserNo());
+					ph.setCategory("로그인");
+					ph.setPointHistory("적립");
+					
+					int result = mService.updateMemberPoint(ph);
+					
+					// 로그인 시간 update
+					int result2 = mService.updateMemberLoginTime(loginUser.getUserNo());
+					
+					if(result*result2 > 0) {
+   					 session.setAttribute("alertMsg", "출석 포인트로 3point 적립되었습니다~~!!!");
+   				    }
+					
+    		}else {
+    			session.setAttribute("alertMsg", "이미 오늘 포인트 받아가셨어요~");
     		}
     		
     		// 확인해보기

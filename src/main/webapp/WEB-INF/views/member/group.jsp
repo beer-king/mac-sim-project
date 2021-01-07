@@ -74,7 +74,7 @@
    <c:forEach var="g" items="${list}">
       <div id="groupBuy">
           <ul>
-              <li>
+              <li id="gb">
               	  <span class="pNo">${g.pNo}</span>	
                   <span class="pName1">${g.gbName}</span><span>(${g.gbPoint}P)</span>
                     <!-- Button to Openthe Modal -->
@@ -87,34 +87,12 @@
       </div>
    </c:forEach>
 
-<!-- 데이터가 없엉서 일단 입시로 해본것 -->
-    <div id="groupBuy">
-
-            <ul>
-                <li>
-                    <span class="pNo">1</span>
-                    <span class="pName1">신발</span><span>(12P)</span>
-
-                    <!-- Button to Openthe Modal -->
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">
-                        취소
-                    </button>
-                </li>
-                <br>
-            </ul>
-
-    </div>
 
 
-
-
-
-
-      
       <script>
           $(function(){
               $("#groupBuy li").click(function(){
-                  var pNo = $(".pNo").text();
+                  var pNo = $("#gb").children(".pNo").text();
                   console.log(pNo);
 
                   $("#nameSpace").text(pNo);
@@ -158,8 +136,8 @@
             $(function(){
                 $("#gbBtn").click(function(){
 
-                   var pNo =  $(".modal-body").children("#nameSpace").text();
-                   var uno = ${loginUser.userNo}
+                   var pNo =  $("#nameSpace").text();
+                   var uno = ${loginUser.userNo};
                     //console.log(pNo);
                     //console.log(uno);
                    location.href = "delete.gb?pNo="+pNo +"&userNo="+uno;

@@ -1,5 +1,6 @@
 package com.beer.macSim.member.model.service;
 
+import com.beer.macSim.data.model.vo.Score;
 import com.beer.macSim.event.model.vo.Event;
 import com.beer.macSim.groupBuy.model.vo.GroupBuy;
 import com.beer.macSim.member.model.dao.MemberDao;
@@ -53,6 +54,16 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int idCheck(String userId) {
 		return mDao.idCheck(sqlSession, userId); 
+	}
+
+	@Override
+	public int deleteReview(Score score) {
+		return mDao.deleteReview(sqlSession,score);
+	}
+
+	@Override
+	public int updateBeerReview(Score score) {
+		return mDao.updateBeerReview(sqlSession,score);
 	}
 	
 
@@ -152,12 +163,28 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
+
 	public void sendMail(String userId, String email) {
 		// TODO Auto-generated method stub
 		
 	}
 
 
+	public ArrayList<Score> selectBeerReivewList(int userNo) {
+		return mDao.selectReviewList(sqlSession,userNo);
+	}
+
+	// 사용자의 포인트를 적립/차감 하고 + 포인트내역에 추가
+	@Override
+	public int updateMemberPoint(PointHistory ph) {
+		return mDao.updateMemberPoint(sqlSession, ph);
+	}
+
+
+	@Override
+	public int updateMemberLoginTime(int userNo) {
+		return mDao.updateMemberLoginTime(sqlSession, userNo);
+	}
 
 }
 

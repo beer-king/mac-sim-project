@@ -98,4 +98,9 @@ public class EventServiceImpl implements EventService {
 		return evDao.searchEventList(sqlSession, pi, es);
 	}
 
+	@Override
+	public int increaseApplyNo(EventAttendee ea) {
+		return evDao.increaseApplyNo(sqlSession, ea);
+	}
+
 }

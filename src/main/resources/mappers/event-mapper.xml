@@ -171,8 +171,9 @@
   	<update id="decreasePoint" parameterType="EventAttendee">
   		update
   			    member
-  		   set  point = point + #{evPoint}
+  		   set  point = point - abs(#{evPoint})
   		 where  user_no = #{userNo}
+  		   and  point >= abs(#{evPoint})
   	</update>
   	
   	<insert id="applyEvent" parameterType="EventAttendee">
@@ -282,4 +283,12 @@
 		  , 'Y'
 		  )
 	</insert>
+	
+	<update id="increaseApplyNo" parameterType="EventAttendee">
+		update
+		       event
+		   set apply_no = apply_no +1
+		 where ev_no = #{evNo}
+		   and limit_no > apply_no
+	</update>
 </mapper>

@@ -17,4 +17,15 @@ public class Attachment {
 	private String changeName;  // 변경후 파일명(저장경로 + 변경후 파일명)
 	private int evNo;			// 이벤트번호
 	private int pNo;			// 공구번호
+	
+	
+	public Attachment(String originName, String changeName, int pNo) {
+		super();
+		this.originName = originName;
+		this.changeName = changeName;
+		this.pNo = pNo;
+	}
+	
+	
+	
 }

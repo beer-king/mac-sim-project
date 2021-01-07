@@ -13,6 +13,7 @@ import com.beer.macSim.community.model.vo.Community;
 import com.beer.macSim.community.model.vo.Forum;
 import com.beer.macSim.community.model.vo.Reply;
 import com.beer.macSim.community.model.vo.SubReply;
+import com.beer.macSim.member.model.vo.PointHistory;
 
 @Service
 public class CommServiceImpl  implements CommService{
@@ -85,13 +86,13 @@ public class CommServiceImpl  implements CommService{
 	}
 
 	@Override
-	public int updateReplyUpdate(Reply r) {
-		return cDao.updateReplyUpdate(sqlSession, r);
+	public int replyUpdate(Reply r) {
+		return cDao.replyUpdate(sqlSession, r);
 	}
 
 	@Override
-	public int updateSubReplyUpdate(Reply r) {
-		return cDao.updateSubReplyUpdate(sqlSession, r);
+	public int subReplyUpdate(Reply r) {
+		return cDao.subReplyUpdate(sqlSession, r);
 	}
 
 	@Override
@@ -112,6 +113,61 @@ public class CommServiceImpl  implements CommService{
 	@Override
 	public int selectIsLike(CommLikes cl) {
 		return cDao.selectIsLike(sqlSession, cl);
+	}
+
+	@Override
+	public int replyInsert(Reply r) {
+		return cDao.replyInsert(sqlSession, r);
+	}
+
+	@Override
+	public int subReplyInsert(Reply r) {
+		return cDao.subReplyInsert(sqlSession, r);
+	}
+
+	@Override
+	public ArrayList<Reply> selectReplyOne(Reply r) {
+		return cDao.selectReplyOne(sqlSession, r);
+	}
+
+	@Override
+	public ArrayList<SubReply> selectSubReplyOne(Reply r) {
+		return cDao.selectSubReplyOne(sqlSession, r);
+	}
+
+	@Override
+	public Community updateFormComm(int commNo) {
+		return cDao.updateFormComm(sqlSession, commNo);
+	}
+
+	@Override
+	public int updateComm(Community c) {
+		return cDao.updateComm(sqlSession, c);
+	}
+
+	@Override
+	public Forum updateFormForum(int forNo) {
+		return cDao.updateFormForum(sqlSession, forNo);
+	}
+
+	@Override
+	public int updateForum(Forum f) {
+		return cDao.updateForum(sqlSession, f);
+	}
+
+	@Override
+	public int deleteComm(int commNo) {
+		return cDao.deleteComm(sqlSession, commNo);
+	}
+
+	@Override
+	public int deleteForum(int forNo) {
+		return cDao.deleteForum(sqlSession, forNo);
+	}
+
+	@Override
+	public int selectForumEnter(PointHistory ph) {
+		return cDao.selectForumEnter(sqlSession, ph);
 	}
 
 }

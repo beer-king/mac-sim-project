@@ -216,6 +216,8 @@
 		  join MEMBER using(user_no)
 		 where for_no = #{ fno }
 		   and co_status = 0
+		  order
+		     by co_createdate desc
 	</select>
 	
 	<select id="selectSubReplyList" resultMap="subReplyResultSet" parameterType="_int" >
@@ -232,15 +234,17 @@
 		   join member using(user_no)
 	   	  where co_no = #{ coNo }
 		    and reco_status = 0
+		  order
+		     by reco_createdate desc
 	</select>
 	
-	<update id="updateReplyUpdate" parameterType="Reply">
+	<update id="replyUpdate" parameterType="Reply">
 		UPDATE MACSIM.FCOMMENTS t
 		   SET t.CO_CONTENT = #{coContent}
 		 WHERE t.CO_NO = #{coNo}
 	</update>
 	
-	<update id="updateSubReplyUpdate" parameterType="Reply">
+	<update id="subReplyUpdate" parameterType="Reply">
 		UPDATE MACSIM.FRECOMMENTS t
 		   SET t.RECO_CONTENT = #{coContent}
 		 WHERE t.RECO_NO = #{coNo}
@@ -271,6 +275,164 @@
 	  FROM MACSIM.CLIKES
 	 WHERE CLIKES.COMM_NO = #{commNo}
 	   AND CLIKES.USER_NO = #{userNo}
+	</select>
+	
+	<insert id="replyInsert" parameterType="Reply">
+		insert
+		  into FCOMMENTS
+		     (
+		       CO_NO
+		     , FOR_NO
+		     , CO_CONTENT
+		     , USER_NO
+		     )
+		VALUES
+		     (
+		       seq_co_no.nextval
+		     , #{ forNo }
+		     , #{ coContent }
+		     , #{ userNo }
+		     )
+	</insert>
+	
+	<insert id="subReplyInsert" parameterType="Reply">
+		insert
+		  into FRECOMMENTS
+		     (
+		       RECO_NO
+		     , CO_NO
+		     , RECO_CONTENT
+		     , USER_NO
+		     )
+		VALUES
+		     (
+		       seq_reco_no.nextval
+		     , #{ coNo }
+		     , #{ coContent }
+		     , (
+		          select
+		                 user_no
+		            from member
+		           where user_id = #{ userId }
+		        )
+		     )
+	</insert>
+	
+	<update id="replyIncrease" parameterType="Reply">
+		update forum
+		   set for_comment = for_comment + 1
+		 where for_no = #{ forNo }
+	</update>
+	
+	<select id="selectReplyOne" resultMap="replyResultSet" parameterType="Reply">
+		select
+		       FOR_NO
+		     , CO_NO
+		     , CO_CONTENT
+		     , CO_CREATEDATE
+		     , CO_UPDATEDATE
+		     , CO_STATUS
+		     , RECO_COUNT
+		     , USER_NO
+		     , USER_ID
+		  from FCOMMENTS
+		  join MEMBER using(user_no)
+		 where for_no = #{ forNo }
+		   and user_no = #{ userNo }
+		   and co_content = #{ coContent }
+	</select>
+	
+	<select id="selectSubReplyOne" resultMap="subReplyResultSet" parameterType="SubReply">
+		select
+		        CO_NO
+		      , RECO_NO
+		      , RECO_CONTENT
+		      , RECO_CREATEDATE
+		      , RECO_UPDATEDATE
+		      , RECO_STATUS
+		      , USER_NO
+		      , USER_ID
+		   from FRECOMMENTS
+		   join member using(user_no)
+	   	  where co_no = #{ coNo }
+	   	    and user_id = #{ userId }
+	   	    and reco_content = #{ coContent }
+	</select>
+	
+	<select id="updateFormComm" resultMap="commResultSet" parameterType="_int" >
+		select
+		       comm_no
+		     , comm_origin_src
+		     , comm_change_src
+		     , comm_content
+		     , comm_createdate
+		     , comm_cate
+		     , comm_status
+		     , user_no
+		     , user_id
+		  from COMMUNITY
+		  join MEMBER using(user_no)
+		 where comm_no = #{ commNo }
+		   and comm_status = 0
+	</select>
+	
+	<update id="updateComm" parameterType="Community">
+		update community
+		   set comm_origin_src = #{ commOriginSrc }
+		     , comm_change_src = #{ commChangeSrc }
+		     , comm_content = #{ commContent }
+		     , comm_cate = #{ commCate }
+		 where comm_no = #{ commNo }
+		   and user_no = #{ userNo }
+	</update>
+	
+	<select id="updateFormForum" resultMap="forResultSet" parameterType="_int">
+		select
+		       for_no
+		     , for_origin_src
+		     , for_change_src
+		     , for_title
+		     , for_info
+		     , for_createdate
+		     , for_count
+		     , for_comment
+		     , for_status
+		     , user_no
+		     , user_id
+		  from FORUM
+		  join MEMBER using(user_no)
+		 where for_no = #{ forNo }
+		   and for_status = 0
+	</select>
+	
+	<update id="updateForum" parameterType="Forum">
+		update forum
+		   set for_origin_src = #{ forOriginSrc }
+		     , for_change_src = #{ forChangeSrc }
+		     , for_title = #{ forTitle }
+		     , for_info = #{ forInfo }
+		 where for_no = #{ forNo }
+		   and user_no = #{ userNo }
+	</update>
+	
+	<update id="deleteComm" parameterType="_int">
+		update community
+		   set comm_status = 3
+		 where comm_no = #{ commNo }
+	</update>
+	
+	<update id="deleteForum" parameterType="_int">
+		update forum
+		   set for_status = 3
+		 where for_no = #{ forNo }
+	</update>
+	
+	<select id="selectForumEnter" resultType="_int" parameterType="PointHistory">
+		select
+		       count(*)
+		  from POINT_HISTORY
+		 where user_no = #{ userNo }
+		   and category = #{ category }
 	</select>
 	
 	<!-- 

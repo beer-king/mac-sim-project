@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.beer.macSim.administer.model.service.AdminService;
 import com.beer.macSim.administer.model.vo.Batch;
 import com.beer.macSim.administer.model.vo.BeerSearch;
+import com.beer.macSim.administer.model.vo.GbRequest;
 import com.beer.macSim.administer.model.vo.Report;
 import com.beer.macSim.administer.model.vo.SelectData;
 import com.beer.macSim.common.model.vo.PageInfo;
@@ -27,7 +28,9 @@ import com.beer.macSim.common.template.Pagination;
 import com.beer.macSim.common.template.Search;
 import com.beer.macSim.common.template.Selectation;
 import com.beer.macSim.data.model.vo.Beers;
+import com.beer.macSim.event.model.vo.Attachment;
 import com.beer.macSim.event.model.vo.Event;
+import com.beer.macSim.groupBuy.model.vo.GroupBuy;
 import com.beer.macSim.member.model.vo.Member;
 import com.beer.macSim.notice.model.vo.Notice;
 
@@ -310,6 +313,70 @@ public class AdministerController {
 		}
 	}
 	
+	//공구 관리
+	@RequestMapping("GB.ad")
+	public String goGB(@RequestParam(value="currentPage", defaultValue="1")int currentPage, @RequestParam(value="category", defaultValue="1")int category, @RequestParam(value="status", defaultValue="R")String status, Model model, String sort, String search) {
+		model.addAttribute("category",category);
+		model.addAttribute("sort", sort);
+		if(category == 2) {
+			model.addAttribute("status", status);
+			BeerSearch bs = Search.getBeerSearch(status, search);
+			int listCount = aService.selectGBRlistCount(bs);
+			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+			ArrayList<GbRequest> gblist= aService.selectGBRlist(bs, pi);
+			for(GbRequest g : gblist) {
+				if(g.getReqStatus().equals("R")) {
+					g.setStatusName("배송준비");
+				}else if(g.getReqStatus().equals("C")) {
+					g.setStatusName("배송완료");
+				}else if(g.getReqStatus().equals("F")) {
+					g.setStatusName("배송취소");
+				}else {
+					g.setStatusName("배송취소완료");
+				}
+			}
+			model.addAttribute("pi", pi);
+			model.addAttribute("gblist", gblist);
+		}
+		return "administer/groupBuyAdmini";
+	}
+	@RequestMapping("enrollGB.ad")
+	public String enrollGB(GroupBuy gb, MultipartFile upfile1,MultipartFile upfile2,MultipartFile upfile3, HttpSession session, Model model) {
+		gb.setGbStart(dataFormat(gb.getGbStart()));
+		gb.setGbEnd(dataFormat(gb.getGbEnd()));
+		String changeName = saveFile(session, upfile1);
+		Attachment a1 = filetoAttachment(gb.getPno(), upfile2, session);
+		Attachment a2 = filetoAttachment(gb.getPno(), upfile3, session);
+		gb.setGbThumb("resources/uploadFiles/" + changeName);
+		
+		int result = aService.enrollGB(gb);
+		int result2 = aService.enrollAT(a1, a2);
+		if(result * result2 > 0) {
+			session.setAttribute("alertMsg", "성공적으로 처리되었습니다.");
+			return "redirect:GB.ad";
+		}else {
+			model.addAttribute("errorMsg", "실패되었습니다.");
+			return "common/errorPage";
+		}
+		
+	}
+	
+	@ResponseBody
+	@RequestMapping("processGB.ad")
+	public String processGB(@RequestParam(value = "list[]") ArrayList<String> list, String Astatus) {
+		Batch b = BatchProcess.getBatch(list, Astatus, null);
+		
+		int result = aService.updateBatchGB(b);
+		if(result > 0) {
+			return "success";
+		}else {
+			return "fail";
+		}
+	}
+	
+	
+	
+	
 	
 	//일반 함수
 	public String saveFile(HttpSession session, MultipartFile upfile) {
@@ -334,5 +401,60 @@ public class AdministerController {
 		
 		return changeName;
 		
+	}
+	
+	public String dataFormat(String date) {
+		String day = date.substring(0, date.indexOf("T"));
+		String time = date.substring(date.indexOf("T") + 1, date.indexOf(":"));
+		int a = Integer.parseInt(time);
+		if(a == 12) {
+			time = " PM " + Integer.toString(a);
+		}else if(a > 12) {
+			int b = a - 12;
+			time = " PM " + Integer.toString(b);
+		}else {
+			time = " AM " + Integer.toString(a);
+		}
+		return day + time;
+	}
+	
+	public String dataFormatSolve(String date) {
+		String day = date.substring(0, date.indexOf("M") - 2);
+		String sub = date.substring(date.indexOf("M") - 1, date.indexOf("M") + 1);
+		String time = date.substring(date.indexOf("M") + 2);
+		if(time.equals("12")) {
+			day = day + "T" + time + ":00";
+		}
+		else if(sub.equals("PM")) {
+			int a = Integer.parseInt(time) + 12;
+			day = day + "T" + Integer.toString(a) + ":00";
+		}else {
+			day = day + "T0" + time + ":00";
+		}
+		
+		return day;
+	}
+	
+	public Attachment filetoAttachment(int pNo, MultipartFile upfile, HttpSession session) {
+		if(!upfile.getOriginalFilename().isEmpty()) {
+			String savePath = session.getServletContext().getRealPath("/resources/images/");
+			
+			String originName = upfile.getOriginalFilename(); 
+			
+			String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+			int ranNum = (int)(Math.random() * 90000 + 10000);
+			String ext = originName.substring(originName.lastIndexOf("."));
+			String rchangeName = currentTime + ranNum + ext;
+			String changeName = "resources/images/" + currentTime + ranNum + ext; // 
+			
+			try {
+				upfile.transferTo(new File(savePath + rchangeName));
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+			}
+			return new Attachment(originName, changeName, pNo);
+		}else {
+			return null;
+		}
 	}
 }

@@ -25,6 +25,15 @@
 		<result column="ev_no" property="evNo"/>
 		<result column="pno" property="pNo"/>
 	</resultMap>
+	
+	<resultMap id="GbRequestResultSet" type="GbRequest">
+		<result column="request_no" property="requestNo" />
+		<result column="pno" property="pno" />
+		<result column="user_no" property="userNo" />
+		<result column="req_status" property="reqStatus" />
+		<result column="address" property="address" />
+		<result column="gb_point" property="gbPoint" />
+	</resultMap>
 		
 	<select id="selectListCount" resultType="_int">
 		select
@@ -90,4 +99,41 @@
   		  where pno = ${gno}  
 	</select>
 	
+	<update id="increaseApplyNo" parameterType="GbRequest">
+		update
+			   group_buy
+		   set apply_no = apply_no +1
+		 where pno = #{pno}
+		   and limit_no > apply_no 
+	</update>
+	
+	<update id="decreasePoint"  parameterType="GbRequest">
+		update
+				member
+		   set  point = point - abs(#{gbPoint})
+		 where  user_no = #{userNo}
+		   and  point >= abs(#{gbPoint})
+	</update>
+	
+	<insert id="applyGroupBuy" parameterType="GbRequest">
+		insert
+		  into gb_request
+		  (
+		    request_no
+		  , pno
+		  , user_no
+		  , req_status
+		  , address
+		  , gb_point
+		  )
+		  values
+		  (
+		    seq_request_no.nextval
+		  , #{pno}
+		  , #{userNo}
+		  , 'R'
+		  , #{address}
+		  , #{gbPoint}
+		  )
+	</insert>
 </mapper>

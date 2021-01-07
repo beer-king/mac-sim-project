@@ -1,5 +1,6 @@
 package com.beer.macSim.member.model.dao;
 
+import com.beer.macSim.data.model.vo.Score;
 import com.beer.macSim.event.model.vo.Event;
 import com.beer.macSim.groupBuy.model.vo.GroupBuy;
 import com.beer.macSim.member.model.vo.Member;
@@ -43,8 +44,8 @@ public class MemberDao {
 
 	}
 
-	public int deleteReivew(SqlSessionTemplate sqlSession, int scoreNo) {
-    	return sqlSession.update("memberMapper.updateBeerReview",scoreNo);
+	public int deleteReview(SqlSessionTemplate sqlSession, Score score) {
+    	return sqlSession.update("memberMapper.deleteReview",score);
 	}
 
 	public int memberPwdUpdate(SqlSessionTemplate sqlSession, Member m) {
@@ -124,6 +125,27 @@ public class MemberDao {
 
 	public int deleteGroupBuy(SqlSessionTemplate sqlSession, Member m) {
     	return sqlSession.update("memberMapper.deleteGroupBuy",m);
+	}
+
+	public int updateBeerReview(SqlSessionTemplate sqlSession, Score score) {
+
+    	return sqlSession.update("memberMapper.updateBeerReview",score);
+	}
+
+	public ArrayList<Score> selectReviewList(SqlSessionTemplate sqlSession, int userNo) {
+    	return (ArrayList)sqlSession.selectList("memberMapper.selectBeerReviewList",userNo);
+	}
+
+	public int updateMemberPoint(SqlSessionTemplate sqlSession, PointHistory ph) {
+		
+		int i = sqlSession.update("memberMapper.updateMemberPoint", ph);
+		int j = sqlSession.insert("memberMapper.insertPointHistory", ph);
+		
+		return i*j;
+	}
+
+	public int updateMemberLoginTime(SqlSessionTemplate sqlSession, int userNo) {
+		return sqlSession.update("memberMapper.updateMemberLoginTime", userNo);
 	}
 
 	

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.beer.macSim.common.model.vo.PageInfo;
 import com.beer.macSim.event.model.vo.Attachment;
+import com.beer.macSim.groupBuy.model.vo.GbRequest;
 import com.beer.macSim.groupBuy.model.vo.GroupBuy;
 
 @Repository
@@ -39,4 +40,15 @@ public class GroupBuyDao {
 		return (ArrayList)sqlSession.selectList("groupBuyMapper.selectGbAttachment", gno);
 	}
 	
+	public int increaseApplyNo(SqlSessionTemplate sqlSession, GbRequest gbr) {
+		return sqlSession.update("groupBuyMapper.increaseApplyNo", gbr);
+	}
+	
+	public int decreasePoint(SqlSessionTemplate sqlSession, GbRequest gbr) {
+		return sqlSession.update("groupBuyMapper.decreasePoint", gbr);
+	}
+	
+	public int applyGroupBuy(SqlSessionTemplate sqlSession, GbRequest gbr) {
+		return sqlSession.insert("groupBuyMapper.applyGroupBuy", gbr);
+	}	
 }
