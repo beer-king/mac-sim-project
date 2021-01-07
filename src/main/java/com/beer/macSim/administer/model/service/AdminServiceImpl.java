@@ -173,6 +173,11 @@ public class AdminServiceImpl implements AdminService{
 	public int updateBatchGB(Batch b) {
 		return aDao.updateBatchGB(sqlSession, b);
 	}
+
+	@Override
+	public int returnPoint(Batch b) {
+		return aDao.returnPoint(sqlSession, b);
+	}
 	
 	
 }

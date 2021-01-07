@@ -173,4 +173,16 @@ public class AdminDao {
 	public int updateBatchGB(SqlSessionTemplate sqlSession, Batch b) {
 		return sqlSession.update("adminMapper.updateBatchGB", b);
 	}
+	
+	public int returnPoint(SqlSessionTemplate sqlSession, Batch b) {
+		int result = 0;
+		for(String no : b.getList()) {
+			result = sqlSession.update("adminMapper.returnPoint", no);
+			if(result <= 0) {
+				break;
+			}
+		}
+		
+		return result;
+	}
 }

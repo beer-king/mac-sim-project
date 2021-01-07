@@ -80,6 +80,7 @@
 		<result column="address" property="address"/>
 		<result column="pname" property="pname"/>
 		<result column="gb_thumb" property="thumb"/>
+		<result column="gb_point" property="gbPoint"/>
 	</resultMap>
 	
   	<insert id="insertBeer" parameterType="Beers">
@@ -457,7 +458,7 @@
   	</select>
   	
   	<select id="selectGBRlist" resultMap="GBRresultSet" parameterType="BS">
-		select request_no, pno, user_id, req_status, g.address, pname, gb_thumb
+		select request_no, pno, user_id, req_status, g.address, pname, gb_thumb, g.gb_point
 		from gb_request g
 		join member using(user_no)
 		join group_buy using(pno)
@@ -481,6 +482,23 @@
 			<foreach item="item" index="index" collection="list" separator="or">
 				request_no = #{item}
 			</foreach>
+  	</update>
+  	
+  	<update id="returnPoint" parameterType="string">
+		update member
+		set
+		point = (select point + g.gb_point
+		                       from gb_request g
+		                       join member using(user_no)
+		                       join group_buy using(pno)
+		                       where request_no = #{no}
+		                    )
+		where user_id = (select user_id
+		                       from gb_request g
+		                       join member using(user_no)
+		                       join group_buy using(pno)
+		                       where request_no = #{no}
+		                    )
   	</update>
   
 </mapper>

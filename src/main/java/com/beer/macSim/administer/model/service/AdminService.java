@@ -59,4 +59,5 @@ public interface AdminService {
 	int selectGBRlistCount(BeerSearch bs);
 	ArrayList<GbRequest> selectGBRlist(BeerSearch bs, PageInfo pi);
 	int updateBatchGB(Batch b);
+	int returnPoint(Batch b);
 }

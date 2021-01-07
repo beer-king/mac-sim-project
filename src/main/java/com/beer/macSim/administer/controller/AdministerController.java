@@ -366,8 +366,13 @@ public class AdministerController {
 	public String processGB(@RequestParam(value = "list[]") ArrayList<String> list, String Astatus) {
 		Batch b = BatchProcess.getBatch(list, Astatus, null);
 		
+		
 		int result = aService.updateBatchGB(b);
-		if(result > 0) {
+		int result2 = 1;
+		if(Astatus.equals("D")) {
+			result2 = aService.returnPoint(b);
+		}
+		if(result * result2 > 0) {
 			return "success";
 		}else {
 			return "fail";

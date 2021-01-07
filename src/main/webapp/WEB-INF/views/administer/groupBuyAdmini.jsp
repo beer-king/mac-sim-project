@@ -256,7 +256,7 @@
 		        			<c:choose>
 		        				<c:when test="${status eq 'R' }">
 				        			<tr>
-					            		<td rowspan="4" style="width: 20px;"><input id="${gb.requestNo}" type="checkbox" name="number" value="${r.reqNo}"></td>
+					            		<td rowspan="4" style="width: 20px;"><input id="${gb.requestNo}" type="checkbox" name="number" value="${gb.gbPoint}"></td>
 					            	</tr>
 					            	<tr class="clickDataView" onclick="trclick(${gb.requestNo});">
 					            		<td rowspan="4" style="width: 20px;"><img src="${gb.thumb }" width="100" height="100"></td>
@@ -272,7 +272,7 @@
 		        				</c:when>
 		        				<c:when test="${status eq 'F' }">
 		        					<tr>
-					            		<td rowspan="4" style="width: 20px;"><input id="${gb.requestNo}" type="checkbox" name="number" value="${r.reqNo}"></td>
+					            		<td rowspan="4" style="width: 20px;"><input id="${gb.requestNo}" type="checkbox" name="number" value="${gb.gbPoint}"></td>
 					            	</tr>
 					            	<tr class="clickDataView" onclick="trclick2(${gb.requestNo});">
 					            		<td rowspan="4" style="width: 20px;"><img src="${gb.thumb }" width="100" height="100"></td>
@@ -523,6 +523,7 @@
 			function complete(){
 				$("input[name='number']:checked").each(function(i){
 					checkArr.push($(this).attr("id"));
+					
 				});
 				$.ajax({
 					url:"processGB.ad",
@@ -544,6 +545,7 @@
 			function cancel(){
 				$("input[name='number']:checked").each(function(i){
 					checkArr.push($(this).attr("id"));
+					
 				});
 				$.ajax({
 					url:"processGB.ad",
