@@ -132,6 +132,10 @@ public class MemberDao {
     	return sqlSession.update("memberMapper.updateBeerReview",score);
 	}
 
+	public ArrayList<Score> selectReviewList(SqlSessionTemplate sqlSession, int userNo) {
+    	return (ArrayList)sqlSession.selectList("memberMapper.selectBeerReviewList",userNo);
+	}
+
 	
 
 

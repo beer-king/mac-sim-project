@@ -31,15 +31,15 @@
 	</resultMap>
 	
 
-	<!-- 
+
 		<resultMap id="beerReviewResultSet" type="Score">
-			<result column="score_no" property="scoreNo"></result>
-			<result column="beer_name" property="beerName"></result>
-			<result column="score" property="score"></result>
-			<result column="updated_date" property="updatedDate"></result>
-			<result column="comments" property="comments"></result>
+			<result column="score_no" property="scoreNo"/>
+			<result column="beer_name" property="beerName"/>
+			<result column="score" property="score"/>
+			<result column="updated_date" property="updatedDate"/>
+			<result column="comments" property="comments"/>
 		</resultMap>
-	 -->
+
 
    <resultMap type="Event" id="eventResultSet">
    		<result column="ev_no" property="evNo"></result>
@@ -171,9 +171,9 @@
 	
 
 
-	<!--
 
-		<select id="selectBeerReviewList" resultMap="beerReviewResultSet">
+
+		<select id="selectBeerReviewList" resultMap="beerReviewResultSet" parameterType="_int">
 	
 			select
 			       score_no
@@ -183,10 +183,11 @@
 				  ,comments
 			from score s
 					 join beer b using(beer_no)
-			where s.status='Y';
+			where s.status='Y'
+              and user_no =#{userNo}
 	
 		</select>
-	 -->
+
 		<update id="updateBeerReview" parameterType="Score">
 
 			update

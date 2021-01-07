@@ -162,6 +162,10 @@ public class MemberServiceImpl implements MemberService {
 		return mDao.deleteGroupBuy(sqlSession,m);
 	}
 
+	@Override
+	public ArrayList<Score> selectBeerReivewList(int userNo) {
+		return mDao.selectReviewList(sqlSession,userNo);
+	}
 
 
 }

@@ -57,11 +57,15 @@ public class MemberController {
 	}
 
 	@RequestMapping("review.me")
-	public String review(Model model) {
+	public String review(Model model,HttpSession session) {
 
-		// ArrayList<> list = mService.selectBeerReivewList();
+		Member m = (Member) session.getAttribute("loginUser");
 
-		// model.addAttribute("list",list);
+		int userNo = m.getUserNo();
+
+		ArrayList<Score> list = mService.selectBeerReivewList(userNo);
+
+		 model.addAttribute("list",list);
 
 
 		return "member/review";

@@ -78,4 +78,5 @@ public interface MemberService {
     int deleteGroupBuy(Member m);
 
 
+    ArrayList<Score> selectBeerReivewList(int userNo);
 }
