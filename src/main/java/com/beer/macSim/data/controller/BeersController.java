@@ -17,12 +17,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.beer.macSim.common.model.vo.PageInfo;
 import com.beer.macSim.common.template.Pagination;
-import com.beer.macSim.data.model.service.BeerService;
+//import com.beer.macSim.data.model.service.BeerService;
 import com.beer.macSim.data.model.vo.Beers;
 
 @Controller
 public class BeersController {
-	
+	/*
 	@Autowired
 	private BeerService bService;
 		
@@ -74,6 +74,6 @@ public class BeersController {
 		
 		return changeName; //반환(return)시켜서 다른 메소드에서 불러올 수 있게 처리 
 	}
-	
+	*/
 
 }

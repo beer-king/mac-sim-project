@@ -50,7 +50,7 @@
         
         <ul class="comm__items">
           <c:forEach var="f" items="${ list }" >
-	          <li class="forum__item" onclick="location.href='detail.fo?fno=${ f.forNo }'">
+	          <li class="forum__item" onclick="enterModalOpen(${f.forNo}, ${f.userNo}, '${f.forTitle}');"/>
 	            <div class="img-wrapper">
 	              <img src="resources/uploadFiles/${ f.forChangeSrc }" alt="picture" />
 	            </div>
@@ -115,6 +115,48 @@
         
       </div>
     </main>
+    
+    <!-- 입장 모달 -->
+    <div id="enter-modal" class="modal__layout">
+      <div id="enter-modal-box" class="modal__box">
+        <h1 id="enter-modal-title"></h1>
+        <span>최초 입장시 5포인트가 차감됩니다. 이후에는 자유롭게 이 포럼을 이용하실 수 있습니다.</span>
+
+        <div class="modal__btn_wrapper">
+          <button id="modal-enter-btn" type="button" class="btn">입장하기</button>
+          <button type="button" onclick="enterModalClose();" class="btn">취소</button>
+        </div>
+      </div>
+    </div>
 
 </body>
+<script defer>
+	// MODAL ------------------------
+	
+	// 입장모달 -----
+	const enterModalOpen = (forNo, userNo, forTitle) => {
+	  const enterBtn = document.querySelector("#modal-enter-btn");
+	  enterBtn.onclick = () => {location.href="detail.fo?fno="+forNo+"&uno="+userNo};
+	  document.querySelector("#enter-modal-title").innerText = forTitle + " 입장";
+	  
+	  document.querySelector("#enter-modal").classList.add("modal__active");
+	};
+	
+	const enterModalClose = () => {
+	  document.querySelector("#enter-modal").style.animation =
+	    "fadeOut 0.4s ease-in-out forwards";
+	  document.querySelector("#enter-modal-box").style.animation =
+	    "slideDown 0.4s ease-in-out forwards";
+	  setTimeout(() => {
+	    document
+	      .querySelector("#enter-modal")
+	      .classList.remove("modal__active");
+	
+	    document.querySelector("#enter-modal").style.animation =
+	      "fadeIn 0.4s ease-in-out forwards";
+	    document.querySelector("#enter-modal-box").style.animation =
+	      "slideUp 0.4s ease-in-out forwards";
+	  }, 400);
+	};
+</script>
 </html>

@@ -167,6 +167,16 @@ public class MemberServiceImpl implements MemberService {
 		return mDao.selectReviewList(sqlSession,userNo);
 	}
 
+	// 사용자의 포인트를 적립/차감 하고 + 포인트내역에 추가
+	@Override
+	public int updateMemberPoint(PointHistory ph) {
+		return mDao.updateMemberPoint(sqlSession, ph);
+	}
+
+	@Override
+	public int updateMemberLoginTime(int userNo) {
+		return mDao.updateMemberLoginTime(sqlSession, userNo);
+	}
 
 }
 

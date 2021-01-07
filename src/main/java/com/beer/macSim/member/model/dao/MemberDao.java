@@ -136,6 +136,18 @@ public class MemberDao {
     	return (ArrayList)sqlSession.selectList("memberMapper.selectBeerReviewList",userNo);
 	}
 
+	public int updateMemberPoint(SqlSessionTemplate sqlSession, PointHistory ph) {
+		
+		int i = sqlSession.update("memberMapper.updateMemberPoint", ph);
+		int j = sqlSession.insert("memberMapper.insertPointHistory", ph);
+		
+		return i*j;
+	}
+
+	public int updateMemberLoginTime(SqlSessionTemplate sqlSession, int userNo) {
+		return sqlSession.update("memberMapper.updateMemberLoginTime", userNo);
+	}
+
 	
 
 

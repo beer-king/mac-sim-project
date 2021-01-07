@@ -1,7 +1,6 @@
 package com.beer.macSim.community.model.dao;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -13,6 +12,7 @@ import com.beer.macSim.community.model.vo.Community;
 import com.beer.macSim.community.model.vo.Forum;
 import com.beer.macSim.community.model.vo.Reply;
 import com.beer.macSim.community.model.vo.SubReply;
+import com.beer.macSim.member.model.vo.PointHistory;
 
 @Repository
 public class CommDao {
@@ -141,6 +141,10 @@ public class CommDao {
 
 	public int deleteForum(SqlSessionTemplate sqlSession, int forNo) {
 		return sqlSession.update("commMapper.deleteForum", forNo);
+	}
+
+	public int selectForumEnter(SqlSessionTemplate sqlSession, PointHistory ph) {
+		return sqlSession.selectOne("commMapper.selectForumEnter", ph);
 	}
 		
 
