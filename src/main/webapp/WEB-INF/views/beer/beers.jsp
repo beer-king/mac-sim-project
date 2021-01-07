@@ -157,7 +157,7 @@
                                     <option value="5.9" <c:if test="${condition eq '5.9' }">selected</c:if>>5.0 ~ 5.9</option>
                                     <option value="6.9" <c:if test="${condition eq '6.9' }">selected</c:if>>6.0 ~ 6.9</option>
                                     <option value="7.9" <c:if test="${condition eq '7.9' }">selected</c:if>>7.0 ~ 7.9</option>
-                                    <option value="8.0" <c:if test="${condition eq '8.' }">selected</c:if>>8.0 ~ </option>
+                                    <option value="8.0" <c:if test="${condition eq '8.0' }">selected</c:if>>8.0 ~ </option>
                                 </select>                            
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-12">
