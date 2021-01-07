@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -25,7 +24,9 @@ import com.beer.macSim.community.model.vo.Community;
 import com.beer.macSim.community.model.vo.Forum;
 import com.beer.macSim.community.model.vo.Reply;
 import com.beer.macSim.community.model.vo.SubReply;
+import com.beer.macSim.member.model.service.MemberService;
 import com.beer.macSim.member.model.vo.Member;
+import com.beer.macSim.member.model.vo.PointHistory;
 import com.google.gson.Gson;
 
 @Controller
@@ -33,6 +34,8 @@ public class CommController {
 
 	@Autowired
 	private CommService cService;
+	@Autowired
+	private MemberService mService;
 	
 	// 커뮤니티 (맥일/오맥) 리스트 조회
 	@RequestMapping("list.cm") // list.cm?cate=x&currentPage=x
@@ -220,26 +223,42 @@ public class CommController {
 	}
 	
 	// 포럼 상세페이지 조회
-	@RequestMapping("detail.fo") // detail.fo?fno=x
-	public String selectForumDetail(int fno, HttpSession session, Model model) {
+	@RequestMapping("detail.fo") // detail.fo?fno=x&uno=x
+	public String selectForumDetail(int fno, int uno, HttpSession session, Model model) {
 
-		//System.out.println("fno : " + fno);
+		System.out.println("fno : " + fno);
+		System.out.println("uno : " + uno);
 		
 		// 포럼 입장가능한지 확인
 		Member m = (Member)session.getAttribute("loginUser");
-		if(m != null) {
+		
+		if(m != null) { // 로그인한 사용자
 			
 			// 이미 입장한 포럼인지
-//			ArrayList<> = cService.select
+			PointHistory ph = new PointHistory();
+			ph.setPoint(-5);
+			ph.setUserNo(m.getUserNo());
+			ph.setCategory("포럼입장" + fno);
+			ph.setPointHistory("차감");
+			System.out.println(ph);
 			
-			// 첫입장이면 포인트 쓸 수 있는지
+			int isEnter = cService.selectForumEnter(ph);
+			if(m.getUserNo() != uno && isEnter == 0) { // 다른유저꺼면서 + 처음 입장하는 포럼
+				if(m.getPoint() < 5) { // 포인트가 없는사람은 바로 return되게
+					session.setAttribute("alertMsg", "포인트가 부족합니다ㅠㅠ");
+					return "redirect:list.fo";
+				}else { // 포인트 쓸 수 있으니까 차감
+					
+                    int result = mService.updateMemberPoint(ph);
+                    if(result > 0) {
+                    }else {
+            			model.addAttribute("errorMsg", "작성하신 글 등록에 실패하였습니다.");
+            			return "common/errorPage";
+                    }
+                    
+				}
+			}
 			
-			// 포인트 쓸 수 있으면 사용할건지 물어보는..???????? 물어봐? 뭘물어봐 그렇다고 그냥써? 으에에에에에ㅔ
-			
-		}else {
-			// 죽여
-		}
-		
 			// 포럼 입장 -->
 			int result = cService.increaseCount(fno);
 			
@@ -258,6 +277,9 @@ public class CommController {
 				
 				//System.out.println("rpList : " + rpList);
 				
+				if(m.getUserNo() != uno && isEnter == 0) {
+					session.setAttribute("alertMsg", fo.getForTitle()+" 입장을 축하합니다!🎉 이 포럼의 첫 입장으로 5포인트가 차감되었습니다.");
+				}
 				model.addAttribute("fo", fo);
 				model.addAttribute("rpList", rpList);
 				return "community/forumDetail";
@@ -267,9 +289,12 @@ public class CommController {
 				return "common/errorPage";
 			}
 			
-//		}else {
-//			살려
-//		}
+		}else { // 로그인 안한 사용자
+			
+			session.setAttribute("alertMsg", "로그인 후 입장하실 수 있습니다.");
+			return "redirect:list.fo";
+			
+		}
 		
 	}
 	

@@ -126,6 +126,15 @@ public class MemberDao {
     	return sqlSession.update("memberMapper.deleteGroupBuy",m);
 	}
 
+	// 사용자의 포인트를 적립/차감 하고 + 포인트내역에 추가
+	public int updateMemberPoint(SqlSessionTemplate sqlSession, PointHistory ph) {
+		
+		int i = sqlSession.update("memberMapper.updateMemberPoint", ph);
+		int j = sqlSession.insert("memberMapper.insertPointHistory", ph);
+		
+		return i*j;
+	}
+
 	
 
 

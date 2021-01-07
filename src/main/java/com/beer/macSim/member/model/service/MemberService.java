@@ -77,4 +77,7 @@ public interface MemberService {
 
     int deleteGroupBuy(Member m);
 
+    // 사용자의 포인트를 적립/차감 하고 + 포인트내역에 추가
+	int updateMemberPoint(PointHistory ph);
+
 }

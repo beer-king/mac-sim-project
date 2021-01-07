@@ -8,6 +8,7 @@ import com.beer.macSim.community.model.vo.Community;
 import com.beer.macSim.community.model.vo.Forum;
 import com.beer.macSim.community.model.vo.Reply;
 import com.beer.macSim.community.model.vo.SubReply;
+import com.beer.macSim.member.model.vo.PointHistory;
 
 public interface CommService {
 	
@@ -39,6 +40,7 @@ public interface CommService {
 	ArrayList<Forum> selectForumList(PageInfo pi);
 	
 	// 포럼 상세페이지 조회 서비스
+	int selectForumEnter(PointHistory ph);
 	int increaseCount(int fno);
 	Forum selectForumDetail(int fno);
 	
