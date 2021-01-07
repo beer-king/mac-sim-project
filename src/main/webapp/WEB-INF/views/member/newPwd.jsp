@@ -6,13 +6,16 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="resources/css/button.css">
+ <link rel="stylesheet" href="resources/css/button.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     <!-- Popper JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
         .outer{
@@ -24,11 +27,12 @@
            color: white;
            border-radius: 10px;
         }
+
         .content{margin-left:10px;}
 
         button {
-          width: 240px;
-          height: 35px;
+          width: 300px;
+          height: 45px;
           background-color: #ecbf2e;;
         }
         img{
@@ -37,45 +41,51 @@
           margin: auto;
           margin-top: 40px;
         }
+        input{
+          width: 250px;
+          height: 40px;
+        }
 
     </style>
 </head>
 <body style="background-color:  #2a2725;">
-    
-    <div class="outer">
+	
+	<div class="outer">
             <br>
             <div id="image" align="center">
-              <a href="/macSim"><img src="resources/images/macsimXy.png" alt="" style="width: 180px; height: 40px;"></a><br><br>
+              <img src="resources/images/macsimXy.png" alt="" style="width: 180px; height: 40px;"><br><br>
             </div>
-            <br><br>
+            <div align="center">
+              <h5>비밀번호 등록</h5>
+            </div>
+            <br>
             <div id="findIdForm">
-              <form action="findPwd.me" method="post">
+              <form action="" method="">
                   <table align="center">
                     <tr>
-                      <th>아이디</th>
-                      <td><input type="text" name="userId" placeholder="ex)macsim" required></td>
+                      <td colspan="2"><input type="password" name="userId" placeholder="새로운 비밀번호를 입력하세요" required></td>
                     </tr>
-
                     <tr>
-                      <th>이메일&nbsp&nbsp</th>
-                      <td><input type="email" name="email" required placeholder="ex)macsim@gmail.com"></td>
+                      <td colspan=""><input type="password" name="email" required placeholder="한번 더 입력해주세요"></td>
                     </tr>
 
                   </table>
 
-                  <br>
+
                   <br>
                   <div align="center" id="findId">
-                    <button class="snip1535" type="submit" >임시비밀번호받기</button>
+                    <button class="snip1535" type="submit" >확인</button>
                   </div>
                   <br>  
               </form>
- 
+
+
+
+              
             </div>
             
     </div>
-         
-      
-
+	
+	
 </body>
 </html>

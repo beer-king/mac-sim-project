@@ -151,6 +151,12 @@ public class MemberServiceImpl implements MemberService {
 		return mDao.deleteGroupBuy(sqlSession,m);
 	}
 
+	@Override
+	public void sendMail(String userId, String email) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 
 }

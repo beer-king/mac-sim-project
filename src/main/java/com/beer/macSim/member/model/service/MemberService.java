@@ -77,4 +77,6 @@ public interface MemberService {
 
     int deleteGroupBuy(Member m);
 
+	void sendMail(String userId, String email);
+
 }
