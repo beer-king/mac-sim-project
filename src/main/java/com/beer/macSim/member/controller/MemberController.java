@@ -37,7 +37,7 @@ public class MemberController {
 
 	@RequestMapping("mypage.me")
 	public String myPage(HttpSession session, Model model) {
-		
+
 		Member m = (Member)session.getAttribute("loginUser");
 		
 		int reviewCount = mService.reviewCount(m);
@@ -311,9 +311,22 @@ public class MemberController {
 		return "member/agreeForm";
 	}
 
-	
+/*
+    // 나의 리뷰 수정
+	@RequestMapping("updateBeerReview")
+	public String updateBeerReview(int score, String myReview){
+
+
+
+
+
+
+    	return "redirect:review.me";
+	}
+*/
 
 /*
+    // 나의 리뷰 삭제
     @RequestMapping("deleteReview")
     public String deleteReview(int scoreNo , HttpSession session){
         int deleteReview = mService.deleteReview(scoreNo);
@@ -327,8 +340,8 @@ public class MemberController {
         }
 
     }
-    */
 
+*/
   
     
     // 회원가입
