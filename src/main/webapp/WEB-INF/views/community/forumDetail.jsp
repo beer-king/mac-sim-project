@@ -359,12 +359,17 @@
       contentBox.classList.add('comment-content'+v.coNo);
       contentBox.innerText = v.coContent;
       
+    const recommentBox = document.createElement('ul');
+      recommentBox.classList.add('fode__re-items');
+      recommentBox.id = "re-comment-top-wrapper"+v.coNo;
+      
     // 추가추가
     commentInfo.appendChild(userIdTag);
     commentInfo.appendChild(selectBtn);
 
     commentBox.appendChild(commentInfo);
     commentBox.appendChild(contentBox);
+    commentBox.appendChild(recommentBox);
 
     const commentWrapper = document.querySelector("#comment-top-wrapper");
       commentWrapper.prepend(commentBox);

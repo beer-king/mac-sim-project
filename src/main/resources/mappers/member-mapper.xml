@@ -358,6 +358,14 @@
   		   )
 	</insert>
 	
+	<update id="updateMemberLoginTime" parameterType="_int">
+		 UPDATE MEMBER
+		    SET
+		        login_time = sysdate
+		  WHERE
+		        user_no = #{userNo}
+	</update>
+	
 
 </mapper>
 

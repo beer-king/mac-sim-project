@@ -157,6 +157,11 @@ public class MemberServiceImpl implements MemberService {
 		return mDao.updateMemberPoint(sqlSession, ph);
 	}
 
+	@Override
+	public int updateMemberLoginTime(int userNo) {
+		return mDao.updateMemberLoginTime(sqlSession, userNo);
+	}
+
 
 
 }

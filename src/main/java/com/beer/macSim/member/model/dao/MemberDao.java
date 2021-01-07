@@ -135,6 +135,10 @@ public class MemberDao {
 		return i*j;
 	}
 
+	public int updateMemberLoginTime(SqlSessionTemplate sqlSession, int userNo) {
+		return sqlSession.update("memberMapper.updateMemberLoginTime", userNo);
+	}
+
 	
 
 
