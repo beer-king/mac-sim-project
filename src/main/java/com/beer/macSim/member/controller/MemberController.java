@@ -7,6 +7,7 @@ import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.beer.macSim.data.model.vo.Score;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -311,25 +312,37 @@ public class MemberController {
 		return "member/agreeForm";
 	}
 
-/*
+
     // 나의 리뷰 수정
 	@RequestMapping("updateBeerReview")
-	public String updateBeerReview(int score, String myReview){
+	public String updateBeerReview(int newScore, String myReview,HttpSession session){
 
+		Score score = new Score();
+		score.setScore(newScore);
+		score.setComments(myReview);
 
+		Member m = (Member) session.getAttribute("loginUser");
+		score.setUserNo(m.getUserNo());
 
-
-
+		int result = mService.updateBeerReview(score);
 
     	return "redirect:review.me";
 	}
-*/
 
-/*
+
+
     // 나의 리뷰 삭제
     @RequestMapping("deleteReview")
     public String deleteReview(int scoreNo , HttpSession session){
-        int deleteReview = mService.deleteReview(scoreNo);
+
+    	Score score = new Score();
+    	score.setScoreNo(scoreNo);
+
+    	Member m = (Member) session.getAttribute("loginUser");
+
+    	score.setUserNo(m.getUserNo());
+
+        int deleteReview = mService.deleteReview(score);
 
         if(deleteReview>0){
            session.setAttribute("alertMsg","리뷰삭제 성공");
@@ -341,7 +354,7 @@ public class MemberController {
 
     }
 
-*/
+
   
     
     // 회원가입

@@ -146,7 +146,7 @@
 
                 점수(10~100)
                 <br>
-                <input type="number" min="10" max="100" name="score">
+                <input type="number" min="10" max="100" name="newScore">
                 <br><br>
                 리뷰
                 <div>

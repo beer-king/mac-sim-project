@@ -187,17 +187,23 @@
 	
 		</select>
 	 -->
-		<update id="updateBeerReview" parameterType="_int">
-	
+		<update id="updateBeerReview" parameterType="Score">
+
 			update
-	              score
-	         set status = 'N'
-	       where score_no = #{scoreNo}
-	
-	
+				score
+			set score = #{score} ,
+				comments=#{comments}
+			where user_no =#{userNo}
+
 		</update>
     
-	
+	<update id="deleteReview" parameterType="Score">
+		update
+			score
+		set status = 'N'
+		where user_no = #{userNo}
+		  and  score_no=#{scoreNo}
+	</update>
 	
 	
 	<select id="selectEventList" resultMap="eventResultSet" parameterType="Member">
