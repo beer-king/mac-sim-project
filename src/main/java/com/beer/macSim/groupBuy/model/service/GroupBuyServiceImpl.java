@@ -74,6 +74,11 @@ public class GroupBuyServiceImpl implements GroupBuyService {
 		return gbDao.applyGroupBuy(sqlSession, gbr);
 	}
 
+	@Override
+	public int checkApplyGroupBuy(GbRequest gbr) {
+		return gbDao.checkApplyGroupBuy(sqlSession, gbr);
+	}
+
 	
 
 }

@@ -136,4 +136,14 @@
 		  , #{gbPoint}
 		  )
 	</insert>
+	
+	<select id="checkApplyGroupBuy"
+			resultType="_int" parameterType="GbRequest">
+		select
+			   count(*)
+	      from gb_request
+	     where user_no = #{userNo}
+	       and pno = #{pno}
+	       and (req_status = 'R' or req_status= 'C')
+	</select>
 </mapper>

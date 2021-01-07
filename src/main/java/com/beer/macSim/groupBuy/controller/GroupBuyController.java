@@ -40,16 +40,25 @@ public class GroupBuyController {
 	}
 	
 	@RequestMapping("detail.gb")
-	public String selectGroupBuy(int gno, Model model) {
+	public String selectGroupBuy(@RequestParam(defaultValue="0")int userNo, int gno, Model model) {
 		
 		int result = gbService.increaseCount(gno);
 		
 		if(result > 0 ) {
 			GroupBuy gb = gbService.selectGroupBuy(gno);
 			ArrayList<Attachment> atList = gbService.selectGbAttachment(gno);
+			
 			System.out.println(gb);
 			System.out.println(atList);
 			
+			GbRequest gbr = new GbRequest();
+			gbr.setPno(gno);
+			gbr.setUserNo(userNo);
+			
+			int chApp = 0;
+			chApp = gbService.checkApplyGroupBuy(gbr);
+					
+			model.addAttribute("chApp", chApp);	
 			model.addAttribute("gb", gb);
 			model.addAttribute("atList", atList);
 			
