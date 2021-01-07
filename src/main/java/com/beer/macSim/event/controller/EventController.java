@@ -61,9 +61,6 @@ public class EventController {
 			Event ev = evService.selectEvent(eno);
 			ArrayList<Attachment> atList = evService.selectEvAttachment(eno);
 			
-			System.out.println(ev);
-			System.out.println(atList);
-			
 			EventAttendee ea = new EventAttendee();
 			ea.setEvNo(eno);
 			ea.setUserNo(userNo);

@@ -80,7 +80,14 @@
                         <th>D- Day = 10일 5시 35분 남음</th>
                     </tr>
                     <tr>
-                        <th><button class="btn btn-danger" data-toggle="modal" data-target="#appModal1">신청하기</button></th>
+                        <c:choose>
+                        	<c:when test="${ chApp eq 0 }">
+                        		<th><button class="btn btn-danger" data-toggle="modal" data-target="#appModal1">신청하기</button></th>
+                        	</c:when>
+                        	<c:otherwise>
+                        		<th>이미 신청하신 공동구매입니다.</th>
+                        	</c:otherwise>
+                        </c:choose>
                         <th><a href="" data-toggle="modal" data-target="#catModal">카테고리에 담기</a></th>
                     </tr>
                 </table>
