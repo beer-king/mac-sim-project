@@ -108,6 +108,8 @@ public class CommController {
 		//System.out.println("Coummnity : " + c);
 		//System.out.println("upfile : " + upfile.getOriginalFilename());
 		
+		Member m = (Member)session.getAttribute("loginUser");
+		
 		if( !upfile.getOriginalFilename().equals("") ) {
 			
 			String changeName = saveFile(session, upfile);
@@ -122,8 +124,17 @@ public class CommController {
 		
 		if(result > 0) { // 성공
 			
-			System.out.println("comm : " + comm);
-			System.out.println("comm.getCommCate() : " + comm.getCommCate());
+			// 포인트 적립해주기
+			PointHistory ph = new PointHistory();
+			ph.setPoint(2);
+			ph.setUserNo(m.getUserNo());
+			ph.setCategory("커뮤니티작성");
+			ph.setPointHistory("적립");
+			
+			int result2 = mService.updateMemberPoint(ph);
+			
+			//System.out.println("comm : " + comm);
+			//System.out.println("comm.getCommCate() : " + comm.getCommCate());
 			String cate = "";
 			switch(comm.getCommCate()) {
 				case 0: cate = "맥심의 일상"; break;
@@ -131,7 +142,11 @@ public class CommController {
 			}
 			
 			System.out.println("cate : " + cate);
-			session.setAttribute("alertMsg", cate + "에 글이 등록되었습니다!");
+			if(result2 > 0) {
+				session.setAttribute("alertMsg", cate + "에 글이 등록되었습니다🎉 !! (2포인트 적립)");
+			}else {
+				session.setAttribute("alertMsg", cate + "에 글이 등록되었습니다!");
+			}
 
 			return "redirect:list.cm?cate=" + comm.getCommCate();
 			
