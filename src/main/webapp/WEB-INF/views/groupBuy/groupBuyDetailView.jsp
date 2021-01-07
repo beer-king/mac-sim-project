@@ -44,6 +44,14 @@
             color:white;
         }
         .table{width: 100%;}
+        #applyTable{
+        	box-sizing: border-box;
+        	width:100%;
+        	text-align:center;
+        }
+        #applyTable th{
+        	height:50;
+        }
     </style>
 </head>
 <body>
@@ -139,9 +147,9 @@
             </table>
         </div>
         
-
+		<!-- 신청하기 모달창 -->
         <div class="modal fade" id="appModal1">
-            <div class="modal-dialog modal-sm">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <!-- Modal Header -->
                     <div class="modal-header">
@@ -149,42 +157,35 @@
                         <button type="button" class="close" data-dismiss="modal">&times;</button> 
                     </div>
     
-                    <form action="신청받아주는서버" method="post">
+                    <form action="apply.gb" method="post">
                         <!-- Modal Body -->
                         <div class="modal-body">
-                            <label >배송지 선택하기</label>
-                            
-                            <input type="radio" name="myAddress"><h4>나의 주소</h4> <br>
-                            <input type="radio" name="newAddress"><h4>직접 입력하기</h4>
-                            <h5><input type="text"></h5>
-                        </div>
-                        
-                        <!-- Modal footer -->
-                        <div class="modal-footer">
-                            <button type="button" data-toggle="modal" data-target="#appModal2" class="btn btn-primary">다음</button>
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <div class="modal fade" id="appModal2">
-            <div class="modal-dialog modal-sm">
-                <div class="modal-content">
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                        <h4 class="modal-title">공구 신청하기</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button> 
-                    </div>
-    
-                    <form action="신청받아주는서버" method="post">
-                        <!-- Modal Body -->
-                        <div class="modal-body">
-                            <label >포인트 차감  <h3> -2</h3></label>
-                            <br>
-                            <label >차감후 포인트 <h3> 35</h3></label>
-                            <h5>공동구매를 신청하시겠습니까?</h5>
+                        	<input type="number" name="pno" value="${ gb.pno }" hidden>
+                        	<input type="number" name="userNo" value="${ loginUser.userNo }" hidden>
+                            <input type="number" name="gbPoint" value="${ gb.gbPoint }" hidden>
+                            <table id="applyTable">
+                               <thead>
+	                               <tr>
+	                                   <th colspan="2">배송지 선택하기</th>
+	                               </tr>
+                               </thead>
+                               <tbody>
+	                               <tr>
+	                                   <th><input type="radio" name="address" value="myAddress" required></th>
+	                                   <th><h4>나의 주소 : <input size="50px" type="text" name="myAddress1" readOnly value="${loginUser.address} ${loginUser.extraAddress } ${loginUser.detailAddress }"></h4></th>
+	                               </tr>
+	                               <tr>
+	                                   <th><input type="radio" name="address" value="newAddress" required></th>
+	                                   <th>직접 입력하기<label><input  size="50px" name="inputAddress" type="text"></label></th>
+	                               </tr>
+	                               <tr>
+	                               		<th colspan="2">포인트 차감 :  ${ gb.gbPoint }  차감후 포인트 : ${ loginUser.point - gb.gbPoint }</th>
+	                               </tr>
+	                               <tr>
+	                               		<th colspan="2"><h5>공동구매를 신청하시겠습니까?</h5></th>
+	                               </tr>
+                               </tbody>
+                           </table>
                         </div>
                         
                         <!-- Modal footer -->
@@ -196,7 +197,8 @@
                 </div>
             </div>
         </div>
-
+		
+		<!-- 공구 카테고리 담기 모달창 -->
         <div class="modal fade" id="catModal">
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">
@@ -206,7 +208,7 @@
                         <!-- Modal Body -->
                         <div class="modal-body">
                             <label>
-                                카카오 맥주잔 공구No.23을<br> 
+                                ${ gb.gbName }공구  No.${ gb.pno }을<br> 
                                 [관심 공구] 카테고리에 담으시겠습니까?
                             </label>
                         </div>

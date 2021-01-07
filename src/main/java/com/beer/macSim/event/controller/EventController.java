@@ -149,8 +149,6 @@ public class EventController {
 	public String applyEvent(EventAttendee ea,
 					         HttpSession session, Model model) {
 		
-		System.out.println(ea);
-
 		int result1 = 0;
 		result1 = evService.increaseApplyNo(ea);
 		
@@ -178,7 +176,7 @@ public class EventController {
 			}
 				
 		}else{
-			session.setAttribute("alertMsg", "이벤트 참여가 마감되었습니다.");
+			session.setAttribute("alertMsg", "해당 이벤트 참여가 마감되었습니다.");
 			return "redirect:list.ev";
 		}
 	}

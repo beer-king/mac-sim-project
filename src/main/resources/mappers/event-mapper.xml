@@ -171,7 +171,7 @@
   	<update id="decreasePoint" parameterType="EventAttendee">
   		update
   			    member
-  		   set  point = point + #{evPoint}
+  		   set  point = point - abs(#{evPoint})
   		 where  user_no = #{userNo}
   		   and  point >= abs(#{evPoint})
   	</update>

@@ -32,6 +32,8 @@
 		<typeAlias type="com.beer.macSim.community.model.vo.SubReply" alias="SubReply"/>
 		<typeAlias type="com.beer.macSim.event.model.vo.EvReply" alias="EvReply"/>
 		<typeAlias type="com.beer.macSim.administer.model.vo.GbRequest" alias="GBR"/>
+		<typeAlias type="com.beer.macSim.groupBuy.model.vo.GbRequest" alias="GbRequest"/>
+		
 		
 	</typeAliases>
 	

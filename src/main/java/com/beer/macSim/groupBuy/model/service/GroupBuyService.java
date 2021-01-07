@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.beer.macSim.common.model.vo.PageInfo;
 import com.beer.macSim.event.model.vo.Attachment;
 import com.beer.macSim.groupBuy.model.vo.GbReply;
+import com.beer.macSim.groupBuy.model.vo.GbRequest;
 import com.beer.macSim.groupBuy.model.vo.GroupBuy;
 
 public interface GroupBuyService {
@@ -23,4 +24,9 @@ public interface GroupBuyService {
 	
 	// 4. 공구 댓글 작성용 서비스
 	int insertGbReply(GbReply gr);
+	
+	// 5. 공구 신청용 서비스
+	int decreasePoint(GbRequest gbr);
+	int applyGroupBuy(GbRequest gbr);
+	int increaseApplyNo(GbRequest gbr);
 }

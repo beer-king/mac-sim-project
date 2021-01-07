@@ -10,6 +10,7 @@ import com.beer.macSim.common.model.vo.PageInfo;
 import com.beer.macSim.event.model.vo.Attachment;
 import com.beer.macSim.groupBuy.model.dao.GroupBuyDao;
 import com.beer.macSim.groupBuy.model.vo.GbReply;
+import com.beer.macSim.groupBuy.model.vo.GbRequest;
 import com.beer.macSim.groupBuy.model.vo.GroupBuy;
 
 @Service
@@ -57,6 +58,22 @@ public class GroupBuyServiceImpl implements GroupBuyService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	@Override
+	public int increaseApplyNo(GbRequest gbr) {
+		return gbDao.increaseApplyNo(sqlSession, gbr);
+	}
+	
+	@Override
+	public int decreasePoint(GbRequest gbr) {
+		return gbDao.decreasePoint(sqlSession, gbr);
+	}
+
+	@Override
+	public int applyGroupBuy(GbRequest gbr) {
+		return gbDao.applyGroupBuy(sqlSession, gbr);
+	}
+
 	
 
 }
