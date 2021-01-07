@@ -7,6 +7,7 @@ import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.beer.macSim.data.model.vo.Score;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -37,7 +38,7 @@ public class MemberController {
 
 	@RequestMapping("mypage.me")
 	public String myPage(HttpSession session, Model model) {
-		
+
 		Member m = (Member)session.getAttribute("loginUser");
 		
 		int reviewCount = mService.reviewCount(m);
@@ -56,11 +57,15 @@ public class MemberController {
 	}
 
 	@RequestMapping("review.me")
-	public String review(Model model) {
+	public String review(Model model,HttpSession session) {
 
-		// ArrayList<> list = mService.selectBeerReivewList();
+		Member m = (Member) session.getAttribute("loginUser");
 
-		// model.addAttribute("list",list);
+		int userNo = m.getUserNo();
+
+		ArrayList<Score> list = mService.selectBeerReivewList(userNo);
+
+		 model.addAttribute("list",list);
 
 
 		return "member/review";
@@ -311,12 +316,37 @@ public class MemberController {
 		return "member/agreeForm";
 	}
 
-	
 
-/*
+    // 나의 리뷰 수정
+	@RequestMapping("updateBeerReview")
+	public String updateBeerReview(int newScore, String myReview,HttpSession session){
+
+		Score score = new Score();
+		score.setScore(newScore);
+		score.setComments(myReview);
+
+		Member m = (Member) session.getAttribute("loginUser");
+		score.setUserNo(m.getUserNo());
+
+		int result = mService.updateBeerReview(score);
+
+    	return "redirect:review.me";
+	}
+
+
+
+    // 나의 리뷰 삭제
     @RequestMapping("deleteReview")
     public String deleteReview(int scoreNo , HttpSession session){
-        int deleteReview = mService.deleteReview(scoreNo);
+
+    	Score score = new Score();
+    	score.setScoreNo(scoreNo);
+
+    	Member m = (Member) session.getAttribute("loginUser");
+
+    	score.setUserNo(m.getUserNo());
+
+        int deleteReview = mService.deleteReview(score);
 
         if(deleteReview>0){
            session.setAttribute("alertMsg","리뷰삭제 성공");
@@ -327,7 +357,7 @@ public class MemberController {
         }
 
     }
-    */
+
 
   
     

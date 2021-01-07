@@ -1,5 +1,6 @@
 package com.beer.macSim.member.model.service;
 
+import com.beer.macSim.data.model.vo.Score;
 import com.beer.macSim.event.model.vo.Event;
 import com.beer.macSim.groupBuy.model.vo.GroupBuy;
 import com.beer.macSim.member.model.dao.MemberDao;
@@ -53,6 +54,16 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int idCheck(String userId) {
 		return mDao.idCheck(sqlSession, userId); 
+	}
+
+	@Override
+	public int deleteReview(Score score) {
+		return mDao.deleteReview(sqlSession,score);
+	}
+
+	@Override
+	public int updateBeerReview(Score score) {
+		return mDao.updateBeerReview(sqlSession,score);
 	}
 	
 
@@ -151,6 +162,10 @@ public class MemberServiceImpl implements MemberService {
 		return mDao.deleteGroupBuy(sqlSession,m);
 	}
 
+	@Override
+	public ArrayList<Score> selectBeerReivewList(int userNo) {
+		return mDao.selectReviewList(sqlSession,userNo);
+	}
 
 
 }

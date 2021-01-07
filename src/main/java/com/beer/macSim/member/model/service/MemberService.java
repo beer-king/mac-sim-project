@@ -1,6 +1,7 @@
 package com.beer.macSim.member.model.service;
 
 
+import com.beer.macSim.data.model.vo.Score;
 import com.beer.macSim.event.model.vo.Event;
 import com.beer.macSim.groupBuy.model.vo.GroupBuy;
 import com.beer.macSim.member.model.vo.Member;
@@ -37,9 +38,12 @@ public interface MemberService {
     
     
     //마이페이지 맥주리뷰 삭제
-    //int deleteReview(int scoreNo);
+    int deleteReview(Score score);
 
-	
+    // 마이페이지 맥주리뷰 수정
+
+    int updateBeerReview(Score score);
+
     ArrayList<Event> selectEventList(Member m);
     
     // 회원 비빌번호 변경
@@ -67,14 +71,12 @@ public interface MemberService {
 	
 
 
-
-     
-
-
     ArrayList<PointHistory> selectPointHistory(Member m);
 
     ArrayList<GroupBuy> selectGroupBuyList(Member m);
 
     int deleteGroupBuy(Member m);
 
+
+    ArrayList<Score> selectBeerReivewList(int userNo);
 }
