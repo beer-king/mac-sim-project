@@ -14,7 +14,9 @@
 		<typeAlias type="com.beer.macSim.event.model.vo.Event" alias="Event"/>
 		<typeAlias type="com.beer.macSim.groupBuy.model.vo.GroupBuy" alias="GroupBuy"/>
 		<typeAlias type="com.beer.macSim.notice.model.vo.Notice" alias="Notice"/>
+		
 		<typeAlias type="com.beer.macSim.data.model.vo.Beers" alias="Beers"/>
+		
 		<typeAlias type="com.beer.macSim.administer.model.vo.Report" alias="Report"/>
 		<typeAlias type="com.beer.macSim.administer.model.vo.SelectData" alias="SD"/>
 		<typeAlias type="com.beer.macSim.notice.model.vo.NoComment" alias="NoComment"/>

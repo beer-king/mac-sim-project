@@ -192,76 +192,59 @@
 	<h4>맥주리스트</h4>
     <!-- 맥주전체테이블 -->
     <table class="table">
-        <tr>
-            <td rowspan="3"><img src='resources/images/beers/말표.png' width='90'></td>
-            <td>말표맥주</td>
-            <td>Malpyo Dark Beer</td>
-            <td rowspan="3">맥주점수</td>
-        </tr>
-        <tr>
-            <td>스퀴즈 브루어어리</td>
-            <td>강원도</td>
-        </tr>
-        <tr>
-            <td>다크 에일</td>
-            <td>캔</td>
-        </tr>
-        <tr>
-            <td rowspan="3"><img src='resources/images/beers/파리의꿈.png' width='90'></td>
-            <td>파리의 꿈</td>
-            <td>Dreams of Paris</td>
-            <td rowspan="3">맥주점수</td>
-        </tr>
-        <tr>
-            <td>스퀴즈 브루어어리</td>
-            <td>강원도</td>
-        </tr>
-        <tr>
-            <td>세종</td>
-            <td>케그</td>
-        </tr>
-        <tr>
-            <td rowspan="3"><img src='resources/images/beers/말표.png' width='90'></td>
-            <td>말표맥주</td>
-            <td>Malpyo Dark Beer</td>
-            <td rowspan="3">92</td>
-        </tr>
-        <tr>
-            <td>스퀴즈 브루어어리</td>
-            <td>강원도</td>
-        </tr>
-        <tr>
-            <td>다크 에일</td>
-            <td>캔</td>
-        </tr>
-        <tr>
-            <td rowspan="3"><img src='resources/images/beers/파리의꿈.png' width='90'></td>
-            <td>파리의 꿈</td>
-            <td>Dreams of Paris</td>
-            <td rowspan="3">맥주점수</td>
-        </tr>
-        <tr>
-            <td>스퀴즈 브루어어리</td>
-            <td>강원도</td>
-        </tr>
-        <tr>
-            <td>세종</td>
-            <td>케그</td>
-        </tr>
+    	<c:forEach var="b" items="${list}">
+	        <tr>
+	            <td rowspan="3"><img src='resources/images/beers/말표.png' width='90'></td>
+	            <td class="bno">${b.beerNO }</td>
+	            <td>${b.beerName} (${b.beerEname })</td>
+	            <td rowspan="3">맥주점수<br><br>#{b.totalScore }</td>
+	        </tr>
+	        <tr>
+	            <td>${b.beerProducer }</td>
+	            <td>${b.beerLocation }</td>
+	        </tr>
+	        <tr>
+	            <td>${b.beerStyle }</td>
+	            <td>${b.beerContainer }</td>
+	        </tr>
+    	
+    	</c:forEach>
     </table>
 	<br><br><br>
+	
+	<!-- 세부페이지 링크 -->
+	<script>
+		$(function(){
+			$("tr").click(function(){
+				location.href = "beerDetail.db?bno=" + $(this).children(".bno").text();
+			})
+		})
+	</script>
 	
     <!-- 페이징바 -->
     <div class="container" style="width:20%">
 	    <div class="pagination">
-	        <a href="#">&laquo;</a>
-	        <a href="#">1</a>
-	        <a class="active" href="#">2</a>
-	        <a href="#">3</a>
-	        <a href="#">4</a>
-	        <a href="#">5</a>
-	        <a href="#">6</a>
-	        <a href="#">&raquo;</a>
+	    	<c:choose>
+	    		<c:when test="${pi.currentPage eq 1 }">
+	        		<a class="disabled" href="#">&laquo;</a>
+	        	</c:when>
+	        	<c:otherwise>
+	        		<a href="beers.db?currentPage=${pi.currentPage - 1 }">&laquo;</a>
+	        	</c:otherwise>
+	        </c:choose>
+	        
+	        <c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
+	        		<a  href="beers.db?currentPage=${ p}">${p }</a>
+	        </c:forEach>
+	        
+	        <c:choose>
+	        	<c:when test="${pi.endPage eq pi.maxPage }">
+			        <a class="disabled" href="#">&raquo;</a>
+		        </c:when>
+		        <c:otherwise>
+		        	<a  href="beers.db?currentPage=${pi.currentPage + 1 }">&raquo;</a>
+		        </c:otherwise>
+	        </c:choose>
 	    </div>
     </div>
     
