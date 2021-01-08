@@ -50,7 +50,7 @@ public class CommController {
 		if(m != null) {
 			
 			ArrayList<CommLikes> clikes = cService.selectCommLikes(m.getUserNo());
-			System.out.println("clikes : " + clikes);
+			//System.out.println("clikes : " + clikes);
 		}
 		
 		//System.out.println("cate : " + cate);
@@ -217,6 +217,59 @@ public class CommController {
 		
 	}
 	
+	// 커뮤니티 좋아요
+	@ResponseBody
+	@RequestMapping(value="like.on", produces="application/json; charset=utf-8")
+	public String insertCommLike(int uno, int cno) {
+		
+		CommLikes cl = new CommLikes();
+		cl.setUserNo(uno); // 이사람이
+		cl.setCommNo(cno); // 여기에 좋아요
+
+		int result = cService.insertCommLike(cl);
+		if(result > 0) {
+			
+			int likeLength = cService.selectLikeLength(cno);
+
+			String json = new Gson().toJson(likeLength);
+			return json;
+			
+		}else {
+			return "F";
+		}
+		
+	}
+	
+	// 커뮤니티 좋아요 취소
+	@ResponseBody
+	@RequestMapping(value="like.off", produces="application/json; charset=utf-8")
+	public String deleteCommLike(int uno, int cno) {
+		
+		CommLikes cl = new CommLikes();
+		cl.setUserNo(uno); // 이사람이
+		cl.setCommNo(cno); // 여기에 좋아요취소
+
+		int result = cService.deleteCommLike(cl);
+		if(result > 0) {
+
+			int likeLength = cService.selectLikeLength(cno);
+
+			String json = new Gson().toJson(likeLength);
+			return json;
+			
+		}else {
+			return "F";
+		}
+		
+	}
+	
+	// 좋아요 안돼요
+	@RequestMapping("like.xx")
+	public String cantClickLike(HttpSession session, int cate) {
+		session.setAttribute("alertMsg", "로그인 후 이용하실 수 있습니다💛");
+		return "redirect:list.cm?cate=" + cate;
+	}
+
 	// 포럼 리스트 조회
 	@RequestMapping("list.fo")
 	public String selectForumList(@RequestParam(value="currentPage", defaultValue="1") int currentPage, Model model) {
@@ -507,7 +560,6 @@ public class CommController {
 			//System.out.println(rNew);
 			String json = new Gson().toJson(rNew);
 			return json;
-
 		}else {
 			return "F";
 		}		

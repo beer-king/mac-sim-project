@@ -146,6 +146,14 @@ public class CommDao {
 	public int selectForumEnter(SqlSessionTemplate sqlSession, PointHistory ph) {
 		return sqlSession.selectOne("commMapper.selectForumEnter", ph);
 	}
+
+	public int insertCommLike(SqlSessionTemplate sqlSession, CommLikes cl) {
+		return sqlSession.insert("commMapper.insertCommLike", cl);
+	}
+
+	public int deleteCommLike(SqlSessionTemplate sqlSession, CommLikes cl) {
+		return sqlSession.delete("commMapper.deleteCommLike", cl);
+	}
 		
 
 }

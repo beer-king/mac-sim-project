@@ -18,6 +18,7 @@
     />
     <link rel="stylesheet" href="resources/css/header.css" />
     <link rel="stylesheet" href="resources/css/community/community.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -71,16 +72,16 @@
 		              </c:otherwise>
 	                </c:choose>
 	                <small>${ c.commCreateDate }</small>
-	                <small class="like-length${c.commNo}">${ c.likeLength }</small>
+	                <small class="like-length${c.commNo}" id="like-length${c.commNo}">${ c.likeLength }</small>
 	                <c:choose>
 	                  <c:when test ="${ c.isLike eq 0 }" >
-	                    <b class="material-icons">favorite_border</b>
+	                    <b class="material-icons" id="likeBtnBorder${c.commNo}" onclick="likeOn(${loginUser.userNo}, ${c.commNo});">favorite_border</b>
 	                  </c:when>
 	                  <c:when test ="${ c.isLike eq 9999999 }" >
-	                    <b class="material-icons">favorite_border</b>
+	                    <b class="material-icons" onclick="location.href='like.xx?cate=${cate}'">favorite_border</b>
 	                  </c:when>
 	                  <c:otherwise>
-	                    <i class="material-icons">favorite</i>
+	                    <b class="material-icons" id="likeBtnFull${c.commNo}" onclick="likeOff(${loginUser.userNo}, ${c.commNo});">favorite</b>
 	                  </c:otherwise>
 	                </c:choose>
 	              </div>
@@ -155,8 +156,57 @@
       });
       */
       
+      
       // 페이징  /  active된 페이지 숫자에 클래스 부여 -> paging-active
-    
+      
+      
+      // 좋아요
+      const likeOn = (userNo, commNo) => {
+    	  console.log("좋아요 클릭");
+    	  axios.get("like.on", {
+    		  params:{
+    			  uno:userNo,
+    			  cno:commNo
+    		  }
+    	  }).then((res) => {
+    		  console.log("좋아요됨");
+    		  console.log(res.data);
+    		  
+    		  const likeLength = document.querySelector("#like-length"+commNo); 
+    		  likeLength.innerText = res.data;
+    		  
+    		  const likeBtnB = document.querySelector("#likeBtnBorder"+commNo);
+    		  likeBtnB.innerText = "favorite";
+    		  likeBtnB.onclick = () => {likeOff(userNo, commNo)};
+    		  likeBtnB.id = "likeBtnFull"+commNo;
+    		  
+    	  })
+    	  
+      }
+      
+      // 좋아요 취소
+      const likeOff = (userNo, commNo) => {
+    	  console.log("좋아요취소");
+    	  axios.get("like.off", {
+    		  params:{
+    			  uno:userNo,
+    			  cno:commNo
+    		  }
+    	  }).then((res) => {
+    		  console.log("취소됨");
+    		  console.log(res.data);
+    		  
+    		  const likeLength = document.querySelector("#like-length"+commNo); 
+    		  likeLength.innerText = res.data;
+    		  
+    		  const likeBtnB = document.querySelector("#likeBtnFull"+commNo);
+    		  likeBtnB.innerText = "favorite_border";
+    		  likeBtnB.onclick = () => {likeOn(userNo, commNo)};
+    		  likeBtnB.id = "likeBtnBorder"+commNo;
+    		  
+    	  })
+      }
+      
     </script>
 
 </body>
