@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mainMapper">
+
+	<resultMap id="beersResultSet" type="Beers" >
+		<result column="beer_no" property="beerNo" />
+		<result column="beer_name" property="beerName" />
+		<result column="beer_ename" property="beerEname" />
+		<result column="beer_style" property="beerStyle" />
+		<result column="beer_producer" property="beerProducer" />
+		<result column="beer_location" property="beerLocation" />
+		<result column="beer_alcohol" property="alcohol" />
+		<result column="beer_container" property="beerContainer" />
+		<result column="updated_date" property="updatedDate" />
+		<result column="status" property="status" />
+		<result column="reply_count" property="replyCount" />
+		<result column="score_total" property="scoreTotal" />
+		<result column="origin_name" property="originName" />
+		<result column="change_name" property="changeName" />
+		<result column="count" property="count" />
+	</resultMap>
+	
+	<select id="selectCountBeer" resultType="_int">
+		select
+		       COUNT(*)
+		  from BEER
+		 where status = 'Y'
+	</select>
+	
+	<select id="selectOneBeer" resultMap="beersResultSet" parameterType="_int">
+		select beer_no
+		     , beer_name
+		     , beer_ename
+		     , beer_style
+		     , beer_producer
+		     , beer_location
+		     , beer_alcohol
+		     , beer_container
+		     , updated_date
+		     , status
+		     , reply_count
+		     , score_total
+		     , origin_name
+		     , change_name
+		     , count
+		from BEER
+		where beer_no = #{ bno }
+		  and status = 'Y'
+	</select>
+	
+	<select id="selectRankList" resultMap="beersResultSet">
+		select beer_no
+		     , beer_name
+		     , beer_ename
+		     , beer_style
+		     , beer_producer
+		     , beer_location
+		     , beer_alcohol
+		     , beer_container
+		     , updated_date
+		     , status
+		     , reply_count
+		     , score_total
+		     , origin_name
+		     , change_name
+		     , count
+		     , ROWNUM
+		from (
+		         select beer_no
+		              , beer_name
+		              , beer_ename
+		              , beer_style
+		              , beer_producer
+		              , beer_location
+		              , beer_alcohol
+		              , beer_container
+		              , updated_date
+		              , status
+		              , reply_count
+		              , score_total
+		              , origin_name
+		              , change_name
+		              , count
+		           from BEER
+		          where STATUS = 'Y'
+		          order by SCORE_TOTAL desc
+		     )
+		where ROWNUM >= 1
+		  and 5 >= ROWNUM
+	</select>
+	
+	<select id="selectGenderRank" resultMap="beersResultSet" parameterType="String">
+		select B2.BEER_NO, B2.BEER_NAME, B2.CHANGE_NAME, C2.SCORE_TOTAL
+		  from
+		  	   (
+			  	 select B.BEER_NO, avg(SCORE.SCORE) as SCORE_TOTAL
+			       from score
+			       left join BEER B on SCORE.BEER_NO = B.BEER_NO
+			       left join MEMBER M on SCORE.USER_NO = M.USER_NO
+			      where M.GENDER = #{gender}
+			      group by B.BEER_NO
+			      order by SCORE_TOTAL desc
+			   ) C2
+		 left join BEER B2 on C2.BEER_NO = B2.BEER_NO
+		where ROWNUM = 1
+	</select>
+
+
+</mapper>

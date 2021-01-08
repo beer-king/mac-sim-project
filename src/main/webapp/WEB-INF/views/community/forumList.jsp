@@ -120,7 +120,7 @@
     <div id="enter-modal" class="modal__layout">
       <div id="enter-modal-box" class="modal__box">
         <h1 id="enter-modal-title"></h1>
-        <span>최초 입장시 5포인트가 차감됩니다. 이후에는 자유롭게 이 포럼을 이용하실 수 있습니다.</span>
+        <span>최초 입장시 5포인트가 차감됩니다.<br>이후에는 자유롭게 이 포럼을 이용하실 수 있습니다.</span>
 
         <div class="modal__btn_wrapper">
           <button id="modal-enter-btn" type="button" class="btn">입장하기</button>

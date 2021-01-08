@@ -27,5 +27,6 @@ public class Beers {
 	private int scoreTotal;			//평점
 	private String originName;		//사진 오리지날 파일명
 	private String changeName;		//사진 업로드 파일명 
+	private int count;
 
 }
