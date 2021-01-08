@@ -591,6 +591,7 @@
 		select att_no, origin_name, change_name, pno
 		from attachment
 		where pno = #{pNo}
+		order by att_no asc
   	</select>
   	
   	<update id="deleteGroupBuy" parameterType="string">

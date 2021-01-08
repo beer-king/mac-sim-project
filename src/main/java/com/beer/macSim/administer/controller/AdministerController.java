@@ -81,7 +81,7 @@ public class AdministerController {
 	@ResponseBody
 	@RequestMapping("reportB.ad")
 	public String reportB(String reqNo) {
-		System.out.println("test");
+		
 		SelectData sd = Selectation.getSelectData(Integer.parseInt(reqNo), "B");
 		int result = aService.reportBC(sd);
 		if(result > 0) {
@@ -406,6 +406,7 @@ public class AdministerController {
 	@RequestMapping("goUpdateG.ad")
 	public String goUpdateG(String pNo,  Model model) {
 		GroupBuy g = aService.selectGBOne(pNo);
+		
 		g.setGbStart(dataFormatSolve(g.getGbStart()));
 		g.setGbEnd(dataFormatSolve(g.getGbEnd()));
 		ArrayList<Attachment> alist = aService.selectATOne(pNo);
@@ -413,8 +414,7 @@ public class AdministerController {
 		model.addAttribute("pNo", pNo);
 		int i = 1;
 		for(Attachment a : alist) {
-			System.out.println("upfile" + i);
-			System.out.println(a.getChangeName());
+
 			model.addAttribute("upfile" + i, a.getChangeName());
 			i += 1;
 		}
@@ -432,6 +432,7 @@ public class AdministerController {
 		Attachment a2 = filetoAttachment(gb.getPno(), upfile2, session);
 
 		GroupBuy gb2 = aService.selectGBOne(pNo);
+		ArrayList<Attachment> alist= aService.selectATOne(pNo);
 		String changeName;
 		if(FImg.isEmpty()) {
 			gb.setGbThumb(gb2.getGbThumb());
@@ -442,7 +443,28 @@ public class AdministerController {
 		
 		if(upfile1.isEmpty() && upfile2.isEmpty()) {
 			System.out.println("pass");
-		}else {
+		}else if(upfile1.isEmpty() && (!alist.isEmpty())) {
+			int i = 1;
+			for(Attachment a : alist) {
+				if(i == 1) {
+					a1 = a;
+				}
+				i += 1;
+			}
+			aService.deleteAttach(pNo);
+			result2 = aService.updateAttachment(a1, a2);
+		}else if(upfile1.isEmpty() && (!alist.isEmpty())) {
+			int i = 1;
+			for(Attachment a : alist) {
+				if(i == 2) {
+					a2 = a;
+				}
+				i += 1;
+			}
+			aService.deleteAttach(pNo);
+			result2 = aService.updateAttachment(a1, a2);
+		}
+		else {
 			aService.deleteAttach(pNo);
 			result2 = aService.updateAttachment(a1, a2);
 		}
@@ -510,7 +532,10 @@ public class AdministerController {
 		else if(sub.equals("PM")) {
 			int a = Integer.parseInt(time) + 12;
 			day = day + "T" + Integer.toString(a) + ":00";
-		}else {
+		}else if(time.length() == 2) {
+			day = day + "T" + time + ":00";
+		}
+		else {
 			day = day + "T0" + time + ":00";
 		}
 		

@@ -222,11 +222,11 @@ public class AdminDao {
 		
 		if(a1 != null) {
 			result2 = sqlSession.update("adminMapper.updateAttachment", a1);
-			System.out.println("test");
+
 		}
 		if(a2 != null) {
 			result3 = sqlSession.update("adminMapper.updateAttachment", a2);
-			System.out.println("test2");
+
 		}
 		return result2 * result3;
 	}
