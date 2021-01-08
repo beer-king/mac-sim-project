@@ -146,4 +146,48 @@
 	       and pno = #{pno}
 	       and (req_status = 'R' or req_status= 'C')
 	</select>
+	
+	<select id="searchGBCount" resultType="_int"
+			parameterType="hashmap">
+		select
+			   count(*)
+		  from group_buy
+		 where status ='Y'
+		  <if test="category == 'catTitle'">  
+		    and pname
+		  </if>
+		  <if test="category == 'catContent'">
+		  	and content
+		  </if>  
+		   like '%' || #{searchWord} || '%'
+	</select>
+	
+	<select id="searchGBList" parameterType="hashmap"
+			resultMap="groupBuyResultSet">
+		select
+		       pno
+		     , user_id
+		     , pname
+		     , price
+		     , content
+		     , gb_start
+		     , gb_thumb
+		     , click_no
+		     , gb_date
+		 from group_buy g
+		 join member using (user_no)
+		where g.status = 'Y'
+		<choose>
+			<when test="category == 'catTitle'">
+				and pname
+			</when>
+			<when test="category == 'catContent'">
+				and content
+			</when>
+		</choose>
+		 like '%' || #{searchWord} || '%'
+		order 
+		   by pno desc
+		
+	</select>
 </mapper>

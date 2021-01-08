@@ -30,4 +30,10 @@ public interface GroupBuyService {
 	int decreasePoint(GbRequest gbr);
 	int applyGroupBuy(GbRequest gbr);
 	int increaseApplyNo(GbRequest gbr);
+	
+	// 6. 공구 검색결과 리스트 서비스
+	int searchGBCount(String category, String searchWord);
+	ArrayList<GroupBuy> searchGBList(PageInfo pi, String category, String searchWord);
+	
+	
 }

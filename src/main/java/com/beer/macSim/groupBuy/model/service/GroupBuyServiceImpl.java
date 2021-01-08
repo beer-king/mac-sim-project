@@ -79,6 +79,16 @@ public class GroupBuyServiceImpl implements GroupBuyService {
 		return gbDao.checkApplyGroupBuy(sqlSession, gbr);
 	}
 
+	@Override
+	public int searchGBCount(String category, String searchWord) {
+		return gbDao.searchGBCount(sqlSession, category, searchWord);
+	}
+
+	@Override
+	public ArrayList<GroupBuy> searchGBList(PageInfo pi, String category, String searchWord) {
+		return gbDao.searchGBList(sqlSession, pi, category, searchWord);
+	}
+
 	
 
 }

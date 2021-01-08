@@ -53,19 +53,29 @@
    
    <div class="outer" align="center">
        
-       <form action="" class="search">
-           <h2>Group Buying</h2>
-           <select id="searchCategory">
-               <option>제목으로 검색</option>
-               <option>내용으로 검색</option>
-           </select>
-
-           <input id="searchWord" spaceholder="검색어를 입력하세요.">
-
-           <button type="submit">검색</button>
-       </form>
+       <div id="search-area" align="center">
+	       <form action="search.gb" class="search">
+	       	   <input type="hidden" name="currentPage" value="1">
+	           <h2>Group Buying</h2>
+	           <select name="category">
+	               <option value="catTitle">제목으로 검색</option>
+	               <option value="catContent">내용으로 검색</option>
+	           </select>
 	
-		<a class="btn btn-primary" style="float:right"  href="enrollForm.gb">글쓰기</a>
+	           <input type="text" name="searchWord" spaceholder="검색어를 입력하세요.">
+	
+	           <button type="submit">검색</button>
+	       </form>
+		</div>
+		
+		<c:if test="${ !empty category }">
+			<script>
+				$(function(){
+					$("#search-area option[value=${category}]").attr("selected", true);
+				})
+			</script>
+		</c:if>
+		
        <br><br>
        
        <c:forEach var="g" items="${ list }">
@@ -152,36 +162,68 @@
          	</c:otherwise>
          </c:choose>
 
-       		<br><br>
-       		
-           <div id="pagingArea">
-               <ul class="pagination">
-               	   
-               	   <c:choose>
-                   		<c:when test="${ pi.currentPage eq 1 }">
-                   			<li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-                   		</c:when>
-                   		<c:otherwise>
-                   			<li class="page-item"><a class="page-link" href="list.gb?currentPage=${ pi.currentPage -1 }">Previous</a></li>
-                   		</c:otherwise>
-                   </c:choose>
-                   
-                   <c:forEach var="p" begin="${pi.startPage }" end="${ pi.endPage }">
-                   		<li class="page-item"><a class="page-link" href="list.gb?currentPage=${ p }">${ p }</a></li>
-                   </c:forEach>
-                   
-                   <c:choose>
-                   		<c:when test="${ pi.currentPage eq pi.maxPage }">
-                   			<li class="page-item"><a class="page-link" href="#">Next</a></li>
-              	   		</c:when>
-              	   		<c:otherwise>
-              	   			<li class="page-item"><a class="page-link" href="${ pi.currentPage +1 }">Next</a></li>
-              	   		</c:otherwise>
-              	   		
-              	   </c:choose>
-               </ul>
-           </div>
-       
+       	<br><br>
+       	
+       	<c:choose>	
+       	   <c:when test="${ empty category }">
+       	   	<!-- 검색 요청전 페이징바 -->
+	           <div id="pagingArea">
+	               <ul class="pagination">
+	               	   
+	               	   <c:choose>
+	                   		<c:when test="${ pi.currentPage eq 1 }">
+	                   			<li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+	                   		</c:when>
+	                   		<c:otherwise>
+	                   			<li class="page-item"><a class="page-link" href="list.gb?currentPage=${ pi.currentPage -1 }">Previous</a></li>
+	                   		</c:otherwise>
+	                   </c:choose>
+	                   
+	                   <c:forEach var="p" begin="${pi.startPage }" end="${ pi.endPage }">
+	                   		<li class="page-item"><a class="page-link" href="list.gb?currentPage=${ p }">${ p }</a></li>
+	                   </c:forEach>
+	                   
+	                   <c:choose>
+	                   		<c:when test="${ pi.currentPage eq pi.maxPage }">
+	                   			<li class="page-item"><a class="page-link" href="#">Next</a></li>
+	              	   		</c:when>
+	              	   		<c:otherwise>
+	              	   			<li class="page-item"><a class="page-link" href="list.gb?currentPage=${ pi.currentPage +1 }">Next</a></li>
+	              	   		</c:otherwise>
+	              	   </c:choose>
+	               </ul>
+	           </div>
+	        </c:when> 
+	        <c:otherwise>
+	        	<!-- 검색 요청후 페이징바 -->
+	        	<div id="pagingArea">
+	               <ul class="pagination">
+	               	   
+	               	   <c:choose>
+	                   		<c:when test="${ pi.currentPage eq 1 }">
+	                   			<li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+	                   		</c:when>
+	                   		<c:otherwise>
+	                   			<li class="page-item"><a class="page-link" href="search.gb?currentPage=${ pi.currentPage -1 }&category=${category}&searchWord=${searchWord}">Previous</a></li>
+	                   		</c:otherwise>
+	                   </c:choose>
+	                   
+	                   <c:forEach var="p" begin="${pi.startPage }" end="${ pi.endPage }">
+	                   		<li class="page-item"><a class="page-link" href="search.gb?currentPage=${ p }&category=${category}&searchWord=${searchWord}">${ p }</a></li>
+	                   </c:forEach>
+	                   
+	                   <c:choose>
+	                   		<c:when test="${ pi.currentPage eq pi.maxPage }">
+	                   			<li class="page-item"><a class="page-link" href="#">Next</a></li>
+	              	   		</c:when>
+	              	   		<c:otherwise>
+	              	   			<li class="page-item"><a class="page-link" href="search.gb?currentPage=${ pi.currentPage +1 }&category=${category}&searchWord=${searchWord}">Next</a></li>
+	              	   		</c:otherwise>
+	              	   </c:choose>
+	               </ul>
+	           </div>
+	        </c:otherwise>
+       </c:choose>
 
    </div>    
 </body>

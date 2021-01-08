@@ -111,5 +111,24 @@ public class GroupBuyController {
 			session.setAttribute("alertMsg", "해당 공동구매 참여가 마감되었습니다.");
 			return "redirect:list.gb";
 		}
+		
+	}
+	
+	@RequestMapping("search.gb")
+	public String searchGBList(@RequestParam(value="currentPage", defaultValue="1")int currentPage, 
+						      String category, String searchWord, Model model) {
+		
+		int searchCount = gbService.searchGBCount(category, searchWord);
+		
+		PageInfo pi = Pagination.getPageInfo(searchCount, currentPage, 5, 5);
+		ArrayList<GroupBuy> list = gbService.searchGBList(pi, category, searchWord);
+		
+		model.addAttribute("list", list);
+		model.addAttribute("pi", pi);
+		model.addAttribute("category", category);
+		model.addAttribute("searchWord", searchWord);
+		
+		
+		return "groupBuy/groupBuyListView";
 	}
 }

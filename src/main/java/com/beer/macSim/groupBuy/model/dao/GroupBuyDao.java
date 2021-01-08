@@ -1,6 +1,7 @@
 package com.beer.macSim.groupBuy.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -54,5 +55,27 @@ public class GroupBuyDao {
 	
 	public int checkApplyGroupBuy(SqlSessionTemplate sqlSession, GbRequest gbr) {
 		return sqlSession.selectOne("groupBuyMapper.checkApplyGroupBuy", gbr);
+	}
+	
+	public int searchGBCount(SqlSessionTemplate sqlSession, String category, String searchWord) {
+		
+		HashMap<String, String> map = new HashMap<>();
+		map.put("category", category);
+		map.put("searchWord", searchWord);
+		
+		return sqlSession.selectOne("groupBuyMapper.searchGBCount", map);
+	}
+	
+	public ArrayList<GroupBuy> searchGBList(SqlSessionTemplate sqlSession, PageInfo pi,
+											 String category, String searchWord){
+		
+		HashMap<String, String> map = new HashMap<>();
+		map.put("category", category);
+		map.put("searchWord", searchWord);
+		
+		int offset = (pi.getCurrentPage()-1)* pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("groupBuyMapper.searchGBList", map, rowBounds);
 	}
 }
