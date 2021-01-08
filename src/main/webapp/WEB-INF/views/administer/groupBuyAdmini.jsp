@@ -255,7 +255,7 @@
 		        	<table class="dataview" style="width: 90%;">
 		        			<c:choose>
 		        				<c:when test="${status eq 'R' }">
-				        			<tr>
+					       			<tr>
 					            		<td rowspan="4" style="width: 20px;"><input id="${gb.requestNo}" type="checkbox" name="number" value="${gb.gbPoint}"></td>
 					            	</tr>
 					            	<tr class="clickDataView" onclick="trclick(${gb.requestNo});">
@@ -330,37 +330,69 @@
         </c:if>
         <c:if test="${category eq 3}">
         		<br>
-      			<form class="enrollForm" action="" method="post" align="right">
-		            <select name="sort" id="sort">
-		                <option value="name" selected>맥주 이름</option>
-		                <option value="no">맥주 번호</option>
-		            </select>
-		            <input type="text" id="searchbox" placeholder="검색어를 입력하세요" name="search">
+        		
+      			<div class="search_bar" style="margin-left: 5px;">
+	            <select id="status2" name="status2">
+	            	<c:choose>
+	            		<c:when test="${status2 eq 'Y' }">
+	            			<option value="Y" selected>진행중</option>
+	            			<option value="N">삭제</option>
+	            		</c:when>
+	            		<c:when test="${status2 eq 'N' }">
+	            			<option value="Y">진행중</option>
+	            			<option value="N" selected>삭제</option>
+	            		</c:when>
+	            	</c:choose>
+	            	
+	            </select>
+	        	</div>
+		        <br>
+		        <form class="enrollForm" action="" method="post" align="right">
+		            <input type="text" id="searchbox" placeholder="상품명을 입력하세요" name="search">
 		            <button type="submit" id="sbtn" style="margin-right: 20px;">검색</button>
 		        </form>
        
 		        
 		        <br>
-		        <table class="dataview" style="width: 90%;" onclick="clickB(${b.beerNo})">
-			            	<tr>
-			            		<td rowspan="2" style="width: 20px;"><img src="${b.changeName }" width="100" height="100"></td>
-			            	</tr>
-			                <tr class="clickDataView">
-			                    <td>맥주 번호 : ${b.beerNo }</td>
-			                    <td>맥주 이름 : ${b.beerName }</td>
+		        <c:choose>
+	        		<c:when test="${pi.listCount eq 0}">
+			        	<table class="dataview" style="width: 90%;">
+			                <tr>
+			                    <td><h3>게시물이 없습니다.</h3></td>
+			               
 			                </tr>
-			    </table>
-		     	<div class="paging-area" align="center">     
-		        	<c:if test="${ pi.currentPage ne 1}">
-		        		<a href="GB.ad?category=${category }&currentPage=${ pi.currentPage-1 }">이전</a>
-		        	</c:if>	
-		        	<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-		        		<a href="GB.ad?category=${category }&currentPage=${ p }">${ p }</a>
-		            </c:forEach>
-		            <c:if test="${pi.maxPage > 0 and pi.maxPage ne pi.currentPage}">
-		            	<a href="GB.ad?category=${category }&currentPage=${ pi.currentPage+1 }">다음</a>
-		            </c:if>
-        		</div>
+			                
+			            </table>
+	        		</c:when>
+	        		<c:otherwise>
+				        <c:forEach var="g" items="${ glist }">
+					        <table class="dataview" style="width: 90%;">
+							    <tr>
+				            		<td rowspan="3" style="width: 20px;"><img src="${g.gbThumb }" width="100" height="100"></td>
+				            	</tr>
+				                <tr>
+				                    <td>상품 제목 : ${g.gbName }</td>
+				                    <td rowspan="3" style="width: 60px;"><button type="button" onclick="goUpdatePage('${g.pno}');">수정</button> 
+				                    <button type="button" data-toggle="modal" data-target="#myModal3" data-num="${g.pno }">삭제</button></td>
+				                </tr>
+				                <tr>
+				                    <td>마감 시간 : ${g.gbEnd }</td>
+				                </tr>
+						    </table>
+					    </c:forEach>
+				     	<div class="paging-area" align="center">     
+				        	<c:if test="${ pi.currentPage ne 1}">
+				        		<a href="GB.ad?category=${category }&currentPage=${ pi.currentPage-1 }">이전</a>
+				        	</c:if>	
+				        	<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+				        		<a href="GB.ad?category=${category }&currentPage=${ p }">${ p }</a>
+				            </c:forEach>
+				            <c:if test="${pi.maxPage > 0 and pi.maxPage ne pi.currentPage}">
+				            	<a href="GB.ad?category=${category }&currentPage=${ pi.currentPage+1 }">다음</a>
+				            </c:if>
+		        		</div>
+        			</c:otherwise>
+        		</c:choose>
         </c:if>
         
         
@@ -424,8 +456,29 @@
 	      </div>
 	    </div>
     </div>
+    <div class="modal fade" id="myModal3">
+	    <div class="modal-dialog">
+	      <div class="modal-content">
+	      <br>
+	      	<h4>&nbsp해당 상품을 삭제 처리하시겠습니까?</h4>
+	        <!-- Modal body -->
+	        <div class="modal-body">
+	          <br><br>
+	          <div align="right">
+	          	<button id="deleteG" type="button" class="btn btn-primary" data-dismiss="modal">처리하기</button>
+	          	<button type="button" class="btn btn-danger" data-dismiss="modal">취소하기</button>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+    </div>
     <script>
     	var checkArr = [];
+    	var num = "";
+    	function goUpdatePage(pNo)
+	    {
+			location.href="goUpdateG.ad?pNo="+pNo;
+	    }
 	    function clickB(bNo){
 			var bNo = bNo;
 			location.href = "beerUpdate.ad?beerNo=" + bNo;
@@ -436,11 +489,9 @@
 					$(".content").height('800');
 					$(".outer").height('1000');
 				}
-	    		if('${sort}' == 'no'){
-	    			$('#sort option:eq(1)').prop('selected', true);
-	    		}else{
-	    			$('#sort option:eq(2)').prop('selected', true);
-	    		}
+	    		$('#myModal3').on('show.bs.modal', function(event){
+	    			num = $(event.relatedTarget).data('num');
+	    		});
 	    		
 	    	});
 			$("#upfile1").hide();
@@ -503,6 +554,9 @@
 		$("#status").change(function(){
 			location.href = "GB.ad?status="+$(this).val() + "&category=${category}";
 		});
+		$("#status2").change(function(){
+			location.href = "GB.ad?status2="+$(this).val() + "&category=${category}";
+		});
 		function trclick(rNo){
 			num = rNo;
 			$("#"+num).prop("checked",true);
@@ -519,6 +573,9 @@
 	        });
 	    	$("#cancel").click(function(){
 	    		cancel();
+	        });
+	    	$("#deleteG").click(function(){
+	    		deleteG();
 	        });
 			function complete(){
 				$("input[name='number']:checked").each(function(i){
@@ -564,6 +621,21 @@
 	    			  }
 				});
 			}
+			function deleteG(){
+	    		  $.ajax({
+	    			  url:"deleteG.ad",
+	    			  type:"POST",
+	    			  data:{
+	    				  pNo:num},
+	    			  success:function(result){
+	    				  alert("삭제되었습니다.");
+	    				  location.reload();
+	    			  },error:function(){
+	    				  alert("실패되었습니다.");
+	    				  location.reload();
+	    			  }
+	    		  })
+	    	  }
 		});
 	</script>
 	

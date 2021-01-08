@@ -315,7 +315,7 @@ public class AdministerController {
 	
 	//공구 관리
 	@RequestMapping("GB.ad")
-	public String goGB(@RequestParam(value="currentPage", defaultValue="1")int currentPage, @RequestParam(value="category", defaultValue="1")int category, @RequestParam(value="status", defaultValue="R")String status, Model model, String sort, String search) {
+	public String goGB(@RequestParam(value="currentPage", defaultValue="1")int currentPage, @RequestParam(value="category", defaultValue="1")int category, @RequestParam(value="status", defaultValue="R")String status, @RequestParam(value="status2", defaultValue="Y")String status2, Model model, String sort, String search) {
 		model.addAttribute("category",category);
 		model.addAttribute("sort", sort);
 		if(category == 2) {
@@ -337,6 +337,15 @@ public class AdministerController {
 			}
 			model.addAttribute("pi", pi);
 			model.addAttribute("gblist", gblist);
+		}
+		if(category == 3) {
+			model.addAttribute("status2", status2);
+			BeerSearch bs = Search.getBeerSearch(status2, search);
+			int listCount = aService.selectGBlistCount(bs);
+			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+			ArrayList<GroupBuy> glist= aService.selectGBlist(bs, pi);
+			model.addAttribute("pi", pi);
+			model.addAttribute("glist", glist);
 		}
 		return "administer/groupBuyAdmini";
 	}
@@ -379,10 +388,79 @@ public class AdministerController {
 		}
 	}
 	
+	@ResponseBody
+	@RequestMapping("deleteG.ad")
+	public String deleteG(String pNo) {
+		
+		int result = aService.deleteGroupBuy(pNo);
+		int result2 = aService.deleteAttach(pNo);
+		
+		if(result * result2 > 0) {
+			return "success";
+		}else {
+			return "fail";
+		}
+	}
 	
 	
+	@RequestMapping("goUpdateG.ad")
+	public String goUpdateG(String pNo,  Model model) {
+		GroupBuy g = aService.selectGBOne(pNo);
+		g.setGbStart(dataFormatSolve(g.getGbStart()));
+		g.setGbEnd(dataFormatSolve(g.getGbEnd()));
+		ArrayList<Attachment> alist = aService.selectATOne(pNo);
+		model.addAttribute("g", g);
+		model.addAttribute("pNo", pNo);
+		int i = 1;
+		for(Attachment a : alist) {
+			System.out.println("upfile" + i);
+			System.out.println(a.getChangeName());
+			model.addAttribute("upfile" + i, a.getChangeName());
+			i += 1;
+		}
+		return "administer/groupUpdate";
+	}
 	
-	
+	@RequestMapping("updateGB.ad")
+	public String updateGB(GroupBuy gb, MultipartFile upfile1,MultipartFile upfile2,MultipartFile FImg, HttpSession session, Model model, String pNo) {
+		int result2 = 1;
+		int result3 = 1;
+		
+		gb.setGbStart(dataFormat(gb.getGbStart()));
+		gb.setGbEnd(dataFormat(gb.getGbEnd()));
+
+		Attachment a1 = filetoAttachment(gb.getPno(), upfile1, session);
+		Attachment a2 = filetoAttachment(gb.getPno(), upfile2, session);
+
+		GroupBuy gb2 = aService.selectGBOne(pNo);
+		String changeName;
+		if(FImg.isEmpty()) {
+			gb.setGbThumb(gb2.getGbThumb());
+		}else {
+			changeName = saveFile(session, FImg);
+			gb.setGbThumb("resources/uploadFiles/" + changeName);
+		}
+		
+		if(upfile1.isEmpty() && upfile2.isEmpty()) {
+			System.out.println("pass");
+		}else {
+			result3 = aService.deleteAttach(pNo);
+			result2 = aService.updateAttachment(a1, a2);
+		}
+		
+		
+		int result = aService.updateGB(gb);
+		
+		
+		if(result * result2 * result3 > 0) {
+			session.setAttribute("alertMsg", "성공적으로 등록되었습니다.");
+			return "redirect:GB.ad";
+		}else {
+			model.addAttribute("errorMsg", "실패되었습니다.");
+			return "common/errorPage";
+		}
+		
+	}
 	//일반 함수
 	public String saveFile(HttpSession session, MultipartFile upfile) {
 		

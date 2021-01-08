@@ -60,4 +60,15 @@ public interface AdminService {
 	ArrayList<GbRequest> selectGBRlist(BeerSearch bs, PageInfo pi);
 	int updateBatchGB(Batch b);
 	int returnPoint(Batch b);
+	
+	int selectGBlistCount(BeerSearch b);
+	ArrayList<GroupBuy> selectGBlist(BeerSearch bs, PageInfo pi);
+	int deleteGroupBuy(String pNo);
+	int deleteAttach(String pNo);
+	
+	GroupBuy selectGBOne(String pNo);
+	ArrayList<Attachment> selectATOne(String pNo);
+	
+	int updateGB(GroupBuy gb);
+	int updateAttachment(Attachment a1, Attachment a2);
 }
