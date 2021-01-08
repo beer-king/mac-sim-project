@@ -195,6 +195,7 @@
 			set score = #{score} ,
 				comments=#{comments}
 			where user_no =#{userNo}
+			  and score_no = #{scoreNo}     
 
 		</update>
     
@@ -226,6 +227,7 @@
 		   select count(*) 
 		         from score 
 		         where user_no =#{userNo}
+		          and status = 'Y'
 	
 	</select>
 	

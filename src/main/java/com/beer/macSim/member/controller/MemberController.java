@@ -65,7 +65,6 @@ public class MemberController {
 
 		ArrayList<Score> list = mService.selectBeerReivewList(userNo);
 		
-		//System.out.println(list);
 		
 		 model.addAttribute("list",list);
 
@@ -321,11 +320,15 @@ public class MemberController {
 
     // 나의 리뷰 수정
 	@RequestMapping("updateBeerReview")
-	public String updateBeerReview(int newScore, String myReview,HttpSession session){
+	public String updateBeerReview(int newScore, String myReview, int scoreNo,HttpSession session){
 
+		System.out.println(scoreNo);
+		
+		
 		Score score = new Score();
 		score.setScore(newScore);
 		score.setComments(myReview);
+		score.setScoreNo(scoreNo);
 
 		Member m = (Member) session.getAttribute("loginUser");
 		score.setUserNo(m.getUserNo());
@@ -339,9 +342,9 @@ public class MemberController {
 
     // 나의 리뷰 삭제
     @RequestMapping("deleteReview")
-    public String deleteReview(Model model , HttpSession session){
+    public String deleteReview(Model model , HttpSession session,int scoreNo){
     		
-    	int scoreNo=(int) model.getAttribute("scoreNo");
+    	
     	Score score = new Score();
     	score.setScoreNo(scoreNo);
 
@@ -353,7 +356,7 @@ public class MemberController {
 
         if(deleteReview>0){
            session.setAttribute("alertMsg","리뷰삭제 성공");
-           return "redirect:/";
+           return "redirect:/review.me";
         }else{
             session.setAttribute("alertMsg","리뷰삭제 실패");
             return "member/review";

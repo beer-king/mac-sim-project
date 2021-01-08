@@ -74,13 +74,14 @@
 
 <form action="" method="post" id="reviewForm">
 
+   <c:forEach var="beerReview" items="${list}">
     <div align="left" >
-        <c:forEach var="beerReview" items="${list}">
             <table border="1" id="reviewTable" class="table-bordered">
 
 
-                <tr>
-                    <th width="100">${beerReview.beerName}</th>
+                <tr >
+                	
+                    <th width="100" id="snt">(<span class="sn">${beerReview.scoreNo}</span>)   ${beerReview.beerName} </th>
                     <td>
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
                             수정
@@ -93,7 +94,7 @@
                 </tr>
                 <tr>
                     <td colspan="2">
-                        (${beerReview.scoreNo})점 <span>${beerReview.updatedDate}</span>
+                        <span >${beerReview.score}</span>점<span>${beerReview.updatedDate}</span>
                     </td>
 
                 </tr>
@@ -104,22 +105,26 @@
 
                 </tr>
             </table>
-        </c:forEach>
+   		 </div>
+       </c:forEach>
 
-        <script>
+</form>
+
+    <script>
             function deleteBeer(){
                 var message = confirm("삭제를 원하신다면 확인을 눌러주세요");
                 //console.log(message); => 확인누르면 true
                 if(message){
-                    location.href="deleteReview?scoreNo="+${list.scoreNo};
+                	
+                	var scoreNo = $("#snt").children(".sn").text();
+                	console.log(scoreNo);
+                	
+                    location.href="deleteReview?scoreNo="+scoreNo;
                 }
 
             }
 
         </script>
-    </div>
-
-</form>
 
 
 
@@ -162,9 +167,28 @@
 
                     취소
                 </button>
-                <button type="submit" class="btn btn-primary">수정</button>
+              	<input id="xxx" type="hidden" name="scoreNo">
+                <button id="sub" type="submit" class="btn btn-primary">수정</button>
             </div>
         </form>
+        
+        <script>
+        
+        	$(function(){
+        		$("#sub").click(function(){
+        			var scoreNo = $("#snt").children(".sn").text();
+                	console.log(scoreNo);
+                	
+                	$("#xxx").val(scoreNo);
+                	
+                	
+        		});
+        	});
+        
+        
+        
+        </script>
+        
     </div>
 </div>
 
