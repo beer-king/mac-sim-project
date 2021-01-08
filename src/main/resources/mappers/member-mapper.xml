@@ -338,7 +338,41 @@
           and pno = #{pNo}
 	</update>
 
-
+	<update id="updateMemberPoint" parameterType="PointHistory">
+		update MEMBER
+		   set
+		       POINT = POINT + #{ point }
+		 where USER_NO = #{ userNo }
+	</update>
+	
+	<insert id="insertPointHistory" parameterType="PointHistory">
+		 insert
+		   into point_history
+		   (  
+		      ph_no
+		    , point
+		    , user_no
+		    , category
+		    , point_history 
+		   )
+		   values
+		   (
+		      seq_ph_no.nextval
+		    , #{ point }
+		    , #{ userNo }
+		    , #{ category }
+		    , #{ pointHistory }
+  		   )
+	</insert>
+	
+	<update id="updateMemberLoginTime" parameterType="_int">
+		 UPDATE MEMBER
+		    SET
+		        login_time = sysdate
+		  WHERE
+		        user_no = #{userNo}
+	</update>
+	
 
 </mapper>
 

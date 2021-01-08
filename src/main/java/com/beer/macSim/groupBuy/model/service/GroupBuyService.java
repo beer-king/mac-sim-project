@@ -18,6 +18,7 @@ public interface GroupBuyService {
 	int increaseCount(int gno);
 	GroupBuy selectGroupBuy(int gno);
 	ArrayList<Attachment> selectGbAttachment(int gno);
+	int checkApplyGroupBuy(GbRequest gbr);
 	
 	// 3. 공구 댓글리스트 조회용 서비스
 	ArrayList<GbReply> selectGbReplyList(int gno);

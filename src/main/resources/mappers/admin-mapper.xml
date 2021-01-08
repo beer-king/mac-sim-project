@@ -80,8 +80,31 @@
 		<result column="address" property="address"/>
 		<result column="pname" property="pname"/>
 		<result column="gb_thumb" property="thumb"/>
+		<result column="gb_point" property="gbPoint"/>
 	</resultMap>
-	
+	<resultMap id="groupBuyResultSet" type="GroupBuy">
+		<result column="pno" property="pno"/>
+		<result column="user_id" property="userNo"/>
+		<result column="pname" property="gbName"/>
+		<result column="price" property="price"/>
+		<result column="content" property="content"/>
+		<result column="gb_start" property="gbStart"/>
+		<result column="gb_end" property="gbEnd"/>
+		<result column="gb_point" property="gbPoint"/>
+		<result column="gb_thumb" property="gbThumb"/>
+		<result column="status" property="status"/>
+		<result column="limit_no" property="limitNo"/>
+		<result column="apply_no" property="applyNo"/>
+		<result column="click_no" property="clickNo"/>	
+		<result column="gb_date" property="gbDate"/>		
+	</resultMap>
+	<resultMap id="AttachmentResultSet" type="Attachment">
+		<result column="att_no" property="attNo"/>
+		<result column="origin_name" property="originName"/>
+		<result column="change_name" property="changeName"/>
+		<result column="ev_no" property="evNo"/>
+		<result column="pno" property="pNo"/>
+	</resultMap>
   	<insert id="insertBeer" parameterType="Beers">
   		insert
   			into beer
@@ -411,6 +434,23 @@
   			)
   	</insert>
   	
+  	<insert id="updateAttachment" parameterType="Attachment">
+  		insert
+  			into attachment
+  			(
+  				    att_no
+  				  , origin_name
+  				  , change_name
+  				  , pno
+  			)
+  			values
+  			(
+  				  seq_att_no.nextval
+  				, #{originName}
+  				, #{changeName}
+  				, #{pNo}
+  			)
+  	</insert>
   	<insert id="insertGB" parameterType="GroupBuy">
   		insert
   			into group_buy
@@ -441,7 +481,22 @@
   			)
   			
   	</insert>
-  	
+  	<update id="updateGB" parameterType="GroupBuy">
+  		update 
+  			group_buy
+  		   set
+  		   	  user_no = #{userNo}
+  			, pname = #{gbName}
+  			, price = #{price}
+  			, content = #{content}
+  			, gb_start = #{gbStart}
+  			, gb_end = #{gbEnd}
+  			, gb_point = #{gbPoint}
+  			, gb_thumb = #{gbThumb}
+  			, limit_no = #{limitNo}
+  		 where
+  		 	pno = #{pno}
+  	</update>
   	<select id="selectGBRlistCount" resultType="_int" parameterType="BS">
 		select count(*)
 		from gb_request
@@ -457,7 +512,7 @@
   	</select>
   	
   	<select id="selectGBRlist" resultMap="GBRresultSet" parameterType="BS">
-		select request_no, pno, user_id, req_status, g.address, pname, gb_thumb
+		select request_no, pno, user_id, req_status, g.address, pname, gb_thumb, g.gb_point
 		from gb_request g
 		join member using(user_no)
 		join group_buy using(pno)
@@ -482,5 +537,73 @@
 				request_no = #{item}
 			</foreach>
   	</update>
+  	
+  	<update id="returnPoint" parameterType="string">
+		update member
+		set
+		point = (select point + g.gb_point
+		                       from gb_request g
+		                       join member using(user_no)
+		                       join group_buy using(pno)
+		                       where request_no = #{no}
+		                    )
+		where user_id = (select user_id
+		                       from gb_request g
+		                       join member using(user_no)
+		                       join group_buy using(pno)
+		                       where request_no = #{no}
+		                    )
+  	</update>
+  	
+  	<select id="selectGBlistCount" resultType="_int" parameterType="BS">
+		select count(*)
+		from group_buy
+		<choose>
+			<when test="content != null">
+				where status = #{category} and pname like '%' || #{content} || '%'
+			</when>
+			<otherwise>
+				where status = #{category}
+			</otherwise>
+		</choose>
+  	</select>
+  	<select id="selectGBlist" resultMap="groupBuyResultSet" parameterType="BS">
+		select pno, pname, gb_end, gb_thumb
+		from group_buy
+		<choose>
+			<when test="content != null">
+				where status = #{category} and pname like '%' || #{content} || '%'
+			</when>
+			<otherwise>
+				where status = #{category}
+			</otherwise>
+		</choose>
+		order by gb_end asc
+  	</select>
   
+  	<select id="selectGBOne" resultType="GroupBuy" parameterType="string">
+		select pno, pname gbname, price, content, gb_start gbStart, gb_end gbEnd, gb_point gbPoint, gb_thumb gbThumb, limit_no limitNo
+		from group_buy
+		where status = 'Y' and pno = #{pNo}
+  	</select>
+  	
+  	<select id="selectATOne" resultMap="AttachmentResultSet" parameterType="string">
+		select att_no, origin_name, change_name, pno
+		from attachment
+		where pno = #{pNo}
+		order by att_no asc
+  	</select>
+  	
+  	<update id="deleteGroupBuy" parameterType="string">
+		update group_buy
+		set status = 'N'
+		where pno = #{pNo}
+  	</update>
+  	
+  	<delete id="deleteAttach" parameterType="string">
+		delete from attachment
+		where pno = #{pNo}
+  	</delete>
+  	
+  	
 </mapper>

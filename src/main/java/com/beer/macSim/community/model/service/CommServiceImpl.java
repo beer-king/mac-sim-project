@@ -13,6 +13,7 @@ import com.beer.macSim.community.model.vo.Community;
 import com.beer.macSim.community.model.vo.Forum;
 import com.beer.macSim.community.model.vo.Reply;
 import com.beer.macSim.community.model.vo.SubReply;
+import com.beer.macSim.member.model.vo.PointHistory;
 
 @Service
 public class CommServiceImpl  implements CommService{
@@ -162,6 +163,11 @@ public class CommServiceImpl  implements CommService{
 	@Override
 	public int deleteForum(int forNo) {
 		return cDao.deleteForum(sqlSession, forNo);
+	}
+
+	@Override
+	public int selectForumEnter(PointHistory ph) {
+		return cDao.selectForumEnter(sqlSession, ph);
 	}
 
 }

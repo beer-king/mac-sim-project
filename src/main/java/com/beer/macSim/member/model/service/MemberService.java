@@ -76,7 +76,14 @@ public interface MemberService {
     ArrayList<GroupBuy> selectGroupBuyList(Member m);
 
     int deleteGroupBuy(Member m);
-
-
+    
     ArrayList<Score> selectBeerReivewList(int userNo);
+
+    // 사용자의 포인트를 적립/차감 하고 + 포인트내역에 추가
+	int updateMemberPoint(PointHistory ph);
+
+	int updateMemberLoginTime(int userNo);
+
+	void sendMail(String userId, String email);
+
 }

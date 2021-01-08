@@ -173,4 +173,61 @@ public class AdminDao {
 	public int updateBatchGB(SqlSessionTemplate sqlSession, Batch b) {
 		return sqlSession.update("adminMapper.updateBatchGB", b);
 	}
+	
+	public int returnPoint(SqlSessionTemplate sqlSession, Batch b) {
+		int result = 0;
+		for(String no : b.getList()) {
+			result = sqlSession.update("adminMapper.returnPoint", no);
+			if(result <= 0) {
+				break;
+			}
+		}
+		
+		return result;
+	}
+
+	public int selectGBlistCount(SqlSessionTemplate sqlSession, BeerSearch bs) {
+		return sqlSession.selectOne("adminMapper.selectGBlistCount", bs);
+	}
+
+	public ArrayList<GroupBuy> selectGBlist(SqlSessionTemplate sqlSession, BeerSearch bs, PageInfo pi) {
+		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("adminMapper.selectGBlist", bs, rowBounds);
+	}
+
+	public int deleteGroupBuy(SqlSessionTemplate sqlSession, String pNo) {
+		return sqlSession.update("adminMapper.deleteGroupBuy", pNo);
+	}
+
+	public int deleteAttach(SqlSessionTemplate sqlSession, String pNo) {
+		return sqlSession.delete("adminMapper.deleteAttach", pNo);
+	}
+
+	public GroupBuy selectGBOne(SqlSessionTemplate sqlSession, String pNo) {
+		return sqlSession.selectOne("adminMapper.selectGBOne", pNo);
+	}
+
+	public ArrayList<Attachment> selectATOne(SqlSessionTemplate sqlSession, String pNo) {
+		return (ArrayList)sqlSession.selectList("adminMapper.selectATOne", pNo);
+	}
+
+	public int updateGB(SqlSessionTemplate sqlSession, GroupBuy gb) {
+		return sqlSession.update("adminMapper.updateGB", gb);
+	}
+
+	public int updateAttachment(SqlSessionTemplate sqlSession, Attachment a1, Attachment a2) {
+		int result2 = 1;
+		int result3 = 1;
+		
+		if(a1 != null) {
+			result2 = sqlSession.update("adminMapper.updateAttachment", a1);
+
+		}
+		if(a2 != null) {
+			result3 = sqlSession.update("adminMapper.updateAttachment", a2);
+
+		}
+		return result2 * result3;
+	}
 }

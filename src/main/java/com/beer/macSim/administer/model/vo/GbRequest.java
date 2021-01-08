@@ -19,4 +19,5 @@ public class GbRequest {
 	private String pname;
 	private String thumb;
 	private String statusName;
+	private int gbPoint;
 }

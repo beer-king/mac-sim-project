@@ -427,6 +427,14 @@
 		 where for_no = #{ forNo }
 	</update>
 	
+	<select id="selectForumEnter" resultType="_int" parameterType="PointHistory">
+		select
+		       count(*)
+		  from POINT_HISTORY
+		 where user_no = #{ userNo }
+		   and category = #{ category }
+	</select>
+	
 	<!-- 
 	<select id="" resultMap="" parameterType="">
 		select

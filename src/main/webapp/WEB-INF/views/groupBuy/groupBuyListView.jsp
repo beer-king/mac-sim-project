@@ -125,19 +125,35 @@
                    </tfoot>
                </table>
            </div>
-		 -->
+        </div>  
+	 	-->
 		 
 		 
-          <script>
-           	$(function(){
-           		$(".gbList").click(function(){
-           			location.href="detail.gb?gno=" + $(this).children(".gno").val();
-           		})
-           		
-           	})
-          </script>
+         <c:choose>
+         	<c:when test="${ !empty loginUser }">
+         		<script>
+		           	$(function(){
+		           		$(".gbList").click(function(){
+		           			location.href="detail.gb?gno=" + $(this).children(".gno").val() + "&userNo=" + ${loginUser.userNo};
+		           		})
+		           		
+		           	})
+		        </script>
+         	</c:when>
+         	<c:otherwise>
+         		<script>
+		           	$(function(){
+		           		$(".gbList").click(function(){
+		           			location.href="detail.gb?gno=" + $(this).children(".gno").val();
+		           		})
+		           		
+		           	})
+		        </script>
+         	</c:otherwise>
+         </c:choose>
 
-       </div>
+       		<br><br>
+       		
            <div id="pagingArea">
                <ul class="pagination">
                	   
@@ -165,7 +181,7 @@
               	   </c:choose>
                </ul>
            </div>
-       </div>
+       
 
    </div>    
 </body>

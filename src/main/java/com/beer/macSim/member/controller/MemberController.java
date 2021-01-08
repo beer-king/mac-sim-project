@@ -374,10 +374,24 @@ public class MemberController {
 		m.setUserPwd(encPwd); // 암호문이 담겨있음! 이것을 dao까지 쭉 넘길것이다.
 
 		int result = mService.insertMember(m);
+		
 
+		
 		if (result > 0) { // 성공 => 메인페이지 url재요청
+
 			
+			Member loginUser = mService.loginMember(m); 
 			
+			// (포인트적립 + 내역에추가)
+			PointHistory ph = new PointHistory();
+			ph.setPoint(100);
+			ph.setUserNo(loginUser.getUserNo());
+			ph.setCategory("회원가입");
+			ph.setPointHistory("적립");
+			
+			mService.updateMemberPoint(ph);
+			
+
 			session.setAttribute("alertMsg", "회원가입 성공! 100point 적립 되었습니다~!");
 			return "redirect:/";
 
@@ -420,6 +434,7 @@ public class MemberController {
     		
     		if(loginTime == null || Integer.parseInt(loginTime) >= 1 ) {
     			
+    			/*
     			//1) memeber 포인트 +3
     				 int result = mService.memberPointUpdate(loginUser.getUserNo(), 3);
     				 //System.out.println(result); -> 1 
@@ -436,6 +451,26 @@ public class MemberController {
     					 
     					 //session.setAttribute("alertMsg", "이미 오늘 포인트 받아가셨어요~");
     				 //}
+				*/
+    				 
+    			// 하나로 퉁치기 (포인트적립 + 내역에추가)
+					PointHistory ph = new PointHistory();
+					ph.setPoint(3);
+					ph.setUserNo(loginUser.getUserNo());
+					ph.setCategory("로그인");
+					ph.setPointHistory("적립");
+					
+					int result = mService.updateMemberPoint(ph);
+					
+					// 로그인 시간 update
+					int result2 = mService.updateMemberLoginTime(loginUser.getUserNo());
+					
+					if(result*result2 > 0) {
+   					 session.setAttribute("alertMsg", "출석 포인트로 3point 적립되었습니다~~!!!");
+   				    }
+					
+    		}else {
+    			session.setAttribute("alertMsg", "이미 오늘 포인트 받아가셨어요~");
     		}
     		
     		// 확인해보기
@@ -456,6 +491,9 @@ public class MemberController {
 
 	@RequestMapping("logout.me")
 	public String logoutMember(HttpSession session) {
+		kakaoService.kakaoLogout((String)session.getAttribute("access_Token"));
+	    session.removeAttribute("access_Token");
+	    session.removeAttribute("userId");
 		session.invalidate();
 		return "redirect:/";
 
@@ -485,7 +523,7 @@ public class MemberController {
 	     return "redirect:/";
 	 }
 
-	 @RequestMapping(value="/kakaologout.do")
+	 @RequestMapping(value="/logout.do")
 	 public String logout(HttpSession session) {
 		 kakaoService.kakaoLogout((String)session.getAttribute("access_Token"));
 	     session.removeAttribute("access_Token");
@@ -493,11 +531,7 @@ public class MemberController {
 	     return "redirect:/";
 	 }
 	 
-	 // 인증번호 보내기 
-	 /*
-	 @RequestMapping("findPwd.me")
-	 public String findPwd()
-	 */
+	 
 
 	 // 비번찾기(메일발송)
 	 @RequestMapping("findPwd.me")
@@ -516,7 +550,14 @@ public class MemberController {
 			 model.addAttribute("historyBack", true);
 			 session.setAttribute("alertMsg", "이메일이 올바르지 않습니다.");
 			 return "redirect:/";
+		 }else {
+			 
+			mService.sendMail(userId, email);
+			return "member/newPwd";
 		 }
+		 
+		 
+		 
 		 
 		 
 		 /*else {
@@ -575,7 +616,7 @@ public class MemberController {
 		 
 		 
 		 
-		 return "redirect:/";
+	
 		 
 		 
 		 

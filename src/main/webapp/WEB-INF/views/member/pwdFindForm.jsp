@@ -66,7 +66,7 @@
                   <br>
                   <br>
                   <div align="center" id="findId">
-                    <button class="snip1535" type="submit" >비밀번호 찾기</button>
+                    <button class="snip1535" type="submit" >임시비밀번호받기</button>
                   </div>
                   <br>  
               </form>

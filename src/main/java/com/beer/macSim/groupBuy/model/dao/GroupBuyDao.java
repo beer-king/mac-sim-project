@@ -51,4 +51,8 @@ public class GroupBuyDao {
 	public int applyGroupBuy(SqlSessionTemplate sqlSession, GbRequest gbr) {
 		return sqlSession.insert("groupBuyMapper.applyGroupBuy", gbr);
 	}	
+	
+	public int checkApplyGroupBuy(SqlSessionTemplate sqlSession, GbRequest gbr) {
+		return sqlSession.selectOne("groupBuyMapper.checkApplyGroupBuy", gbr);
+	}
 }

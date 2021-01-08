@@ -173,6 +173,53 @@ public class AdminServiceImpl implements AdminService{
 	public int updateBatchGB(Batch b) {
 		return aDao.updateBatchGB(sqlSession, b);
 	}
+
+	@Override
+	public int returnPoint(Batch b) {
+		return aDao.returnPoint(sqlSession, b);
+	}
+
+	@Override
+	public int selectGBlistCount(BeerSearch bs) {
+		return aDao.selectGBlistCount(sqlSession, bs);
+	}
+
+	@Override
+	public ArrayList<GroupBuy> selectGBlist(BeerSearch bs, PageInfo pi) {
+		return aDao.selectGBlist(sqlSession, bs, pi);
+	}
+
+	@Override
+	public int deleteGroupBuy(String pNo) {
+		return aDao.deleteGroupBuy(sqlSession, pNo);
+	}
+
+	@Override
+	public int deleteAttach(String pNo) {
+		return aDao.deleteAttach(sqlSession, pNo);
+	}
+
+	@Override
+	public GroupBuy selectGBOne(String pNo) {
+		return aDao.selectGBOne(sqlSession, pNo);
+	}
+
+	@Override
+	public ArrayList<Attachment> selectATOne(String pNo) {
+		return aDao.selectATOne(sqlSession, pNo);
+	}
+
+	@Override
+	public int updateGB(GroupBuy gb) {
+		return  aDao.updateGB(sqlSession, gb);
+	}
+
+	@Override
+	public int updateAttachment(Attachment a1, Attachment a2) {
+		return aDao.updateAttachment(sqlSession, a1, a2);
+	}
+
+	
 	
 	
 }
