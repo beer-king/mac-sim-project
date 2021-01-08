@@ -64,7 +64,9 @@ public class MemberController {
 		int userNo = m.getUserNo();
 
 		ArrayList<Score> list = mService.selectBeerReivewList(userNo);
-
+		
+		//System.out.println(list);
+		
 		 model.addAttribute("list",list);
 
 
@@ -337,8 +339,9 @@ public class MemberController {
 
     // 나의 리뷰 삭제
     @RequestMapping("deleteReview")
-    public String deleteReview(int scoreNo , HttpSession session){
-
+    public String deleteReview(Model model , HttpSession session){
+    		
+    	int scoreNo=(int) model.getAttribute("scoreNo");
     	Score score = new Score();
     	score.setScoreNo(scoreNo);
 

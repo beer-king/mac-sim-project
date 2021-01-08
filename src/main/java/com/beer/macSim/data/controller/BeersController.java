@@ -1,3 +1,5 @@
+
+/*
 package com.beer.macSim.data.controller;
 
 import java.io.File;
@@ -14,7 +16,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.beer.macSim.common.model.vo.PageInfo;
 import com.beer.macSim.common.template.Pagination;
 import com.beer.macSim.data.model.service.BeerService;
@@ -77,3 +78,6 @@ public class BeersController {
 	
 
 }
+
+
+ */

@@ -20,12 +20,14 @@ public class Score {
 
     private String comments;
 
-    private Date updateDate;
+    private Date updatedDate;
 
     private String status;
 
     private int userNo;
 
     private int beerNo;
+    
+    private String beerName;
 
 }

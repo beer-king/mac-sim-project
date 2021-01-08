@@ -93,7 +93,7 @@
                 </tr>
                 <tr>
                     <td colspan="2">
-                        (${beerReview.score})점 <span>${beerReview.updatedDate}</span>
+                        (${beerReview.scoreNo})점 <span>${beerReview.updatedDate}</span>
                     </td>
 
                 </tr>
@@ -111,7 +111,7 @@
                 var message = confirm("삭제를 원하신다면 확인을 눌러주세요");
                 //console.log(message); => 확인누르면 true
                 if(message){
-                    location.href="deleteReview?scoreNo=${list.scoreNo}";
+                    location.href="deleteReview?scoreNo="+${list.scoreNo};
                 }
 
             }
