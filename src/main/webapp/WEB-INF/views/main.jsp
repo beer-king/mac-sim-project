@@ -92,7 +92,7 @@
 
 	<div class="inner">
 		<c:if test="${loginUser.status eq 3}">
-			<span class="openmenu" onclick='openNav()'></span>
+			<span class="openmenu" onclick='openNav()'>></span>
 		</c:if>
 		<div class="header__left">
 			<a class="header__logo" href="#">

@@ -424,7 +424,6 @@ public class AdministerController {
 	@RequestMapping("updateGB.ad")
 	public String updateGB(GroupBuy gb, MultipartFile upfile1,MultipartFile upfile2,MultipartFile FImg, HttpSession session, Model model, String pNo) {
 		int result2 = 1;
-		int result3 = 1;
 		
 		gb.setGbStart(dataFormat(gb.getGbStart()));
 		gb.setGbEnd(dataFormat(gb.getGbEnd()));
@@ -444,7 +443,7 @@ public class AdministerController {
 		if(upfile1.isEmpty() && upfile2.isEmpty()) {
 			System.out.println("pass");
 		}else {
-			result3 = aService.deleteAttach(pNo);
+			aService.deleteAttach(pNo);
 			result2 = aService.updateAttachment(a1, a2);
 		}
 		
@@ -452,7 +451,7 @@ public class AdministerController {
 		int result = aService.updateGB(gb);
 		
 		
-		if(result * result2 * result3 > 0) {
+		if(result * result2 > 0) {
 			session.setAttribute("alertMsg", "성공적으로 등록되었습니다.");
 			return "redirect:GB.ad";
 		}else {
