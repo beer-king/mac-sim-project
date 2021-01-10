@@ -375,6 +375,16 @@
 		        user_no = #{userNo}
 	</update>
 	
+	<update id="searchPassword" parameterType="hashmap">
+		update member 
+		   set user_Pwd = #{key} 
+		 where user_Id= #{userId} 
+		   and email = #{email}
+	</update>
+	
+	
+	
+	
 
 </mapper>
 

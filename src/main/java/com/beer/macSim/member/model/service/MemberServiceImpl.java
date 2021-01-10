@@ -1,17 +1,23 @@
 package com.beer.macSim.member.model.service;
 
+import java.io.PrintWriter;
+import java.util.ArrayList;
+
+import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletResponse;
+
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Service;
+
 import com.beer.macSim.data.model.vo.Score;
 import com.beer.macSim.event.model.vo.Event;
 import com.beer.macSim.groupBuy.model.vo.GroupBuy;
 import com.beer.macSim.member.model.dao.MemberDao;
 import com.beer.macSim.member.model.vo.Member;
 import com.beer.macSim.member.model.vo.PointHistory;
-import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.sql.Date;
-import java.util.ArrayList;
 
 
 @Service
@@ -23,7 +29,7 @@ public class MemberServiceImpl implements MemberService {
     private SqlSessionTemplate sqlSession;
     
     @Autowired
-    private MailService mailService;
+	private JavaMailSender mailSender;
 
     @Override
     public Member loginMember(Member m) {
@@ -180,7 +186,22 @@ public class MemberServiceImpl implements MemberService {
 		return mDao.updateMemberLoginTime(sqlSession, userNo);
 	}
 
+	@Override
+	public int searchPassword(String userId, String email, String key) {
+		return mDao.searchPassword(sqlSession,userId, email, key);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
+
+
 
 
 

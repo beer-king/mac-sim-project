@@ -148,6 +148,20 @@ public class MemberDao {
 		return sqlSession.update("memberMapper.updateMemberLoginTime", userNo);
 	}
 
+
+	public int searchPassword(SqlSessionTemplate sqlSession, String userId, String email, String key) {
+
+		HashMap<String,String> map = new HashMap<String,String>();
+		map.put("userId",userId);
+		map.put("email",email);
+		map.put("key",key);
+		
+		
+		return sqlSession.update("memberMapper.searchPassword", map);
+		
+		
+	}
+
 	
 
 

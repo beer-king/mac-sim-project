@@ -11,16 +11,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class MailServiceImpl implements MailService {
 
-	private final JavaMailSender javaMailSender;
 	
 	@Autowired
-	public MailServiceImpl(JavaMailSender javaMailSender) {
+	private JavaMailSender javaMailSender;
+	
+	public void setJavaMailSender(JavaMailSender javaMailSender) {
 		this.javaMailSender = javaMailSender;
 	}
 	
-	 
 	@Override
 	public boolean send(String subject, String text, String from, String to) {
+		
 		MimeMessage message = javaMailSender.createMimeMessage();
 		
 		try {

@@ -50,7 +50,9 @@
         <br><br>
             <div id="image" align="center">
               <a href="/macSim"><img src="resources/images/logo.png" alt=""></a><br><br>
-              <span style="font-size: small;">고객님의 정보와 일치하는 아이디 입니다.</span>
+              <c:if test="${ !empty findId }">
+              	<span style="font-size: small;">고객님의 정보와 일치하는 아이디 입니다.</span>
+              </c:if>
             </div>
             <br>
             <div id="findIdForm">

@@ -3,23 +3,26 @@ package com.beer.macSim.member.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import com.beer.macSim.data.model.vo.Score;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.beer.macSim.common.model.vo.PageInfo;
 import com.beer.macSim.common.template.Pagination;
+import com.beer.macSim.data.model.vo.Score;
 import com.beer.macSim.event.model.vo.Event;
 import com.beer.macSim.member.model.service.KakaoService;
+import com.beer.macSim.member.model.service.MailService;
 import com.beer.macSim.member.model.service.MemberService;
 import com.beer.macSim.member.model.vo.Member;
 import com.beer.macSim.member.model.vo.PointHistory;
@@ -35,6 +38,11 @@ public class MemberController {
 	 private KakaoService kakaoService;
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
+	@Autowired
+	private MailService ms;
+	// 랜덤값 만들때 
+	private boolean lowerCheck;
+	private int size;
 
 	@RequestMapping("mypage.me")
 	public String myPage(HttpSession session, Model model) {
@@ -537,93 +545,87 @@ public class MemberController {
 	 
 
 	 // 비번찾기(메일발송)
-	 @RequestMapping("findPwd.me")
-	 public String findPwd(Member m,String userId, String email,String div, Model model, HttpSession session, HttpServletRequest request) {
+	 
+	 @RequestMapping(value = "findPwd.me")
+	 @ResponseBody
+	 public String passwordSearch(@RequestParam("userId")String userId,
+			@RequestParam("email")String email,
+			HttpServletRequest request, HttpServletRequest req, Model model, HttpSession session) {
 		 
-		 Member member = mService.loginMember(m);
+		 String key = getKey(false, 8);
 		 
-		 //System.out.println(member);
-		 if(member == null) {
-			 model.addAttribute("historyBack", true);
-			 session.setAttribute("alertMsg", "해당 회원이 존재하지 않습니다.");
-			 return "redirect:/";
-		 }
+		 session = req.getSession(true);
+		 String subject = "맥심 임시비밀번호 발급 안내 입니다.";
+		 StringBuilder sb = new StringBuilder();
+		 sb.append("귀하의 임시비밀번호는" +  key + "입니다. 마이페이지에서 비밀번호를 바꿔주세요~!");
 		 
-		 if(member.getEmail().equals(email)==false) {
-			 model.addAttribute("historyBack", true);
-			 session.setAttribute("alertMsg", "이메일이 올바르지 않습니다.");
-			 return "redirect:/";
+		 session.setAttribute("key", key);
+		 
+		 System.out.println(key);
+		 
+		 if(ms.send(subject, sb.toString(), "macsimmacsim000@gmail.com", email)) {
+			 
+			 // 임시비번=key 암호화해서 저장시키기 
+			 key = bcryptPasswordEncoder.encode(key);
+			
+			 int result = mService.searchPassword(userId, email, key);
+
+			 // 메일 발송 성공
+			 if(result > 0) {
+				 	  
+				 //session.setAttribute("alertMsg", "메일확인 해주세요~!");
+				 return "member/pwdFindForm";
+				 
+			 }else {
+				 model.addAttribute("errorMsg", "메일 발송 실패..");
+				 return "common/errorPage";
+			 }
+			 
+			 
 		 }else {
-			 
-			mService.sendMail(userId, email);
-			return "member/newPwd";
+			 return "fail";
 		 }
-		 
-		 
-		 
-		 
-		 
-		 /*else {
-			 
-			    String charSet = "utf-8";
-				String hostSMTP = "smtp.naver.com";
-				String hostSMTPid = "이메일 입력";
-				String hostSMTPpwd = "비밀번호 입력";
-
-				// 보내는 사람 EMail, 제목, 내용
-				String fromEmail = "이메일 입력";
-				String fromName = "Spring Homepage";
-				String subject = "";
-				String msg = "";
-				
-				if(div.equals("find_pw")) {
-					subject = "Spring Homepage 임시 비밀번호 입니다.";
-					msg += "<div align='center' style='border:1px solid black; font-family:verdana'>";
-					msg += "<h3 style='color: blue;'>";
-					msg += member.getUserId() + "님의 임시 비밀번호 입니다. 비밀번호를 변경하여 사용하세요.</h3>";
-					msg += "<p>임시 비밀번호 : ";
-					msg += member.getUserPwd() + "</p></div>";
-				}
-				// 받는 사람 E-Mail 주소
-				String mail = member.getEmail();
-				try {
-					HtmlEmail email = new HtmlEmail();
-					email.setDebug(true);
-					email.setCharset(charSet);
-					email.setSSL(true);
-					email.setHostName(hostSMTP);
-					email.setSmtpPort(587);
-
-					email.setAuthentication(hostSMTPid, hostSMTPpwd);
-					email.setTLS(true);
-					email.addTo(mail, charSet);
-					email.setFrom(fromEmail, fromName, charSet);
-					email.setSubject(subject);
-					email.setHtmlMsg(msg);
-					email.send();
-				} catch (Exception e) {
-					System.out.println("메일발송 실패 : " + e);
-				}
-			}
-			 
-			 
-			 
-		 }
-		 
-		 Member loginMember = (Member)session.getAttribute("loginMember");
-		 /*
-		 String contextPath = request.getContextPath();
-		 mService.sendTempLoginPwToEmail(loginMember, contextPath);
-		 */
-		 
-		 
-		 
-		 
-	
-		 
-		 
-		 
+		
 	 }
+	 
+	 // 랜덤값 만드는 메소드
+	 private String init() {
+			Random ran = new Random();
+			StringBuffer sb = new StringBuffer();
+			int num = 0;
+
+			do {
+				num = ran.nextInt(75) + 48;
+				if ((num >= 48 && num <= 57) || (num >= 65 && num <= 90) || (num >= 97 && num <= 122)) {
+					sb.append((char) num);
+				} else {
+					continue;
+				}
+
+			} while (sb.length() < size);
+			if (lowerCheck) {
+				return sb.toString().toLowerCase();
+			}
+			return sb.toString();
+		}
+		
+		public String getKey(boolean lowerCheck, int size) {
+			this.lowerCheck = lowerCheck;
+			this.size = size;
+			return init();
+		}
+	
+ }
+			
+	 
+	 
+	 
+	 
+ 
+		 
+		  	 
+		 
+	 
 	 
 	
 	
@@ -644,4 +646,4 @@ public class MemberController {
 	
 	
 	
-}
+
