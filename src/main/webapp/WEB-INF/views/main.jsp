@@ -306,8 +306,7 @@
 <script defer>
 	
 	const openRank = () => {
-		bottomRank.style.marginTop = "150px";
-		bottomRank.style.display = "initial";
+		bottomRank.style.display = "block";
 	}
 
 </script>
