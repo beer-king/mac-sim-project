@@ -22,14 +22,7 @@
 	/>
 	<link rel="stylesheet" href="resources/css/header.css" />
 	<link rel="stylesheet" href="resources/css/mainPage.css" />
-	<script>
-		<c:if test="${a eq null}">
-			(() => {
-				console.log("!!!!");
-				location.href="main.load";
-			})()
-		</c:if>
-	</script>
+
 	<style>
 		.sidenav {
 			height:100%;
@@ -79,15 +72,23 @@
 </head>
 <body>
 
-<!-- header -->
-<header>
-
 	<c:if test="${!empty alertMsg}">
 		<script>
 			alert("${alertMsg}");
 		</script>
 		<c:remove var="alertMsg" scope="session"/>
 	</c:if>
+	<script>
+		<c:if test="${a eq null}">
+			(() => {
+				console.log("!!!!");
+				location.href="main.load";
+			})()
+		</c:if>
+	</script>
+	
+<!-- header -->
+<header>
 
 
 	<div class="inner">
@@ -306,8 +307,7 @@
 <script defer>
 	
 	const openRank = () => {
-		bottomRank.style.marginTop = "150px";
-		bottomRank.style.display = "initial";
+		bottomRank.style.display = "block";
 	}
 
 </script>
