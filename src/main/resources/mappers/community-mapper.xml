@@ -270,12 +270,33 @@
 	</select>
 	
 	<select id="selectIsLike" resultType="_int" parameterType="CommLikes">
-	SELECT
-	       COUNT(*)
-	  FROM MACSIM.CLIKES
-	 WHERE CLIKES.COMM_NO = #{commNo}
-	   AND CLIKES.USER_NO = #{userNo}
+		SELECT
+		       COUNT(*)
+		  FROM MACSIM.CLIKES
+		 WHERE CLIKES.COMM_NO = #{commNo}
+		   AND CLIKES.USER_NO = #{userNo}
 	</select>
+	
+	<insert id="insertCommLike" parameterType="CommLikes">
+		insert
+		  into clikes
+		     (
+		       user_no
+		     , comm_no
+		     )
+		values
+		     (
+		       #{userNo}
+		     , #{commNo}
+		     )
+	</insert>
+	
+	<delete id="deleteCommLike" parameterType="CommLikes">
+		delete
+		  from CLIKES
+		 where USER_NO = #{userNo}
+		   and COMM_NO = #{commNo}
+	</delete>
 	
 	<insert id="replyInsert" parameterType="Reply">
 		insert

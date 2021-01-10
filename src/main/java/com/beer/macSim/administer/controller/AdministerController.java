@@ -66,6 +66,22 @@ public class AdministerController {
 		return "administer/callAdmini";
 	}
 	
+	@ResponseBody
+	@RequestMapping("callInsert.ad")
+	public String callInsert(Report r) {
+		System.out.println(r);
+		if(r.getReqCateNo().equals("1")) {
+			r.setReqCateTitle("욕설");
+		}else if(r.getReqCateNo().equals("2")) {
+			r.setReqCateTitle("중복, 도배");
+		}else if((r.getReqCateNo().equals("3"))) {
+			r.setReqCateTitle("정치적 발언");
+		}else {
+			r.setReqCateTitle("기타");
+		}
+		int result = aService.callInsert(r);
+		return "success";
+	}
 	
 	@ResponseBody
 	@RequestMapping("userBan.ad")
@@ -453,7 +469,7 @@ public class AdministerController {
 			}
 			aService.deleteAttach(pNo);
 			result2 = aService.updateAttachment(a1, a2);
-		}else if(upfile1.isEmpty() && (!alist.isEmpty())) {
+		}else if(upfile2.isEmpty() && (!alist.isEmpty())) {
 			int i = 1;
 			for(Attachment a : alist) {
 				if(i == 2) {

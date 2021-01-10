@@ -6,6 +6,13 @@
 <head>
 <meta charset="UTF-8">
 <title>MACSIM</title>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	<!-- 부트스트랩에서 제공하고 있는 스크립트 -->
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css"
@@ -18,6 +25,8 @@
     />
     <link rel="stylesheet" href="resources/css/header.css" />
     <link rel="stylesheet" href="resources/css/community/community.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
 
@@ -67,20 +76,20 @@
 		                <span onclick="location.href='delete.cm?commNo=${c.commNo}'">삭제</span>
 		              </c:when>
 		              <c:otherwise>
-		                <span>신고</span>
+		                <span><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal" data-num="${c.commNo }">신고</button></span>
 		              </c:otherwise>
 	                </c:choose>
 	                <small>${ c.commCreateDate }</small>
-	                <small class="like-length${c.commNo}">${ c.likeLength }</small>
+	                <small class="like-length${c.commNo}" id="like-length${c.commNo}">${ c.likeLength }</small>
 	                <c:choose>
 	                  <c:when test ="${ c.isLike eq 0 }" >
-	                    <b class="material-icons">favorite_border</b>
+	                    <b class="material-icons" id="likeBtnBorder${c.commNo}" onclick="likeOn(${loginUser.userNo}, ${c.commNo});">favorite_border</b>
 	                  </c:when>
 	                  <c:when test ="${ c.isLike eq 9999999 }" >
-	                    <b class="material-icons">favorite_border</b>
+	                    <b class="material-icons" onclick="location.href='like.xx?cate=${cate}'">favorite_border</b>
 	                  </c:when>
 	                  <c:otherwise>
-	                    <i class="material-icons">favorite</i>
+	                    <b class="material-icons" id="likeBtnFull${c.commNo}" onclick="likeOff(${loginUser.userNo}, ${c.commNo});">favorite</b>
 	                  </c:otherwise>
 	                </c:choose>
 	              </div>
@@ -121,6 +130,41 @@
 		</div>
         
       </div>
+      
+      <div class="modal fade" id="myModal">
+		<div class="modal-dialog">
+		  <div class="modal-content">
+		  
+		    <!-- Modal Header -->
+		  <div class="modal-header">
+		    <h4 class="modal-title">신고하기</h4>
+		    <button type="button" class="close" data-dismiss="modal">×</button>
+		  </div>
+		  
+		  <div class="modal-body">
+		  <form id="form1">
+		    <h4>신고사유</h4>
+		    <select id="reqCateNo" name="reqCateNo" style="width: 200px;">
+		      <option value="1">욕설</option>
+		      <option value="2">중복, 도배</option>
+		      <option value="3">정치적 발언</option>
+		      <option value="4">기타</option>
+		    </select>
+		    <br><br>
+		    <h4>상세사유</h4>
+		    <textarea name="reqContent" id="reqContent" cols="30" rows="10" style="width: 400px; height: 100; resize: none;"></textarea>
+		  </form>
+		  </div>
+		  
+		  <!-- Modal footer -->
+		      <div class="modal-footer">
+		        <button id="call" type="button" class="btn btn-primary" data-dismiss="modal">제출하기</button>
+		        <button type="button" class="btn btn-danger" data-dismiss="modal">취소하기</button>
+		      </div>
+		      
+		    </div>
+		  </div>
+		</div>
     </main>
     
     <script defer>
@@ -155,8 +199,88 @@
       });
       */
       
+      
       // 페이징  /  active된 페이지 숫자에 클래스 부여 -> paging-active
-    
+      
+      
+      // 좋아요
+      const likeOn = (userNo, commNo) => {
+    	  console.log("좋아요 클릭");
+    	  axios.get("like.on", {
+    		  params:{
+    			  uno:userNo,
+    			  cno:commNo
+    		  }
+    	  }).then((res) => {
+    		  console.log("좋아요됨");
+    		  console.log(res.data);
+    		  
+    		  const likeLength = document.querySelector("#like-length"+commNo); 
+    		  likeLength.innerText = res.data;
+    		  
+    		  const likeBtnB = document.querySelector("#likeBtnBorder"+commNo);
+    		  likeBtnB.innerText = "favorite";
+    		  likeBtnB.onclick = () => {likeOff(userNo, commNo)};
+    		  likeBtnB.id = "likeBtnFull"+commNo;
+    		  
+    	  })
+    	  
+      }
+      
+      // 좋아요 취소
+      const likeOff = (userNo, commNo) => {
+    	  console.log("좋아요취소");
+    	  axios.get("like.off", {
+    		  params:{
+    			  uno:userNo,
+    			  cno:commNo
+    		  }
+    	  }).then((res) => {
+    		  console.log("취소됨");
+    		  console.log(res.data);
+    		  
+    		  const likeLength = document.querySelector("#like-length"+commNo); 
+    		  likeLength.innerText = res.data;
+    		  
+    		  const likeBtnB = document.querySelector("#likeBtnFull"+commNo);
+    		  likeBtnB.innerText = "favorite_border";
+    		  likeBtnB.onclick = () => {likeOn(userNo, commNo)};
+    		  likeBtnB.id = "likeBtnBorder"+commNo;
+    		  
+    	  })
+      }
+    </script>
+    <script>
+    $(function(){
+		var num = "";
+		$(document).ready(function() {
+    		$('#myModal').on('show.bs.modal', function(event){
+    			num = $(event.relatedTarget).data('num');
+    			no = $(event.relatedTarget).data('no');
+    			
+    		});
+    	});
+    	$("#call").click(function(){
+        	call();
+        });
+   	  	function call(){
+   		  $.ajax({
+   			  url:"callInsert.ad",
+   			  type:"POST",
+   			  data:{reqCateNo:$("#reqCateNo").val(),
+   				  reqContent:$("#reqContent").val(),
+   				  reqNum:num,
+   				  rfromNo:3},
+   			  success:function(result){
+   				  alert("신고가 완료 되었습니다.");
+   				  location.reload();
+   			  },error:function(){
+   				  alert("신고가 실패 되었습니다.");
+   			  }
+   		  })
+   	  }
+          
+    });
     </script>
 
 </body>

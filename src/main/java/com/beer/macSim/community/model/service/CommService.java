@@ -32,8 +32,10 @@ public interface CommService {
 	int selectIsLike(CommLikes cl);
 	
 	// 커뮤니티 좋아요 추가
+	int insertCommLike(CommLikes cl);
 	
 	// 커뮤니티 좋아요 삭제
+	int deleteCommLike(CommLikes cl);
 	
 	// 3. 포럼 리스트 조회용 서비스
 	int selectForumCount();

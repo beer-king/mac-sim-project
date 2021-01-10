@@ -130,6 +130,7 @@ main .inner h1 {
   align-self: center;
   color: #ecbf2e;
   margin-left: 10px;
+  cursor: pointer;
 }
 
 /* ---------- forum ---------- */

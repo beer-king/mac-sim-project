@@ -36,11 +36,11 @@ public class LoadMainController {
 		model.addAttribute("mRank", mRank);
 		model.addAttribute("fRank", fRank);
 
-		System.out.println("랜덤맥주번호 : " + bno);
-		System.out.println("to : " + to);
-		System.out.println("rList : " + rList);
-		System.out.println("mRank : " + mRank);
-		System.out.println("fRank : " + fRank);
+		//System.out.println("랜덤맥주번호 : " + bno);
+		//System.out.println("to : " + to);
+		//System.out.println("rList : " + rList);
+		//System.out.println("mRank : " + mRank);
+		//System.out.println("fRank : " + fRank);
 		
 		model.addAttribute("a", "a");
 		return "main";

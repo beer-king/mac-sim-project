@@ -170,4 +170,14 @@ public class CommServiceImpl  implements CommService{
 		return cDao.selectForumEnter(sqlSession, ph);
 	}
 
+	@Override
+	public int insertCommLike(CommLikes cl) {
+		return cDao.insertCommLike(sqlSession, cl);
+	}
+
+	@Override
+	public int deleteCommLike(CommLikes cl) {
+		return cDao.deleteCommLike(sqlSession, cl);
+	}
+
 }
