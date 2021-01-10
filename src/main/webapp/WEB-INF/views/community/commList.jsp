@@ -76,7 +76,7 @@
 		                <span onclick="location.href='delete.cm?commNo=${c.commNo}'">삭제</span>
 		              </c:when>
 		              <c:otherwise>
-		                <span><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal" data-num="${c.commNo }" data-no="${c.userNo }">신고</button></span>
+		                <span><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal" data-num="${c.commNo }">신고</button></span>
 		              </c:otherwise>
 	                </c:choose>
 	                <small>${ c.commCreateDate }</small>
@@ -253,7 +253,6 @@
     <script>
     $(function(){
 		var num = "";
-		var no = ""
 		$(document).ready(function() {
     		$('#myModal').on('show.bs.modal', function(event){
     			num = $(event.relatedTarget).data('num');
@@ -271,7 +270,6 @@
    			  data:{reqCateNo:$("#reqCateNo").val(),
    				  reqContent:$("#reqContent").val(),
    				  reqNum:num,
-   				  userNo:no,
    				  rfromNo:3},
    			  success:function(result){
    				  alert("신고가 완료 되었습니다.");

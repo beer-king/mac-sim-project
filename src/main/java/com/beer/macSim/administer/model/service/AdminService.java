@@ -73,4 +73,5 @@ public interface AdminService {
 	int updateAttachment(Attachment a1, Attachment a2);
 	int callInsert(Report r);
 	int increaseUserCount(int userNo);
+	
 }

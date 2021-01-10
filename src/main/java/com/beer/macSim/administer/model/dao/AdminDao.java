@@ -87,7 +87,40 @@ public class AdminDao {
 		return sqlSession.update("adminMapper.userBan", userNo);
 	}
 	public int reportBC(SqlSessionTemplate sqlSession, SelectData sd) {
-		return sqlSession.update("adminMapper.reportBC", sd);
+		int i = sqlSession.update("adminMapper.reportBC", sd);
+		int j = 1;
+		int k = 1;
+		if(sd.getStatus().equals("C")) {	
+			System.out.println("reqNo : " + Integer.toString(sd.getCategory()));
+			Report r = sqlSession.selectOne("adminMapper.selectReportOne", Integer.toString(sd.getCategory()));
+			System.out.println(r);
+			if(r.getRfromNo().equals("3")) {
+				j = sqlSession.update("adminMapper.deleteProcess3", r);
+				String userNo = sqlSession.selectOne("adminMapper.selectUserNoList3", r);
+				k = sqlSession.update("adminMapper.increaseUserReport", userNo);
+			}else if(r.getRfromNo().equals("2")) {
+				j = sqlSession.update("adminMapper.deleteProcess2", r);
+				String userNo = sqlSession.selectOne("adminMapper.selectUserNoList2", r);
+				k = sqlSession.update("adminMapper.increaseUserReport", userNo);
+			}else if(r.getRfromNo().equals("4")) {
+				j = sqlSession.update("adminMapper.deleteProcess4", r);
+				String userNo = sqlSession.selectOne("adminMapper.selectUserNoList4", r);
+				k = sqlSession.update("adminMapper.increaseUserReport", userNo);
+			}else if(r.getRfromNo().equals("5")) {
+				j = sqlSession.update("adminMapper.deleteProcess5", r);
+				String userNo = sqlSession.selectOne("adminMapper.selectUserNoList5", r);
+				k = sqlSession.update("adminMapper.increaseUserReport", userNo);
+			}else if(r.getRfromNo().equals("6")) {
+				j = sqlSession.update("adminMapper.deleteProcess6", r);
+				String userNo = sqlSession.selectOne("adminMapper.selectUserNoList6", r);
+				k = sqlSession.update("adminMapper.increaseUserReport", userNo);
+			}else {
+				j = sqlSession.update("adminMapper.deleteProcess", r);
+				String userNo = sqlSession.selectOne("adminMapper.selectUserNoList", r);
+				k = sqlSession.update("adminMapper.increaseUserReport", userNo);
+			}
+		}
+		return i * j * k;
 	}
 	
 	public int selectBeerListCount(SqlSessionTemplate sqlSession, BeerSearch bs) {

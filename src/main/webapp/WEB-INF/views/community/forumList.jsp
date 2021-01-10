@@ -7,18 +7,27 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>MACSIM</title>
-	<link
-	  rel="stylesheet"
-	  href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css"
-	  integrity="sha512-NmLkDIU1C/C88wi324HBc+S2kLhi08PN5GDeUVVVC/BVt/9Izdsc9SVeVfA1UZbY3sHUlDSyRXhCzHfr6hmPPw=="
-	  crossorigin="anonymous"
-	/>
-	<link
-	  href="https://fonts.googleapis.com/icon?family=Material+Icons"
-	  rel="stylesheet"
-	/>
-	<link rel="stylesheet" href="resources/css/header.css" />
-	<link rel="stylesheet" href="resources/css/community/community.css" />
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	<!-- 부트스트랩에서 제공하고 있는 스크립트 -->
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css"
+      integrity="sha512-NmLkDIU1C/C88wi324HBc+S2kLhi08PN5GDeUVVVC/BVt/9Izdsc9SVeVfA1UZbY3sHUlDSyRXhCzHfr6hmPPw=="
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="resources/css/header.css" />
+    <link rel="stylesheet" href="resources/css/community/community.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
 
@@ -67,7 +76,7 @@
 		                  <span>삭제</span> -->  
 		                </c:when>
 		                <c:otherwise>
-		                  <span>신고</span>
+		                  <span><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal" data-num="${f.forNo}">신고</button></span>
 		                </c:otherwise>
 	                  </c:choose>
 	                  <small>${ f.forCreateDate }</small>
@@ -128,6 +137,40 @@
         </div>
       </div>
     </div>
+    <div class="modal fade" id="myModal">
+		<div class="modal-dialog">
+		  <div class="modal-content">
+		  
+		    <!-- Modal Header -->
+		  <div class="modal-header">
+		    <h4 class="modal-title">신고하기</h4>
+		    <button type="button" class="close" data-dismiss="modal">×</button>
+		  </div>
+		  
+		  <div class="modal-body">
+		  <form id="form1">
+		    <h4>신고사유</h4>
+		    <select id="reqCateNo" name="reqCateNo" style="width: 200px;">
+		      <option value="1">욕설</option>
+		      <option value="2">중복, 도배</option>
+		      <option value="3">정치적 발언</option>
+		      <option value="4">기타</option>
+		    </select>
+		    <br><br>
+		    <h4>상세사유</h4>
+		    <textarea name="reqContent" id="reqContent" cols="30" rows="10" style="width: 400px; height: 100; resize: none;"></textarea>
+		  </form>
+		  </div>
+		  
+		  <!-- Modal footer -->
+		      <div class="modal-footer">
+		        <button id="call" type="button" class="btn btn-primary" data-dismiss="modal">제출하기</button>
+		        <button type="button" class="btn btn-danger" data-dismiss="modal">취소하기</button>
+		      </div>
+		      
+		    </div>
+		  </div>
+		</div>
 
 </body>
 <script defer>
@@ -159,4 +202,35 @@
 	  }, 400);
 	};
 </script>
+<script>
+    $(function(){
+		var num = "";
+		$(document).ready(function() {
+    		$('#myModal').on('show.bs.modal', function(event){
+    			num = $(event.relatedTarget).data('num');
+    			
+    		});
+    	});
+    	$("#call").click(function(){
+        	call();
+        });
+   	  	function call(){
+   		  $.ajax({
+   			  url:"callInsert.ad",
+   			  type:"POST",
+   			  data:{reqCateNo:$("#reqCateNo").val(),
+   				  reqContent:$("#reqContent").val(),
+   				  reqNum:num,
+   				  rfromNo:2},
+   			  success:function(result){
+   				  alert("신고가 완료 되었습니다.");
+   				  location.reload();
+   			  },error:function(){
+   				  alert("신고가 실패 되었습니다.");
+   			  }
+   		  })
+   	  }
+          
+    });
+    </script>
 </html>

@@ -68,8 +68,8 @@ public class AdministerController {
 	
 	@ResponseBody
 	@RequestMapping("callInsert.ad")
-	public String callInsert(Report r, int userNo) {
-		
+	public String callInsert(Report r) {
+		System.out.println(r);
 		if(r.getReqCateNo().equals("1")) {
 			r.setReqCateTitle("욕설");
 		}else if(r.getReqCateNo().equals("2")) {
