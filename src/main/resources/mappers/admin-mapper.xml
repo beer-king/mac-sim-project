@@ -43,6 +43,7 @@
     	<result column="req_num" property="reqNum"/>
     	<result column="req_cate_no" property="reqCateNo"/>
     	<result column="req_cate_title" property="reqCateTitle"/>
+    	<result column="rfrom_title" property="rfromTitle"/>
     </resultMap>
     <resultMap type="Notice" id="noticeResultSet">
 		<result column="notice_no" property="noticeNo"/>
@@ -605,5 +606,106 @@
 		where pno = #{pNo}
   	</delete>
   	
+  	<insert id="callInsert" parameterType="Report">
+  		insert
+  			into report
+  			(
+  				    req_no
+  				  , rfrom_no
+  				  , req_content
+  				  , req_num
+  				  , req_cate_no
+  				  , req_cate_title
+  				  , req_status
+  			)
+  			values
+  			(
+  				  seq_req_no.nextval
+  				, #{rfromNo}
+  				, #{reqContent}
+  				, #{reqNum}
+  				, #{reqCateNo}
+  				, #{reqCateTitle}
+  				, 'A'
+  			)
+  	</insert>
   	
+  	<select id="selectReportOne" resultMap="reportResultSet" parameterType="string">
+		select req_no, req_num, rfrom_title, rfrom_no
+		from report
+		join report_fromcate using(rfrom_no)
+		where req_no = #{reqNo}
+  	</select>
+  	
+  	<select id="selectUserNoList" parameterType="Report" resultType="string">
+		select user_no 
+		from score
+		where score_no = #{reqNum}
+  	</select>
+  	<select id="selectUserNoList3" parameterType="Report" resultType="string">
+		select user_no 
+		from community
+		where comm_no = #{reqNum}
+			
+  	</select>
+  	<select id="selectUserNoList2" parameterType="Report" resultType="string">
+		select user_no 
+		from forum
+		where for_no = #{reqNum}
+			
+  	</select>
+  	<select id="selectUserNoList4" parameterType="Report" resultType="string">
+		select user_no 
+		from fcomments
+		where co_no = #{reqNum}
+	
+  	</select>
+  	<select id="selectUserNoList5" parameterType="Report" resultType="string">
+		select user_no 
+		from frecomments
+		where reco_no = #{reqNum}
+  	</select>
+  	<select id="selectUserNoList6" parameterType="Report" resultType="string">
+		select user_no 
+		from ev_reply
+		where ev_rpno = #{reqNum}
+  	</select>
+  	
+  	<update id="deleteProcess" parameterType="Report">
+		update score
+		set status = 'N'
+		where score_no = #{reqNum}
+  	</update>
+  	<update id="deleteProcess3" parameterType="Report">
+		update community
+		set comm_status = 3
+ 		where comm_no = #{reqNum}
+  	</update>
+  	<update id="deleteProcess2" parameterType="Report">
+		update forum
+		set for_status = 3
+		where for_no = #{reqNum}
+
+  	</update>
+  	<update id="deleteProcess4" parameterType="Report">
+		update fcomments
+		set co_status = 3
+		where co_no = #{reqNum}
+  	</update>
+  	<update id="deleteProcess5" parameterType="Report">
+		update frecomments
+		set reco_status = 3
+ 		where reco_no = #{reqNum}
+  	</update>
+  	<update id="deleteProcess6" parameterType="Report">
+		update ev_reply
+		set status = 'N'
+		where ev_rpno = #{reqNum}
+  	</update>
+  	 
+  	<update id="increaseUserReport" parameterType="string">
+		update member
+		set report = report + 1
+		where user_no = #{userNo}
+  	</update>
 </mapper>

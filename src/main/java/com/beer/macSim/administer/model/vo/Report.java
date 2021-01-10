@@ -19,6 +19,7 @@ public class Report {
 	private String reqNum;
 	private String reqCateNo;
 	private String reqCateTitle;
+	private String rfromTitle;
 	
 	
 }

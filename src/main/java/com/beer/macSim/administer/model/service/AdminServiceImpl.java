@@ -219,6 +219,16 @@ public class AdminServiceImpl implements AdminService{
 		return aDao.updateAttachment(sqlSession, a1, a2);
 	}
 
+	@Override
+	public int callInsert(Report r) {
+		return aDao.callInsert(sqlSession, r);
+	}
+
+	@Override
+	public int increaseUserCount(int userNo) {
+		return aDao.increaseUserCount(sqlSession, userNo);
+	}
+
 	
 	
 	
