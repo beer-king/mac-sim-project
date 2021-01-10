@@ -11,8 +11,9 @@ public class Selectation {
 			data.add("6");
 		}else if(category == 2){
 			data.add("1");
-			data.add("2");
+			
 		}else {
+			data.add("2");
 			data.add("3");
 			data.add("4");
 			data.add("5");

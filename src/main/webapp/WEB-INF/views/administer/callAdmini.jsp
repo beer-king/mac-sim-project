@@ -231,9 +231,7 @@
 			                    <c:if test="${r.rfromNo eq 1}">
 			                    	<td>종류 번호 :맥주리뷰</td>
 			                    </c:if>
-			                    <c:if test="${r.rfromNo eq 2}">
-			                    	<td>종류 번호 : 맥주리뷰댓글</td>
-			                    </c:if>
+			                    
 			                </tr>
 			                <tr class="clickDataView" onclick="trclick2(${r.reqNo}, `${r.reqContent }`, '${r.reqCateTitle }')">
 			                	<td>신고 카테고리 : ${r.reqCateTitle }</td>
@@ -246,9 +244,7 @@
 			                    <c:if test="${r.rfromNo eq 1}">
 			                    	<td>종류 번호 :맥주리뷰</td>
 			                    </c:if>
-			                    <c:if test="${r.rfromNo eq 2}">
-			                    	<td>종류 번호 : 맥주리뷰댓글</td>
-			                    </c:if>
+			                   
 			                </tr>
 			                <tr class="clickDataView">
 			                	<td>신고 카테고리 : ${r.reqCateTitle }</td>
@@ -272,6 +268,9 @@
 			            	</tr>
 			                <tr class="clickDataView" onclick="trclick2(${r.reqNo}, `${r.reqContent }`, '${r.reqCateTitle }')">
 			                    <td>신고글 번호 : ${r.reqNo}</td>
+			                    <c:if test="${r.rfromNo eq 2}">
+			                    	<td>종류 번호 : 포럼</td>
+			                    </c:if>
 			                    <c:if test="${r.rfromNo eq 3}">
 			                    	<td>종류 번호 : 커뮤니티</td>
 			                    </c:if>
@@ -290,6 +289,9 @@
 		                <c:if test="${status ne 'A' }">
 			                <tr class="clickDataView">
 			                    <td>신고글 번호 : ${r.reqNo}</td>
+			                    <c:if test="${r.rfromNo eq 2}">
+			                    	<td>종류 번호 : 포럼</td>
+			                    </c:if>
 			                    <c:if test="${r.rfromNo eq 3}">
 			                    	<td>종류 번호 : 커뮤니티</td>
 			                    </c:if>
@@ -578,7 +580,6 @@
 		          <h5 id="mcontent" style="margin-left: 40px;"></h5>
 		          <br><br>
 		          <div align="center">
-		          	<button type="button" class="btn btn-primary" data-dismiss="modal" style="width: 150px;">해당 글 이동</button>
 		          	<button id="reportB" type="button" class="btn btn-primary" data-dismiss="modal" style="width: 100px;">허위 신고</button>
 		          	<button id="reportC" type="button" class="btn btn-danger" data-dismiss="modal">삭제하기</button>
 		          </div>

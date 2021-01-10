@@ -87,7 +87,40 @@ public class AdminDao {
 		return sqlSession.update("adminMapper.userBan", userNo);
 	}
 	public int reportBC(SqlSessionTemplate sqlSession, SelectData sd) {
-		return sqlSession.update("adminMapper.reportBC", sd);
+		int i = sqlSession.update("adminMapper.reportBC", sd);
+		int j = 1;
+		int k = 1;
+		if(sd.getStatus().equals("C")) {	
+			System.out.println("reqNo : " + Integer.toString(sd.getCategory()));
+			Report r = sqlSession.selectOne("adminMapper.selectReportOne", Integer.toString(sd.getCategory()));
+			System.out.println(r);
+			if(r.getRfromNo().equals("3")) {
+				j = sqlSession.update("adminMapper.deleteProcess3", r);
+				String userNo = sqlSession.selectOne("adminMapper.selectUserNoList3", r);
+				k = sqlSession.update("adminMapper.increaseUserReport", userNo);
+			}else if(r.getRfromNo().equals("2")) {
+				j = sqlSession.update("adminMapper.deleteProcess2", r);
+				String userNo = sqlSession.selectOne("adminMapper.selectUserNoList2", r);
+				k = sqlSession.update("adminMapper.increaseUserReport", userNo);
+			}else if(r.getRfromNo().equals("4")) {
+				j = sqlSession.update("adminMapper.deleteProcess4", r);
+				String userNo = sqlSession.selectOne("adminMapper.selectUserNoList4", r);
+				k = sqlSession.update("adminMapper.increaseUserReport", userNo);
+			}else if(r.getRfromNo().equals("5")) {
+				j = sqlSession.update("adminMapper.deleteProcess5", r);
+				String userNo = sqlSession.selectOne("adminMapper.selectUserNoList5", r);
+				k = sqlSession.update("adminMapper.increaseUserReport", userNo);
+			}else if(r.getRfromNo().equals("6")) {
+				j = sqlSession.update("adminMapper.deleteProcess6", r);
+				String userNo = sqlSession.selectOne("adminMapper.selectUserNoList6", r);
+				k = sqlSession.update("adminMapper.increaseUserReport", userNo);
+			}else {
+				j = sqlSession.update("adminMapper.deleteProcess", r);
+				String userNo = sqlSession.selectOne("adminMapper.selectUserNoList", r);
+				k = sqlSession.update("adminMapper.increaseUserReport", userNo);
+			}
+		}
+		return i * j * k;
 	}
 	
 	public int selectBeerListCount(SqlSessionTemplate sqlSession, BeerSearch bs) {
@@ -124,19 +157,45 @@ public class AdminDao {
 	public int updateBatchReport(SqlSessionTemplate sqlSession, Batch b) {
 		int i = sqlSession.update("adminMapper.updateBatchReport", b);
 		int j = 1;
-		if(b.getStatus().equals("C")) {
-			
-			/* 해당 글 및 댓글 삭제처리 작업후 돌아갈 부분
-			for(String s : b.getList()) {
-				j = sqlSession.update("adminMapper.deleteReport", s);
-				if(j <= 0) {
+		int k = 1;
+		System.out.println("test");
+		System.out.println(b.getStatus());
+		if(b.getStatus().equals("C")) {	
+			for(String reqNo : b.getList()) {
+				System.out.println("reqNo : " + reqNo);
+				Report r = sqlSession.selectOne("adminMapper.selectReportOne", reqNo);
+				System.out.println(r);
+				if(r.getRfromNo().equals("3")) {
+					j = sqlSession.update("adminMapper.deleteProcess3", r);
+					String userNo = sqlSession.selectOne("adminMapper.selectUserNoList3", r);
+					k = sqlSession.update("adminMapper.increaseUserReport", userNo);
+				}else if(r.getRfromNo().equals("2")) {
+					j = sqlSession.update("adminMapper.deleteProcess2", r);
+					String userNo = sqlSession.selectOne("adminMapper.selectUserNoList2", r);
+					k = sqlSession.update("adminMapper.increaseUserReport", userNo);
+				}else if(r.getRfromNo().equals("4")) {
+					j = sqlSession.update("adminMapper.deleteProcess4", r);
+					String userNo = sqlSession.selectOne("adminMapper.selectUserNoList4", r);
+					k = sqlSession.update("adminMapper.increaseUserReport", userNo);
+				}else if(r.getRfromNo().equals("5")) {
+					j = sqlSession.update("adminMapper.deleteProcess5", r);
+					String userNo = sqlSession.selectOne("adminMapper.selectUserNoList5", r);
+					k = sqlSession.update("adminMapper.increaseUserReport", userNo);
+				}else if(r.getRfromNo().equals("6")) {
+					j = sqlSession.update("adminMapper.deleteProcess6", r);
+					String userNo = sqlSession.selectOne("adminMapper.selectUserNoList6", r);
+					k = sqlSession.update("adminMapper.increaseUserReport", userNo);
+				}else {
+					j = sqlSession.update("adminMapper.deleteProcess", r);
+					String userNo = sqlSession.selectOne("adminMapper.selectUserNoList", r);
+					k = sqlSession.update("adminMapper.increaseUserReport", userNo);
+				}
+				if(j * k <= 0) {
 					break;
 				}
-			}*/
+			}
 		}
-		
-		
-		return i*j;
+		return i*j *k;
 	}
 	
 	public int selectPnocurrent(SqlSessionTemplate sqlSession) {
@@ -229,5 +288,14 @@ public class AdminDao {
 
 		}
 		return result2 * result3;
+	}
+
+	public int callInsert(SqlSessionTemplate sqlSession, Report r) {
+		return sqlSession.insert("adminMapper.callInsert", r);
+	}
+
+	public int increaseUserCount(SqlSessionTemplate sqlSession, int userNo) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

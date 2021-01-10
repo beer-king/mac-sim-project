@@ -11,6 +11,9 @@ import java.sql.Date;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.mybatis.spring.SqlSessionTemplate;
 
 public interface MemberService {
 
@@ -84,6 +87,16 @@ public interface MemberService {
 
 	int updateMemberLoginTime(int userNo);
 
+	
+	
+	
 	void sendMail(String userId, String email);
 
+	int searchPassword(String userId, String email, String key);
+
+	
+
+
+	
+	
 }

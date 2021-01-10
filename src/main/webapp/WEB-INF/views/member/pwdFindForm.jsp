@@ -49,16 +49,16 @@
             </div>
             <br><br>
             <div id="findIdForm">
-              <form action="findPwd.me" method="post">
+              <form action="" method="">
                   <table align="center">
                     <tr>
                       <th>아이디</th>
-                      <td><input type="text" name="userId" placeholder="ex)macsim" required></td>
+                      <td><input type="text" name="userId" id="userId" placeholder="ex)macsim" required></td>
                     </tr>
 
                     <tr>
                       <th>이메일&nbsp&nbsp</th>
-                      <td><input type="email" name="email" required placeholder="ex)macsim@gmail.com"></td>
+                      <td><input type="email" name="email" id="email"required placeholder="ex)macsim@gmail.com"></td>
                     </tr>
 
                   </table>
@@ -66,7 +66,7 @@
                   <br>
                   <br>
                   <div align="center" id="findId">
-                    <button class="snip1535" type="submit" >임시비밀번호받기</button>
+                    <button class="snip1535" type="submit" onclick="findBtn();">임시비밀번호받기</button>
                   </div>
                   <br>  
               </form>
@@ -74,8 +74,42 @@
             </div>
             
     </div>
-         
-      
+    
+    <script>
+
+		function findBtn(){
+			
+				$.ajax({
+					type:"post",
+					url:"findPwd.me",
+					data:{
+						userId : $("#userId").val(),
+						email : $("#email").val()
+					},
+					success:function(result){
+						
+						console.log(result);
+						if(result != "fail"){
+							//alert("임시비밀번호가 발송 되었습니다.");
+						}else{
+							//alert("이메일 발송 실패되었습니다.");
+						}
+						
+					},error:function(){
+						console.log("메일 보내기 ajax 통신 실패");
+						return false;
+					}
+				});
+					
+	
+		}
+		
+		
+		
+		
+		
+		
+    </script> 
 
 </body>
 </html>
