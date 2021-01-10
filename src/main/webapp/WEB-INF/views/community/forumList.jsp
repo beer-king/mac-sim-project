@@ -59,13 +59,13 @@
         
         <ul class="comm__items">
           <c:forEach var="f" items="${ list }" >
-	          <li class="forum__item" onclick="enterModalOpen(${f.forNo}, ${f.userNo}, '${f.forTitle}');"/>
-	            <div class="img-wrapper">
+	          <li class="forum__item">
+	            <div class="img-wrapper" onclick="enterModalOpen(${f.forNo}, ${f.userNo}, '${f.forTitle}');">
 	              <img src="resources/uploadFiles/${ f.forChangeSrc }" alt="picture" />
 	            </div>
 	            <div class="item-right">
 	              <div class="item-info">
-	                <div>
+	                <div onclick="enterModalOpen(${f.forNo}, ${f.userNo}, '${f.forTitle}');">
 	                  <strong>${ f.forTitle }</strong>
 	                  <strong>${ f.userId }</strong>
 	                </div>
@@ -79,10 +79,10 @@
 		                  <span><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal" data-num="${f.forNo}">신고</button></span>
 		                </c:otherwise>
 	                  </c:choose>
-	                  <small>${ f.forCreateDate }</small>
+	                  <small onclick="enterModalOpen(${f.forNo}, ${f.userNo}, '${f.forTitle}');">${ f.forCreateDate }</small>
 	                </div>
 	              </div>
-	              <div class="forum-contents">
+	              <div class="forum-contents" onclick="enterModalOpen(${f.forNo}, ${f.userNo}, '${f.forTitle}');">
 	                ${ f.forInfo }
 	                <div>
 	                  <span>${ f.forCount } views</span>
@@ -91,6 +91,7 @@
 	              </div>
 	            </div>
 	          </li>
+	          
           </c:forEach>
         </ul>
         
